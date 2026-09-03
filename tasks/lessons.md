@@ -32,6 +32,28 @@ Also note: `Prefer: resolution=merge-duplicates` (upsert) needs **both** an `ins
 
 **Rule:** RLS is deny-by-default. Enabling it without policies does not "secure" a table — it disconnects it. After enabling RLS on any table this app reads with the anon key, immediately probe both verbs (`SELECT` and an upsert) with the anon key before assuming it works. Never infer "the table is empty" from `[]` on an RLS-enabled table.
 
-**How to apply:** When adding any new Supabase table the client touches, ship the policies in the same SQL as the `create table`, then verify with a live read+write probe. Design the client to degrade safely (see `renderStats` — it falls back to the full-scan path when `scores` returns empty), so an RLS misconfiguration costs performance, never correctness.
+**How to apply:** When adding any new Supabase table the client touches, ship the policies in the same SQL as the `create table`, then verify with a live read+write probe. Design the client to degrade safely, so an RLS misconfiguration costs performance, never correctness. *(2026-09-03: `renderStats`' full-scan fallback was removed — it recomputed the score from raw events with a third copy of the scoring rules. It now shows an explicit „clasamentul nu este disponibil” message instead of a silently different number.)*
 
-**Related caveat:** `tracker.js` always authenticates with the *public* anon key, never the logged-in user's session JWT — so every request hits Postgres as the `anon` role. That forces `using (true)` policies, which for read/write are effectively equivalent to RLS-off (they do still block `DELETE`). Real per-user enforcement would require sending the user's access token as the Bearer and matching on the JWT claim.
+**Related caveat (rezolvat 2026-08):** `tracker.js` trimitea odată doar cheia anon publică, deci fiecare cerere ajungea la Postgres ca rol `anon` — ceea ce forța politici `using (true)`, echivalente practic cu RLS oprit. Acum `authHeaders()` pune JWT-ul sesiunii în `Authorization`, iar politicile din `supabase/00000000_baseline_schema.sql` chiar restrâng la `user_id = auth.uid()`.
+
+## L04 — `\b` in JavaScript is ASCII-only, even under the `/u` flag (2026-09-03)
+
+Shipped the same bug twice, independently. `app.js` capitalised leaderboard names with `/\b\w/g`; `auth.js` capitalised usernames with `/\b\p{L}/gu` and *looked* correct because it used a Unicode property escape and a `ro-RO` locale. Both produced „ȘTefan” for „ștefan”.
+
+The cause is that `\b` is defined in terms of `\w = [A-Za-z0-9_]`, and the `u` flag does not change that. So in „ștefan” the first word boundary sits *between* „ș” and „t” — the regex skips the real first letter and uppercases the second.
+
+Worse, during the audit I read `auth.js`, saw `\p{L}` plus `toLocaleUpperCase('ro-RO')`, concluded it was the correct implementation, and made `app.js` delegate to it — propagating the bug instead of fixing it. It only surfaced because the fix was executed in the browser (`displayName('ștefan')` still returned „șTefan”) rather than reasoned about.
+
+**Rule:** never use `\b` on text that can contain non-ASCII letters. Match the position explicitly: `/(^|[\s\-'’])(\p{L})/gu`. And when a regex „looks Unicode-aware”, check which parts actually are — `\p{...}` being Unicode-aware says nothing about `\b` next to it.
+
+**How to apply:** any string-casing or word-splitting helper in this repo gets a diacritic case in `scripts/check-username-normalizer.js` before it is trusted. Run the function on real input; don't approve it by reading.
+
+## L05 — „Server-derived” means the server derives the *inputs*, not just re-runs the formula (2026-09-03)
+
+Three migrations were titled around making scores server-derived, and the SQL comments said the browser could no longer send a point total that might be altered. True — but the browser still computed `correct` (`s.value === s.dataset.answer`) and sent it, along with `cycle`, `page_index`, `page_size` and the chapter fields. The server faithfully re-applied the scoring formula to numbers it had never checked.
+
+Because points are counted once per `(cycle, verse_ref)` and `cycle` had no constraint at all — `page_index` and `page_size` did — one request containing 1505 verses × 100 cycles was worth ~1.5 million points.
+
+**Rule:** when moving a calculation server-side, list every field the formula reads and ask, for each one, *who produced this value*. A recomputation over attacker-supplied inputs is not a recomputation. If the server cannot independently derive a field, it needs its own copy of the ground truth — here, `public.verse_answers`, generated from the same verse files the client ships.
+
+**How to apply:** the trigger `verify_event_before_insert` now overwrites every scoring input from the answer key, so `chosen` is the only thing the client still decides. If a new scoring input is ever added to `events`, it belongs in that trigger on the same day it is added.

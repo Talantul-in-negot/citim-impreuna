@@ -49,4 +49,4 @@ function validate(book, fileName, globalName) {
   }
 }
 
-module.exports = { validate };
+module.exports = { validate, loadVerseArray };

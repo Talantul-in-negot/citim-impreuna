@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Versetele: o singură completare per verset, patru variante unice,
+      # răspunsul prezent în variante și absent din restul textului.
+      - name: Validate verses
+        run: npm run validate:verses
+
+      # index.html și sw.js trebuie să refere exact aceleași URL-uri
+      # cache-busted, altfel o instalare PWA curată rămâne fără fișiere offline.
+      - name: Check asset versions
+        run: npm run check:assets
+
+      # Sintaxa fiecărui fișier livrat browserului.
+      - name: Syntax-check shipped JavaScript
+        run: |
+          for f in sw.js js/*.js; do
+            node --check "$f"
+          done
+
+      # Numele cu diacritice: bug-ul cu \b a aparut de doua ori, independent.
+      - name: Username normalizer
+        run: npm run check:names
+
+      # Cheia de răspunsuri din supabase/ trebuie să corespundă versetelor
+      # livrate; altfel triggerul serverului ar marca greșit răspunsuri corecte.
+      - name: Answer key matches the shipped verses
+        run: npm run build:answer-key -- --check

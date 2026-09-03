@@ -1,21 +1,22 @@
 // Keep these URLs in lock-step with the cache-busted URLs in index.html.
 // CacheStorage matches query strings, so precaching `js/app.js` does not make
 // `js/app.js?v=54` available on a fresh offline install.
-const CACHE = "citim-impreuna-v72";
+const CACHE = "citim-impreuna-v73";
 const ASSETS = [
   ".",
   "index.html",
   "css/style.css?v=47",
   "js/config.js?v=44",
-  "js/auth.js?v=45",
+  "js/auth.js?v=46",
   "js/scenes.js?v=44",
   "js/verses-1samuel.js?v=44",
   "js/verses-2samuel.js?v=44",
   "js/verses.js?v=44",
-  "js/tracker.js?v=50",
-  "js/app.js?v=55",
+  "js/tracker.js?v=51",
+  "js/app.js?v=56",
   "manifest.webmanifest",
   "icons/icon.svg",
+  "media/bible-book.jpg?v=2",
 ];
 
 self.addEventListener("install", (event) => {
@@ -44,8 +45,13 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        const copy = response.clone();
-        caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+        // Doar răspunsurile bune intră în cache. Un 404/500 servit în timpul
+        // unui deploy ar deveni altfel varianta offline, până la următorul
+        // CACHE nou.
+        if (response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+        }
         return response;
       })
       .catch(() => caches.match(event.request))

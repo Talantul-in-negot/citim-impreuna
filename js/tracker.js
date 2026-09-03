@@ -6,9 +6,16 @@ const Tracker = (() => {
   const QUEUE_LOCK_KEY = "ci_pending_events_lock";
   const EVENT_ID_FIELD = "_ci_event_id";
   const EVENT_OWNER_FIELD = "_ci_owner_id";
+  // Plafonul se aplică DOAR evenimentelor cu proprietar. Cele nerevendicate
+  // (create fără cont) nu se pot trimite niciodată, deci dacă ar intra în
+  // același plafon ar împinge afară evenimente reale — adică puncte pierdute
+  // în tăcere. Ele au propriul plafon, mult mai mic, plus o expirare.
   const MAX_QUEUE_EVENTS = 500;
+  const MAX_UNCLAIMED_EVENTS = 100;
+  const UNCLAIMED_TTL_MS = 7 * 24 * 60 * 60 * 1000;
   const POST_BATCH_SIZE = 100;
   const LOCK_TTL_MS = 60 * 1000;
+  const LOCK_BUSY = Symbol("queue-lock-busy");
   const tabId = typeof crypto !== "undefined" && crypto.randomUUID
     ? crypto.randomUUID()
     : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -17,6 +24,14 @@ const Tracker = (() => {
     SUPABASE_URL.startsWith("https://") &&
     typeof SUPABASE_ANON_KEY === "string" &&
     SUPABASE_ANON_KEY.length > 0;
+  // Web Locks oferă excludere mutuală reală între tab-uri. Vechea variantă pe
+  // localStorage era citire-apoi-scriere, deci intercalarea scrie(A) → citește(A)
+  // → scrie(B) → citește(B) dădea lacătul ambelor tab-uri. Rămâne ca rezervă
+  // pentru browserele fără API (mitigată de client_event_id + ignore-duplicates).
+  const hasWebLocks =
+    typeof navigator !== "undefined" &&
+    !!navigator.locks &&
+    typeof navigator.locks.request === "function";
   let flushPromise = null;
   let scoreRefreshPromise = null;
   let bufferedEvents = [];
@@ -41,6 +56,10 @@ const Tracker = (() => {
     };
   }
 
+  function currentUserId() {
+    return typeof Auth !== "undefined" && Auth.getUserId ? Auth.getUserId() : null;
+  }
+
   function makeEventId() {
     return typeof crypto !== "undefined" && crypto.randomUUID
       ? crypto.randomUUID()
@@ -48,9 +67,24 @@ const Tracker = (() => {
   }
 
   function trimQueue(queue) {
-    return queue.length > MAX_QUEUE_EVENTS
-      ? queue.slice(queue.length - MAX_QUEUE_EVENTS)
-      : queue;
+    const now = Date.now();
+    const fresh = queue.filter((evt) => {
+      if (evt[EVENT_OWNER_FIELD]) return true;
+      const at = Date.parse(evt.created_at || "");
+      return Number.isFinite(at) && now - at < UNCLAIMED_TTL_MS;
+    });
+    const owned = fresh.filter((evt) => evt[EVENT_OWNER_FIELD]);
+    const unclaimed = fresh.filter((evt) => !evt[EVENT_OWNER_FIELD]);
+    if (owned.length <= MAX_QUEUE_EVENTS && unclaimed.length <= MAX_UNCLAIMED_EVENTS) {
+      return fresh;
+    }
+    // Se păstrează cele mai recente din fiecare categorie, dar ordinea
+    // originală a cozii rămâne neschimbată (identitatea obiectelor).
+    const keep = new Set([
+      ...owned.slice(Math.max(0, owned.length - MAX_QUEUE_EVENTS)),
+      ...unclaimed.slice(Math.max(0, unclaimed.length - MAX_UNCLAIMED_EVENTS)),
+    ]);
+    return fresh.filter((evt) => keep.has(evt));
   }
 
   // Pending events belong to the account that was active *when they were
@@ -106,54 +140,59 @@ const Tracker = (() => {
     if (lockRecord()?.owner === tabId) localStorage.removeItem(QUEUE_LOCK_KEY);
   }
 
+  // Rulează `run` cu acces exclusiv la coadă. Cu Web Locks apelul așteaptă
+  // rândul; pe rezervă întoarce LOCK_BUSY dacă alt tab ține lacătul.
+  async function withQueueLock(run) {
+    if (hasWebLocks) return navigator.locks.request(QUEUE_LOCK_KEY, run);
+    if (!tryAcquireQueueLock()) return LOCK_BUSY;
+    try {
+      return await run();
+    } finally {
+      releaseQueueLock();
+    }
+  }
+
   function scheduleBufferedDrain() {
     if (bufferedDrainTimer) return;
-    bufferedDrainTimer = setTimeout(() => {
+    bufferedDrainTimer = setTimeout(async () => {
       bufferedDrainTimer = null;
-      drainBufferedEvents();
+      if (await drainBufferedEvents()) flush();
     }, 100);
   }
 
-  function drainBufferedEvents() {
-    if (bufferedEvents.length === 0) return;
-    if (!tryAcquireQueueLock()) {
+  async function drainBufferedEvents() {
+    if (bufferedEvents.length === 0) return false;
+    const pending = bufferedEvents;
+    bufferedEvents = [];
+    const result = await withQueueLock(() => {
+      writeQueue(readQueue().concat(pending));
+      return true;
+    });
+    if (result !== true) {
+      // Lacătul de rezervă e ocupat — evenimentele se întorc în buffer, în
+      // ordinea originală, și se reîncearcă la următorul tick.
+      bufferedEvents = pending.concat(bufferedEvents);
       scheduleBufferedDrain();
-      return;
+      return false;
     }
-    try {
-      writeQueue(readQueue().concat(bufferedEvents));
-      bufferedEvents = [];
-    } finally {
-      releaseQueueLock();
-    }
-    flush();
+    return true;
   }
 
+  // Scrierea în coadă are nevoie de lacăt (asincron), dar log() rămâne sincron:
+  // evenimentul intră într-un buffer în memorie și e persistat de drenajul
+  // următor. flush() drenează întâi bufferul, deci un log() imediat urmat de
+  // flush() — cazul din checkAnswers() — trimite tot.
   function log(evt) {
     if (!enabled) return;
-    const ownerId = typeof Auth !== "undefined" && Auth.getUserId ? Auth.getUserId() : null;
-    const entry = {
+    const ownerId = currentUserId();
+    bufferedEvents.push({
       ...evt,
+      // păstrează momentul real al răspunsului, chiar dacă trimiterea se face mai târziu
       created_at: new Date().toISOString(),
       [EVENT_ID_FIELD]: makeEventId(),
       [EVENT_OWNER_FIELD]: ownerId || null,
-    };
-    if (!tryAcquireQueueLock()) {
-      bufferedEvents.push(entry);
-      scheduleBufferedDrain();
-      return;
-    }
-    // păstrează momentul real al răspunsului, chiar dacă trimiterea se face mai târziu
-    try {
-      writeQueue(readQueue().concat(entry));
-    } finally {
-      releaseQueueLock();
-    }
-    // nu declanșează flush() aici — checkAnswers() apelează log() de mai multe ori
-    // la rând (o dată per verset); un singur flush() după buclă evită atât rafala
-    // de cereri, cât și cursa în care evenimente adăugate în timpul unui flush
-    // în desfășurare rămâneau blocate în coadă (flush-ul următor era ignorat
-    // din cauza gărzii "flushing").
+    });
+    scheduleBufferedDrain();
   }
 
   async function flush() {
@@ -161,78 +200,60 @@ const Tracker = (() => {
     if (flushPromise) return flushPromise;
 
     flushPromise = (async () => {
-      let sentAny = false;
-      if (!tryAcquireQueueLock()) return sentAny;
-      while (true) {
-        const userId = typeof Auth !== "undefined" && Auth.getUserId ? Auth.getUserId() : null;
-        if (!userId) return sentAny;
-        // Send only events explicitly recorded for this account. Unclaimed
-        // anonymous events stay local until a future explicit claim flow.
-        const batch = readQueue()
-          .filter((evt) => evt[EVENT_OWNER_FIELD] === userId)
-          .slice(0, POST_BATCH_SIZE);
-        if (batch.length === 0) return sentAny;
-        const payload = batch.map(({ [EVENT_ID_FIELD]: eventId, [EVENT_OWNER_FIELD]: _ownerId, ...evt }) => ({
-          ...evt,
-          client_event_id: eventId,
-          user_id: userId,
-        }));
-        try {
-          const res = await fetch(`${SUPABASE_URL}/rest/v1/events`, {
-            method: "POST",
-            headers: await authHeaders({
-              "Content-Type": "application/json",
-              Prefer: "resolution=ignore-duplicates,return=minimal",
-            }),
-            body: JSON.stringify(payload),
-          });
-          if (!res.ok) return sentAny;
-          // Evenimente adăugate în timpul trimiterii sunt procesate în următoarea
-          // iterație înainte ca apelantul să poată citi scorul serverului.
-          const sentIds = new Set(batch.map((evt) => evt[EVENT_ID_FIELD]));
-          writeQueue(readQueue().filter((evt) => !sentIds.has(evt[EVENT_ID_FIELD])));
-          sentAny = true;
-          await refreshScore();
-        } catch {
-          // Offline sau eroare de rețea — coada rămâne pentru următoarea încercare.
-          return sentAny;
+      await drainBufferedEvents();
+      const result = await withQueueLock(async () => {
+        let sentAny = false;
+        while (true) {
+          const userId = currentUserId();
+          if (!userId) return sentAny;
+          // Send only events explicitly recorded for this account. Unclaimed
+          // anonymous events stay local until a future explicit claim flow.
+          const batch = readQueue()
+            .filter((evt) => evt[EVENT_OWNER_FIELD] === userId)
+            .slice(0, POST_BATCH_SIZE);
+          if (batch.length === 0) return sentAny;
+          const payload = batch.map(({ [EVENT_ID_FIELD]: eventId, [EVENT_OWNER_FIELD]: _ownerId, ...evt }) => ({
+            ...evt,
+            client_event_id: eventId,
+            user_id: userId,
+          }));
+          try {
+            // `on_conflict=client_event_id` e obligatoriu: fără el,
+            // resolution=ignore-duplicates se rezolvă pe cheia primară
+            // (generată, deci mereu nouă) și nu deduplică niciodată.
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/events?on_conflict=client_event_id`, {
+              method: "POST",
+              headers: await authHeaders({
+                "Content-Type": "application/json",
+                Prefer: "resolution=ignore-duplicates,return=minimal",
+              }),
+              body: JSON.stringify(payload),
+            });
+            if (!res.ok) return sentAny;
+            // Evenimente adăugate în timpul trimiterii sunt procesate în următoarea
+            // iterație înainte ca apelantul să poată citi scorul serverului.
+            const sentIds = new Set(batch.map((evt) => evt[EVENT_ID_FIELD]));
+            writeQueue(readQueue().filter((evt) => !sentIds.has(evt[EVENT_ID_FIELD])));
+            sentAny = true;
+            await refreshScore();
+          } catch {
+            // Offline sau eroare de rețea — coada rămâne pentru următoarea încercare.
+            return sentAny;
+          }
         }
-      }
+      });
+      return result === LOCK_BUSY ? false : result;
     })().finally(() => {
-      releaseQueueLock();
       flushPromise = null;
       if (bufferedEvents.length > 0) scheduleBufferedDrain();
     });
     return flushPromise;
   }
 
-  async function fetchAll() {
-    if (!enabled) return [];
-    // Supabase plafonează serverul la 1000 de rânduri per cerere, indiferent de
-    // `limit`. Paginăm cu offset până se golește, ca să prindem TOȚI utilizatorii
-    // (altfel cei cu evenimente mai vechi dispar din clasament).
-    const PAGE = 1000;
-    let all = [];
-    for (let offset = 0; offset < 100000; offset += PAGE) {
-      const url =
-        `${SUPABASE_URL}/rest/v1/events` +
-        `?select=user_name,verse_ref,answer,chosen,correct,created_at,cycle` +
-        `&order=created_at.desc&limit=${PAGE}&offset=${offset}`;
-      const res = await fetch(url, { headers: await authHeaders() });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const rows = await res.json();
-      all = all.concat(rows);
-      if (rows.length < PAGE) break;
-    }
-    return all;
-  }
-
   async function fetchUserEvents(userName) {
     if (!enabled || !userName) return [];
-    const userId = typeof Auth !== "undefined" && Auth.getUserId ? Auth.getUserId() : null;
+    const userId = currentUserId();
     if (!userId) return [];
-    // ilike fără wildcards = egalitate case-insensitive (prinde și numele
-    // vechi salvate cu literă mică, ex. "sergiu" vs "Sergiu").
     // Paginat (cap Supabase = 1000/cerere) ca scorul să fie corect chiar și
     // pentru cine depășește 1000 de evenimente.
     const PAGE = 1000;
@@ -252,9 +273,9 @@ const Tracker = (() => {
     return all;
   }
 
-  // Clasamentul agregat: un singur rând per utilizator (user_name, points),
-  // derivat de Supabase din evenimente. Evită descărcarea întregului istoric
-  // la fiecare deschidere de statistici.
+  // Clasamentul agregat: un singur rând per utilizator (user_id, user_name,
+  // points), derivat de Supabase din evenimente. Evită descărcarea întregului
+  // istoric la fiecare deschidere de statistici.
   const LEADERBOARD_PAGE_SIZE = 1000;
 
   async function fetchScores() {
@@ -274,13 +295,13 @@ const Tracker = (() => {
       }
       return all;
     } catch {
-      // tabel lipsă/offline — apelantul recurge la calculul din evenimente
+      // RPC lipsă/offline — apelantul afișează un mesaj, nu un clasament greșit.
       return [];
     }
   }
 
   async function fetchOwnScore() {
-    const userId = typeof Auth !== "undefined" && Auth.getUserId ? Auth.getUserId() : null;
+    const userId = currentUserId();
     if (!userId) return null;
     try {
       // The public leaderboard is intentionally limited. This authenticated
@@ -304,7 +325,7 @@ const Tracker = (() => {
   async function refreshScore() {
     if (!enabled) return false;
     if (scoreRefreshPromise) return scoreRefreshPromise;
-    const userId = typeof Auth !== "undefined" && Auth.getUserId ? Auth.getUserId() : null;
+    const userId = currentUserId();
     if (!userId) return false;
     scoreRefreshPromise = (async () => {
       try {
@@ -326,28 +347,10 @@ const Tracker = (() => {
     return scoreRefreshPromise;
   }
 
-  const DEFAULT_LEADERBOARD_SIZE = 5;
-
-  async function fetchConfig() {
-    if (!enabled) return { leaderboard_size: DEFAULT_LEADERBOARD_SIZE };
-    try {
-      const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/app_config?select=leaderboard_size&limit=1`,
-        { headers: await authHeaders() }
-      );
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const rows = await res.json();
-      return rows[0] || { leaderboard_size: DEFAULT_LEADERBOARD_SIZE };
-    } catch {
-      // tabel lipsă sau offline — clasamentul tot funcționează, cu valoarea implicită
-      return { leaderboard_size: DEFAULT_LEADERBOARD_SIZE };
-    }
-  }
-
   window.addEventListener("online", () => {
     flush();
     refreshScore();
   });
 
-  return { enabled, log, flush, refreshScore, fetchAll, fetchUserEvents, fetchScores, fetchOwnScore, fetchConfig };
+  return { enabled, log, flush, refreshScore, fetchUserEvents, fetchScores, fetchOwnScore };
 })();

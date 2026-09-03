@@ -30,11 +30,15 @@ const Auth = (() => {
     return username.trim().toLowerCase().replace(/\s+/g, '_') + (domain || DOMAIN);
   }
 
+  // \b nu ajută aici: în JavaScript granița de cuvânt e definită prin \w =
+  // [A-Za-z0-9_], chiar și cu flag-ul /u. Pentru „ștefan” prima graniță cade
+  // între „ș” și „t”, deci /\b\p{L}/ producea „șTefan”. Se potrivește
+  // explicit prima literă de după început, spațiu, cratimă sau apostrof.
   function normalizeUsername(username) {
     return String(username || '')
       .trim()
       .toLocaleLowerCase('ro-RO')
-      .replace(/\b\p{L}/gu, (letter) => letter.toLocaleUpperCase('ro-RO'));
+      .replace(/(^|[\s\-'’])(\p{L})/gu, (_, sep, letter) => sep + letter.toLocaleUpperCase('ro-RO'));
   }
 
   function extractUsername(user) {
@@ -44,6 +48,11 @@ const Auth = (() => {
                 null;
     if (!raw) return null;
     return normalizeUsername(raw);
+  }
+
+  function isInvalidCredentials(error) {
+    const msg = error?.message || '';
+    return msg.includes('Invalid login') || msg.includes('invalid_credentials');
   }
 
   function translateError(msg) {
@@ -77,7 +86,10 @@ const Auth = (() => {
     });
     // Conturile create înainte de fix-ul de domeniu sunt încă pe @test.com —
     // dacă noul domeniu nu găsește contul, încearcă domeniul vechi.
-    if (error) {
+    // Doar o autentificare respinsă justifică a doua încercare. Reîncercarea
+    // oarbă dubla fiecare cerere către limitatorul de rată Supabase și
+    // înlocuia mesajul corect al primei erori (ex. „prea multe încercări").
+    if (error && isInvalidCredentials(error)) {
       const retry = await client().auth.signInWithPassword({
         email: toEmail(username, LEGACY_DOMAIN),
         password,
@@ -142,5 +154,5 @@ const Auth = (() => {
     return _session?.user?.id || null;
   }
 
-  return { init, signIn, signUp, signOut, currentUser, isLoggedIn, getAccessToken, getUserId };
+  return { init, signIn, signUp, signOut, currentUser, isLoggedIn, getAccessToken, getUserId, normalizeUsername };
 })();

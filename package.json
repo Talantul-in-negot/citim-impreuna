@@ -1,0 +1,15 @@
+{
+  "name": "citim-impreuna",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Completează cuvintele lipsă din versete biblice și adună puncte.",
+  "scripts": {
+    "validate:verses": "node validate.js && node validate2sam.js",
+    "check:assets": "node scripts/check-asset-versions.js",
+    "build:answer-key": "node scripts/build-answer-key.js",
+    "build:verses": "node scripts/build-window.js",
+    "test": "npm run validate:verses && npm run check:assets && npm run check:names",
+    "check:names": "node scripts/check-username-normalizer.js"
+  },
+  "license": "UNLICENSED"
+}
