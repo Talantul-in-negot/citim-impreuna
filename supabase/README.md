@@ -20,6 +20,12 @@ Ordinea alfabetică este acum și ordinea corectă — nu a fost mereu, vezi mai
 Pe o bază de date **nouă** e suficient să rulezi 1, 8, 9, 10 și 11 — fișierele 2–7 sunt
 istoric, iar 1, 8, 9, 10 și 11 conțin deja starea finală a schemei și a funcțiilor.
 
+## Cel mai simplu: un singur fișier
+
+`apply_all.sql` concatenează, în ordine, fișierele 1, 8, 9, 10 și 11 de mai jos într-un singur script — se lipește o singură dată în SQL Editor și se rulează. Regenerează-l cu `node scripts/build-apply-all.js` dacă se adaugă o migrație nouă. Complet idempotent — sigur de rulat chiar dacă unele fișiere au rulat deja parțial pe acel proiect.
+
+**Înainte să rulezi orice, confirmă proiectul.** URL-ul din bara de adrese a dashboard-ului trebuie să conțină exact codul din `SUPABASE_URL` din [`js/config.js`](../js/config.js) (`https://<cod>.supabase.co`). Un cont Supabase cu mai multe proiecte face confuzia asta foarte ușor de făcut — vezi L07 în `tasks/lessons.md`.
+
 ## De ce prefixele
 
 Fișierele 2–5 poartă toate data `20260813` și redefinesc `upsert_own_score` unul
