@@ -14,9 +14,10 @@ Ordinea alfabetică este acum și ordinea corectă — nu a fost mereu, vezi mai
 | 7 | `20260824_leaderboard_domain_split.sql` | Clasament separat pe domeniul contului. |
 | 8 | `20260903_01_verse_answer_key.sql` | Cheia de răspunsuri (**generată** — vezi mai jos). |
 | 9 | `20260903_02_server_verified_events.sql` | Trigger de verificare, punctaj într-un singur loc, `p_offset` pe clasament. |
+| 10 | `20260903_03_grant_authenticated.sql` | **Grant-uri de tabel lipsă** — fără ele, fiecare insert al unui utilizator logat era respins în tăcere. |
 
-Pe o bază de date **nouă** e suficient să rulezi 1, 8 și 9 — fișierele 2–7 sunt
-istoric, iar 1, 8 și 9 conțin deja starea finală a schemei și a funcțiilor.
+Pe o bază de date **nouă** e suficient să rulezi 1, 8, 9 și 10 — fișierele 2–7 sunt
+istoric, iar 1, 8, 9 și 10 conțin deja starea finală a schemei și a funcțiilor.
 
 ## De ce prefixele
 
