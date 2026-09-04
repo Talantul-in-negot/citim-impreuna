@@ -235,7 +235,15 @@ const Tracker = (() => {
             const sentIds = new Set(batch.map((evt) => evt[EVENT_ID_FIELD]));
             writeQueue(readQueue().filter((evt) => !sentIds.has(evt[EVENT_ID_FIELD])));
             sentAny = true;
-            await refreshScore();
+            // NU mai chemăm refreshScore() aici. Triggerul AFTER INSERT STATEMENT
+            // de pe `events` (events_recalculate_scores) recalculează deja scorul,
+            // în aceeași tranzacție ca insert-ul de mai sus — până când `res.ok`
+            // devine adevărat, scorul e deja actualizat pe server. Un al doilea
+            // apel explicit aici nu citea nimic nou; dubla doar recalculul, care
+            // fără blocare pe utilizator (adăugată în 20260903_04) permitea o
+            // cursă „ultima scriere câștigă" cu o valoare mai veche.
+            // syncScoreFromServer() din app.js citește deja valoarea proaspătă
+            // via Tracker.fetchOwnScore() (get_own_score — doar citire).
           } catch {
             // Offline sau eroare de rețea — coada rămâne pentru următoarea încercare.
             return sentAny;

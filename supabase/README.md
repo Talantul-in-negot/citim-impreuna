@@ -15,9 +15,10 @@ Ordinea alfabetică este acum și ordinea corectă — nu a fost mereu, vezi mai
 | 8 | `20260903_01_verse_answer_key.sql` | Cheia de răspunsuri (**generată** — vezi mai jos). |
 | 9 | `20260903_02_server_verified_events.sql` | Trigger de verificare, punctaj într-un singur loc, `p_offset` pe clasament. |
 | 10 | `20260903_03_grant_authenticated.sql` | **Grant-uri de tabel lipsă** — fără ele, fiecare insert al unui utilizator logat era respins în tăcere. |
+| 11 | `20260903_04_fix_score_race_condition.sql` | **Cursa de recalcul a scorului** — două recalculări simultane puteau suprascrie una pe alta cu o valoare mai veche. Blocare per utilizator + rebașeză.
 
-Pe o bază de date **nouă** e suficient să rulezi 1, 8, 9 și 10 — fișierele 2–7 sunt
-istoric, iar 1, 8, 9 și 10 conțin deja starea finală a schemei și a funcțiilor.
+Pe o bază de date **nouă** e suficient să rulezi 1, 8, 9, 10 și 11 — fișierele 2–7 sunt
+istoric, iar 1, 8, 9, 10 și 11 conțin deja starea finală a schemei și a funcțiilor.
 
 ## De ce prefixele
 
