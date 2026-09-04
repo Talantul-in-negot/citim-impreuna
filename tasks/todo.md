@@ -107,3 +107,33 @@ The SQL was **not** executed — there is no local Postgres. It is reviewed and
 internally consistent, but it must be applied in the README's order, against a
 backup of `scores`, before the client changes reach production: until the trigger
 and the answer key exist, the leaderboard stays broken exactly as it is today.
+
+## Post-deploy incident (2026-09-04) — closed
+
+Applying the SQL live surfaced three more issues, none of them caught by
+review — all found and fixed in follow-up commits:
+
+- **`c262a96`** — `events`/`scores` had RLS policies but no table-level `GRANT`
+  to `authenticated`. Every logged-in insert was silently rejected.
+- **`88dd379`** — lost-update race in `recalculate_score_for_user` (two
+  concurrent recompute triggers per answer, no lock spanning read+write).
+  Fixed with a per-user `pg_advisory_xact_lock`; removed the redundant
+  client-triggered recompute that doubled the race window.
+- **Wrong Supabase project** — the user was applying migrations 03/04 to a
+  different project (`llnlzbczdcjarzoizwgi`) than the live site
+  (`szwrfxcshcbqgdtfqqfp`). Neither fix above ever reached production until
+  this was caught. `supabase/apply_all.sql` (`02af553`) now bundles every
+  migration into one paste, and `supabase/README.md` opens with a
+  project-ref check to prevent a repeat. See `tasks/lessons.md` L07.
+- **`ed4a5ff`** — independent live re-verification after the project fix
+  found `get_public_leaderboard` was still readable by the unauthenticated
+  `anon` role: `revoke ... from public` doesn't reach a grant a named role
+  holds directly. Fixed with an explicit `revoke ... from anon`. See L08.
+
+**Final state, confirmed 2026-09-04:**
+- `get_public_leaderboard` verified live via `curl` with the anon key → `401`.
+- User tested live, logged in, answering several pages in sequence: score
+  holds correctly, no reversion.
+
+Both the original bug report and everything found while chasing it are
+closed.
