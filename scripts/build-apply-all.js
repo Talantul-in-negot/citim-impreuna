@@ -25,6 +25,7 @@ const FILES = [
   "20260903_02_server_verified_events.sql",
   "20260903_03_grant_authenticated.sql",
   "20260903_04_fix_score_race_condition.sql",
+  "20260904_05_lock_down_anon_execute.sql",
 ];
 
 function main() {

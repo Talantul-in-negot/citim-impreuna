@@ -16,9 +16,10 @@ Ordinea alfabetică este acum și ordinea corectă — nu a fost mereu, vezi mai
 | 9 | `20260903_02_server_verified_events.sql` | Trigger de verificare, punctaj într-un singur loc, `p_offset` pe clasament. |
 | 10 | `20260903_03_grant_authenticated.sql` | **Grant-uri de tabel lipsă** — fără ele, fiecare insert al unui utilizator logat era respins în tăcere. |
 | 11 | `20260903_04_fix_score_race_condition.sql` | **Cursa de recalcul a scorului** — două recalculări simultane puteau suprascrie una pe alta cu o valoare mai veche. Blocare per utilizator + rebașeză.
+| 12 | `20260904_05_lock_down_anon_execute.sql` | **`get_public_leaderboard` era public** — `revoke ... from public` nu acoperă un grant făcut direct rolului `anon`. |
 
-Pe o bază de date **nouă** e suficient să rulezi 1, 8, 9, 10 și 11 — fișierele 2–7 sunt
-istoric, iar 1, 8, 9, 10 și 11 conțin deja starea finală a schemei și a funcțiilor.
+Pe o bază de date **nouă** e suficient să rulezi 1, 8, 9, 10, 11 și 12 (sau, mai simplu,
+`apply_all.sql`, care le conține pe toate în ordine) — fișierele 2–7 sunt istoric.
 
 ## Cel mai simplu: un singur fișier
 
