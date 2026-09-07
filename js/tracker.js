@@ -328,6 +328,31 @@ const Tracker = (() => {
     }
   }
 
+  // `current_cycle` e ștampilat de server (vezi 20260903_02_server_verified_events.sql
+  // și 20260907_02_fix_completed_page_count_baseline.sql), nu poate fi dedus
+  // din maximul `cycle`-ului găsit în evenimente: dacă serverul a avansat
+  // ciclul fără să existe încă niciun eveniment nou ștampilat cu noua
+  // valoare (ex. imediat după o migrare de recalcul), clientul rămâne orb la
+  // avans și recalculează etern pe baza ciclului vechi. `scores_select_own`
+  // (00000000_baseline_schema.sql) permite citirea directă a rândului
+  // propriu.
+  async function fetchOwnCycle() {
+    const userId = currentUserId();
+    if (!userId) return null;
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/scores?select=current_cycle&user_id=eq.${userId}`,
+        { headers: await authHeaders() }
+      );
+      if (!res.ok) return null;
+      const rows = await res.json();
+      const value = rows[0]?.current_cycle;
+      return Number.isFinite(value) ? value : null;
+    } catch {
+      return null;
+    }
+  }
+
   // Supabase derivează scorul exclusiv din evenimentele utilizatorului curent.
   // Browserul nu mai transmite niciun total de puncte care ar putea fi modificat.
   async function refreshScore() {
@@ -360,5 +385,5 @@ const Tracker = (() => {
     refreshScore();
   });
 
-  return { enabled, log, flush, refreshScore, fetchUserEvents, fetchScores, fetchOwnScore };
+  return { enabled, log, flush, refreshScore, fetchUserEvents, fetchScores, fetchOwnScore, fetchOwnCycle };
 })();

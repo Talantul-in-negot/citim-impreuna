@@ -819,14 +819,21 @@ async function syncProgressFromCloud() {
     await Tracker.flush();
     const events = await Tracker.fetchUserEvents(userName);
 
-    // Sincronizează ciclul curent de pe orice dispozitiv: cel puțin cel mai mare
-    // ciclu întâlnit în evenimente (și nu coborî sub ciclul local).
+    // Sincronizează ciclul curent de pe orice dispozitiv: cel mai mare dintre
+    // ciclul local, ciclul întâlnit în evenimente, ȘI ciclul autoritativ de
+    // pe server (scores.current_cycle). Doar evenimentele nu sunt de-ajuns —
+    // dacă serverul a avansat ciclul (ex. printr-un recalcul manual) dar încă
+    // nu există niciun eveniment nou ștampilat cu noua valoare, clientul ar
+    // rămâne orb la avans și ar recalcula etern pe baza ciclului vechi.
     let cloudCycle = 0;
     for (const e of events) {
       const c = e.cycle == null ? 0 : e.cycle;
       if (c > cloudCycle) cloudCycle = c;
     }
-    cycle = Math.max(cycle, cloudCycle);
+    const serverCycle = await Tracker.fetchOwnCycle();
+    const newCycle = Math.max(cycle, cloudCycle, serverCycle ?? 0);
+    const cycleAdvanced = newCycle > cycle;
+    cycle = newCycle;
 
     // Nu calculam scorul din evenimente in browser: totalul serverului include
     // baseline-ul si bonusurile, deci ramane identic cu cel din clasament.
@@ -840,12 +847,18 @@ async function syncProgressFromCloud() {
     const resume = resumePageFromEvents(events, cycle);
     if (resume >= 0 && resume !== page) {
       page = resume;
+    } else if (cycleAdvanced) {
+      // Ciclul a avansat pe server, dar încă nu există niciun eveniment nou
+      // pentru el — reluarea nu are din ce ghici pagina, dar tot trebuie să
+      // pornească de la începutul noului ciclu, nu să rămână pe ecranul de
+      // final al ciclului vechi.
+      page = 0;
     }
     hadMistake = pageHadMistakeBeforeCompletion(events, page, cycle);
     if (hadMistake) setPageMistake();
     else clearPageMistake();
     save();
-    if (resume >= 0) renderPage();
+    if (resume >= 0 || cycleAdvanced) renderPage();
   } catch {
     // offline sau eroare — rămâne scorul/progresul local, se reîncearcă la login
     progressSynced = false;
