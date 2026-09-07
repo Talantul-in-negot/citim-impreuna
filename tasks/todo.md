@@ -137,3 +137,49 @@ review — all found and fixed in follow-up commits:
 
 Both the original bug report and everything found while chasing it are
 closed.
+
+## Cross-device progress-sync incident (2026-09-07) — closed
+
+New report: finished the book on desktop, continued on phone to "page 10",
+desktop showed page 1 again despite the score looking right. Four
+independent, compounding causes, found one at a time — each fix alone left
+the symptom unchanged, which was itself the signal to keep digging (see
+`tasks/lessons.md` L09, L10):
+
+1. **Wrong live target.** `sergiunicoara.github.io/citim-impreuna` is served
+   from a *separate* repo (`sergiunicoara/sergiunicoara.github.io`), last
+   pushed 2026-08-24 — every fix pushed to `Talantul-in-negot/citim-impreuna`
+   (this repo) landed on an unused URL. Also found and preserved a
+   realistic-backdrop `scenes.js` that existed only on the live copy and had
+   never been merged back — now in both repos, one source of truth going
+   forward.
+2. **Progress only resynced once per page load.** Score resynced on every
+   tab-focus; page/cycle didn't. Fixed: `syncSessionFromCloud()` now
+   guarantees both, with retry, on login/register/session-restore/tab-focus
+   (`js/app.js`).
+3. **`events.page_index` NULL on pre-migration rows.** `add column` with no
+   backfill (`20260813_server_derived_scores.sql`) — `completed_page_count()`
+   requires `page_index is not null`, so pages made of old events could never
+   count as complete. Fixed live via
+   `supabase/20260907_01_backfill_event_page_index.sql`.
+4. **`completed_page_count()` wrongly filtered by `baseline_at`.** Correct
+   for *points* (avoids double-counting `baseline_points`), wrong for "was
+   this page ever completed" — 27/301 pages were completed only before that
+   timestamp and could never count. Fixed live via
+   `supabase/20260907_02_fix_completed_page_count_baseline.sql`
+   (`compute_user_points`, the actual scoring function, untouched).
+5. **Client never read `scores.current_cycle` directly.** It inferred the
+   cycle from the max `cycle` value seen in event history — blind to the
+   server advancing the cycle with zero new events yet written (exactly what
+   migrations 13/14 did). Added `Tracker.fetchOwnCycle()` and folded it into
+   `syncProgressFromCloud()`'s cycle computation (`js/tracker.js`,
+   `js/app.js`).
+6. **`sw.js` "network first" still respected the browser's own HTTP cache**
+   (GitHub Pages sends `Cache-Control: max-age=600`), so a deploy could take
+   up to 10 minutes to actually reach an already-open tab even with a
+   correctly-running service worker. Fixed with `fetch(event.request, {
+   cache: "no-store" })`.
+
+**Verified live, end to end:** phone answered new pages post-fix → score
+rose (16170 → 16220) → desktop reloaded → landed on page 11, matching the
+phone, no manual intervention. Cross-device sync confirmed working.
