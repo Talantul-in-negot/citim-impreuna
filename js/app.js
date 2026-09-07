@@ -1263,10 +1263,16 @@ if (page >= totalPages) page = 0;
 renderPage();
 Tracker.flush();
 
-// Daca scorul a fost actualizat pe alt dispozitiv sau corectat de administrator,
-// afiseaza totalul curent imediat ce utilizatorul revine in aplicatie.
+// Daca scorul sau pagina au fost actualizate pe alt dispozitiv, aduce-le la zi
+// imediat ce utilizatorul revine in aplicatie — nu doar la login/reload. Fara
+// asta, scorul se resincroniza la revenirea pe tab dar pagina ramanea inghetata
+// la ce era local (syncProgressFromCloud rula o singura data per incarcare de
+// pagina), asa ca cele doua puteau ajunge sa arate stari diferite.
 document.addEventListener("visibilitychange", () => {
-  if (!document.hidden) refreshAndSyncScore();
+  if (document.hidden) return;
+  refreshAndSyncScore();
+  progressSynced = false;
+  syncProgressFromCloud();
 });
 
 // Arătăm modalul imediat — nu așteptăm Supabase (poate fi lent/offline).
