@@ -714,10 +714,7 @@ async function handleLogin() {
     hideAuthModal();
     updateUserChip();
     el.loginPassword.value = "";
-    guardAgainstAccountSwitch();
-    progressSynced = false;
-    await refreshAndSyncScore();
-    await syncProgressFromCloud();
+    await syncSessionFromCloud();
     showWelcomeMessage(userName);
   } catch (err) {
     setAuthError(el.loginError, err.message);
@@ -738,10 +735,7 @@ async function handleRegister() {
     hideAuthModal();
     updateUserChip();
     el.loginPassword.value = "";
-    guardAgainstAccountSwitch();
-    progressSynced = false;
-    await refreshAndSyncScore();
-    await syncProgressFromCloud();
+    await syncSessionFromCloud();
     showWelcomeMessage(userName);
   } catch (err) {
     setAuthError(el.loginError, err.message);
@@ -814,7 +808,9 @@ function pageHadMistakeBeforeCompletion(events, targetPage, curCycle) {
   return false;
 }
 
-// Rulează o singură dată la logare — aduce progresul de pe orice dispozitiv.
+// Aduce progresul de pe orice dispozitiv. Nu rulează dacă o cerere e deja în
+// curs (progressSynced=true) — syncSessionFromCloud, mai jos, controlează
+// când și de câte ori se reîncearcă.
 let progressSynced = false;
 async function syncProgressFromCloud() {
   if (progressSynced || !Tracker.enabled || !userName) return;
@@ -853,6 +849,23 @@ async function syncProgressFromCloud() {
   } catch {
     // offline sau eroare — rămâne scorul/progresul local, se reîncearcă la login
     progressSynced = false;
+  }
+}
+
+// Sincronizarea completă (scor + pagină) pentru începutul unei sesiuni — login,
+// înregistrare, restaurare de sesiune la reîncărcare, sau revenirea pe tab.
+// syncProgressFromCloud() lasă progressSynced=true doar dacă a reușit efectiv
+// (vezi try/catch de mai jos), deci reîncercăm de câteva ori la eșec — altfel
+// un singur blip de rețea chiar în momentul intrării lasă pagina blocată pe
+// starea locală veche, nesincronizată cu ce s-a citit pe alt dispozitiv.
+async function syncSessionFromCloud() {
+  guardAgainstAccountSwitch();
+  await refreshAndSyncScore();
+  for (let attempt = 0; attempt < 3; attempt++) {
+    progressSynced = false;
+    await syncProgressFromCloud();
+    if (progressSynced) return;
+    if (attempt < 2) await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
   }
 }
 
@@ -1269,10 +1282,8 @@ Tracker.flush();
 // la ce era local (syncProgressFromCloud rula o singura data per incarcare de
 // pagina), asa ca cele doua puteau ajunge sa arate stari diferite.
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden) return;
-  refreshAndSyncScore();
-  progressSynced = false;
-  syncProgressFromCloud();
+  if (document.hidden || !userName) return;
+  syncSessionFromCloud();
 });
 
 // Arătăm modalul imediat — nu așteptăm Supabase (poate fi lent/offline).
@@ -1288,9 +1299,7 @@ Auth.init((user) => {
   updateUserChip();
   if (user) {
     hideAuthModal();
-    guardAgainstAccountSwitch();
-    await refreshAndSyncScore();
-    await syncProgressFromCloud();
+    await syncSessionFromCloud();
     showWelcomeMessage(userName);
   }
 });
