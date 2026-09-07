@@ -17,6 +17,7 @@ Ordinea alfabetică este acum și ordinea corectă — nu a fost mereu, vezi mai
 | 10 | `20260903_03_grant_authenticated.sql` | **Grant-uri de tabel lipsă** — fără ele, fiecare insert al unui utilizator logat era respins în tăcere. |
 | 11 | `20260903_04_fix_score_race_condition.sql` | **Cursa de recalcul a scorului** — două recalculări simultane puteau suprascrie una pe alta cu o valoare mai veche. Blocare per utilizator + rebașeză.
 | 12 | `20260904_05_lock_down_anon_execute.sql` | **`get_public_leaderboard` era public** — `revoke ... from public` nu acoperă un grant făcut direct rolului `anon`. |
+| 13 | `20260907_01_backfill_event_page_index.sql` | **Reparație pentru date live existente** — `page_index`/`page_size`/`chapter_ref`/`chapter_size` erau NULL pe evenimentele scrise înainte ca acele coloane să fie adăugate (fără backfill), ceea ce bloca `completed_page_count()` sub totalul real și ținea `current_cycle` blocat pe 0 la nesfârșit. Nu e nevoie pe o bază de date nouă (fără evenimente vechi) — doar pe proiectul live existent. Nu e inclusă în `apply_all.sql`. |
 
 Pe o bază de date **nouă** e suficient să rulezi 1, 8, 9, 10, 11 și 12 (sau, mai simplu,
 `apply_all.sql`, care le conține pe toate în ordine) — fișierele 2–7 sunt istoric.
