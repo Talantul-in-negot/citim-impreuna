@@ -1,7 +1,7 @@
 // Keep these URLs in lock-step with the cache-busted URLs in index.html.
 // CacheStorage matches query strings, so precaching `js/app.js` does not make
 // `js/app.js?v=54` available on a fresh offline install.
-const CACHE = "citim-impreuna-v75";
+const CACHE = "citim-impreuna-v76";
 const ASSETS = [
   ".",
   "index.html",
@@ -42,8 +42,12 @@ self.addEventListener("fetch", (event) => {
     return;
   }
   // Rețea întâi, ca actualizările să apară imediat; recurge la cache doar offline.
+  // `cache: "no-store"` ocolește și cache-ul HTTP obișnuit al browserului —
+  // fără el, "rețea întâi" tot putea întoarce un răspuns vechi din cache-ul
+  // browserului cât timp Cache-Control (max-age=600 pe GitHub Pages) nu
+  // expirase, chiar dacă acest fetch handler rula corect.
   event.respondWith(
-    fetch(event.request)
+    fetch(event.request, { cache: "no-store" })
       .then((response) => {
         // Doar răspunsurile bune intră în cache. Un 404/500 servit în timpul
         // unui deploy ar deveni altfel varianta offline, până la următorul
