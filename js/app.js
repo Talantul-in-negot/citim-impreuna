@@ -1041,6 +1041,7 @@ function buildMyStatsPanel(myEvents) {
 /* --- Sărbători pe canvas, fără dependențe: confetti, artificii, bule, stele --- */
 const FX_COLORS = ["#f0b429", "#4c3aa3", "#2e9e5b", "#d64545", "#3e9be0", "#e07be0"];
 const FX_KINDS = ["confetti", "fireworks", "bubbles", "stars", "balloons"];
+let celebrationFrameId = null;
 
 function fxColor() {
   return FX_COLORS[Math.floor(Math.random() * FX_COLORS.length)];
@@ -1058,10 +1059,12 @@ function drawStar(ctx, r) {
 }
 
 // kind: unul din FX_KINDS sau omis = ales aleator, ca sărbătoarea să fie
-// mereu o mică surpriză. Durata ~2.5s, apoi canvas-ul se curăță singur.
+// mereu o mică surpriză. La final, întregul efect dispare treptat.
 function launchCelebration(kind) {
+  if (celebrationFrameId !== null) cancelAnimationFrame(celebrationFrameId);
   kind = kind || FX_KINDS[Math.floor(Math.random() * FX_KINDS.length)];
   const canvas = document.getElementById("confetti");
+  canvas.style.opacity = "1";
   const ctx = canvas.getContext("2d");
   const W = (canvas.width = window.innerWidth);
   const H = (canvas.height = window.innerHeight);
@@ -1171,8 +1174,14 @@ function launchCelebration(kind) {
   }
 
   const start = performance.now();
+  const duration = kind === "balloons" ? 6000 : 3200;
+  const fadeDuration = 900;
   function frame(now) {
     const t = now - start;
+    // Opacitatea canvas-ului estompează și dârele deja desenate, nu doar
+    // particulele noi. Smoothstep face începutul și sfârșitul tranziției line.
+    const fadeProgress = Math.max(0, Math.min(1, (t - duration + fadeDuration) / fadeDuration));
+    canvas.style.opacity = String(1 - fadeProgress * fadeProgress * (3 - 2 * fadeProgress));
     fadeFrame();
     for (const p of pieces) {
       if (kind === "confetti") {
@@ -1266,13 +1275,14 @@ function launchCelebration(kind) {
       }
     }
     // baloanele urcă lin, au nevoie de mai mult timp să traverseze ecranul
-    if (t < (kind === "balloons" ? 6000 : 3200)) {
-      requestAnimationFrame(frame);
+    if (t < duration) {
+      celebrationFrameId = requestAnimationFrame(frame);
     } else {
       ctx.clearRect(0, 0, W, H);
+      celebrationFrameId = null;
     }
   }
-  requestAnimationFrame(frame);
+  celebrationFrameId = requestAnimationFrame(frame);
 }
 
 /* --- Inițializare --- */
