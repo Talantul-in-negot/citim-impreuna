@@ -258,6 +258,12 @@ const Tracker = (() => {
     return flushPromise;
   }
 
+  function hasPendingEvents() {
+    const userId = currentUserId();
+    if (!userId) return false;
+    return bufferedEvents.concat(readQueue()).some((evt) => evt[EVENT_OWNER_FIELD] === userId);
+  }
+
   async function fetchUserEvents(userName) {
     if (!enabled || !userName) return [];
     const userId = currentUserId();
@@ -385,5 +391,5 @@ const Tracker = (() => {
     refreshScore();
   });
 
-  return { enabled, log, flush, refreshScore, fetchUserEvents, fetchScores, fetchOwnScore, fetchOwnCycle };
+  return { enabled, log, flush, hasPendingEvents, refreshScore, fetchUserEvents, fetchScores, fetchOwnScore, fetchOwnCycle };
 })();

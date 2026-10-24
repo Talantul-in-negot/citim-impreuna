@@ -1,3 +1,21 @@
+# Punctaj blocat după reluare — 2026-10-24
+
+- [x] Urmărit fluxul local de finalizare și ciclul autoritativ de pe server.
+- [x] Identificat regresia: apply_all.sql reinstala completed_page_count cu filtrul baseline și omitea reparațiile din 7 septembrie.
+- [x] Inclus backfill-ul și repararea completării în generatorul bundle-ului.
+- [x] Adăugat verificare de sincronizare a bundle-ului și protecție în CI.
+- [x] Verificare locală: versete, assets, nume, cheie de răspunsuri, bundle actualizat și protecție de ciclu; testul respinge bundle-ul anterior. git diff --check fără erori. Nu s-a executat SQL într-un PostgreSQL local (indisponibil).
+- [x] Diagnostic live: contul Sergiu cu 36140 puncte, current_cycle=1, 297/301 pagini și 1485/1505 versete corecte. Paginile 6–9 nu au evenimente în ciclul 1. Metadatele nu lipsesc, iar funcția de completare live conține deja corecția din septembrie; bundle-ul nu este cauza acestui incident.
+- [x] Reparat local resumePageFromEvents (prima pagină incompletă), protejat showFinal de finalizare cu goluri și reconciliat ciclul cu serverul după golirea cozii contului. Teste pentru goluri, pagini parțiale, final prematur, ciclu local avansat și coadă offline.
+- [ ] Publicarea corecției frontend și verificarea punctajului după răspunsuri reale ale utilizatorului.
+
+Review: utilizatorul a confirmat URL-ul talantul-in-negot.github.io/citim-impreuna
+și contul Sergiu; punctajul nu crește nici în aplicație. Versiunile scripturilor
+din pagina live coincid cu checkout-ul inițial. După autentificare s-au rulat
+doar SELECT-uri în proiectul szwrfxcshcbqgdtfqqfp; nu s-au modificat date sau
+punctaje live. Cauza absenței istorice a celor 20 de răspunsuri nu este stabilită;
+defectul frontend demonstrat permitea sărirea golurilor și finalizarea prematură.
+
 # Audit remediation — 2026-09-03
 
 Implements every finding from the repo audit. Ordered by the audit's severity.

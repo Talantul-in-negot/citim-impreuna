@@ -26,10 +26,13 @@ const FILES = [
   "20260903_03_grant_authenticated.sql",
   "20260903_04_fix_score_race_condition.sql",
   "20260904_05_lock_down_anon_execute.sql",
+  "20260907_01_backfill_event_page_index.sql",
+  "20260907_02_fix_completed_page_count_baseline.sql",
 ];
 
 function main() {
-  const relFiles = FILES.map((f) => path.join("supabase", f));
+  // Folosim / și în comentarii, ca bundle-ul să fie identic pe Windows și CI.
+  const relFiles = FILES.map((f) => `supabase/${f}`);
 
   const header = [
     "-- APLICARE COMBINATA - GENERAT AUTOMAT de scripts/build-apply-all.js, nu edita direct.",
@@ -73,7 +76,19 @@ function main() {
     parts.push("");
   }
 
-  fs.writeFileSync(OUT_FILE, parts.join("\n"), "utf8");
+  const output = parts.join("\n");
+  if (process.argv.includes("--check")) {
+    const existing = fs.existsSync(OUT_FILE)
+      ? fs.readFileSync(OUT_FILE, "utf8").replace(/\r\n/g, "\n")
+      : "";
+    if (existing !== output) {
+      console.error("supabase/apply_all.sql nu este actualizat. Ruleaza node scripts/build-apply-all.js.");
+      process.exit(1);
+    }
+    console.log("apply_all.sql corespunde migratiilor sursa.");
+    return;
+  }
+  fs.writeFileSync(OUT_FILE, output, "utf8");
   console.log(`Scris ${path.relative(ROOT, OUT_FILE)}: ${relFiles.length} fisiere combinate.`);
 }
 

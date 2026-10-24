@@ -1,5 +1,28 @@
 # Lessons — Citim împreună
 
+## L12 — Ultima pagină atinsă nu dovedește completarea parcurgerii (2026-10-24)
+
+În live, Sergiu avea 297/301 pagini complete în ciclul 1, cu paginile 6–9
+absente. `resumePageFromEvents` relua de la pagina cea mai avansată, iar
+`showFinal` avansa local ciclul doar pentru că ultima pagină era rezolvată.
+`Math.max(localCycle, serverCycle)` făcea apoi imposibilă corectarea ciclului
+local avansat prematur. Reia prima pagină incompletă, verifică toate paginile
+înainte de final și reconciliază cu ciclul serverului după golirea cozii locale.
+Nu înlocui progresul offline cât timp contul are evenimente netrimise.
+
+## L11 — Bundle-ul de migrări trebuie să păstreze corecțiile ulterioare (2026-10-24)
+
+`apply_all.sql` reinstala definiția veche a `completed_page_count()` și omitea
+ambele reparații din 7 septembrie. Reaplicarea putea astfel bloca din nou ciclul,
+deși corecțiile existau în repository. Include migrările de reparație după
+definițiile inițiale și verifică în CI atât sincronizarea bundle-ului, cât și
+ultima definiție efectivă. Un test al fișierului de reparație separat nu dovedește
+că instalarea combinată îl aplică.
+
+Pentru raportul curent, utilizatorul a clarificat că punctajul nu crește nici
+în aplicație. Aceasta nu stabilește singură cauza: separă observația utilizatorului,
+defectul demonstrat în repository și starea live încă neverificată.
+
 ## L01 — PWA service workers need their own file to change, or updates never reach installed clients (2026-07-04)
 
 Deployed two rounds of content/logic changes to `sergiunicoara.github.io/citim-impreuna` without touching `sw.js`. Browsers only re-check a service worker when the service worker *script's own bytes* change — untouched `sw.js` means the browser never re-installs it, so a cache-first `fetch` handler keeps serving whatever was cached on first visit forever, no matter how many times the underlying app files are pushed. User reported "still the same version on my phone" after two live deploys.

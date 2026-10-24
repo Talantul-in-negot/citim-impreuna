@@ -17,15 +17,25 @@ Ordinea alfabetică este acum și ordinea corectă — nu a fost mereu, vezi mai
 | 10 | `20260903_03_grant_authenticated.sql` | **Grant-uri de tabel lipsă** — fără ele, fiecare insert al unui utilizator logat era respins în tăcere. |
 | 11 | `20260903_04_fix_score_race_condition.sql` | **Cursa de recalcul a scorului** — două recalculări simultane puteau suprascrie una pe alta cu o valoare mai veche. Blocare per utilizator + rebașeză.
 | 12 | `20260904_05_lock_down_anon_execute.sql` | **`get_public_leaderboard` era public** — `revoke ... from public` nu acoperă un grant făcut direct rolului `anon`. |
-| 13 | `20260907_01_backfill_event_page_index.sql` | **Reparație pentru date live existente** — `page_index`/`page_size`/`chapter_ref`/`chapter_size` erau NULL pe evenimentele scrise înainte ca acele coloane să fie adăugate (fără backfill), ceea ce bloca `completed_page_count()` sub totalul real și ținea `current_cycle` blocat pe 0 la nesfârșit. Nu e nevoie pe o bază de date nouă (fără evenimente vechi) — doar pe proiectul live existent. Nu e inclusă în `apply_all.sql`. |
-| 14 | `20260907_02_fix_completed_page_count_baseline.sql` | **`completed_page_count()` filtra greșit după `baseline_at`** — corect pentru puncte (evită dublarea cu `baseline_points`), greșit pentru „a fost pagina asta citită vreodată" (nu are legătură cu banii). Pagini terminate doar înainte de `baseline_at` nu se numărau niciodată, ținând ciclul blocat pe 0. `compute_user_points()` (scorul propriu-zis) rămâne neatins. Nu e inclusă în `apply_all.sql` (aceeași logică ca #13). |
+| 13 | `20260907_01_backfill_event_page_index.sql` | **Reparație pentru date live existente** — `page_index`/`page_size`/`chapter_ref`/`chapter_size` erau NULL pe evenimentele scrise înainte ca acele coloane să fie adăugate (fără backfill), ceea ce bloca `completed_page_count()` sub totalul real și ținea `current_cycle` blocat pe 0 la nesfârșit. Nu e nevoie pe o bază de date nouă (fără evenimente vechi) — doar pe proiectul live existent. Inclusă în `apply_all.sql`, pentru reaplicare sigură. |
+| 14 | `20260907_02_fix_completed_page_count_baseline.sql` | **`completed_page_count()` filtra greșit după `baseline_at`** — corect pentru puncte (evită dublarea cu `baseline_points`), greșit pentru „a fost pagina asta citită vreodată" (nu are legătură cu banii). Pagini terminate doar înainte de `baseline_at` nu se numărau niciodată, ținând ciclul blocat pe 0. `compute_user_points()` (scorul propriu-zis) rămâne neatins. Inclusă la final în `apply_all.sql`, ca reaplicarea să nu anuleze corecția. |
 
-Pe o bază de date **nouă** e suficient să rulezi 1, 8, 9, 10, 11 și 12 (sau, mai simplu,
+Pe o bază de date **nouă** e suficient să rulezi 1, 8, 9, 10, 11, 12, 13 și 14 (sau, mai simplu,
 `apply_all.sql`, care le conține pe toate în ordine) — fișierele 2–7 sunt istoric.
 
 ## Cel mai simplu: un singur fișier
 
-`apply_all.sql` concatenează, în ordine, fișierele 1, 8, 9, 10 și 11 de mai jos într-un singur script — se lipește o singură dată în SQL Editor și se rulează. Regenerează-l cu `node scripts/build-apply-all.js` dacă se adaugă o migrație nouă. Complet idempotent — sigur de rulat chiar dacă unele fișiere au rulat deja parțial pe acel proiect.
+`apply_all.sql` concatenează, în ordine, fișierele 1, 8, 9, 10, 11, 12, 13 și 14 într-un singur script — se lipește o singură dată în SQL Editor și se rulează. Regenerează-l cu `node scripts/build-apply-all.js` dacă se adaugă o migrație nouă. `npm run check:migrations` verifică sincronizarea și păstrarea corecțiilor de ciclu. Complet idempotent — sigur de rulat chiar dacă unele fișiere au rulat deja parțial pe acel proiect.
+
+**Pentru punctaj blocat după terminarea cărții:** verifică pe proiectul live dacă
+evenimentele vechi au metadatele paginii și dacă `completed_page_count()` exclude
+greșit evenimentele dinainte de `baseline_at`. Reaplicarea vechiului bundle putea
+anula corecția din 7 septembrie. Pentru aceste două cauze, aplică în ordine
+`20260907_01_backfill_event_page_index.sql` și
+`20260907_02_fix_completed_page_count_baseline.sql`; acestea recalculează și ciclul.
+Bundle-ul actual include ambele reparații la final, inclusiv pe o bază nouă,
+pentru ca o reaplicare ulterioară să nu reinstaleze regula greșită. Nu reseta
+manual punctajul sau ciclul în browser: serverul stabilește ciclul evenimentelor.
 
 **Înainte să rulezi orice, confirmă proiectul.** URL-ul din bara de adrese a dashboard-ului trebuie să conțină exact codul din `SUPABASE_URL` din [`js/config.js`](../js/config.js) (`https://<cod>.supabase.co`). Un cont Supabase cu mai multe proiecte face confuzia asta foarte ușor de făcut — vezi L07 în `tasks/lessons.md`.
 

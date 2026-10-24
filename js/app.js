@@ -639,6 +639,15 @@ function nextPage() {
 }
 
 function showFinal() {
+  // Ultima pagină rezolvată nu dovedește că toate paginile anterioare au
+  // fost salvate (ex. progres venit de pe alt dispozitiv, cu goluri).
+  const missingPage = firstUnsolvedPage(solvedThisCycle);
+  if (missingPage >= 0) {
+    page = missingPage;
+    save();
+    renderPage();
+    return;
+  }
   // A terminat toată cartea → ciclu nou. De acum versetele reluate aduc din nou
   // puncte (alt ciclu), dar în cadrul aceluiași ciclu reluarea nu adaugă nimic.
   cycle += 1;
@@ -755,22 +764,22 @@ async function handleLogout() {
 
 // Calculează unde a rămas utilizatorul, din evenimentele lui din Supabase, DOAR
 // pentru ciclul curent (evenimentele din cicluri anterioare nu contează la
-// progres): cea mai avansată pagină atinsă în ciclul curent; dacă acea pagină e
-// complet rezolvată, continuă la următoarea. Întoarce -1 dacă nu are activitate.
-function resumePageFromEvents(events, curCycle) {
-  let far = -1;
-  const correct = new Set();
-  for (const e of events) {
-    if ((e.cycle == null ? 0 : e.cycle) !== curCycle) continue;
-    const p = REF_PAGE.get(e.verse_ref);
-    if (p != null && p > far) far = p;
-    if (e.correct) correct.add(e.verse_ref);
+// progres): prima pagină incompletă, inclusiv golurile dinaintea ultimei
+// pagini atinse. Întoarce -1 dacă nu are activitate în corpusul curent.
+function firstUnsolvedPage(solvedPages) {
+  for (let p = 0; p < totalPages; p++) {
+    if (!solvedPages.has(p)) return p;
   }
-  if (far < 0) return -1;
-  const pageRefs = VERSES.slice(far * PAGE_SIZE, far * PAGE_SIZE + PAGE_SIZE).map((v) => v.ref);
-  const pageDone = pageRefs.every((ref) => correct.has(ref));
-  if (pageDone && far + 1 < totalPages) return far + 1;
-  return far;
+  return -1;
+}
+
+function resumePageFromEvents(events, curCycle) {
+  const hasActivity = events.some((e) =>
+    (e.cycle == null ? 0 : e.cycle) === curCycle && REF_PAGE.has(e.verse_ref)
+  );
+  if (!hasActivity) return -1;
+  const missingPage = firstUnsolvedPage(computeSolvedPagesForCycle(events, curCycle));
+  return missingPage >= 0 ? missingPage : totalPages - 1;
 }
 
 // Pagini complet rezolvate corect în ciclul dat, calculate din evenimentele
@@ -817,11 +826,13 @@ async function syncProgressFromCloud() {
   progressSynced = true;
   try {
     await Tracker.flush();
+    // Nu înlocuim progresul local cu o copie cloud incompletă cât timp există
+    // răspunsuri ale contului care încă așteaptă trimiterea.
+    if (Tracker.hasPendingEvents()) throw new Error("Progress upload pending");
     const events = await Tracker.fetchUserEvents(userName);
 
-    // Sincronizează ciclul curent de pe orice dispozitiv: cel mai mare dintre
-    // ciclul local, ciclul întâlnit în evenimente, ȘI ciclul autoritativ de
-    // pe server (scores.current_cycle). Doar evenimentele nu sunt de-ajuns —
+    // Sincronizează ciclul curent de pe orice dispozitiv, folosind ciclul
+    // autoritativ de pe server (scores.current_cycle). Doar evenimentele nu sunt de-ajuns —
     // dacă serverul a avansat ciclul (ex. printr-un recalcul manual) dar încă
     // nu există niciun eveniment nou ștampilat cu noua valoare, clientul ar
     // rămâne orb la avans și ar recalcula etern pe baza ciclului vechi.
@@ -831,8 +842,10 @@ async function syncProgressFromCloud() {
       if (c > cloudCycle) cloudCycle = c;
     }
     const serverCycle = await Tracker.fetchOwnCycle();
-    const newCycle = Math.max(cycle, cloudCycle, serverCycle ?? 0);
-    const cycleAdvanced = newCycle > cycle;
+    // Un final afișat prematur poate lăsa ciclul LOCAL înaintea serverului.
+    // După trimiterea cozii, serverul decide; altfel golurile nu se mai repară.
+    const newCycle = Math.max(cloudCycle, serverCycle ?? cycle);
+    const cycleChanged = newCycle !== cycle;
     cycle = newCycle;
 
     // Nu calculam scorul din evenimente in browser: totalul serverului include
@@ -845,9 +858,9 @@ async function syncProgressFromCloud() {
     saveSolvedThisCycle();
 
     const resume = resumePageFromEvents(events, cycle);
-    if (resume >= 0 && resume !== page) {
+    if (resume >= 0) {
       page = resume;
-    } else if (cycleAdvanced) {
+    } else if (cycleChanged) {
       // Ciclul a avansat pe server, dar încă nu există niciun eveniment nou
       // pentru el — reluarea nu are din ce ghici pagina, dar tot trebuie să
       // pornească de la începutul noului ciclu, nu să rămână pe ecranul de
@@ -858,7 +871,7 @@ async function syncProgressFromCloud() {
     if (hadMistake) setPageMistake();
     else clearPageMistake();
     save();
-    if (resume >= 0 || cycleAdvanced) renderPage();
+    if (resume >= 0 || cycleChanged) renderPage();
   } catch {
     // offline sau eroare — rămâne scorul/progresul local, se reîncearcă la login
     progressSynced = false;

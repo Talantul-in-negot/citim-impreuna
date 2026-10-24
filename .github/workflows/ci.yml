@@ -35,6 +35,12 @@ jobs:
       - name: Username normalizer
         run: npm run check:names
 
+      - name: Migration bundle preserves cycle fixes
+        run: npm run check:migrations
+
+      - name: Progress resumes at missing pages
+        run: npm run check:progress
+
       # Cheia de răspunsuri din supabase/ trebuie să corespundă versetelor
       # livrate; altfel triggerul serverului ar marca greșit răspunsuri corecte.
       - name: Answer key matches the shipped verses
