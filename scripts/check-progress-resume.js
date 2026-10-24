@@ -46,7 +46,7 @@ async function checkCloudReconciliation() {
       fetchUserEvents: async () => answered([0, 1, 2, 3, 4, 10, 11]),
       fetchOwnCycle: async () => 1,
     },
-    refreshAndSyncScore: async () => {}, saveSolvedThisCycle: () => {},
+    refreshAndSyncScore: async () => {}, refreshReadingStreak: async () => {}, saveSolvedThisCycle: () => {},
     pageHadMistakeBeforeCompletion: () => false,
     setPageMistake: () => {}, clearPageMistake: () => {},
   });

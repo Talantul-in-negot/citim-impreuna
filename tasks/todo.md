@@ -1,3 +1,11 @@
+# Ziua de streak la 03:00 — 2026-10-24
+
+- [x] Prag comun client/server: ora locală Europe/Bucharest, înainte de 03:00 = ziua precedentă.
+- [x] Migrare inclusă în bundle și aplicată în proiectul live szwrfxcshcbqgdtfqqfp.
+- [x] Verificare live înainte de aplicare: 0 conturi cu bonus diferit; verificare după aplicare: day_starts_at_03=true.
+- [x] Cazuri de regresie pentru 03:00, miezul nopții, schimbarea anului și ambele tranziții DST.
+- [x] Verificări locale: versete, assets, nume, bundle SQL, progres și 11 cazuri pentru ziua de citire; client pregătit pentru publicare.
+
 # Punctaj blocat după reluare — 2026-10-24
 
 - [x] Urmărit fluxul local de finalizare și ciclul autoritativ de pe server.

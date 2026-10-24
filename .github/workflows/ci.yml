@@ -41,6 +41,9 @@ jobs:
       - name: Progress resumes at missing pages
         run: npm run check:progress
 
+      - name: Reading day starts at 03:00 Romania time
+        run: npm run check:reading-day
+
       # Cheia de răspunsuri din supabase/ trebuie să corespundă versetelor
       # livrate; altfel triggerul serverului ar marca greșit răspunsuri corecte.
       - name: Answer key matches the shipped verses

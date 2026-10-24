@@ -23,6 +23,14 @@ Ordinea alfabetică este acum și ordinea corectă — nu a fost mereu, vezi mai
 Pe o bază de date **nouă** e suficient să rulezi 1, 8, 9, 10, 11, 12, 13 și 14 (sau, mai simplu,
 `apply_all.sql`, care le conține pe toate în ordine) — fișierele 2–7 sunt istoric.
 
+## Ziua de streak începe la 03:00
+
+Migrarea `20261024_01_streak_day_starts_at_03.sql` mută începutul zilei la
+**03:00, Europe/Bucharest**, inclusiv la schimbările orei de vară. Răspunsurile
+de la 00:00 până la 02:59 se grupează cu ziua precedentă. Migrarea recalculează
+scorurile folosind noua grupare a zilelor și este inclusă ultima în `apply_all.sql`.
+Clientul folosește aceeași regulă pentru cele șapte stele.
+
 ## Cel mai simplu: un singur fișier
 
 `apply_all.sql` concatenează, în ordine, fișierele 1, 8, 9, 10, 11, 12, 13 și 14 într-un singur script — se lipește o singură dată în SQL Editor și se rulează. Regenerează-l cu `node scripts/build-apply-all.js` dacă se adaugă o migrație nouă. `npm run check:migrations` verifică sincronizarea și păstrarea corecțiilor de ciclu. Complet idempotent — sigur de rulat chiar dacă unele fișiere au rulat deja parțial pe acel proiect.

@@ -399,13 +399,16 @@ function readingDayNumber(timestamp) {
   if (!Number.isFinite(date.getTime())) return null;
   const parts = new Intl.DateTimeFormat("en-US-u-ca-gregory", {
     timeZone: "Europe/Bucharest", year: "numeric", month: "numeric", day: "numeric",
+    hour: "numeric", hourCycle: "h23",
   }).formatToParts(date);
   const get = (type) => Number(parts.find((part) => part.type === type)?.value);
-  return Date.UTC(get("year"), get("month") - 1, get("day")) / 86400000;
+  // Folosim ora locală pentru a păstra pragul 03:00 inclusiv la schimbarea DST.
+  const localDay = Date.UTC(get("year"), get("month") - 1, get("day")) / 86400000;
+  return localDay - (get("hour") < 3 ? 1 : 0);
 }
 
 // Refolosește criteriul serverului: un capitol are toate versetele corecte
-// în aceeași zi calendaristică din fusul Europe/Bucharest.
+// în aceeași zi de citire (03:00–02:59, Europe/Bucharest).
 function calculateReadingStreak(events, baselineAt) {
   const baseline = baselineAt ? Date.parse(baselineAt) : 0;
   const chaptersByDay = new Map();
