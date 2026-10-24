@@ -125,6 +125,63 @@ main::before {
   border-radius: 999px;
 }
 
+.streak-card {
+  width: min(100%, 340px);
+  margin: -7px auto 0;
+  padding: 13px 20px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,249,229,.92));
+  box-shadow: 0 8px 24px rgba(43, 36, 55, 0.13), inset 0 1px 0 #fff;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.streak-card-heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink);
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+.streak-flame { font-size: 1rem; }
+
+.streak-stars {
+  display: flex;
+  justify-content: center;
+  gap: clamp(8px, 3.3vw, 15px);
+  margin: 5px 0 1px;
+  color: #d9d5df;
+  font-size: clamp(1.25rem, 6vw, 1.65rem);
+  line-height: 1.25;
+}
+
+.streak-stars span {
+  display: inline-block;
+  transition: color .35s ease, filter .35s ease, transform .35s ease;
+}
+
+.streak-stars span.is-lit {
+  color: #efb528;
+  filter: drop-shadow(0 2px 5px rgba(228, 165, 18, .4));
+  transform: translateY(-2px);
+}
+
+.streak-caption {
+  min-height: 1.25em;
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: .8rem;
+  font-weight: 600;
+}
+
 .book-title {
   text-align: center;
   font-family: system-ui, sans-serif;

@@ -334,6 +334,35 @@ const Tracker = (() => {
     }
   }
 
+  // Activitatea proprie necesară pentru streak, cu aceleași coloane și
+  // metadatele de chapter verificate de calculul de puncte de pe server.
+  async function fetchOwnReadingData() {
+    const userId = currentUserId();
+    if (!userId) return null;
+    const scoreRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/scores?select=baseline_at&user_id=eq.${encodeURIComponent(userId)}`,
+      { headers: await authHeaders() }
+    );
+    if (!scoreRes.ok) throw new Error(`HTTP ${scoreRes.status}`);
+    const scoreRows = await scoreRes.json();
+    if (!scoreRows.length) return null;
+
+    const PAGE = 1000;
+    const events = [];
+    for (let offset = 0; offset < 100000; offset += PAGE) {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/events?select=recorded_at,correct,verse_ref,chapter_ref,chapter_size` +
+        `&user_id=eq.${encodeURIComponent(userId)}&order=recorded_at.asc&limit=${PAGE}&offset=${offset}`,
+        { headers: await authHeaders() }
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const rows = await res.json();
+      events.push(...rows);
+      if (rows.length < PAGE) break;
+    }
+    return { baselineAt: scoreRows[0].baseline_at, events };
+  }
+
   // `current_cycle` e ștampilat de server (vezi 20260903_02_server_verified_events.sql
   // și 20260907_02_fix_completed_page_count_baseline.sql), nu poate fi dedus
   // din maximul `cycle`-ului găsit în evenimente: dacă serverul a avansat
@@ -391,5 +420,5 @@ const Tracker = (() => {
     refreshScore();
   });
 
-  return { enabled, log, flush, hasPendingEvents, refreshScore, fetchUserEvents, fetchScores, fetchOwnScore, fetchOwnCycle };
+  return { enabled, log, flush, hasPendingEvents, refreshScore, fetchUserEvents, fetchScores, fetchOwnScore, fetchOwnCycle, fetchOwnReadingData };
 })();

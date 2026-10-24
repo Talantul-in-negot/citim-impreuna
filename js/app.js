@@ -52,6 +52,8 @@ const el = {
   score: document.getElementById("score"),
   scoreChip: document.getElementById("score-chip"),
   progress: document.getElementById("progress"),
+  streakStars: document.getElementById("streak-stars"),
+  streakCaption: document.getElementById("streak-caption"),
   container: document.getElementById("verses-container"),
   cheer: document.getElementById("cheer"),
   checkBtn: document.getElementById("check-btn"),
@@ -91,6 +93,8 @@ let page = parseInt(localStorage.getItem(STORAGE_PROGRESS), 10) || 0;
 // reluarea unei pagini în același ciclu nu mai adaugă puncte.
 let cycle = parseInt(localStorage.getItem(STORAGE_CYCLE), 10) || 0;
 let userName = "";
+let readingStreakDays = null;
+let streakFetchPromise = null;
 let hadMistake = false;
 let reminderTimer = null;
 let serviceWorkerRegistration = null;
@@ -390,6 +394,106 @@ async function refreshAndSyncScore() {
   await syncScoreFromServer();
 }
 
+function readingDayNumber(timestamp) {
+  const date = new Date(timestamp);
+  if (!Number.isFinite(date.getTime())) return null;
+  const parts = new Intl.DateTimeFormat("en-US-u-ca-gregory", {
+    timeZone: "Europe/Bucharest", year: "numeric", month: "numeric", day: "numeric",
+  }).formatToParts(date);
+  const get = (type) => Number(parts.find((part) => part.type === type)?.value);
+  return Date.UTC(get("year"), get("month") - 1, get("day")) / 86400000;
+}
+
+// Refolosește criteriul serverului: un capitol are toate versetele corecte
+// în aceeași zi calendaristică din fusul Europe/Bucharest.
+function calculateReadingStreak(events, baselineAt) {
+  const baseline = baselineAt ? Date.parse(baselineAt) : 0;
+  const chaptersByDay = new Map();
+  for (const event of events) {
+    if (!event.correct || !event.chapter_ref || !event.chapter_size) continue;
+    const recorded = Date.parse(event.recorded_at);
+    if (!Number.isFinite(recorded) || recorded <= baseline) continue;
+    const day = readingDayNumber(recorded);
+    if (day == null) continue;
+    if (!chaptersByDay.has(day)) chaptersByDay.set(day, new Map());
+    const chapters = chaptersByDay.get(day);
+    const chapter = chapters.get(event.chapter_ref) || { expected: 0, verses: new Set() };
+    chapter.expected = Math.max(chapter.expected, Number(event.chapter_size) || 0);
+    chapter.verses.add(event.verse_ref);
+    chapters.set(event.chapter_ref, chapter);
+  }
+
+  const qualifyingDays = new Set();
+  for (const [day, chapters] of chaptersByDay) {
+    if ([...chapters.values()].some((chapter) => chapter.expected > 0 && chapter.verses.size >= chapter.expected)) {
+      qualifyingDays.add(day);
+    }
+  }
+
+  let cursor = readingDayNumber(Date.now());
+  if (cursor == null) return 0;
+  if (!qualifyingDays.has(cursor)) cursor--;
+  let streak = 0;
+  while (qualifyingDays.has(cursor)) {
+    streak++;
+    cursor--;
+  }
+  return streak;
+}
+
+function renderReadingStreak() {
+  const stars = [...el.streakStars.children];
+  if (readingStreakDays == null) {
+    stars.forEach((star) => star.classList.remove("is-lit"));
+    const label = userName ? "Se încarcă progresul…" : "Conectează-te ca să vezi streakul";
+    el.streakCaption.textContent = label;
+    el.streakStars.setAttribute("aria-label", label);
+    return;
+  }
+
+  const daysTowardBonus = readingStreakDays === 0 ? 0 : ((readingStreakDays - 1) % 7) + 1;
+  stars.forEach((star, index) => star.classList.toggle("is-lit", index < daysTowardBonus));
+  const nextBonusIn = 7 - (readingStreakDays % 7);
+  const detail = readingStreakDays === 0
+    ? "0 zile la rând · completează un capitol pentru prima zi"
+    : `${readingStreakDays} ${readingStreakDays === 1 ? "zi" : "zile"} la rând · bonusul următor în ${nextBonusIn} ${nextBonusIn === 1 ? "zi" : "zile"}`;
+  el.streakCaption.textContent = detail;
+  el.streakStars.setAttribute("aria-label", `${daysTowardBonus} din 7 stele aprinse. ${detail}`);
+}
+
+async function refreshReadingStreak({ afterWrite = false } = {}) {
+  if (!userName || !Tracker.enabled) {
+    readingStreakDays = null;
+    renderReadingStreak();
+    return;
+  }
+  if (streakFetchPromise) {
+    if (!afterWrite) return streakFetchPromise;
+    await streakFetchPromise;
+  }
+  const requestedUser = userName;
+  renderReadingStreak();
+  streakFetchPromise = (async () => {
+    try {
+      const readingData = await Tracker.fetchOwnReadingData();
+      if (requestedUser !== userName) return;
+      if (!readingData) return;
+      readingStreakDays = calculateReadingStreak(readingData.events, readingData.baselineAt);
+      renderReadingStreak();
+    } catch {
+      // Păstrăm ultima valoare confirmată când rețeaua e offline.
+      if (requestedUser === userName && readingStreakDays == null) {
+        const label = "Streakul nu este disponibil acum";
+        el.streakCaption.textContent = label;
+        el.streakStars.setAttribute("aria-label", label);
+      }
+    }
+  })().finally(() => {
+    streakFetchPromise = null;
+  });
+  return streakFetchPromise;
+}
+
 function buildVerseCard(v) {
   const card = document.createElement("section");
   card.className = "card";
@@ -566,7 +670,7 @@ function checkAnswers() {
       announceStreak: true,
       localScoreBefore: scoreBefore,
       localGain: earned + bonus,
-    }));
+    })).then(() => refreshReadingStreak({ afterWrite: true }));
     celebrate(bonus);
   }
 }
@@ -687,6 +791,10 @@ function updateUserChip() {
   const name = Auth.currentUser();
   el.userName.textContent = name || "Conectează-te";
   el.logoutBtn.hidden = !name;
+  if (!name) {
+    readingStreakDays = null;
+    renderReadingStreak();
+  }
 }
 
 function showAuthModal() {
@@ -830,6 +938,7 @@ async function syncProgressFromCloud() {
     // răspunsuri ale contului care încă așteaptă trimiterea.
     if (Tracker.hasPendingEvents()) throw new Error("Progress upload pending");
     const events = await Tracker.fetchUserEvents(userName);
+    refreshReadingStreak();
 
     // Sincronizează ciclul curent de pe orice dispozitiv, folosind ciclul
     // autoritativ de pe server (scores.current_cycle). Doar evenimentele nu sunt de-ajuns —

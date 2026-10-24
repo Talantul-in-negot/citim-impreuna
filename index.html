@@ -9,7 +9,7 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icons/icon.svg" />
-  <link rel="stylesheet" href="css/style.css?v=47" />
+  <link rel="stylesheet" href="css/style.css?v=49" />
 </head>
 <body>
   <canvas id="scene-canvas"></canvas>
@@ -30,6 +30,13 @@
   <main>
     <div class="book-title" id="book-title"></div>
     <div class="progress" id="progress"></div>
+    <section class="streak-card" id="streak-card" aria-label="Streakul tău">
+      <div class="streak-card-heading"><span class="streak-flame" aria-hidden="true">🔥</span><span>Streakul tău</span></div>
+      <div class="streak-stars" id="streak-stars" role="img" aria-label="Progresul streakului se încarcă">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="streak-caption" id="streak-caption" aria-live="polite">Se încarcă progresul…</p>
+    </section>
 
     <div id="verses-container"></div>
     <div class="cheer" id="cheer" hidden></div>
@@ -122,7 +129,7 @@
   <script src="js/verses-1samuel.js?v=44"></script>
   <script src="js/verses-2samuel.js?v=44"></script>
   <script src="js/verses.js?v=44"></script>
-  <script src="js/tracker.js?v=54"></script>
-  <script src="js/app.js?v=59"></script>
+  <script src="js/tracker.js?v=55"></script>
+  <script src="js/app.js?v=60"></script>
 </body>
 </html>
