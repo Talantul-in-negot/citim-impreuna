@@ -269,7 +269,10 @@ const Tracker = (() => {
     const userId = currentUserId();
     if (!userId) return [];
     // Paginat (cap Supabase = 1000/cerere) ca scorul să fie corect chiar și
-    // pentru cine depășește 1000 de evenimente.
+    // pentru cine depășește 1000 de evenimente. Ordinea trebuie să fie TOTALĂ
+    // (created_at nu e unic: răspunsurile unei pagini se scriu împreună), altfel
+    // cu offset rândurile egale pot fi sărite sau duplicate la granița dintre
+    // loturi, iar o pagină rezolvată apare nerezolvată în alt dispozitiv.
     const PAGE = 1000;
     let all = [];
     for (let offset = 0; offset < 100000; offset += PAGE) {
@@ -277,7 +280,7 @@ const Tracker = (() => {
         `${SUPABASE_URL}/rest/v1/events` +
         `?select=verse_ref,correct,created_at,cycle,answer,chosen` +
         `&user_id=eq.${encodeURIComponent(userId)}` +
-        `&order=created_at.desc&limit=${PAGE}&offset=${offset}`;
+        `&order=created_at.desc,id.desc&limit=${PAGE}&offset=${offset}`;
       const res = await fetch(url, { headers: await authHeaders() });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const rows = await res.json();
@@ -352,7 +355,7 @@ const Tracker = (() => {
     for (let offset = 0; offset < 100000; offset += PAGE) {
       const res = await fetch(
         `${SUPABASE_URL}/rest/v1/events?select=recorded_at,correct,verse_ref,chapter_ref,chapter_size` +
-        `&user_id=eq.${encodeURIComponent(userId)}&order=recorded_at.asc&limit=${PAGE}&offset=${offset}`,
+        `&user_id=eq.${encodeURIComponent(userId)}&order=recorded_at.asc,id.asc&limit=${PAGE}&offset=${offset}`,
         { headers: await authHeaders() }
       );
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
