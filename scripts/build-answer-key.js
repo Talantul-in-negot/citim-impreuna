@@ -12,6 +12,7 @@
 const fs = require("fs");
 const path = require("path");
 const { loadVerseArray } = require("./validate-verses");
+const { buildChapterPages } = require("../js/pagination");
 
 const PAGE_SIZE = 5; // trebuie să rămână egal cu PAGE_SIZE din js/app.js
 const ROOT = path.resolve(__dirname, "..");
@@ -39,11 +40,8 @@ function buildRows(verses) {
     const c = chapterOf(v.ref);
     chapterSizes.set(c, (chapterSizes.get(c) || 0) + 1);
   }
-  const pageSizes = new Map();
-  verses.forEach((_, i) => {
-    const p = Math.floor(i / PAGE_SIZE);
-    pageSizes.set(p, (pageSizes.get(p) || 0) + 1);
-  });
+  const pages = buildChapterPages(verses, PAGE_SIZE);
+  const pageByRef = new Map(pages.flatMap((page, index) => page.map((v) => [v.ref, index])));
 
   const seen = new Set();
   return verses.map((v, ordinal) => {
@@ -56,8 +54,8 @@ function buildRows(verses) {
     const chapterSize = chapterSizes.get(chapterRef);
     // events_chapter_size_check permite 1..100
     if (chapterSize > 100) throw new Error(`${chapterRef}: ${chapterSize} versete, peste limita de 100`);
-    const pageIndex = Math.floor(ordinal / PAGE_SIZE);
-    const pageSize = pageSizes.get(pageIndex);
+    const pageIndex = pageByRef.get(v.ref);
+    const pageSize = pages[pageIndex].length;
     // events_page_size_check permite 1..5
     if (pageSize > PAGE_SIZE) throw new Error(`pagina ${pageIndex}: ${pageSize} versete`);
     return {

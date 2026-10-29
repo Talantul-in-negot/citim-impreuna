@@ -44,6 +44,9 @@ jobs:
       - name: Reading day starts at 03:00 Romania time
         run: npm run check:reading-day
 
+      - name: Chapters start on a new page
+        run: npm run check:chapter-pages
+
       # Cheia de răspunsuri din supabase/ trebuie să corespundă versetelor
       # livrate; altfel triggerul serverului ar marca greșit răspunsuri corecte.
       - name: Answer key matches the shipped verses

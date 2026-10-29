@@ -1,3 +1,12 @@
+# Fiecare capitol pe pagină nouă — 2026-10-29
+
+- [x] Paginare comună browser/cheie SQL: maximum 5 versete, un singur capitol pe pagină (324 pagini).
+- [x] Migrarea progresului local și a greșelilor după referințele versetelor; coada offline păstrată.
+- [x] Migrare SQL atomică pentru cheie/evenimente, cu păstrarea totalurilor prin offset-ul baseline_points și fără schimbarea baseline_at.
+- [x] Regresii pentru capitole scurte, cheie, reluare și progres offline.
+- [x] Simulare cu rollback, aplicare atomică și reaplicare cu rollback pe proiectul live; toate punctajele păstrate. Înainte/după: 38.087 evenimente, 23.987 corecte, total 288.000 puncte; pagini 301→324, zero pagini mixte.
+- [x] Suita locală, cheia generată și verificările de progres trec; client pregătit pentru publicare.
+
 # Ziua de streak la 03:00 — 2026-10-24
 
 - [x] Prag comun client/server: ora locală Europe/Bucharest, înainte de 03:00 = ziua precedentă.

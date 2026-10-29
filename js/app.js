@@ -1,4 +1,4 @@
-/* Citim împreună — logică joc: completează cuvântul lipsă din fiecare verset, 5 pe pagină. */
+/* Citim împreună — cel mult 5 versete pe pagină; fiecare capitol începe o pagină nouă. */
 
 const PAGE_SIZE = 5;
 const POINTS_PER_VERSE = 10;
@@ -8,6 +8,8 @@ const STORAGE_SCORE = "ci_score";
 const STORAGE_PROGRESS = "ci_progress";
 const STORAGE_USER = "ci_user";
 const STORAGE_CYCLE = "ci_cycle";
+const STORAGE_PAGE_LAYOUT = "ci_page_layout";
+const PAGE_LAYOUT_VERSION = "chapters-v1";
 const STORAGE_PAGE_MISTAKES = "ci_page_mistakes";
 const STORAGE_REMINDER_ENABLED = "ci_daily_reminder_enabled";
 const STORAGE_REMINDER_TIME = "ci_daily_reminder_time";
@@ -32,11 +34,12 @@ const MILESTONE_VERSES = [
   { text: "Căci Domnul dă înțelepciune; din gura Lui iese cunoștință și pricepere.", ref: "Proverbele 2:6" },
 ];
 
-const totalPages = Math.ceil(VERSES.length / PAGE_SIZE);
+const PAGES = buildChapterPages(VERSES, PAGE_SIZE);
+const totalPages = PAGES.length;
 
 // Verset → indexul paginii pe care se află (pentru sincronizarea progresului
 // între dispozitive, calculată din evenimentele stocate în Supabase).
-const REF_PAGE = new Map(VERSES.map((v, i) => [v.ref, Math.floor(i / PAGE_SIZE)]));
+const REF_PAGE = new Map(PAGES.flatMap((verses, pageIndex) => verses.map((v) => [v.ref, pageIndex])));
 const CHAPTER_SIZES = new Map();
 for (const verse of VERSES) {
   const chapterRef = verse.ref.replace(/:\d+$/, "");
@@ -283,9 +286,11 @@ function resetLocalProgressForAccountSwitch() {
   page = 0;
   cycle = 0;
   solvedThisCycle = new Set();
+  correctThisCycle = new Set();
   hadMistake = false;
   localStorage.removeItem(STORAGE_PAGE_MISTAKES);
   localStorage.removeItem(STORAGE_SOLVED);
+  localStorage.removeItem(STORAGE_CORRECT);
   save();
 }
 
@@ -313,9 +318,51 @@ function loadSolvedThisCycle() {
   return new Set();
 }
 let solvedThisCycle = loadSolvedThisCycle();
+const STORAGE_CORRECT = "ci_correct_verses";
+let correctThisCycle = new Set();
+try {
+  const raw = JSON.parse(localStorage.getItem(STORAGE_CORRECT) || "null");
+  if (raw?.cycle === cycle) correctThisCycle = new Set(raw.refs);
+} catch { /* ignorăm progresul corupt */ }
+function saveCorrectThisCycle() {
+  localStorage.setItem(STORAGE_CORRECT, JSON.stringify({ cycle, refs: [...correctThisCycle] }));
+}
 function saveSolvedThisCycle() {
   localStorage.setItem(STORAGE_SOLVED, JSON.stringify({ cycle, pages: [...solvedThisCycle] }));
+  saveCorrectThisCycle();
 }
+
+function migrateLocalPagination() {
+  if (localStorage.getItem(STORAGE_PAGE_LAYOUT) === PAGE_LAYOUT_VERSION) return;
+  const oldPageRefs = (oldPage) => VERSES.slice(oldPage * PAGE_SIZE, (oldPage + 1) * PAGE_SIZE);
+  const correctRefs = new Set([...correctThisCycle, ...[...solvedThisCycle].flatMap((oldPage) => oldPageRefs(oldPage).map((v) => v.ref))]);
+  correctThisCycle = correctRefs;
+  const currentRef = oldPageRefs(page)[0]?.ref;
+  page = REF_PAGE.get(currentRef) ?? 0;
+  solvedThisCycle = new Set(PAGES.flatMap((verses, index) =>
+    verses.every((v) => correctRefs.has(v.ref)) ? [index] : []
+  ));
+
+  // Fără referința versetului greșit, păstrăm avertizarea pe fiecare pagină
+  // nouă care intersectează vechea pagină cu greșeli.
+  const mistakes = {};
+  try {
+    const oldMistakes = JSON.parse(localStorage.getItem(STORAGE_PAGE_MISTAKES) || "{}");
+    for (const [key, wasWrong] of Object.entries(oldMistakes)) {
+      if (!wasWrong) continue;
+      const [oldCycle, oldPage] = key.split(":").map(Number);
+      if (!Number.isInteger(oldCycle) || !Number.isInteger(oldPage)) continue;
+      for (const verse of oldPageRefs(oldPage)) {
+        mistakes[`${oldCycle}:${REF_PAGE.get(verse.ref)}`] = true;
+      }
+    }
+  } catch { /* un istoric local corupt nu blochează migrarea */ }
+  localStorage.setItem(STORAGE_PAGE_MISTAKES, JSON.stringify(mistakes));
+  save();
+  saveSolvedThisCycle();
+  localStorage.setItem(STORAGE_PAGE_LAYOUT, PAGE_LAYOUT_VERSION);
+}
+migrateLocalPagination();
 
 function shuffle(arr) {
   const a = arr.slice();
@@ -584,8 +631,7 @@ function renderPage() {
     return;
   }
 
-  const start = page * PAGE_SIZE;
-  const pageVerses = VERSES.slice(start, start + PAGE_SIZE);
+  const pageVerses = PAGES[page] || [];
 
   el.progress.textContent = `Pagina ${page + 1} din ${totalPages}`;
   const firstRef = pageVerses[0]?.ref || "";
@@ -606,7 +652,7 @@ function renderPage() {
     el.checkBtn.hidden = false;
     el.nextBtn.hidden = true;
     for (const v of pageVerses) {
-      el.container.appendChild(buildVerseCard(v));
+      el.container.appendChild(correctThisCycle.has(v.ref) ? buildSolvedVerseCard(v) : buildVerseCard(v));
     }
   }
 
@@ -642,10 +688,11 @@ function checkAnswers() {
       correct: s.value === s.dataset.answer,
       cycle,
       page_index: page,
-      page_size: selects.length,
+      page_size: PAGES[page].length,
       ...chapter,
     });
     if (s.value === s.dataset.answer) {
+      correctThisCycle.add(s.dataset.ref);
       const span = document.createElement("span");
       span.className = "locked";
       span.textContent = s.dataset.answer;
@@ -658,6 +705,7 @@ function checkAnswers() {
     }
   }
   const flushPromise = Tracker.flush();
+  saveCorrectThisCycle();
   if (earned > 0) updateScore(earned);
 
   if (!el.container.querySelector("select.blank")) {
@@ -759,6 +807,7 @@ function showFinal() {
   // puncte (alt ciclu), dar în cadrul aceluiași ciclu reluarea nu adaugă nimic.
   cycle += 1;
   solvedThisCycle = new Set();
+  correctThisCycle = new Set();
   page = 0;
   save();
   saveSolvedThisCycle();
@@ -908,14 +957,14 @@ function computeSolvedPagesForCycle(events, curCycle) {
   }
   const solved = new Set();
   for (const [p, refs] of correctByPage) {
-    const pageRefs = VERSES.slice(p * PAGE_SIZE, p * PAGE_SIZE + PAGE_SIZE).map((v) => v.ref);
+    const pageRefs = PAGES[p].map((v) => v.ref);
     if (pageRefs.every((ref) => refs.has(ref))) solved.add(p);
   }
   return solved;
 }
 
 function pageHadMistakeBeforeCompletion(events, targetPage, curCycle) {
-  const pageRefs = VERSES.slice(targetPage * PAGE_SIZE, targetPage * PAGE_SIZE + PAGE_SIZE).map((v) => v.ref);
+  const pageRefs = (PAGES[targetPage] || []).map((v) => v.ref);
   const pageEvents = events
     .filter((e) => (e.cycle == null ? 0 : e.cycle) === curCycle && REF_PAGE.get(e.verse_ref) === targetPage)
     .sort((a, b) => (a.created_at || "").localeCompare(b.created_at || ""));
@@ -967,6 +1016,9 @@ async function syncProgressFromCloud() {
     // Paginile deja terminate în ciclul curent, calculate din cloud — astfel
     // restricția „nu poți relua o pagină" ține și dacă schimbă dispozitivul.
     solvedThisCycle = computeSolvedPagesForCycle(events, cycle);
+    correctThisCycle = new Set(events
+      .filter((e) => e.correct && (e.cycle == null ? 0 : e.cycle) === cycle)
+      .map((e) => e.verse_ref));
     saveSolvedThisCycle();
 
     const resume = resumePageFromEvents(events, cycle);

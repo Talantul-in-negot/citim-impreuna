@@ -7,6 +7,7 @@ const source = fs.readFileSync(path.join(__dirname, '..', 'js', 'app.js'), 'utf8
 const verses = Array.from({ length: 12 }, (_, i) => ({ ref: `Verse ${i}` }));
 const context = {
   VERSES: verses, PAGE_SIZE: 5, totalPages: 3,
+  PAGES: [verses.slice(0, 5), verses.slice(5, 10), verses.slice(10)],
   REF_PAGE: new Map(verses.map((v, i) => [v.ref, Math.floor(i / 5)])),
   cycle: 1, page: 2, solvedThisCycle: new Set([0, 2]),
   saves: 0, renders: 0,

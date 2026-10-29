@@ -29,6 +29,7 @@ const FILES = [
   "20260907_01_backfill_event_page_index.sql",
   "20260907_02_fix_completed_page_count_baseline.sql",
   "20261024_01_streak_day_starts_at_03.sql",
+  "20261029_01_chapter_pages.sql",
 ];
 
 function main() {

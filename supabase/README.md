@@ -31,6 +31,21 @@ de la 00:00 până la 02:59 se grupează cu ziua precedentă. Migrarea recalcule
 scorurile folosind noua grupare a zilelor și este inclusă ultima în `apply_all.sql`.
 Clientul folosește aceeași regulă pentru cele șapte stele.
 
+## Paginare pe capitole
+
+`20261029_01_chapter_pages.sql` mută începutul fiecărui capitol pe o pagină
+nouă (maximum cinci versete). Pentru corpusul actual rezultă 324 de pagini.
+Aplică această migrare pe live **înainte de publicarea clientului nou**.
+Ea actualizează atomic cheia existentă și metadatele evenimentelor, blochează
+scrierile pe durata migrării și verifică păstrarea punctajelor.
+
+Nu aplica separat cheia regenerată pe o bază live înaintea acestei migrări.
+`baseline_at` rămâne neschimbat; `baseline_points` devine offset-ul semnat
+care păstrează totalul anterior în ciuda regrupării bonusurilor istorice de pagină.
+O reaplicare nu modifică punctajele. Bundle-ul include migrarea la final.
+În browser, indicii locali vechi se mută după referințele versetelor;
+coada offline rămâne intactă.
+
 ## Cel mai simplu: un singur fișier
 
 `apply_all.sql` concatenează, în ordine, fișierele 1, 8, 9, 10, 11, 12, 13 și 14 într-un singur script — se lipește o singură dată în SQL Editor și se rulează. Regenerează-l cu `node scripts/build-apply-all.js` dacă se adaugă o migrație nouă. `npm run check:migrations` verifică sincronizarea și păstrarea corecțiilor de ciclu. Complet idempotent — sigur de rulat chiar dacă unele fișiere au rulat deja parțial pe acel proiect.
