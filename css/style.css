@@ -688,6 +688,17 @@ select.blank.wrong {
   font-size: 1.15rem;
 }
 
+.app-version {
+  margin: 0;
+  padding: 0 22px 18px;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+  font-size: 0.75rem;
+  color: var(--muted);
+  opacity: 0.8;
+  overflow-wrap: anywhere;
+}
+
 /* Ecran statistici */
 .stats {
   font-family: system-ui, sans-serif;

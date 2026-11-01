@@ -73,6 +73,7 @@ const el = {
   authForm: document.getElementById("auth-form"),
   authLogged: document.getElementById("auth-logged"),
   authUsernameDisplay: document.getElementById("auth-username-display"),
+  appVersion: document.getElementById("app-version"),
   loginUsername: document.getElementById("login-username"),
   loginPassword: document.getElementById("login-password"),
   loginError: document.getElementById("login-error"),
@@ -854,7 +855,18 @@ function updateUserChip() {
   }
 }
 
+// Versiunea aplicației = parametrul ?v= al scriptului încărcat efectiv (nu o
+// valoare scrisă de mână), deci o captură de ecran arată exact ce rulează pe
+// dispozitivul respectiv, fără consolă.
+function appVersionText() {
+  const src = document.querySelector('script[src*="js/app.js"]')?.getAttribute("src") || "";
+  const version = /[?&]v=(\d+)/.exec(src)?.[1] || "?";
+  const streak = el.streakCaption?.textContent?.trim();
+  return `Versiune aplicație: v${version}${streak ? ` · Streak: ${streak}` : ""}`;
+}
+
 function showAuthModal() {
+  el.appVersion.textContent = appVersionText();
   el.authModal.hidden = false;
   if (Auth.isLoggedIn()) {
     el.authLogged.hidden = false;
