@@ -374,10 +374,20 @@ function shuffle(arr) {
   return a;
 }
 
+// Fără cont logat, `score` e doar o valoare locală veche a acestui browser (alt
+// browser / browserul încorporat al unei aplicații are alt spațiu de stocare),
+// iar afișată ca fiind a utilizatorului dădea impresia că a pierdut puncte.
+// Cât timp nu există sesiune afișăm „–", nu o cifră care nu e a lui.
+function renderScore() {
+  const loggedIn = !!userName;
+  el.score.textContent = loggedIn ? score : "–";
+  el.scoreChip.title = loggedIn ? "Punctajul tău" : "Conectează-te ca să-ți vezi punctajul";
+}
+
 function updateScore(points) {
   const before = score;
   score += points;
-  el.score.textContent = score;
+  renderScore();
   el.scoreChip.classList.add("bump");
   setTimeout(() => el.scoreChip.classList.remove("bump"), 200);
   save();
@@ -428,7 +438,7 @@ async function syncScoreFromServer() {
   const serverScore = await Tracker.fetchOwnScore();
   if (!Number.isFinite(serverScore) || serverScore < 0) return;
   score = serverScore;
-  el.score.textContent = score;
+  renderScore();
   save();
 }
 
@@ -849,6 +859,7 @@ function updateUserChip() {
   const name = Auth.currentUser();
   el.userName.textContent = name || "Conectează-te";
   el.logoutBtn.hidden = !name;
+  renderScore();
   if (!name) {
     readingStreakDays = null;
     renderReadingStreak();
@@ -1485,7 +1496,7 @@ el.registerBtn?.addEventListener("click", handleRegister);
 el.authCloseBtn?.addEventListener("click", hideAuthModal);
 el.authModal?.addEventListener("click", (e) => { if (e.target === el.authModal) hideAuthModal(); });
 
-el.score.textContent = score;
+renderScore();
 updateReminderButton();
 scheduleDailyReminder();
 persistReminderSettingsForWorker(reminderIsEnabled(), reminderTime());
