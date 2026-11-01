@@ -423,14 +423,12 @@ function showMilestone(m) {
   setTimeout(() => launchCelebration("fireworks"), 1100);
 }
 
-async function syncScoreFromServer({ announceStreak = false, localScoreBefore = score, localGain = 0 } = {}) {
+async function syncScoreFromServer() {
   const serverScore = await Tracker.fetchOwnScore();
   if (!Number.isFinite(serverScore) || serverScore < 0) return;
-  const streakBonus = serverScore - localScoreBefore - localGain;
   score = serverScore;
   el.score.textContent = score;
   save();
-  if (announceStreak && streakBonus >= 2000) showStreakMessage();
 }
 
 async function refreshAndSyncScore() {
@@ -676,7 +674,7 @@ function checkAnswers() {
     return;
   }
 
-  const scoreBefore = score;
+  const streakBefore = readingStreakDays;
   let earned = 0;
   for (const s of selects) {
     const chapter = chapterMetaForRef(s.dataset.ref);
@@ -717,11 +715,18 @@ function checkAnswers() {
     solvedThisCycle.add(page);
     clearPageMistake();
     saveSolvedThisCycle();
-    flushPromise.then(() => syncScoreFromServer({
-      announceStreak: true,
-      localScoreBefore: scoreBefore,
-      localGain: earned + bonus,
-    })).then(() => refreshReadingStreak({ afterWrite: true }));
+    // Mesajul de streak se arată doar când streak-ul REAL (din evenimente) atinge
+    // un multiplu de 7 — nu din diferența dintre scorul local și cel al serverului,
+    // care pe un dispozitiv cu scor local vechi dădea un „bonus” fals de 2000.
+    flushPromise
+      .then(() => syncScoreFromServer())
+      .then(() => refreshReadingStreak({ afterWrite: true }))
+      .then(() => {
+        if (streakBefore != null && readingStreakDays != null
+            && readingStreakDays > streakBefore && readingStreakDays % 7 === 0) {
+          showStreakMessage();
+        }
+      });
     celebrate(bonus);
   }
 }
