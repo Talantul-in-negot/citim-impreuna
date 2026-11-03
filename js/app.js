@@ -757,7 +757,11 @@ function celebrate(bonus) {
   el.cheer.hidden = false;
   el.checkBtn.hidden = true;
 
-  if (page + 1 < totalPages) {
+  // Cartea e terminată când nu mai rămâne NICIO pagină nerezolvată în ciclu, nu
+  // doar când pagina curentă e ultima: progresul reluat (alt dispozitiv,
+  // repaginare) poate avea goluri la mijloc, iar completarea ultimei găuri
+  // termină ciclul chiar dacă e pagina 120 din 324.
+  if (nextUnsolvedPageAfter(page) >= 0) {
     el.nextBtn.hidden = false;
   } else {
     el.nextBtn.hidden = true;
@@ -803,10 +807,32 @@ function showWelcomeMessage(name) {
   document.body.appendChild(overlay);
 }
 
+// Următoarea pagină încă nerezolvată în ciclul curent, căutând înainte de la
+// `from` și apoi de la începutul cărții. -1 = toate paginile sunt rezolvate.
+function nextUnsolvedPageAfter(from) {
+  for (let p = from + 1; p < totalPages; p++) {
+    if (!solvedThisCycle.has(p)) return p;
+  }
+  for (let p = 0; p <= from && p < totalPages; p++) {
+    if (!solvedThisCycle.has(p)) return p;
+  }
+  return -1;
+}
+
 function nextPage() {
-  page += 1;
+  const target = nextUnsolvedPageAfter(page);
+  if (target < 0) {
+    showFinal();
+    return;
+  }
+  const skipped = target > page ? target - page - 1 : 0;
+  page = target;
   save();
   renderPage();
+  if (skipped > 0) {
+    el.cheer.innerHTML = `<div class="points">Am sărit peste ${skipped} ${skipped === 1 ? "pagină deja citită" : "pagini deja citite"} în acest ciclu.</div>`;
+    el.cheer.hidden = false;
+  }
 }
 
 function showFinal() {
