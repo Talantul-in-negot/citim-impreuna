@@ -464,7 +464,7 @@ const VERSES_2SAMUEL = [
   },
   {
     ref: "2 Samuel 3:34",
-    text: "N-aveai nici mâinile legate, nici picioarele puse în lanțuri. Ai {0} cum cade cineva înaintea celor răi!",
+    text: "N-aveai nici mâinile legate, nici picioarele puse în lanțuri. Ai {0} cum cade cineva înaintea celor răi!” Și tot poporul a plâns și mai mult după Abner.",
     blanks: [{ answer: "căzut", options: ["căzut","murit","pierit","sfârșit"] }],
   },
   {
