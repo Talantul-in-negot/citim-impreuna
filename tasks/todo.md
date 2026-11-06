@@ -1,3 +1,11 @@
+# Audit integral al versetelor — 2026-11-06
+
+- [x] Comparate toate cele 810 versete din 1 Samuel și 695 din 2 Samuel, reconstruind completările și păstrând continuările nenumerotate din referință.
+- [x] Rezultate confirmate printr-o comparație independentă: omisiuni în 1 Samuel 2:1 și 16:13; scriere legată/separată în 2 Samuel 18:30; nicio altă diferență de cuvinte.
+- [x] Raport complet MD/JSON și comparator reutilizabil: npm run audit:reference.
+- [x] Verificat că 2 Samuel 3:34 este complet după corecție.
+- [x] Corectate 1 Samuel 2:1, 16:13 și 2 Samuel 18:30; comparația integrală introdusă în npm test și CI pentru detectarea omisiunilor viitoare.
+
 # Fiecare capitol pe pagină nouă — 2026-10-29
 
 - [x] Paginare comună browser/cheie SQL: maximum 5 versete, un singur capitol pe pagină (324 pagini).

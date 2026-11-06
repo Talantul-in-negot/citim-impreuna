@@ -144,7 +144,7 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 2:1",
-    text: "Ana s-a {0} și a zis:",
+    text: "Ana s-a {0} și a zis: „Mi se bucură inima în Domnul, puterea mea a fost înălțată de Domnul; mi s-a deschis larg gura împotriva vrăjmașilor mei, căci mă bucur de ajutorul Tău.",
     blanks: [{ answer: "rugat", options: ["rugat","închinat","plecat","apropiat"] }],
   },
   {
@@ -1979,7 +1979,7 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 16:13",
-    text: "Samuel a luat cornul cu untdelemn și l-a {0} în mijlocul fraților lui. Duhul Domnului a venit peste David începând din ziua aceea și în cele următoare.",
+    text: "Samuel a luat cornul cu untdelemn și l-a {0} în mijlocul fraților lui. Duhul Domnului a venit peste David începând din ziua aceea și în cele următoare. Samuel s-a sculat și s-a dus la Rama.",
     blanks: [{ answer: "uns", options: ["uns","sfințit","ales","pus"] }],
   },
   {

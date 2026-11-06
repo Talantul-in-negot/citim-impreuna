@@ -19,6 +19,9 @@ jobs:
       - name: Validate verses
         run: npm run validate:verses
 
+      - name: Full verse texts match the reference
+        run: npm run audit:reference
+
       # index.html și sw.js trebuie să refere exact aceleași URL-uri
       # cache-busted, altfel o instalare PWA curată rămâne fără fișiere offline.
       - name: Check asset versions

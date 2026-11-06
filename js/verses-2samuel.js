@@ -2429,7 +2429,7 @@ const VERSES_2SAMUEL = [
   },
   {
     ref: "2 Samuel 18:30",
-    text: "Și împăratul a zis: „Stai colea la o parte!” Și Ahimaaț a stat {0}.",
+    text: "Și împăratul a zis: „Stai colea laoparte!” Și Ahimaaț a stat {0}.",
     blanks: [{ answer: "deoparte", options: ["deoparte","liniștit","tăcut","așteptând"] }],
   },
   {
