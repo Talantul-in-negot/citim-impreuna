@@ -32,3 +32,54 @@ const sql = fs.readFileSync(path.join(root, 'supabase/20261024_01_streak_day_sta
 assert.equal((sql.match(/\(\(e\.recorded_at at time zone 'Europe\/Bucharest'\) - interval '3 hours'\)::date/g) || []).length, 2,
   'SQL must group and select by the same local 03:00 boundary');
 console.log(`Reading day: ${cases.length} timezone and 03:00 boundary cases passed.`);
+
+// Aceeași lungime a streakului poate include sau nu ziua curentă.
+vm.runInContext(source.match(/function calculateReadingStreak\([^]*?\n}/)[0], sandbox);
+vm.runInContext(source.match(/function renderReadingStreak\([^]*?\n}/)[0], sandbox);
+const now = Date.parse('2026-11-10T12:00:00+02:00');
+sandbox.Date = class extends Date { static now() { return now; } };
+const event = (date, verse = '1') => ({
+  correct: true, chapter_ref: '1 Samuel 1', chapter_size: 2,
+  verse_ref: verse, recorded_at: `${date}T12:00:00+02:00`,
+});
+const previousWeek = Array.from({ length: 7 }, (_, i) => {
+  const date = `2026-11-${String(i + 3).padStart(2, '0')}`;
+  return [event(date), event(date, '2')];
+}).flat();
+function element() {
+  const classes = new Set();
+  return {
+    textContent: '', attributes: {},
+    classList: {
+      add: (...names) => names.forEach(name => classes.add(name)),
+      remove: (...names) => names.forEach(name => classes.delete(name)),
+      toggle: (name, enabled) => enabled ? classes.add(name) : classes.delete(name),
+      contains: name => classes.has(name),
+    },
+    setAttribute(name, value) { this.attributes[name] = value; },
+    removeAttribute(name) { delete this.attributes[name]; },
+  };
+}
+sandbox.el = { streakStars: element(), streakCaption: element(), streakToday: element() };
+sandbox.el.streakStars.children = Array.from({ length: 7 }, element);
+for (const [events, days, earned, position] of [
+  [[], 0, false, 0],
+  [previousWeek, 7, false, 0],
+  [[...previousWeek, event('2026-11-10'), event('2026-11-10')], 7, false, 0],
+  [[...previousWeek, event('2026-11-10'), event('2026-11-10', '2')], 8, true, 0],
+  [[...previousWeek.slice(2), event('2026-11-10'), event('2026-11-10', '2')], 7, true, 6],
+]) {
+  const status = sandbox.calculateReadingStreak(events, null);
+  assert.equal(status.days, days);
+  assert.equal(status.todayCompleted, earned);
+  sandbox.readingStreakStatus = status;
+  sandbox.readingStreakDays = status.days;
+  sandbox.renderReadingStreak();
+  const stars = sandbox.el.streakStars.children;
+  assert.equal(stars.filter(s => s.classList.contains('is-today')).length, 1);
+  assert.equal(stars[position].classList.contains('is-today'), true);
+  assert.equal(stars[position].classList.contains('is-pending'), !earned);
+  assert.equal(stars[position].classList.contains('is-lit'), earned);
+  assert.match(sandbox.el.streakToday.textContent, earned ? /câștigată/ : /completează un capitol/);
+}
+console.log('Streak today: pending, duplicate verses, earned, and seven-day rollover passed.');

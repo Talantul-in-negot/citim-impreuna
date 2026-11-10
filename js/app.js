@@ -57,6 +57,7 @@ const el = {
   progress: document.getElementById("progress"),
   streakStars: document.getElementById("streak-stars"),
   streakCaption: document.getElementById("streak-caption"),
+  streakToday: document.getElementById("streak-today"),
   container: document.getElementById("verses-container"),
   cheer: document.getElementById("cheer"),
   checkBtn: document.getElementById("check-btn"),
@@ -98,6 +99,7 @@ let page = parseInt(localStorage.getItem(STORAGE_PROGRESS), 10) || 0;
 let cycle = parseInt(localStorage.getItem(STORAGE_CYCLE), 10) || 0;
 let userName = "";
 let readingStreakDays = null;
+let readingStreakStatus = null;
 let streakFetchPromise = null;
 let hadMistake = false;
 let reminderTimer = null;
@@ -490,34 +492,55 @@ function calculateReadingStreak(events, baselineAt) {
   }
 
   let cursor = readingDayNumber(Date.now());
-  if (cursor == null) return 0;
+  const today = cursor;
+  const todayCompleted = qualifyingDays.has(today);
+  if (cursor == null) return { days: 0, todayCompleted: false, day: null };
   if (!qualifyingDays.has(cursor)) cursor--;
   let streak = 0;
   while (qualifyingDays.has(cursor)) {
     streak++;
     cursor--;
   }
-  return streak;
+  return { days: streak, todayCompleted, day: today };
 }
 
 function renderReadingStreak() {
   const stars = [...el.streakStars.children];
+  stars.forEach((star) => {
+    star.classList.remove("is-today", "is-pending");
+    star.removeAttribute("data-label");
+  });
   if (readingStreakDays == null) {
     stars.forEach((star) => star.classList.remove("is-lit"));
     const label = userName ? "Se încarcă progresul…" : "Conectează-te ca să vezi streakul";
     el.streakCaption.textContent = label;
     el.streakStars.setAttribute("aria-label", label);
+    el.streakToday.textContent = "";
+    el.streakToday.classList.remove("is-earned");
     return;
   }
 
-  const daysTowardBonus = readingStreakDays === 0 ? 0 : ((readingStreakDays - 1) % 7) + 1;
+  const todayCompleted = readingStreakStatus?.todayCompleted === true;
+  // După un ciclu de șapte zile, ziua încă necâștigată începe un rând nou.
+  const daysTowardBonus = todayCompleted
+    ? ((readingStreakDays - 1) % 7) + 1
+    : readingStreakDays % 7;
   stars.forEach((star, index) => star.classList.toggle("is-lit", index < daysTowardBonus));
+  const todayStar = stars[todayCompleted ? daysTowardBonus - 1 : daysTowardBonus];
+  todayStar.classList.add("is-today");
+  todayStar.classList.toggle("is-pending", !todayCompleted);
+  todayStar.setAttribute("data-label", "Azi");
+  const todayLabel = todayCompleted
+    ? "Steluța de azi este câștigată ✓"
+    : "Pentru steluța de azi, completează un capitol.";
+  el.streakToday.textContent = todayLabel;
+  el.streakToday.classList.toggle("is-earned", todayCompleted);
   const nextBonusIn = 7 - (readingStreakDays % 7);
   const detail = readingStreakDays === 0
     ? "0 zile la rând · completează un capitol pentru prima zi"
     : `${readingStreakDays} ${readingStreakDays === 1 ? "zi" : "zile"} la rând · bonusul următor în ${nextBonusIn} ${nextBonusIn === 1 ? "zi" : "zile"}`;
   el.streakCaption.textContent = detail;
-  el.streakStars.setAttribute("aria-label", `${daysTowardBonus} din 7 stele aprinse. ${detail}`);
+  el.streakStars.setAttribute("aria-label", `${daysTowardBonus} din 7 stele aprinse. ${todayLabel} ${detail}`);
 }
 
 async function refreshReadingStreak({ afterWrite = false } = {}) {
@@ -537,7 +560,8 @@ async function refreshReadingStreak({ afterWrite = false } = {}) {
       const readingData = await Tracker.fetchOwnReadingData();
       if (requestedUser !== userName) return;
       if (!readingData) return;
-      readingStreakDays = calculateReadingStreak(readingData.events, readingData.baselineAt);
+      readingStreakStatus = calculateReadingStreak(readingData.events, readingData.baselineAt);
+      readingStreakDays = readingStreakStatus.days;
       renderReadingStreak();
     } catch {
       // Păstrăm ultima valoare confirmată când rețeaua e offline.
@@ -1537,8 +1561,20 @@ Tracker.flush();
 // pagina), asa ca cele doua puteau ajunge sa arate stari diferite.
 document.addEventListener("visibilitychange", () => {
   if (document.hidden || !userName) return;
+  refreshStreakDay();
   syncSessionFromCloud();
 });
+
+function refreshStreakDay() {
+  if (!userName || !readingStreakStatus || readingStreakStatus.day === readingDayNumber(Date.now())) return;
+  readingStreakStatus = null;
+  readingStreakDays = null;
+  renderReadingStreak();
+  refreshReadingStreak();
+}
+
+// Actualizează și o aplicație rămasă deschisă peste pragul de la 03:00.
+setInterval(refreshStreakDay, 30 * 1000);
 
 // Arătăm modalul imediat — nu așteptăm Supabase (poate fi lent/offline).
 // Dacă sesiunea se restaurează, onAuthStateChange ascunde modalul automat.
