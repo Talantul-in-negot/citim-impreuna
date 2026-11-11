@@ -58,6 +58,9 @@ jobs:
       - name: Offline queue survives stale answers
         run: npm run check:offline-queue
 
+      - name: Category change warns only when the epistle changes
+        run: npm run check:category-warning
+
       - name: Reading day starts at 03:00 Romania time
         run: npm run check:reading-day
 

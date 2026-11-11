@@ -9,7 +9,7 @@
     "build:answer-key": "node scripts/build-answer-key.js",
     "build:verses": "node scripts/build-window.js",
     "audit:reference": "node scripts/audit-reference-text.js",
-    "test": "npm run check:syntax && npm run validate:verses && npm run check:generated && npm run check:assets && npm run check:names && npm run check:migrations && npm run check:progress && npm run check:offline-queue && npm run check:reading-day && npm run check:chapter-pages && npm run check:category-db && npm run check:epistle-catalog && npm run audit:reference",
+    "test": "npm run check:syntax && npm run validate:verses && npm run check:generated && npm run check:assets && npm run check:names && npm run check:migrations && npm run check:progress && npm run check:offline-queue && npm run check:category-warning && npm run check:reading-day && npm run check:chapter-pages && npm run check:category-db && npm run check:epistle-catalog && npm run audit:reference",
     "check:chapter-pages": "node scripts/check-chapter-pages.js",
     "check:reading-day": "node scripts/check-reading-day.js",
     "check:progress": "node scripts/check-progress-resume.js",
@@ -22,7 +22,8 @@
     "check:category-db": "node scripts/check-category-database.js",
     "check:offline-queue": "node scripts/check-offline-queue.js",
     "build:epistle-catalog": "node scripts/build-epistle-catalog.js",
-    "check:epistle-catalog": "node scripts/check-epistle-catalog.js"
+    "check:epistle-catalog": "node scripts/check-epistle-catalog.js",
+    "check:category-warning": "node scripts/check-category-warning.js"
   },
   "license": "UNLICENSED",
   "devDependencies": {

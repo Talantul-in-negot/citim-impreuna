@@ -90,6 +90,7 @@ const el = {
   categoryModal: document.getElementById("category-modal"),
   readingCategory: document.getElementById("reading-category"),
   categoryError: document.getElementById("category-error"),
+  categoryWarning: document.getElementById("category-warning"),
   categorySaveBtn: document.getElementById("category-save-btn"),
   categoryCancelBtn: document.getElementById("category-cancel-btn"),
   categoryLogoutBtn: document.getElementById("category-logout-btn"),
@@ -514,7 +515,32 @@ function showSyncNotice(text) {
   document.body.appendChild(notice);
 }
 
+const EPISTLE_NAMES = { iuda: "Iuda", "1petru": "1 Petru", filipeni: "Filipeni", galateni: "Galateni", evrei: "Evrei" };
+// Categoria pentru care utilizatorul a confirmat deja avertismentul de schimbare.
+let categoryChangeConfirmed = null;
+
+function resetCategoryWarning() {
+  categoryChangeConfirmed = null;
+  el.categoryWarning.hidden = true;
+  el.categoryWarning.textContent = "";
+  el.categorySaveBtn.textContent = "Salvează categoria";
+}
+
+// Avertisment doar când schimbarea mută cititorul pe ALTĂ epistolă (atunci epistola
+// nouă începe de la prima pagină). Două categorii cu aceeași epistolă (ex. 18–35 și
+// 35+) nu pierd nimic, deci nu cer confirmare.
+function categoryChangeWarning(categoryId) {
+  if (!hasReadingCategory()) return null;
+  const from = ReadingPath.getCategory(readingProfile.category_id);
+  const to = ReadingPath.getCategory(categoryId);
+  if (!from || !to || from.epistle === to.epistle) return null;
+  const fromName = EPISTLE_NAMES[from.epistle];
+  const toName = EPISTLE_NAMES[to.epistle];
+  return `Schimbi epistola din ${fromName} în ${toName}. ${toName} începe de la prima pagină, iar ce ai citit din ${fromName} nu se mai numără pe traseul tău. Punctele câștigate se păstrează, dar versetele pentru care ai primit deja puncte în acest ciclu nu mai aduc puncte a doua oară.`;
+}
+
 function openCategoryModal() {
+  resetCategoryWarning();
   el.categoryModal.hidden = false;
   el.readingCategory.value = readingProfile?.category_id || "";
   el.categoryError.hidden = true;
@@ -527,6 +553,18 @@ async function handleCategorySave() {
   const category = el.readingCategory.value;
   if (!ReadingPath.getCategory(category)) {
     setAuthError(el.categoryError, "Alege categoria de vârstă.");
+    return;
+  }
+  const warning = categoryChangeWarning(category);
+  if (warning && categoryChangeConfirmed !== category) {
+    // Primul click arată avertismentul; salvarea se face abia la confirmare.
+    categoryChangeConfirmed = category;
+    el.categoryError.hidden = true;
+    el.categoryWarning.textContent = warning;
+    el.categoryWarning.hidden = false;
+    el.categorySaveBtn.textContent = "Da, schimb categoria";
+    // Pe telefon fereastra se derulează: butonul de confirmare trebuie să fie la vedere.
+    el.categorySaveBtn.scrollIntoView({ block: "nearest" });
     return;
   }
   const owner = Auth.getUserId();
@@ -553,6 +591,7 @@ async function handleCategorySave() {
     if (owner !== Auth.getUserId()) return;
     applyReadingProfile(profile, owner);
     el.categoryModal.hidden = true;
+    resetCategoryWarning();
     hideAuthModal();
     categorySaving = false;
     await syncSessionFromCloud();
@@ -561,7 +600,8 @@ async function handleCategorySave() {
   } finally {
     categorySaving = false;
     el.categorySaveBtn.disabled = false;
-    el.categorySaveBtn.textContent = "Salvează categoria";
+    // La o eroare păstrăm confirmarea: utilizatorul reîncearcă dintr-un singur click.
+    el.categorySaveBtn.textContent = categoryChangeConfirmed ? "Da, schimb categoria" : "Salvează categoria";
   }
 }
 
@@ -1811,6 +1851,7 @@ for (const select of [el.registerCategory, el.readingCategory]) {
     select.appendChild(option);
   }
 }
+el.readingCategory.addEventListener("change", resetCategoryWarning);
 el.categorySaveBtn.addEventListener("click", handleCategorySave);
 el.changeCategoryBtn.addEventListener("click", () => { hideAuthModal(); openCategoryModal(); });
 el.categoryCancelBtn.addEventListener("click", () => { if (hasReadingCategory()) el.categoryModal.hidden = true; });
