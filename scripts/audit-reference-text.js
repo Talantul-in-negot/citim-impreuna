@@ -5,11 +5,15 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { loadVerseArray } = require('./validate-verses');
+const { EPISTLE_BOOKS, parseEpistleReference } = require('./epistle-reference');
 const ROOT = path.join(__dirname, '..');
 const HEADINGS = require('../tasks/reference-section-headings.json');
 const BOOKS = [
   { id: '1samuel', name: '1 Samuel', variable: 'VERSES_1SAMUEL', count: 810, chapters: 31 },
   { id: '2samuel', name: '2 Samuel', variable: 'VERSES_2SAMUEL', count: 695, chapters: 24 },
+  ...EPISTLE_BOOKS.map((book) => ({ ...book, epistle: true,
+    variable: `EPISTLES[${JSON.stringify(book.id)}]`, appPath: 'js/verses-epistles.js',
+    count: book.chapterSizes.reduce((sum, size) => sum + size, 0), chapters: book.chapterSizes.length })),
 ];
 const normalize = (text) => text.normalize('NFC').replace(/ş/g, 'ș').replace(/Ş/g, 'Ș')
   .replace(/ţ/g, 'ț').replace(/Ţ/g, 'Ț').replace(/\s+/g, ' ').trim();
@@ -17,6 +21,7 @@ const words = (text) => normalize(text).toLocaleLowerCase('ro-RO').match(/[\p{L}
 const sha256 = (text) => crypto.createHash('sha256').update(text).digest('hex');
 
 function parseReference(raw, book) {
+  if (book.epistle) return parseEpistleReference(raw, book);
   const lines = raw.replace(/\r\n?/g, '\n').split('\n');
   const headings = new Set(HEADINGS[book.id]);
   const kept = [];
@@ -73,8 +78,8 @@ function wordDiff(reference, actual) {
 }
 
 function auditBook(book) {
-  const referencePath = `tasks/${book.id}-reference-text.md`;
-  const appPath = `js/verses-${book.id}.js`;
+  const referencePath = book.referencePath || `tasks/${book.id}-reference-text.md`;
+  const appPath = book.appPath || `js/verses-${book.id}.js`;
   const raw = fs.readFileSync(path.join(ROOT, referencePath), 'utf8');
   const references = parseReference(raw, book);
   const verses = loadVerseArray(path.join(ROOT, appPath), book.variable);
@@ -130,7 +135,7 @@ function markdownReport(results) {
   for (const r of results) out.push(`**${r.book}:** ${r.formatting.map(x => x.ref).join(', ') || 'Niciuna.'}`, '');
   out.push('## Surse și reproducere', '',
     '`node scripts/audit-reference-text.js --report tasks/reference-audit-YYYY-MM-DD`', '',
-    'Titlurile de secțiuni sunt excluse prin lista explicită din `tasks/reference-section-headings.json`. Continuările nenumerotate ale versetelor sunt păstrate. Structura referințelor este verificată: 31/24 capitole și 810/695 versete, în ordine fără goluri.', '');
+    'Titlurile de secțiuni sunt excluse prin liste explicite din `tasks/reference-section-headings.json` și `scripts/epistle-reference.js`. Continuările nenumerotate ale versetelor sunt păstrate. Pentru Filipeni 4:1 este restabilit explicit markerul numeric absent din sursă. Numărul capitolelor și versetelor este verificat pentru fiecare carte, în ordine fără goluri.', '');
   for (const r of results) out.push(`- ${r.referencePath} · SHA-256: ${r.referenceSha256}`, `- ${r.appPath} · SHA-256: ${r.appSha256}`);
   return out.join('\n') + '\n';
 }

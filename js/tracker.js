@@ -4,6 +4,12 @@
 const Tracker = (() => {
   const QUEUE_KEY = "ci_pending_events";
   const QUEUE_LOCK_KEY = "ci_pending_events_lock";
+  // Răspunsuri pe care serverul le-a refuzat DEFINITIV (categorie/revizie/ciclu/
+  // pagină schimbată între timp, verset necunoscut). Nu se mai trimit și nu se
+  // reștampilează niciodată cu valori noi, dar nici nu se șterg în tăcere: se
+  // păstrează aici pentru verificare, iar aplicația anunță utilizatorul.
+  const REJECTED_KEY = "ci_rejected_events";
+  const MAX_REJECTED_EVENTS = 300;
   const EVENT_ID_FIELD = "_ci_event_id";
   const EVENT_OWNER_FIELD = "_ci_owner_id";
   // Plafonul se aplică DOAR evenimentelor cu proprietar. Cele nerevendicate
@@ -195,6 +201,79 @@ const Tracker = (() => {
     scheduleBufferedDrain();
   }
 
+  // Refuz definitiv = serverul a verificat evenimentul și nu-l va accepta niciodată
+  // în forma lui. Doar motivele explicite contează; orice altceva (rețea, 401/403,
+  // 429, 5xx, „alege categoria", erori necunoscute) e tratat ca temporar, ca un
+  // răspuns legitim să nu fie pierdut din cauza unei erori pe care n-o înțelegem.
+  // „Unknown verse reference" NU e definitiv: înseamnă de obicei un server încă
+  // neactualizat (ex. catalogul de versete fără epistole, găsit în producție pe
+  // 2026-11-11), deci răspunsul rămâne în coadă până serverul îl cunoaște.
+  function permanentRejectionReason(status, body) {
+    if (status < 400 || status >= 500 || [401, 403, 408, 429].includes(status)) return null;
+    const detail = String(body?.details || "");
+    if (/^STALE_READING_(REVISION|CATEGORY|CYCLE|PAGE)$/.test(detail)) return detail;
+    return null;
+  }
+
+  async function readErrorBody(res) {
+    try { return await res.json(); } catch { return null; }
+  }
+
+  function readRejected() {
+    try {
+      const raw = JSON.parse(localStorage.getItem(REJECTED_KEY));
+      return Array.isArray(raw) ? raw : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function quarantine(evt, reason) {
+    const kept = readRejected().concat({ ...evt, _ci_rejected_reason: reason, _ci_rejected_at: new Date().toISOString(), _ci_rejected_seen: false });
+    localStorage.setItem(REJECTED_KEY, JSON.stringify(kept.slice(-MAX_REJECTED_EVENTS)));
+  }
+
+  function postEvents(batch, userId) {
+    const payload = batch.map(({ [EVENT_ID_FIELD]: eventId, [EVENT_OWNER_FIELD]: _ownerId, ...evt }) => ({
+      ...evt,
+      client_event_id: eventId,
+      user_id: userId,
+    }));
+    return (async () => fetch(`${SUPABASE_URL}/rest/v1/events?on_conflict=client_event_id`, {
+      method: "POST",
+      headers: await authHeaders({
+        "Content-Type": "application/json",
+        Prefer: "resolution=ignore-duplicates,return=minimal",
+      }),
+      body: JSON.stringify(payload),
+    }))();
+  }
+
+  function removeFromQueue(events) {
+    const ids = new Set(events.map((evt) => evt[EVENT_ID_FIELD]));
+    writeQueue(readQueue().filter((evt) => !ids.has(evt[EVENT_ID_FIELD])));
+  }
+
+  // Un lot e atomic: un singur eveniment învechit îl respinge întreg. Trimitem
+  // atunci câte unul, în ordine: cele valide intră, cele refuzate definitiv merg
+  // în carantină, iar la primul eșec temporar ne oprim (ordinea rămâne intactă).
+  async function submitOneByOne(batch, userId) {
+    let sentAny = false;
+    for (const evt of batch) {
+      const res = await postEvents([evt], userId);
+      if (res.ok) {
+        removeFromQueue([evt]);
+        sentAny = true;
+        continue;
+      }
+      const reason = permanentRejectionReason(res.status, await readErrorBody(res));
+      if (!reason) return { sentAny, stopped: true };
+      quarantine(evt, reason);
+      removeFromQueue([evt]);
+    }
+    return { sentAny, stopped: false };
+  }
+
   async function flush() {
     if (!enabled) return false;
     if (flushPromise) return flushPromise;
@@ -212,28 +291,23 @@ const Tracker = (() => {
             .filter((evt) => evt[EVENT_OWNER_FIELD] === userId)
             .slice(0, POST_BATCH_SIZE);
           if (batch.length === 0) return sentAny;
-          const payload = batch.map(({ [EVENT_ID_FIELD]: eventId, [EVENT_OWNER_FIELD]: _ownerId, ...evt }) => ({
-            ...evt,
-            client_event_id: eventId,
-            user_id: userId,
-          }));
           try {
-            // `on_conflict=client_event_id` e obligatoriu: fără el,
-            // resolution=ignore-duplicates se rezolvă pe cheia primară
+            // `on_conflict=client_event_id` e obligatoriu (vezi postEvents): fără
+            // el, resolution=ignore-duplicates se rezolvă pe cheia primară
             // (generată, deci mereu nouă) și nu deduplică niciodată.
-            const res = await fetch(`${SUPABASE_URL}/rest/v1/events?on_conflict=client_event_id`, {
-              method: "POST",
-              headers: await authHeaders({
-                "Content-Type": "application/json",
-                Prefer: "resolution=ignore-duplicates,return=minimal",
-              }),
-              body: JSON.stringify(payload),
-            });
-            if (!res.ok) return sentAny;
+            const res = await postEvents(batch, userId);
+            if (!res.ok) {
+              // Doar un refuz definitiv justifică desfacerea lotului; altfel
+              // (offline, sesiune expirată, server căzut) reîncercăm mai târziu.
+              if (!permanentRejectionReason(res.status, await readErrorBody(res))) return sentAny;
+              const outcome = await submitOneByOne(batch, userId);
+              sentAny = sentAny || outcome.sentAny;
+              if (outcome.stopped) return sentAny;
+              continue;
+            }
             // Evenimente adăugate în timpul trimiterii sunt procesate în următoarea
             // iterație înainte ca apelantul să poată citi scorul serverului.
-            const sentIds = new Set(batch.map((evt) => evt[EVENT_ID_FIELD]));
-            writeQueue(readQueue().filter((evt) => !sentIds.has(evt[EVENT_ID_FIELD])));
+            removeFromQueue(batch);
             sentAny = true;
             // NU mai chemăm refreshScore() aici. Triggerul AFTER INSERT STATEMENT
             // de pe `events` (events_recalculate_scores) recalculează deja scorul,
@@ -258,6 +332,23 @@ const Tracker = (() => {
     return flushPromise;
   }
 
+  // Câte răspunsuri ale contului curent au fost refuzate definitiv de la ultima
+  // întrebare; le marchează ca văzute (rămân păstrate în REJECTED_KEY).
+  function takeUnseenRejections() {
+    const userId = currentUserId();
+    if (!userId) return 0;
+    const rejected = readRejected();
+    let count = 0;
+    for (const evt of rejected) {
+      if (evt[EVENT_OWNER_FIELD] === userId && !evt._ci_rejected_seen) {
+        evt._ci_rejected_seen = true;
+        count++;
+      }
+    }
+    if (count) localStorage.setItem(REJECTED_KEY, JSON.stringify(rejected));
+    return count;
+  }
+
   function hasPendingEvents() {
     const userId = currentUserId();
     if (!userId) return false;
@@ -278,7 +369,7 @@ const Tracker = (() => {
     for (let offset = 0; offset < 100000; offset += PAGE) {
       const url =
         `${SUPABASE_URL}/rest/v1/events` +
-        `?select=verse_ref,correct,created_at,cycle,answer,chosen` +
+        `?select=verse_ref,correct,created_at,cycle,answer,chosen,epistle_revision` +
         `&user_id=eq.${encodeURIComponent(userId)}` +
         `&order=created_at.desc,id.desc&limit=${PAGE}&offset=${offset}`;
       const res = await fetch(url, { headers: await authHeaders() });
@@ -391,6 +482,42 @@ const Tracker = (() => {
     }
   }
 
+  async function fetchOwnProfile() {
+    const userId = currentUserId();
+    if (!enabled || !userId) throw new Error("Conectează-te pentru a alege categoria.");
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/reading_profiles?select=category_id,epistle_revision&user_id=eq.${encodeURIComponent(userId)}`,
+      { headers: await authHeaders() }
+    );
+    if (!res.ok) throw new Error("Categoria nu poate fi încărcată. Verifică conexiunea și încearcă din nou.");
+    const rows = await res.json();
+    return rows[0] || { category_id: null, epistle_revision: 0 };
+  }
+
+  async function saveCategory(categoryId, { initial = false } = {}) {
+    if (!enabled || !currentUserId()) throw new Error("Conectează-te pentru a salva categoria.");
+    // La prima alegere coada nu se golește aici: serverul respinge evenimentele
+    // unui cont fără categorie, deci ea se poate trimite abia după salvare.
+    if (!initial) {
+      await flush();
+      if (hasPendingEvents()) {
+        throw new Error("Răspunsurile tale așteaptă sincronizarea. Reconectează-te la internet înainte de a schimba categoria.");
+      }
+    }
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/set_reading_category`, {
+      method: "POST",
+      headers: await authHeaders({ "Content-Type": "application/json" }),
+      body: JSON.stringify({ p_category_id: categoryId }),
+    });
+    if (!res.ok) throw new Error("Categoria nu a putut fi salvată. Verifică conexiunea și încearcă din nou.");
+    const value = await res.json();
+    const profile = Array.isArray(value) ? value[0] : value;
+    if (!profile || profile.category_id !== categoryId) {
+      throw new Error("Categoria nu a fost confirmată. Încearcă din nou.");
+    }
+    return profile;
+  }
+
   // Supabase derivează scorul exclusiv din evenimentele utilizatorului curent.
   // Browserul nu mai transmite niciun total de puncte care ar putea fi modificat.
   async function refreshScore() {
@@ -423,5 +550,5 @@ const Tracker = (() => {
     refreshScore();
   });
 
-  return { enabled, log, flush, hasPendingEvents, refreshScore, fetchUserEvents, fetchScores, fetchOwnScore, fetchOwnCycle, fetchOwnReadingData };
+  return { enabled, log, flush, hasPendingEvents, takeUnseenRejections, refreshScore, fetchUserEvents, fetchScores, fetchOwnScore, fetchOwnCycle, fetchOwnReadingData, fetchOwnProfile, saveCategory };
 })();

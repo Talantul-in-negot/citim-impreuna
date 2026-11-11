@@ -226,3 +226,13 @@ the symptom unchanged, which was itself the signal to keep digging (see
 **Verified live, end to end:** phone answered new pages post-fix → score
 rose (16170 → 16220) → desktop reloaded → landed on page 11, matching the
 phone, no manual intervention. Cross-device sync confirmed working.
+
+## Categorii de vârstă și epistole — 2026-11-10
+
+- [ ] Verifică autentificarea, sursele de text și compatibilitatea ciclurilor existente.
+- [ ] Adaugă cele cinci epistole, generarea exercițiilor și auditul integral.
+- [ ] Adaugă profilul cu categorie, politici RLS și validarea parcursului în Supabase.
+- [ ] Integrează înregistrarea, alegerea obligatorie pentru conturile vechi și schimbarea categoriei.
+- [ ] Implementează parcursul fix Samuel → Samuel → epistolă, cu progres și punctare per ciclu.
+- [ ] Verifică migrarea, funcționarea offline, interfața și toate verificările repository-ului.
+- [ ] Pregătește instrucțiunile de publicare, fără push sau modificări în producție.

@@ -57,8 +57,12 @@ context.migrateLocalPagination();
 assert.equal(context.page, 6, 'Local migration must be idempotent');
 
 // Partial/short pages and gaps are reconstructed from references, not indices.
-Object.assign(context, { totalPages: pages.length });
-for (const name of ['firstUnsolvedPage', 'resumePageFromEvents', 'computeSolvedPagesForCycle', 'pageHadMistakeBeforeCompletion']) {
+// Toate versetele de aici sunt Samuel, deci revizia epistolei nu le afectează.
+Object.assign(context, {
+  totalPages: pages.length, readingEpistleRevision: 0,
+  ReadingPath: { isSamuelRef: (ref) => /^[12] Samuel /.test(ref) },
+});
+for (const name of ['isCurrentPathEvent', 'firstUnsolvedPage', 'resumePageFromEvents', 'computeSolvedPagesForCycle', 'pageHadMistakeBeforeCompletion']) {
   vm.runInContext(source.match(new RegExp(`function ${name}\\([^]*?\\n}`))[0], context);
 }
 const events = verses.slice(0, 28).map(v => ({ verse_ref: v.ref, cycle: 1, correct: true }));

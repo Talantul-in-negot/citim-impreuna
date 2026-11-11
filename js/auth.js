@@ -102,7 +102,7 @@ const Auth = (() => {
     return currentUser();
   }
 
-  async function signUp(username, password) {
+  async function signUp(username, password, categoryId) {
     if (!client()) throw new Error('Serviciul de autentificare nu este disponibil. Verifică conexiunea la internet.');
     const trimmed = normalizeUsername(username);
     if (trimmed.length < 2) throw new Error('Numele trebuie să aibă cel puțin 2 caractere.');
@@ -110,7 +110,7 @@ const Auth = (() => {
     const { data, error } = await client().auth.signUp({
       email: toEmail(trimmed),
       password,
-      options: { data: { username: trimmed } },
+      options: { data: { username: trimmed, category_id: categoryId || null } },
     });
     if (error) throw new Error(translateError(error.message));
     if (data.user && !data.session) {

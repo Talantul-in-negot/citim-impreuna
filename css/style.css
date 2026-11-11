@@ -673,6 +673,16 @@ select.blank.wrong {
   white-space: nowrap;
 }
 
+/* Etichete mai lungi („Salvează categoria") depășeau butonul pe telefoane de
+   375px; aici le lăsăm să treacă pe două rânduri în loc să fie tăiate. */
+.category-modal .modal-actions {
+  flex-wrap: wrap;
+}
+.category-modal .modal-actions .btn {
+  white-space: normal;
+  flex-basis: 8rem;
+}
+
 .modal-actions .btn.secondary {
   background: #64748b;
   color: #fff;
@@ -1045,3 +1055,38 @@ footer {
   15% { opacity: 1; }
   100% { opacity: 0; transform: translateY(-52vh) scale(1.15); }
 }
+
+/* Alegerea categoriei, la înscriere și în cont. */
+.category-modal { max-width: 440px; max-height: 90dvh; overflow-y: auto; }
+.category-modal p { font-family: system-ui, sans-serif; line-height: 1.5; }
+.category-label { display: block; font-family: system-ui, sans-serif; font-size: .9rem; font-weight: 700; text-align: left; margin: 10px 0 6px; }
+.category-select { width: 100%; min-height: 46px; padding: 10px; border: 1px solid #c8bddb; border-radius: 10px; background: #fff; color: var(--ink); font: inherit; }
+.category-select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.category-note { margin: 7px 0; font-family: system-ui, sans-serif; font-size: .76rem; color: var(--muted); line-height: 1.45; }
+.category-current { margin: 0; font-family: system-ui, sans-serif; font-size: .9rem; text-align: center; }
+.category-modal .modal-actions { flex-wrap: wrap; }
+.auth-modal { max-height: 92dvh; overflow-y: auto; }
+
+/* Problemă de sincronizare care trebuie văzută (răspunsuri vechi refuzate). */
+.sync-notice {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--card);
+  color: var(--ink);
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  font-family: system-ui, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+.sync-notice p { margin: 0; }
+.sync-notice .btn { align-self: flex-end; }

@@ -10,8 +10,9 @@
 -- comoditate ca sa nu mai existe loc pentru "am rulat unele, nu toate, in
 -- ordine gresita, in alt proiect" - vezi tasks/lessons.md L07.
 --
--- Idempotent in intregime: sigur de rulat de mai multe ori, inclusiv peste
--- o baza de date pe care unele dintre aceste fisiere au rulat deja partial.
+-- Pentru o baza noua sau pentru proiectul anterior activarii categoriilor.
+-- Dupa activarea categoriilor se aplica doar migrarile incrementale noi.
+-- Garda de mai jos refuza reaplicarea istoricului pe o baza cu categorii.
 --
 -- Inainte sa rulezi: confirma ca esti pe proiectul corect (bara de adrese a
 -- dashboard-ului trebuie sa contina codul din SUPABASE_URL din js/config.js).
@@ -27,7 +28,18 @@
 --   supabase/20260907_02_fix_completed_page_count_baseline.sql
 --   supabase/20261024_01_streak_day_starts_at_03.sql
 --   supabase/20261029_01_chapter_pages.sql
+--   supabase/20261110_01_epistle_answer_key.sql
+--   supabase/20261110_02_reading_categories.sql
+--   supabase/20261110_03_citim_catalog_epistles.sql
 
+
+do $category_bundle_guard$
+begin
+  if to_regclass('public.reading_profiles') is not null then
+    raise exception 'Reading categories are already enabled. Apply only incremental migrations; replaying the historical bundle would replace route-aware cycle rules.';
+  end if;
+end;
+$category_bundle_guard$;
 
 -- ============================================================================
 -- supabase/00000000_baseline_schema.sql
@@ -2717,5 +2729,1715 @@ begin
 end;
 $$;
 
+commit;
+
+
+-- ============================================================================
+-- supabase/20261110_01_epistle_answer_key.sql
+-- ============================================================================
+
+-- GENERAT de scripts/build-epistle-answer-key.js. Nu modifica manual.
+-- Aplică înainte de 20261110_02_reading_categories.sql și înainte de publicarea aplicației.
+begin;
+lock table public.verse_answers in share row exclusive mode;
+insert into public.verse_answers (verse_ref, ordinal, answer, page_index, page_size, chapter_ref, chapter_size) values
+  ('Iuda 1:1', 1505, 'iubiți', 324, 5, 'Iuda 1', 25),
+  ('Iuda 1:2', 1506, 'înmulțite', 324, 5, 'Iuda 1', 25),
+  ('Iuda 1:3', 1507, 'despre', 324, 5, 'Iuda 1', 25),
+  ('Iuda 1:4', 1508, 'harul', 324, 5, 'Iuda 1', 25),
+  ('Iuda 1:5', 1509, 'nimicit', 324, 5, 'Iuda 1', 25),
+  ('Iuda 1:6', 1510, 'întuneric', 325, 5, 'Iuda 1', 25),
+  ('Iuda 1:7', 1511, 'altuia', 325, 5, 'Iuda 1', 25),
+  ('Iuda 1:8', 1512, 'pângăresc', 325, 5, 'Iuda 1', 25),
+  ('Iuda 1:9', 1513, 'Arhanghelul', 325, 5, 'Iuda 1', 25),
+  ('Iuda 1:10', 1514, 'știu', 325, 5, 'Iuda 1', 25),
+  ('Iuda 1:11', 1515, 'într', 326, 5, 'Iuda 1', 25),
+  ('Iuda 1:12', 1516, 'îndoapă', 326, 5, 'Iuda 1', 25),
+  ('Iuda 1:13', 1517, 'vecie', 326, 5, 'Iuda 1', 25),
+  ('Iuda 1:14', 1518, 'șaptelea', 326, 5, 'Iuda 1', 25),
+  ('Iuda 1:15', 1519, 'ocară', 326, 5, 'Iuda 1', 25),
+  ('Iuda 1:16', 1520, 'poftele', 327, 5, 'Iuda 1', 25),
+  ('Iuda 1:17', 1521, 'vorbele', 327, 5, 'Iuda 1', 25),
+  ('Iuda 1:18', 1522, 'trăi', 327, 5, 'Iuda 1', 25),
+  ('Iuda 1:19', 1523, 'oameni', 327, 5, 'Iuda 1', 25),
+  ('Iuda 1:20', 1524, 'rugați', 327, 5, 'Iuda 1', 25),
+  ('Iuda 1:21', 1525, 'viața', 328, 5, 'Iuda 1', 25),
+  ('Iuda 1:22', 1526, 'despart', 328, 5, 'Iuda 1', 25),
+  ('Iuda 1:23', 1527, 'frică', 328, 5, 'Iuda 1', 25),
+  ('Iuda 1:24', 1528, 'înaintea', 328, 5, 'Iuda 1', 25),
+  ('Iuda 1:25', 1529, 'slava', 328, 5, 'Iuda 1', 25),
+  ('1 Petru 1:1', 1530, 'împrăștiați', 329, 5, '1 Petru 1', 25),
+  ('1 Petru 1:2', 1531, 'Tatăl', 329, 5, '1 Petru 1', 25),
+  ('1 Petru 1:3', 1532, 'Tatăl', 329, 5, '1 Petru 1', 25),
+  ('1 Petru 1:4', 1533, 'păstrată', 329, 5, '1 Petru 1', 25),
+  ('1 Petru 1:5', 1534, 'gata', 329, 5, '1 Petru 1', 25),
+  ('1 Petru 1:6', 1535, 'sunteți', 330, 5, '1 Petru 1', 25),
+  ('1 Petru 1:7', 1536, 'cinstea', 330, 5, '1 Petru 1', 25),
+  ('1 Petru 1:8', 1537, 'văzut', 330, 5, '1 Petru 1', 25),
+  ('1 Petru 1:9', 1538, 'sfârșit', 330, 5, '1 Petru 1', 25),
+  ('1 Petru 1:10', 1539, 'despre', 330, 5, '1 Petru 1', 25),
+  ('1 Petru 1:11', 1540, 'vedere', 331, 5, '1 Petru 1', 25),
+  ('1 Petru 1:12', 1541, 'Evanghelia', 331, 5, '1 Petru 1', 25),
+  ('1 Petru 1:13', 1542, 'fiți', 331, 5, '1 Petru 1', 25),
+  ('1 Petru 1:14', 1543, 'târâți', 331, 5, '1 Petru 1', 25),
+  ('1 Petru 1:15', 1544, 'sfinți', 331, 5, '1 Petru 1', 25),
+  ('1 Petru 1:16', 1545, 'scris', 332, 5, '1 Petru 1', 25),
+  ('1 Petru 1:17', 1546, 'faptele', 332, 5, '1 Petru 1', 25),
+  ('1 Petru 1:18', 1547, 'deșert', 332, 5, '1 Petru 1', 25),
+  ('1 Petru 1:19', 1548, 'scump', 332, 5, '1 Petru 1', 25),
+  ('1 Petru 1:20', 1549, 'lumii', 332, 5, '1 Petru 1', 25),
+  ('1 Petru 1:21', 1550, 'credința', 333, 5, '1 Petru 1', 25),
+  ('1 Petru 1:22', 1551, 'iubiți', 333, 5, '1 Petru 1', 25),
+  ('1 Petru 1:23', 1552, 'născuți', 333, 5, '1 Petru 1', 25),
+  ('1 Petru 1:24', 1553, 'cade', 333, 5, '1 Petru 1', 25),
+  ('1 Petru 1:25', 1554, 'Domnului', 333, 5, '1 Petru 1', 25),
+  ('1 Petru 2:1', 1555, 'prefăcătorie', 334, 5, '1 Petru 2', 25),
+  ('1 Petru 2:2', 1556, 'curat', 334, 5, '1 Petru 2', 25),
+  ('1 Petru 2:3', 1557, 'într', 334, 5, '1 Petru 2', 25),
+  ('1 Petru 2:4', 1558, 'Apropiați', 334, 5, '1 Petru 2', 25),
+  ('1 Petru 2:5', 1559, 'duhovnicești', 334, 5, '1 Petru 2', 25),
+  ('1 Petru 2:6', 1560, 'unghiului', 335, 5, '1 Petru 2', 25),
+  ('1 Petru 2:7', 1561, 'crezut', 335, 5, '1 Petru 2', 25),
+  ('1 Petru 2:8', 1562, 'lovesc', 335, 5, '1 Petru 2', 25),
+  ('1 Petru 2:9', 1563, 'minunată', 335, 5, '1 Petru 2', 25),
+  ('1 Petru 2:10', 1564, 'Dumnezeu', 335, 5, '1 Petru 2', 25),
+  ('1 Petru 2:11', 1565, 'străini', 336, 5, '1 Petru 2', 25),
+  ('1 Petru 2:12', 1566, 'cercetării', 336, 5, '1 Petru 2', 25),
+  ('1 Petru 2:13', 1567, 'omenești', 336, 5, '1 Petru 2', 25),
+  ('1 Petru 2:14', 1568, 'unii', 336, 5, '1 Petru 2', 25),
+  ('1 Petru 2:15', 1569, 'neștiutori', 336, 5, '1 Petru 2', 25),
+  ('1 Petru 2:16', 1570, 'Dumnezeu', 337, 5, '1 Petru 2', 25),
+  ('1 Petru 2:17', 1571, 'cinste', 337, 5, '1 Petru 2', 25),
+  ('1 Petru 2:18', 1572, 'stăpânilor', 337, 5, '1 Petru 2', 25),
+  ('1 Petru 2:19', 1573, 'cineva', 337, 5, '1 Petru 2', 25),
+  ('1 Petru 2:20', 1574, 'Într', 337, 5, '1 Petru 2', 25),
+  ('1 Petru 2:21', 1575, 'lăsat', 338, 5, '1 Petru 2', 25),
+  ('1 Petru 2:22', 1576, 'gura', 338, 5, '1 Petru 2', 25),
+  ('1 Petru 2:23', 1577, 'chinuit', 338, 5, '1 Petru 2', 25),
+  ('1 Petru 2:24', 1578, 'păcate', 338, 5, '1 Petru 2', 25),
+  ('1 Petru 2:25', 1579, 'Păstorul', 338, 5, '1 Petru 2', 25),
+  ('1 Petru 3:1', 1580, 'bărbaților', 339, 5, '1 Petru 3', 22),
+  ('1 Petru 3:2', 1581, 'felul', 339, 5, '1 Petru 3', 22),
+  ('1 Petru 3:3', 1582, 'îmbrăcarea', 339, 5, '1 Petru 3', 22),
+  ('1 Petru 3:4', 1583, 'curăția', 339, 5, '1 Petru 3', 22),
+  ('1 Petru 3:5', 1584, 'supuse', 339, 5, '1 Petru 3', 22),
+  ('1 Petru 3:6', 1585, 'Sara', 340, 5, '1 Petru 3', 22),
+  ('1 Petru 3:7', 1586, 'împreună', 340, 5, '1 Petru 3', 22),
+  ('1 Petru 3:8', 1587, 'fiți', 340, 5, '1 Petru 3', 22),
+  ('1 Petru 3:9', 1588, 'întoarceți', 340, 5, '1 Petru 3', 22),
+  ('1 Petru 3:10', 1589, 'limba', 340, 5, '1 Petru 3', 22),
+  ('1 Petru 3:11', 1590, 'facă', 341, 5, '1 Petru 3', 22),
+  ('1 Petru 3:12', 1591, 'ochii', 341, 5, '1 Petru 3', 22),
+  ('1 Petru 3:13', 1592, 'bine', 341, 5, '1 Petru 3', 22),
+  ('1 Petru 3:14', 1593, 'teamă', 341, 5, '1 Petru 3', 22),
+  ('1 Petru 3:15', 1594, 'Domn', 341, 5, '1 Petru 3', 22),
+  ('1 Petru 3:16', 1595, 'curat', 342, 5, '1 Petru 3', 22),
+  ('1 Petru 3:17', 1596, 'răul', 342, 5, '1 Petru 3', 22),
+  ('1 Petru 3:18', 1597, 'Hristos', 342, 5, '1 Petru 3', 22),
+  ('1 Petru 3:19', 1598, 'închisoare', 342, 5, '1 Petru 3', 22),
+  ('1 Petru 3:20', 1599, 'îndelunga', 342, 5, '1 Petru 3', 22),
+  ('1 Petru 3:21', 1600, 'Icoana', 343, 2, '1 Petru 3', 22),
+  ('1 Petru 3:22', 1601, 'puterile', 343, 2, '1 Petru 3', 22),
+  ('1 Petru 4:1', 1602, 'păcatul', 344, 5, '1 Petru 4', 19),
+  ('1 Petru 4:2', 1603, 'Dumnezeu', 344, 5, '1 Petru 4', 19),
+  ('1 Petru 4:3', 1604, 'ospețe', 344, 5, '1 Petru 4', 19),
+  ('1 Petru 4:4', 1605, 'același', 344, 5, '1 Petru 4', 19),
+  ('1 Petru 4:5', 1606, 'înaintea', 344, 5, '1 Petru 4', 19),
+  ('1 Petru 4:6', 1607, 'vestită', 345, 5, '1 Petru 4', 19),
+  ('1 Petru 4:7', 1608, 'aproape', 345, 5, '1 Petru 4', 19),
+  ('1 Petru 4:8', 1609, 'sumedenie', 345, 5, '1 Petru 4', 19),
+  ('1 Petru 4:9', 1610, 'primitori', 345, 5, '1 Petru 4', 19),
+  ('1 Petru 4:10', 1611, 'ispravnici', 345, 5, '1 Petru 4', 19),
+  ('1 Petru 4:11', 1612, 'slăvit', 346, 5, '1 Petru 4', 19),
+  ('1 Petru 4:12', 1613, 'mirați', 346, 5, '1 Petru 4', 19),
+  ('1 Petru 4:13', 1614, 'arătarea', 346, 5, '1 Petru 4', 19),
+  ('1 Petru 4:14', 1615, 'ferice', 346, 5, '1 Petru 4', 19),
+  ('1 Petru 4:15', 1616, 'unul', 346, 5, '1 Petru 4', 19),
+  ('1 Petru 4:16', 1617, 'Dumnezeu', 347, 4, '1 Petru 4', 19),
+  ('1 Petru 4:17', 1618, 'judecata', 347, 4, '1 Petru 4', 19),
+  ('1 Petru 4:18', 1619, 'face', 347, 4, '1 Petru 4', 19),
+  ('1 Petru 4:19', 1620, 'voia', 347, 4, '1 Petru 4', 19),
+  ('1 Petru 5:1', 1621, 'sfătuiesc', 348, 5, '1 Petru 5', 14),
+  ('1 Petru 5:2', 1622, 'turma', 348, 5, '1 Petru 5', 14),
+  ('1 Petru 5:3', 1623, 'peste', 348, 5, '1 Petru 5', 14),
+  ('1 Petru 5:4', 1624, 'arăta', 348, 5, '1 Petru 5', 14),
+  ('1 Petru 5:5', 1625, 'bătrâni', 348, 5, '1 Petru 5', 14),
+  ('1 Petru 5:6', 1626, 'înalțe', 349, 5, '1 Petru 5', 14),
+  ('1 Petru 5:7', 1627, 'asupra', 349, 5, '1 Petru 5', 14),
+  ('1 Petru 5:8', 1628, 'treji', 349, 5, '1 Petru 5', 14),
+  ('1 Petru 5:9', 1629, 'aceleași', 349, 5, '1 Petru 5', 14),
+  ('1 Petru 5:10', 1630, 'veșnică', 349, 5, '1 Petru 5', 14),
+  ('1 Petru 5:11', 1631, 'vecilor', 350, 4, '1 Petru 5', 14),
+  ('1 Petru 5:12', 1632, 'scris', 350, 4, '1 Petru 5', 14),
+  ('1 Petru 5:13', 1633, 'Marcu', 350, 4, '1 Petru 5', 14),
+  ('1 Petru 5:14', 1634, 'unii', 350, 4, '1 Petru 5', 14),
+  ('Filipeni 1:1', 1635, 'către', 351, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:2', 1636, 'Hristos', 351, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:3', 1637, 'Dumnezeului', 351, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:4', 1638, 'rugăciunile', 351, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:5', 1639, 'luați', 351, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:6', 1640, 'lucrare', 352, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:7', 1641, 'întrucât', 352, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:8', 1642, 'dragoste', 352, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:9', 1643, 'pricepere', 352, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:10', 1644, 'lucrurile', 352, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:11', 1645, 'lauda', 353, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:12', 1646, 'Evangheliei', 353, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:13', 1647, 'Într', 353, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:14', 1648, 'îmbărbătați', 353, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:15', 1649, 'alții', 353, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:16', 1650, 'unii', 354, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:17', 1651, 'lanțurile', 354, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:18', 1652, 'lumii', 354, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:19', 1653, 'acesta', 354, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:20', 1654, 'aștept', 354, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:21', 1655, 'câștig', 355, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:22', 1656, 'trup', 355, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:23', 1657, 'dori', 355, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:24', 1658, 'rămân', 355, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:25', 1659, 'înaintarea', 355, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:26', 1660, 'pricină', 356, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:27', 1661, 'suflet', 356, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:28', 1662, 'mântuirea', 356, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:29', 1663, 'harul', 356, 5, 'Filipeni 1', 30),
+  ('Filipeni 1:30', 1664, 'acum', 356, 5, 'Filipeni 1', 30),
+  ('Filipeni 2:1', 1665, 'milostivire', 357, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:2', 1666, 'aveți', 357, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:3', 1667, 'nimic', 357, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:4', 1668, 'altora', 357, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:5', 1669, 'acesta', 357, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:6', 1670, 'apucat', 358, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:7', 1671, 'chip', 358, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:8', 1672, 'găsit', 358, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:9', 1673, 'orice', 358, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:10', 1674, 'genunchi', 358, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:11', 1675, 'spre', 359, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:12', 1676, 'preaiubiților', 359, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:13', 1677, 'Dumnezeu', 359, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:14', 1678, 'cârtiri', 359, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:15', 1679, 'unui', 359, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:16', 1680, 'Cuvântul', 360, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:17', 1681, 'toți', 360, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:18', 1682, 'împreună', 360, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:19', 1683, 'Timotei', 360, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:20', 1684, 'simțirile', 360, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:21', 1685, 'umblă', 361, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:22', 1686, 'lucrat', 361, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:23', 1687, 'nădăjduiesc', 361, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:24', 1688, 'Domnul', 361, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:25', 1689, 'nevoile', 361, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:26', 1690, 'bolnav', 362, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:27', 1691, 'foarte', 362, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:28', 1692, 'atât', 362, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:29', 1693, 'Domnul', 362, 5, 'Filipeni 2', 30),
+  ('Filipeni 2:30', 1694, 'aproape', 362, 5, 'Filipeni 2', 30),
+  ('Filipeni 3:1', 1695, 'vouă', 363, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:2', 1696, 'câinii', 363, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:3', 1697, 'pământești', 363, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:4', 1698, 'Măcar', 363, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:5', 1699, 'împrejur', 363, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:6', 1700, 'privește', 364, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:7', 1701, 'câștiguri', 364, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:8', 1702, 'Isus', 364, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:9', 1703, 'neprihănirea', 364, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:10', 1704, 'învierii', 364, 5, 'Filipeni 3', 21)
+on conflict (verse_ref) do update set ordinal = excluded.ordinal, answer = excluded.answer, page_index = excluded.page_index, page_size = excluded.page_size, chapter_ref = excluded.chapter_ref, chapter_size = excluded.chapter_size;
+insert into public.verse_answers (verse_ref, ordinal, answer, page_index, page_size, chapter_ref, chapter_size) values
+  ('Filipeni 3:11', 1705, 'ajung', 365, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:12', 1706, 'apucat', 365, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:13', 1707, 'Fraților', 365, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:14', 1708, 'premiul', 365, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:15', 1709, 'suntem', 365, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:16', 1710, 'aceeași', 366, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:17', 1711, 'pilda', 366, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:18', 1712, 'vrăjmași', 366, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:19', 1713, 'pierzarea', 366, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:20', 1714, 'Mântuitor', 366, 5, 'Filipeni 3', 21),
+  ('Filipeni 3:21', 1715, 'lucrarea', 367, 1, 'Filipeni 3', 21),
+  ('Filipeni 4:1', 1716, 'doriții', 368, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:2', 1717, 'Sintichia', 368, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:3', 1718, 'tovarăș', 368, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:4', 1719, 'Iarăși', 368, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:5', 1720, 'Blândețea', 368, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:6', 1721, 'aduceți', 369, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:7', 1722, 'pricepere', 369, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:8', 1723, 'însuflețească', 369, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:9', 1724, 'auzit', 369, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:10', 1725, 'prilejul', 369, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:11', 1726, 'vedere', 370, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:12', 1727, 'smerit', 370, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:13', 1728, 'întărește', 370, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:14', 1729, 'parte', 370, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:15', 1730, 'mine', 370, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:16', 1731, 'nevoile', 371, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:17', 1732, 'daruri', 371, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:18', 1733, 'mireasmă', 371, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:19', 1734, 'Hristos', 371, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:20', 1735, 'Amin', 371, 5, 'Filipeni 4', 23),
+  ('Filipeni 4:21', 1736, 'Isus', 372, 3, 'Filipeni 4', 23),
+  ('Filipeni 4:22', 1737, 'sănătate', 372, 3, 'Filipeni 4', 23),
+  ('Filipeni 4:23', 1738, 'toți', 372, 3, 'Filipeni 4', 23),
+  ('Evrei 1:1', 1739, 'rânduri', 373, 5, 'Evrei 1', 14),
+  ('Evrei 1:2', 1740, 'acestor', 373, 5, 'Evrei 1', 14),
+  ('Evrei 1:3', 1741, 'păcatelor', 373, 5, 'Evrei 1', 14),
+  ('Evrei 1:4', 1742, 'decât', 373, 5, 'Evrei 1', 14),
+  ('Evrei 1:5', 1743, 'iarăși', 373, 5, 'Evrei 1', 14),
+  ('Evrei 1:6', 1744, 'zice', 374, 5, 'Evrei 1', 14),
+  ('Evrei 1:7', 1745, 'zice', 374, 5, 'Evrei 1', 14),
+  ('Evrei 1:8', 1746, 'Dumnezeule', 374, 5, 'Evrei 1', 14),
+  ('Evrei 1:9', 1747, 'iubit', 374, 5, 'Evrei 1', 14),
+  ('Evrei 1:10', 1748, 'mâinilor', 374, 5, 'Evrei 1', 14),
+  ('Evrei 1:11', 1749, 'haină', 375, 4, 'Evrei 1', 14),
+  ('Evrei 1:12', 1750, 'anii', 375, 4, 'Evrei 1', 14),
+  ('Evrei 1:13', 1751, 'dintre', 375, 4, 'Evrei 1', 14),
+  ('Evrei 1:14', 1752, 'duhuri', 375, 4, 'Evrei 1', 14),
+  ('Evrei 2:1', 1753, 'îndepărtați', 376, 5, 'Evrei 2', 18),
+  ('Evrei 2:2', 1754, 'îngeri', 376, 5, 'Evrei 2', 18),
+  ('Evrei 2:3', 1755, 'mântuire', 376, 5, 'Evrei 2', 18),
+  ('Evrei 2:4', 1756, 'întărea', 376, 5, 'Evrei 2', 18),
+  ('Evrei 2:5', 1757, 'viitoare', 376, 5, 'Evrei 2', 18),
+  ('Evrei 2:6', 1758, 'încă', 377, 5, 'Evrei 2', 18),
+  ('Evrei 2:7', 1759, 'Tale', 377, 5, 'Evrei 2', 18),
+  ('Evrei 2:8', 1760, 'adevăr', 377, 5, 'Evrei 2', 18),
+  ('Evrei 2:9', 1761, 'puțină', 377, 5, 'Evrei 2', 18),
+  ('Evrei 2:10', 1762, 'mântuirii', 377, 5, 'Evrei 2', 18),
+  ('Evrei 2:11', 1763, 'numească', 378, 5, 'Evrei 2', 18),
+  ('Evrei 2:12', 1764, 'vesti', 378, 5, 'Evrei 2', 18),
+  ('Evrei 2:13', 1765, 'iarăși', 378, 5, 'Evrei 2', 18),
+  ('Evrei 2:14', 1766, 'nimicească', 378, 5, 'Evrei 2', 18),
+  ('Evrei 2:15', 1767, 'erau', 378, 5, 'Evrei 2', 18),
+  ('Evrei 2:16', 1768, 'Avraam', 379, 3, 'Evrei 2', 18),
+  ('Evrei 2:17', 1769, 'Dumnezeu', 379, 3, 'Evrei 2', 18),
+  ('Evrei 2:18', 1770, 'ceea', 379, 3, 'Evrei 2', 18),
+  ('Evrei 3:1', 1771, 'frați', 380, 5, 'Evrei 3', 19),
+  ('Evrei 3:2', 1772, 'Dumnezeu', 380, 5, 'Evrei 3', 19),
+  ('Evrei 3:3', 1773, 'casa', 380, 5, 'Evrei 3', 19),
+  ('Evrei 3:4', 1774, 'Dumnezeu', 380, 5, 'Evrei 3', 19),
+  ('Evrei 3:5', 1775, 'casa', 380, 5, 'Evrei 3', 19),
+  ('Evrei 3:6', 1776, 'lăudăm', 381, 5, 'Evrei 3', 19),
+  ('Evrei 3:7', 1777, 'zice', 381, 5, 'Evrei 3', 19),
+  ('Evrei 3:8', 1778, 'împietriți', 381, 5, 'Evrei 3', 19),
+  ('Evrei 3:9', 1779, 'ispitit', 381, 5, 'Evrei 3', 19),
+  ('Evrei 3:10', 1780, 'acesta', 381, 5, 'Evrei 3', 19),
+  ('Evrei 3:11', 1781, 'mânia', 382, 5, 'Evrei 3', 19),
+  ('Evrei 3:12', 1782, 'dintre', 382, 5, 'Evrei 3', 19),
+  ('Evrei 3:13', 1783, 'fiecare', 382, 5, 'Evrei 3', 19),
+  ('Evrei 3:14', 1784, 'nezguduită', 382, 5, 'Evrei 3', 19),
+  ('Evrei 3:15', 1785, 'inimile', 382, 5, 'Evrei 3', 19),
+  ('Evrei 3:16', 1786, 'Cine', 383, 4, 'Evrei 3', 19),
+  ('Evrei 3:17', 1787, 'pustie', 383, 4, 'Evrei 3', 19),
+  ('Evrei 3:18', 1788, 'intre', 383, 4, 'Evrei 3', 19),
+  ('Evrei 3:19', 1789, 'necredinței', 383, 4, 'Evrei 3', 19),
+  ('Evrei 4:1', 1790, 'pomenească', 384, 5, 'Evrei 4', 16),
+  ('Evrei 4:2', 1791, 'cuvântul', 384, 5, 'Evrei 4', 16),
+  ('Evrei 4:3', 1792, 'lumii', 384, 5, 'Evrei 4', 16),
+  ('Evrei 4:4', 1793, 'odihnit', 384, 5, 'Evrei 4', 16),
+  ('Evrei 4:5', 1794, 'odihna', 384, 5, 'Evrei 4', 16),
+  ('Evrei 4:6', 1795, 'unii', 385, 5, 'Evrei 4', 16),
+  ('Evrei 4:7', 1796, 'atâta', 385, 5, 'Evrei 4', 16),
+  ('Evrei 4:8', 1797, 'altă', 385, 5, 'Evrei 4', 16),
+  ('Evrei 4:9', 1798, 'poporul', 385, 5, 'Evrei 4', 16),
+  ('Evrei 4:10', 1799, 'odihnit', 385, 5, 'Evrei 4', 16),
+  ('Evrei 4:11', 1800, 'odihna', 386, 5, 'Evrei 4', 16),
+  ('Evrei 4:12', 1801, 'încheieturile', 386, 5, 'Evrei 4', 16),
+  ('Evrei 4:13', 1802, 'înaintea', 386, 5, 'Evrei 4', 16),
+  ('Evrei 4:14', 1803, 'cerurile', 386, 5, 'Evrei 4', 16),
+  ('Evrei 4:15', 1804, 'milă', 386, 5, 'Evrei 4', 16),
+  ('Evrei 4:16', 1805, 'deplină', 387, 1, 'Evrei 4', 16),
+  ('Evrei 5:1', 1806, 'oameni', 388, 5, 'Evrei 5', 14),
+  ('Evrei 5:2', 1807, 'rătăciți', 388, 5, 'Evrei 5', 14),
+  ('Evrei 5:3', 1808, 'păcatele', 388, 5, 'Evrei 5', 14),
+  ('Evrei 5:4', 1809, 'cinstea', 388, 5, 'Evrei 5', 14),
+  ('Evrei 5:5', 1810, 'Mare', 388, 5, 'Evrei 5', 14),
+  ('Evrei 5:6', 1811, 'veac', 389, 5, 'Evrei 5', 14),
+  ('Evrei 5:7', 1812, 'către', 389, 5, 'Evrei 5', 14),
+  ('Evrei 5:8', 1813, 'măcar', 389, 5, 'Evrei 5', 14),
+  ('Evrei 5:9', 1814, 'unei', 389, 5, 'Evrei 5', 14),
+  ('Evrei 5:10', 1815, 'numit', 389, 5, 'Evrei 5', 14),
+  ('Evrei 5:11', 1816, 'făcut', 390, 4, 'Evrei 5', 14),
+  ('Evrei 5:12', 1817, 'iarăși', 390, 4, 'Evrei 5', 14),
+  ('Evrei 5:13', 1818, 'despre', 390, 4, 'Evrei 5', 14),
+  ('Evrei 5:14', 1819, 'deosebească', 390, 4, 'Evrei 5', 14),
+  ('Evrei 6:1', 1820, 'cele', 391, 5, 'Evrei 6', 20),
+  ('Evrei 6:2', 1821, 'învierea', 391, 5, 'Evrei 6', 20),
+  ('Evrei 6:3', 1822, 'Dumnezeu', 391, 5, 'Evrei 6', 20),
+  ('Evrei 6:4', 1823, 'gustat', 391, 5, 'Evrei 6', 20),
+  ('Evrei 6:5', 1824, 'Cuvântul', 391, 5, 'Evrei 6', 20),
+  ('Evrei 6:6', 1825, 'Dumnezeu', 392, 5, 'Evrei 6', 20),
+  ('Evrei 6:7', 1826, 'rodește', 392, 5, 'Evrei 6', 20),
+  ('Evrei 6:8', 1827, 'mărăcini', 392, 5, 'Evrei 6', 20),
+  ('Evrei 6:9', 1828, 'bune', 392, 5, 'Evrei 6', 20),
+  ('Evrei 6:10', 1829, 'osteneala', 392, 5, 'Evrei 6', 20),
+  ('Evrei 6:11', 1830, 'râvnă', 393, 5, 'Evrei 6', 20),
+  ('Evrei 6:12', 1831, 'răbdare', 393, 5, 'Evrei 6', 20),
+  ('Evrei 6:13', 1832, 'jure', 393, 5, 'Evrei 6', 20),
+  ('Evrei 6:14', 1833, 'binecuvânta', 393, 5, 'Evrei 6', 20),
+  ('Evrei 6:15', 1834, 'așteptat', 393, 5, 'Evrei 6', 20),
+  ('Evrei 6:16', 1835, 'chezășie', 394, 5, 'Evrei 6', 20),
+  ('Evrei 6:17', 1836, 'Dumnezeu', 394, 5, 'Evrei 6', 20),
+  ('Evrei 6:18', 1837, 'apucăm', 394, 5, 'Evrei 6', 20),
+  ('Evrei 6:19', 1838, 'neclintită', 394, 5, 'Evrei 6', 20),
+  ('Evrei 6:20', 1839, 'Mare', 394, 5, 'Evrei 6', 20),
+  ('Evrei 7:1', 1840, 'împăraților', 395, 5, 'Evrei 7', 28),
+  ('Evrei 7:2', 1841, 'zeciuială', 395, 5, 'Evrei 7', 28),
+  ('Evrei 7:3', 1842, 'asemănat', 395, 5, 'Evrei 7', 28),
+  ('Evrei 7:4', 1843, 'mare', 395, 5, 'Evrei 7', 28),
+  ('Evrei 7:5', 1844, 'slujba', 395, 5, 'Evrei 7', 28),
+  ('Evrei 7:6', 1845, 'făgăduințele', 396, 5, 'Evrei 7', 28),
+  ('Evrei 7:7', 1846, 'mare', 396, 5, 'Evrei 7', 28),
+  ('Evrei 7:8', 1847, 'mărturisește', 396, 5, 'Evrei 7', 28),
+  ('Evrei 7:9', 1848, 'zicem', 396, 5, 'Evrei 7', 28),
+  ('Evrei 7:10', 1849, 'Melhisedec', 396, 5, 'Evrei 7', 28),
+  ('Evrei 7:11', 1850, 'Legea', 397, 5, 'Evrei 7', 28),
+  ('Evrei 7:12', 1851, 'numaidecât', 397, 5, 'Evrei 7', 28),
+  ('Evrei 7:13', 1852, 'altarului', 397, 5, 'Evrei 7', 28),
+  ('Evrei 7:14', 1853, 'seminție', 397, 5, 'Evrei 7', 28),
+  ('Evrei 7:15', 1854, 'Melhisedec', 397, 5, 'Evrei 7', 28),
+  ('Evrei 7:16', 1855, 'vieți', 398, 5, 'Evrei 7', 28),
+  ('Evrei 7:17', 1856, 'ești', 398, 5, 'Evrei 7', 28),
+  ('Evrei 7:18', 1857, 'aici', 398, 5, 'Evrei 7', 28),
+  ('Evrei 7:19', 1858, 'bună', 398, 5, 'Evrei 7', 28),
+  ('Evrei 7:20', 1859, 'acesta', 398, 5, 'Evrei 7', 28),
+  ('Evrei 7:21', 1860, 'Domnul', 399, 5, 'Evrei 7', 28),
+  ('Evrei 7:22', 1861, 'făcut', 399, 5, 'Evrei 7', 28),
+  ('Evrei 7:23', 1862, 'moartea', 399, 5, 'Evrei 7', 28),
+  ('Evrei 7:24', 1863, 'unul', 399, 5, 'Evrei 7', 28),
+  ('Evrei 7:25', 1864, 'mijlocească', 399, 5, 'Evrei 7', 28),
+  ('Evrei 7:26', 1865, 'trebuia', 400, 3, 'Evrei 7', 28),
+  ('Evrei 7:27', 1866, 'nevoie', 400, 3, 'Evrei 7', 28),
+  ('Evrei 7:28', 1867, 'niște', 400, 3, 'Evrei 7', 28),
+  ('Evrei 8:1', 1868, 'Preot', 401, 5, 'Evrei 8', 13),
+  ('Evrei 8:2', 1869, 'slujitor', 401, 5, 'Evrei 8', 13),
+  ('Evrei 8:3', 1870, 'trebuință', 401, 5, 'Evrei 8', 13),
+  ('Evrei 8:4', 1871, 'Lege', 401, 5, 'Evrei 8', 13),
+  ('Evrei 8:5', 1872, 'arătat', 401, 5, 'Evrei 8', 13),
+  ('Evrei 8:6', 1873, 'legământul', 402, 5, 'Evrei 8', 13),
+  ('Evrei 8:7', 1874, 'vorba', 402, 5, 'Evrei 8', 13),
+  ('Evrei 8:8', 1875, 'zice', 402, 5, 'Evrei 8', 13),
+  ('Evrei 8:9', 1876, 'apucat', 402, 5, 'Evrei 8', 13),
+  ('Evrei 8:10', 1877, 'legile', 402, 5, 'Evrei 8', 13),
+  ('Evrei 8:11', 1878, 'zicând', 403, 3, 'Evrei 8', 13),
+  ('Evrei 8:12', 1879, 'nelegiuirile', 403, 3, 'Evrei 8', 13),
+  ('Evrei 8:13', 1880, 'faptul', 403, 3, 'Evrei 8', 13),
+  ('Evrei 9:1', 1881, 'dumnezeiască', 404, 5, 'Evrei 9', 28),
+  ('Evrei 9:2', 1882, 'dinainte', 404, 5, 'Evrei 9', 28),
+  ('Evrei 9:3', 1883, 'afla', 404, 5, 'Evrei 9', 28),
+  ('Evrei 9:4', 1884, 'chivotul', 404, 5, 'Evrei 9', 28),
+  ('Evrei 9:5', 1885, 'ispășirii', 404, 5, 'Evrei 9', 28),
+  ('Evrei 9:6', 1886, 'preoții', 405, 5, 'Evrei 9', 28),
+  ('Evrei 9:7', 1887, 'preot', 405, 5, 'Evrei 9', 28),
+  ('Evrei 9:8', 1888, 'Sfânt', 405, 5, 'Evrei 9', 28),
+  ('Evrei 9:9', 1889, 'vremurile', 405, 5, 'Evrei 9', 28),
+  ('Evrei 9:10', 1890, 'spălări', 405, 5, 'Evrei 9', 28),
+  ('Evrei 9:11', 1891, 'zidirea', 406, 5, 'Evrei 9', 28),
+  ('Evrei 9:12', 1892, 'răscumpărare', 406, 5, 'Evrei 9', 28),
+  ('Evrei 9:13', 1893, 'trupului', 406, 5, 'Evrei 9', 28),
+  ('Evrei 9:14', 1894, 'Dumnezeu', 406, 5, 'Evrei 9', 28),
+  ('Evrei 9:15', 1895, 'veșnica', 406, 5, 'Evrei 9', 28),
+  ('Evrei 9:16', 1896, 'făcut', 407, 5, 'Evrei 9', 28),
+  ('Evrei 9:17', 1897, 'trăiește', 407, 5, 'Evrei 9', 28),
+  ('Evrei 9:18', 1898, 'întâiul', 407, 5, 'Evrei 9', 28),
+  ('Evrei 9:19', 1899, 'cartea', 407, 5, 'Evrei 9', 28),
+  ('Evrei 9:20', 1900, 'poruncit', 407, 5, 'Evrei 9', 28),
+  ('Evrei 9:21', 1901, 'vasele', 408, 5, 'Evrei 9', 28),
+  ('Evrei 9:22', 1902, 'vărsare', 408, 5, 'Evrei 9', 28),
+  ('Evrei 9:23', 1903, 'deoarece', 408, 5, 'Evrei 9', 28),
+  ('Evrei 9:24', 1904, 'chiar', 408, 5, 'Evrei 9', 28)
+on conflict (verse_ref) do update set ordinal = excluded.ordinal, answer = excluded.answer, page_index = excluded.page_index, page_size = excluded.page_size, chapter_ref = excluded.chapter_ref, chapter_size = excluded.chapter_size;
+insert into public.verse_answers (verse_ref, ordinal, answer, page_index, page_size, chapter_ref, chapter_size) values
+  ('Evrei 9:25', 1905, 'fiecare', 408, 5, 'Evrei 9', 28),
+  ('Evrei 9:26', 1906, 'jertfa', 409, 3, 'Evrei 9', 28),
+  ('Evrei 9:27', 1907, 'rânduit', 409, 3, 'Evrei 9', 28),
+  ('Evrei 9:28', 1908, 'multora', 409, 3, 'Evrei 9', 28),
+  ('Evrei 10:1', 1909, 'adevărată', 410, 5, 'Evrei 10', 39),
+  ('Evrei 10:2', 1910, 'păcate', 410, 5, 'Evrei 10', 39),
+  ('Evrei 10:3', 1911, 'aducerea', 410, 5, 'Evrei 10', 39),
+  ('Evrei 10:4', 1912, 'sângele', 410, 5, 'Evrei 10', 39),
+  ('Evrei 10:5', 1913, 'pregătit', 410, 5, 'Evrei 10', 39),
+  ('Evrei 10:6', 1914, 'păcat', 411, 5, 'Evrei 10', 39),
+  ('Evrei 10:7', 1915, 'Iată', 411, 5, 'Evrei 10', 39),
+  ('Evrei 10:8', 1916, 'primit', 411, 5, 'Evrei 10', 39),
+  ('Evrei 10:9', 1917, 'pună', 411, 5, 'Evrei 10', 39),
+  ('Evrei 10:10', 1918, 'totdeauna', 411, 5, 'Evrei 10', 39),
+  ('Evrei 10:11', 1919, 'preot', 412, 5, 'Evrei 10', 39),
+  ('Evrei 10:12', 1920, 'adus', 412, 5, 'Evrei 10', 39),
+  ('Evrei 10:13', 1921, 'făcuți', 412, 5, 'Evrei 10', 39),
+  ('Evrei 10:14', 1922, 'făcut', 412, 5, 'Evrei 10', 39),
+  ('Evrei 10:15', 1923, 'Lucrul', 412, 5, 'Evrei 10', 39),
+  ('Evrei 10:16', 1924, 'Iată', 413, 5, 'Evrei 10', 39),
+  ('Evrei 10:17', 1925, 'aminte', 413, 5, 'Evrei 10', 39),
+  ('Evrei 10:18', 1926, 'păcat', 413, 5, 'Evrei 10', 39),
+  ('Evrei 10:19', 1927, 'sângele', 413, 5, 'Evrei 10', 39),
+  ('Evrei 10:20', 1928, 'adică', 413, 5, 'Evrei 10', 39),
+  ('Evrei 10:21', 1929, 'casa', 414, 5, 'Evrei 10', 39),
+  ('Evrei 10:22', 1930, 'deplină', 414, 5, 'Evrei 10', 39),
+  ('Evrei 10:23', 1931, 'credincios', 414, 5, 'Evrei 10', 39),
+  ('Evrei 10:24', 1932, 'unii', 414, 5, 'Evrei 10', 39),
+  ('Evrei 10:25', 1933, 'mult', 414, 5, 'Evrei 10', 39),
+  ('Evrei 10:26', 1934, 'cunoștința', 415, 5, 'Evrei 10', 39),
+  ('Evrei 10:27', 1935, 'mistui', 415, 5, 'Evrei 10', 39),
+  ('Evrei 10:28', 1936, 'trei', 415, 5, 'Evrei 10', 39),
+  ('Evrei 10:29', 1937, 'Duhul', 415, 5, 'Evrei 10', 39),
+  ('Evrei 10:30', 1938, 'altă', 415, 5, 'Evrei 10', 39),
+  ('Evrei 10:31', 1939, 'mâinile', 416, 5, 'Evrei 10', 39),
+  ('Evrei 10:32', 1940, 'zilele', 416, 5, 'Evrei 10', 39),
+  ('Evrei 10:33', 1941, 'soartă', 416, 5, 'Evrei 10', 39),
+  ('Evrei 10:34', 1942, 'Într', 416, 5, 'Evrei 10', 39),
+  ('Evrei 10:35', 1943, 'părăsiți', 416, 5, 'Evrei 10', 39),
+  ('Evrei 10:36', 1944, 'puteți', 417, 4, 'Evrei 10', 39),
+  ('Evrei 10:37', 1945, 'zăbovi', 417, 4, 'Evrei 10', 39),
+  ('Evrei 10:38', 1946, 'sufletul', 417, 4, 'Evrei 10', 39),
+  ('Evrei 10:39', 1947, 'înapoi', 417, 4, 'Evrei 10', 39),
+  ('Evrei 11:1', 1948, 'despre', 418, 5, 'Evrei 11', 40),
+  ('Evrei 11:2', 1949, 'vechime', 418, 5, 'Evrei 11', 40),
+  ('Evrei 11:3', 1950, 'lumea', 418, 5, 'Evrei 11', 40),
+  ('Evrei 11:4', 1951, 'Abel', 418, 5, 'Evrei 11', 40),
+  ('Evrei 11:5', 1952, 'pământ', 418, 5, 'Evrei 11', 40),
+  ('Evrei 11:6', 1953, 'răsplătește', 419, 5, 'Evrei 11', 40),
+  ('Evrei 11:7', 1954, 'înștiințat', 419, 5, 'Evrei 11', 40),
+  ('Evrei 11:8', 1955, 'chemat', 419, 5, 'Evrei 11', 40),
+  ('Evrei 11:9', 1956, 'venit', 419, 5, 'Evrei 11', 40),
+  ('Evrei 11:10', 1957, 'tari', 419, 5, 'Evrei 11', 40),
+  ('Evrei 11:11', 1958, 'primit', 420, 5, 'Evrei 11', 40),
+  ('Evrei 11:12', 1959, 'singur', 420, 5, 'Evrei 11', 40),
+  ('Evrei 11:13', 1960, 'văzut', 420, 5, 'Evrei 11', 40),
+  ('Evrei 11:14', 1961, 'patrii', 420, 5, 'Evrei 11', 40),
+  ('Evrei 11:15', 1962, 'întoarcă', 420, 5, 'Evrei 11', 40),
+  ('Evrei 11:16', 1963, 'bună', 421, 5, 'Evrei 11', 40),
+  ('Evrei 11:17', 1964, 'Isaac', 421, 5, 'Evrei 11', 40),
+  ('Evrei 11:18', 1965, 'avea', 421, 5, 'Evrei 11', 40),
+  ('Evrei 11:19', 1966, 'vorbind', 421, 5, 'Evrei 11', 40),
+  ('Evrei 11:20', 1967, 'Esau', 421, 5, 'Evrei 11', 40),
+  ('Evrei 11:21', 1968, 'Iacov', 422, 5, 'Evrei 11', 40),
+  ('Evrei 11:22', 1969, 'sfârșitul', 422, 5, 'Evrei 11', 40),
+  ('Evrei 11:23', 1970, 'părinții', 422, 5, 'Evrei 11', 40),
+  ('Evrei 11:24', 1971, 'Faraon', 422, 5, 'Evrei 11', 40),
+  ('Evrei 11:25', 1972, 'Dumnezeu', 422, 5, 'Evrei 11', 40),
+  ('Evrei 11:26', 1973, 'avea', 423, 5, 'Evrei 11', 40),
+  ('Evrei 11:27', 1974, 'teamă', 423, 5, 'Evrei 11', 40),
+  ('Evrei 11:28', 1975, 'întâi', 423, 5, 'Evrei 11', 40),
+  ('Evrei 11:29', 1976, 'Roșie', 423, 5, 'Evrei 11', 40),
+  ('Evrei 11:30', 1977, 'Ierihonului', 423, 5, 'Evrei 11', 40),
+  ('Evrei 11:31', 1978, 'găzduise', 424, 5, 'Evrei 11', 40),
+  ('Evrei 11:32', 1979, 'Samson', 424, 5, 'Evrei 11', 40),
+  ('Evrei 11:33', 1980, 'împărății', 424, 5, 'Evrei 11', 40),
+  ('Evrei 11:34', 1981, 'vrăjmașe', 424, 5, 'Evrei 11', 40),
+  ('Evrei 11:35', 1982, 'înviați', 424, 5, 'Evrei 11', 40),
+  ('Evrei 11:36', 1983, 'bătăi', 425, 5, 'Evrei 11', 40),
+  ('Evrei 11:37', 1984, 'prigoniți', 425, 5, 'Evrei 11', 40),
+  ('Evrei 11:38', 1985, 'vrednică', 425, 5, 'Evrei 11', 40),
+  ('Evrei 11:39', 1986, 'credința', 425, 5, 'Evrei 11', 40),
+  ('Evrei 11:40', 1987, 'vedere', 425, 5, 'Evrei 11', 40),
+  ('Evrei 12:1', 1988, 'laoparte', 426, 5, 'Evrei 12', 29),
+  ('Evrei 12:2', 1989, 'Isus', 426, 5, 'Evrei 12', 29),
+  ('Evrei 12:3', 1990, 'cumva', 426, 5, 'Evrei 12', 29),
+  ('Evrei 12:4', 1991, 'sânge', 426, 5, 'Evrei 12', 29),
+  ('Evrei 12:5', 1992, 'Fiule', 426, 5, 'Evrei 12', 29),
+  ('Evrei 12:6', 1993, 'pedepsește', 427, 5, 'Evrei 12', 29),
+  ('Evrei 12:7', 1994, 'pedepsește', 427, 5, 'Evrei 12', 29),
+  ('Evrei 12:8', 1995, 'niște', 427, 5, 'Evrei 12', 29),
+  ('Evrei 12:9', 1996, 'trebuie', 427, 5, 'Evrei 12', 29),
+  ('Evrei 12:10', 1997, 'adevăr', 427, 5, 'Evrei 12', 29),
+  ('Evrei 12:11', 1998, 'aduce', 428, 5, 'Evrei 12', 29),
+  ('Evrei 12:12', 1999, 'mâinile', 428, 5, 'Evrei 12', 29),
+  ('Evrei 12:13', 2000, 'picioarele', 428, 5, 'Evrei 12', 29),
+  ('Evrei 12:14', 2001, 'Urmăriți', 428, 5, 'Evrei 12', 29),
+  ('Evrei 12:15', 2002, 'nimeni', 428, 5, 'Evrei 12', 29),
+  ('Evrei 12:16', 2003, 'Vegheați', 429, 5, 'Evrei 12', 29),
+  ('Evrei 12:17', 2004, 'Știți', 429, 5, 'Evrei 12', 29),
+  ('Evrei 12:18', 2005, 'cuprins', 429, 5, 'Evrei 12', 29),
+  ('Evrei 12:19', 2006, 'glasul', 429, 5, 'Evrei 12', 29),
+  ('Evrei 12:20', 2007, 'munte', 429, 5, 'Evrei 12', 29),
+  ('Evrei 12:21', 2008, 'înfricoșătoare', 430, 5, 'Evrei 12', 29),
+  ('Evrei 12:22', 2009, 'muntele', 430, 5, 'Evrei 12', 29),
+  ('Evrei 12:23', 2010, 'născuți', 430, 5, 'Evrei 12', 29),
+  ('Evrei 12:24', 2011, 'decât', 430, 5, 'Evrei 12', 29),
+  ('Evrei 12:25', 2012, 'scăpat', 430, 5, 'Evrei 12', 29),
+  ('Evrei 12:26', 2013, 'încă', 431, 4, 'Evrei 12', 29),
+  ('Evrei 12:27', 2014, 'arată', 431, 4, 'Evrei 12', 29),
+  ('Evrei 12:28', 2015, 'frică', 431, 4, 'Evrei 12', 29),
+  ('Evrei 12:29', 2016, 'Dumnezeul', 431, 4, 'Evrei 12', 29),
+  ('Evrei 13:1', 2017, 'frățească', 432, 5, 'Evrei 13', 25),
+  ('Evrei 13:2', 2018, 'știe', 432, 5, 'Evrei 13', 25),
+  ('Evrei 13:3', 2019, 'aminte', 432, 5, 'Evrei 13', 25),
+  ('Evrei 13:4', 2020, 'ținută', 432, 5, 'Evrei 13', 25),
+  ('Evrei 13:5', 2021, 'iubitori', 432, 5, 'Evrei 13', 25),
+  ('Evrei 13:6', 2022, 'putem', 433, 5, 'Evrei 13', 25),
+  ('Evrei 13:7', 2023, 'Dumnezeu', 433, 5, 'Evrei 13', 25),
+  ('Evrei 13:8', 2024, 'Isus', 433, 5, 'Evrei 13', 25),
+  ('Evrei 13:9', 2025, 'întărită', 433, 5, 'Evrei 13', 25),
+  ('Evrei 13:10', 2026, 'altar', 433, 5, 'Evrei 13', 25),
+  ('Evrei 13:11', 2027, 'păcat', 434, 5, 'Evrei 13', 25),
+  ('Evrei 13:12', 2028, 'însuși', 434, 5, 'Evrei 13', 25),
+  ('Evrei 13:13', 2029, 'suferim', 434, 5, 'Evrei 13', 25),
+  ('Evrei 13:14', 2030, 'căutarea', 434, 5, 'Evrei 13', 25),
+  ('Evrei 13:15', 2031, 'Dumnezeu', 434, 5, 'Evrei 13', 25),
+  ('Evrei 13:16', 2032, 'binefacerea', 435, 5, 'Evrei 13', 25),
+  ('Evrei 13:17', 2033, 'sufletelor', 435, 5, 'Evrei 13', 25),
+  ('Evrei 13:18', 2034, 'purtăm', 435, 5, 'Evrei 13', 25),
+  ('Evrei 13:19', 2035, 'lucrul', 435, 5, 'Evrei 13', 25),
+  ('Evrei 13:20', 2036, 'oilor', 435, 5, 'Evrei 13', 25),
+  ('Evrei 13:21', 2037, 'Hristos', 436, 5, 'Evrei 13', 25),
+  ('Evrei 13:22', 2038, 'primiți', 436, 5, 'Evrei 13', 25),
+  ('Evrei 13:23', 2039, 'împreună', 436, 5, 'Evrei 13', 25),
+  ('Evrei 13:24', 2040, 'trimit', 436, 5, 'Evrei 13', 25),
+  ('Evrei 13:25', 2041, 'Harul', 436, 5, 'Evrei 13', 25),
+  ('Galateni 1:1', 2042, 'Pavel', 437, 5, 'Galateni 1', 24),
+  ('Galateni 1:2', 2043, 'către', 437, 5, 'Galateni 1', 24),
+  ('Galateni 1:3', 2044, 'Hristos', 437, 5, 'Galateni 1', 24),
+  ('Galateni 1:4', 2045, 'Însuși', 437, 5, 'Galateni 1', 24),
+  ('Galateni 1:5', 2046, 'vecilor', 437, 5, 'Galateni 1', 24),
+  ('Galateni 1:6', 2047, 'altă', 438, 5, 'Galateni 1', 24),
+  ('Galateni 1:7', 2048, 'tulbură', 438, 5, 'Galateni 1', 24),
+  ('Galateni 1:8', 2049, 'evanghelie', 438, 5, 'Galateni 1', 24),
+  ('Galateni 1:9', 2050, 'deosebită', 438, 5, 'Galateni 1', 24),
+  ('Galateni 1:10', 2051, 'oare', 438, 5, 'Galateni 1', 24),
+  ('Galateni 1:11', 2052, 'obârșie', 439, 5, 'Galateni 1', 24),
+  ('Galateni 1:12', 2053, 'primit', 439, 5, 'Galateni 1', 24),
+  ('Galateni 1:13', 2054, 'mult', 439, 5, 'Galateni 1', 24),
+  ('Galateni 1:14', 2055, 'vârstă', 439, 5, 'Galateni 1', 24),
+  ('Galateni 1:15', 2056, 'pântecele', 439, 5, 'Galateni 1', 24),
+  ('Galateni 1:16', 2057, 'neamuri', 440, 5, 'Galateni 1', 24),
+  ('Galateni 1:17', 2058, 'mine', 440, 5, 'Galateni 1', 24),
+  ('Galateni 1:18', 2059, 'cincisprezece', 440, 5, 'Galateni 1', 24),
+  ('Galateni 1:19', 2060, 'decât', 440, 5, 'Galateni 1', 24),
+  ('Galateni 1:20', 2061, 'scriu', 440, 5, 'Galateni 1', 24),
+  ('Galateni 1:21', 2062, 'Ciliciei', 441, 4, 'Galateni 1', 24),
+  ('Galateni 1:22', 2063, 'necunoscut', 441, 4, 'Galateni 1', 24),
+  ('Galateni 1:23', 2064, 'propovăduiește', 441, 4, 'Galateni 1', 24),
+  ('Galateni 1:24', 2065, 'pricina', 441, 4, 'Galateni 1', 24),
+  ('Galateni 2:1', 2066, 'luat', 442, 5, 'Galateni 2', 21),
+  ('Galateni 2:2', 2067, 'vază', 442, 5, 'Galateni 2', 21),
+  ('Galateni 2:3', 2068, 'mine', 442, 5, 'Galateni 2', 21),
+  ('Galateni 2:4', 2069, 'pândească', 442, 5, 'Galateni 2', 21),
+  ('Galateni 2:5', 2070, 'rămână', 442, 5, 'Galateni 2', 21),
+  ('Galateni 2:6', 2071, 'fața', 443, 5, 'Galateni 2', 21),
+  ('Galateni 2:7', 2072, 'dimpotrivă', 443, 5, 'Galateni 2', 21),
+  ('Galateni 2:8', 2073, 'tăiați', 443, 5, 'Galateni 2', 21),
+  ('Galateni 2:9', 2074, 'însoțire', 443, 5, 'Galateni 2', 21),
+  ('Galateni 2:10', 2075, 'căutat', 443, 5, 'Galateni 2', 21),
+  ('Galateni 2:11', 2076, 'venit', 444, 5, 'Galateni 2', 21),
+  ('Galateni 2:12', 2077, 'tăiați', 444, 5, 'Galateni 2', 21),
+  ('Galateni 2:13', 2078, 'iudei', 444, 5, 'Galateni 2', 21),
+  ('Galateni 2:14', 2079, 'tuturor', 444, 5, 'Galateni 2', 21),
+  ('Galateni 2:15', 2080, 'fire', 444, 5, 'Galateni 2', 21),
+  ('Galateni 2:16', 2081, 'socotiți', 445, 5, 'Galateni 2', 21),
+  ('Galateni 2:17', 2082, 'păcătoși', 445, 5, 'Galateni 2', 21),
+  ('Galateni 2:18', 2083, 'zidesc', 445, 5, 'Galateni 2', 21),
+  ('Galateni 2:19', 2084, 'trăiesc', 445, 5, 'Galateni 2', 21),
+  ('Galateni 2:20', 2085, 'Sine', 445, 5, 'Galateni 2', 21),
+  ('Galateni 2:21', 2086, 'Hristos', 446, 1, 'Galateni 2', 21),
+  ('Galateni 3:1', 2087, 'fermecat', 447, 5, 'Galateni 3', 29),
+  ('Galateni 3:2', 2088, 'faptele', 447, 5, 'Galateni 3', 29),
+  ('Galateni 3:3', 2089, 'vreți', 447, 5, 'Galateni 3', 29),
+  ('Galateni 3:4', 2090, 'adevăr', 447, 5, 'Galateni 3', 29),
+  ('Galateni 3:5', 2091, 'Duhul', 447, 5, 'Galateni 3', 29),
+  ('Galateni 3:6', 2092, 'crezut', 448, 5, 'Galateni 3', 29),
+  ('Galateni 3:7', 2093, 'credință', 448, 5, 'Galateni 3', 29),
+  ('Galateni 3:8', 2094, 'tine', 448, 5, 'Galateni 3', 29),
+  ('Galateni 3:9', 2095, 'binecuvântați', 448, 5, 'Galateni 3', 29),
+  ('Galateni 3:10', 2096, 'lucrurile', 448, 5, 'Galateni 3', 29),
+  ('Galateni 3:11', 2097, 'trăi', 449, 5, 'Galateni 3', 29),
+  ('Galateni 3:12', 2098, 'credință', 449, 5, 'Galateni 3', 29),
+  ('Galateni 3:13', 2099, 'lemn', 449, 5, 'Galateni 3', 29),
+  ('Galateni 3:14', 2100, 'peste', 449, 5, 'Galateni 3', 29),
+  ('Galateni 3:15', 2101, 'nimeni', 449, 5, 'Galateni 3', 29),
+  ('Galateni 3:16', 2102, 'multe', 450, 5, 'Galateni 3', 29),
+  ('Galateni 3:17', 2103, 'Iată', 450, 5, 'Galateni 3', 29),
+  ('Galateni 3:18', 2104, 'vine', 450, 5, 'Galateni 3', 29)
+on conflict (verse_ref) do update set ordinal = excluded.ordinal, answer = excluded.answer, page_index = excluded.page_index, page_size = excluded.page_size, chapter_ref = excluded.chapter_ref, chapter_size = excluded.chapter_size;
+insert into public.verse_answers (verse_ref, ordinal, answer, page_index, page_size, chapter_ref, chapter_size) values
+  ('Galateni 3:19', 2105, 'mijlocitor', 450, 5, 'Galateni 3', 29),
+  ('Galateni 3:20', 2106, 'Dumnezeu', 450, 5, 'Galateni 3', 29),
+  ('Galateni 3:21', 2107, 'Dumnezeu', 451, 5, 'Galateni 3', 29),
+  ('Galateni 3:22', 2108, 'închis', 451, 5, 'Galateni 3', 29),
+  ('Galateni 3:23', 2109, 'credinței', 451, 5, 'Galateni 3', 29),
+  ('Galateni 3:24', 2110, 'credință', 451, 5, 'Galateni 3', 29),
+  ('Galateni 3:25', 2111, 'îndrumătorul', 451, 5, 'Galateni 3', 29),
+  ('Galateni 3:26', 2112, 'Isus', 452, 4, 'Galateni 3', 29),
+  ('Galateni 3:27', 2113, 'Toți', 452, 4, 'Galateni 3', 29),
+  ('Galateni 3:28', 2114, 'slobod', 452, 4, 'Galateni 3', 29),
+  ('Galateni 3:29', 2115, 'Avraam', 452, 4, 'Galateni 3', 29),
+  ('Galateni 4:1', 2116, 'vreme', 453, 5, 'Galateni 4', 31),
+  ('Galateni 4:2', 2117, 'rânduită', 453, 5, 'Galateni 4', 31),
+  ('Galateni 4:3', 2118, 'robia', 453, 5, 'Galateni 4', 31),
+  ('Galateni 4:4', 2119, 'femeie', 453, 5, 'Galateni 4', 31),
+  ('Galateni 4:5', 2120, 'căpătăm', 453, 5, 'Galateni 4', 31),
+  ('Galateni 4:6', 2121, 'Tată', 454, 5, 'Galateni 4', 31),
+  ('Galateni 4:7', 2122, 'Dumnezeu', 454, 5, 'Galateni 4', 31),
+  ('Galateni 4:8', 2123, 'Dumnezeu', 454, 5, 'Galateni 4', 31),
+  ('Galateni 4:9', 2124, 'întoarceți', 454, 5, 'Galateni 4', 31),
+  ('Galateni 4:10', 2125, 'vremuri', 454, 5, 'Galateni 4', 31),
+  ('Galateni 4:11', 2126, 'ostenit', 455, 5, 'Galateni 4', 31),
+  ('Galateni 4:12', 2127, 'fiți', 455, 5, 'Galateni 4', 31),
+  ('Galateni 4:13', 2128, 'neputința', 455, 5, 'Galateni 4', 31),
+  ('Galateni 4:14', 2129, 'dispreț', 455, 5, 'Galateni 4', 31),
+  ('Galateni 4:15', 2130, 'putință', 455, 5, 'Galateni 4', 31),
+  ('Galateni 4:16', 2131, 'făcut', 456, 5, 'Galateni 4', 31),
+  ('Galateni 4:17', 2132, 'fiți', 456, 5, 'Galateni 4', 31),
+  ('Galateni 4:18', 2133, 'plini', 456, 5, 'Galateni 4', 31),
+  ('Galateni 4:19', 2134, 'nașterii', 456, 5, 'Galateni 4', 31),
+  ('Galateni 4:20', 2135, 'glasul', 456, 5, 'Galateni 4', 31),
+  ('Galateni 4:21', 2136, 'Legea', 457, 5, 'Galateni 4', 31),
+  ('Galateni 4:22', 2137, 'femeia', 457, 5, 'Galateni 4', 31),
+  ('Galateni 4:23', 2138, 'femeia', 457, 5, 'Galateni 4', 31),
+  ('Galateni 4:24', 2139, 'două', 457, 5, 'Galateni 4', 31),
+  ('Galateni 4:25', 2140, 'Arabia', 457, 5, 'Galateni 4', 31),
+  ('Galateni 4:26', 2141, 'mama', 458, 5, 'Galateni 4', 31),
+  ('Galateni 4:27', 2142, 'durerile', 458, 5, 'Galateni 4', 31),
+  ('Galateni 4:28', 2143, 'sunteți', 458, 5, 'Galateni 4', 31),
+  ('Galateni 4:29', 2144, 'întâmplat', 458, 5, 'Galateni 4', 31),
+  ('Galateni 4:30', 2145, 'slobode', 458, 5, 'Galateni 4', 31),
+  ('Galateni 4:31', 2146, 'slobode', 459, 1, 'Galateni 4', 31),
+  ('Galateni 5:1', 2147, 'Rămâneți', 460, 5, 'Galateni 5', 26),
+  ('Galateni 5:2', 2148, 'folosi', 460, 5, 'Galateni 5', 26),
+  ('Galateni 5:3', 2149, 'dată', 460, 5, 'Galateni 5', 26),
+  ('Galateni 5:4', 2150, 'despărțit', 460, 5, 'Galateni 5', 26),
+  ('Galateni 5:5', 2151, 'credință', 460, 5, 'Galateni 5', 26),
+  ('Galateni 5:6', 2152, 'netăierea', 461, 5, 'Galateni 5', 26),
+  ('Galateni 5:7', 2153, 'adevăr', 461, 5, 'Galateni 5', 26),
+  ('Galateni 5:8', 2154, 'vine', 461, 5, 'Galateni 5', 26),
+  ('Galateni 5:9', 2155, 'plămădeala', 461, 5, 'Galateni 5', 26),
+  ('Galateni 5:10', 2156, 'oricine', 461, 5, 'Galateni 5', 26),
+  ('Galateni 5:11', 2157, 'mine', 462, 5, 'Galateni 5', 26),
+  ('Galateni 5:12', 2158, 'odată', 462, 5, 'Galateni 5', 26),
+  ('Galateni 5:13', 2159, 'faceți', 462, 5, 'Galateni 5', 26),
+  ('Galateni 5:14', 2160, 'singură', 462, 5, 'Galateni 5', 26),
+  ('Galateni 5:15', 2161, 'nimiciți', 462, 5, 'Galateni 5', 26),
+  ('Galateni 5:16', 2162, 'umblați', 463, 5, 'Galateni 5', 26),
+  ('Galateni 5:17', 2163, 'firii', 463, 5, 'Galateni 5', 26),
+  ('Galateni 5:18', 2164, 'Duhul', 463, 5, 'Galateni 5', 26),
+  ('Galateni 5:19', 2165, 'curvia', 463, 5, 'Galateni 5', 26),
+  ('Galateni 5:20', 2166, 'partide', 463, 5, 'Galateni 5', 26),
+  ('Galateni 5:21', 2167, 'spun', 464, 5, 'Galateni 5', 26),
+  ('Galateni 5:22', 2168, 'răbdare', 464, 5, 'Galateni 5', 26),
+  ('Galateni 5:23', 2169, 'Lege', 464, 5, 'Galateni 5', 26),
+  ('Galateni 5:24', 2170, 'împreună', 464, 5, 'Galateni 5', 26),
+  ('Galateni 5:25', 2171, 'trăim', 464, 5, 'Galateni 5', 26),
+  ('Galateni 5:26', 2172, 'pizmuindu', 465, 1, 'Galateni 5', 26),
+  ('Galateni 6:1', 2173, 'duhovnicești', 466, 5, 'Galateni 6', 18),
+  ('Galateni 6:2', 2174, 'unii', 466, 5, 'Galateni 6', 18),
+  ('Galateni 6:3', 2175, 'măcar', 466, 5, 'Galateni 6', 18),
+  ('Galateni 6:4', 2176, 'Fiecare', 466, 5, 'Galateni 6', 18),
+  ('Galateni 6:5', 2177, 'însuși', 466, 5, 'Galateni 6', 18),
+  ('Galateni 6:6', 2178, 'facă', 467, 5, 'Galateni 6', 18),
+  ('Galateni 6:7', 2179, 'seamănă', 467, 5, 'Galateni 6', 18),
+  ('Galateni 6:8', 2180, 'putrezirea', 467, 5, 'Galateni 6', 18),
+  ('Galateni 6:9', 2181, 'oboseală', 467, 5, 'Galateni 6', 18),
+  ('Galateni 6:10', 2182, 'toți', 467, 5, 'Galateni 6', 18),
+  ('Galateni 6:11', 2183, 'Uitați', 468, 5, 'Galateni 6', 18),
+  ('Galateni 6:12', 2184, 'împrejur', 468, 5, 'Galateni 6', 18),
+  ('Galateni 6:13', 2185, 'păzesc', 468, 5, 'Galateni 6', 18),
+  ('Galateni 6:14', 2186, 'altceva', 468, 5, 'Galateni 6', 18),
+  ('Galateni 6:15', 2187, 'făptură', 468, 5, 'Galateni 6', 18),
+  ('Galateni 6:16', 2188, 'acesta', 469, 3, 'Galateni 6', 18),
+  ('Galateni 6:17', 2189, 'necăjească', 469, 3, 'Galateni 6', 18),
+  ('Galateni 6:18', 2190, 'Hristos', 469, 3, 'Galateni 6', 18)
+on conflict (verse_ref) do update set ordinal = excluded.ordinal, answer = excluded.answer, page_index = excluded.page_index, page_size = excluded.page_size, chapter_ref = excluded.chapter_ref, chapter_size = excluded.chapter_size;
+commit;
+
+
+-- ============================================================================
+-- supabase/20261110_02_reading_categories.sql
+-- ============================================================================
+
+-- Categorii si traseu liniar: 1 Samuel -> 2 Samuel -> epistola -> ciclu nou.
+-- Se aplica dupa cheia epistolelor, fara rescrierea scorurilor/ciclurilor vechi.
+begin;
+
+create or replace function public.category_epistle(p_category_id text)
+returns text language sql immutable set search_path = public, pg_temp as $$
+  select case p_category_id
+    when 'preschool_1' then 'iuda'
+    when 'grades_2_3' then 'iuda'
+    when 'grades_4_5' then '1petru'
+    when 'grades_6_7' then 'filipeni'
+    when 'grades_8_9' then 'galateni'
+    when 'grades_10_11' then 'evrei'
+    when 'adults_18_35' then 'evrei'
+    when 'adults_35_plus' then 'evrei'
+  end;
+$$;
+
+create or replace function public.reading_book_key(p_chapter_ref text)
+returns text language sql immutable set search_path = public, pg_temp as $$
+  select case
+    when p_chapter_ref like '1 Samuel %' then '1samuel'
+    when p_chapter_ref like '2 Samuel %' then '2samuel'
+    when p_chapter_ref like 'Iuda %' then 'iuda'
+    when p_chapter_ref like '1 Petru %' then '1petru'
+    when p_chapter_ref like 'Filipeni %' then 'filipeni'
+    when p_chapter_ref like 'Evrei %' then 'evrei'
+    when p_chapter_ref like 'Galateni %' then 'galateni'
+  end;
+$$;
+
+create table if not exists public.reading_profiles (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  category_id text,
+  epistle_revision integer not null default 0 check (epistle_revision >= 0),
+  updated_at timestamptz not null default now(),
+  constraint reading_profiles_category_check check (
+    category_id is null or category_id in (
+      'preschool_1', 'grades_2_3', 'grades_4_5', 'grades_6_7',
+      'grades_8_9', 'grades_10_11', 'adults_18_35', 'adults_35_plus'
+    )
+  )
+);
+alter table public.reading_profiles enable row level security;
+drop policy if exists reading_profiles_select_own on public.reading_profiles;
+create policy reading_profiles_select_own on public.reading_profiles
+  for select to authenticated using (user_id = auth.uid());
+revoke all on public.reading_profiles from anon, authenticated;
+grant select on public.reading_profiles to authenticated;
+
+alter table public.events add column if not exists epistle_revision integer not null default 0;
+
+-- Conturile existente pastreaza categoria NULL pana la alegerea explicita.
+insert into public.reading_profiles(user_id)
+select id from auth.users on conflict (user_id) do nothing;
+
+create or replace function public.create_reading_profile()
+returns trigger language plpgsql security definer set search_path = public, pg_temp as $$
+declare v_category text := new.raw_user_meta_data ->> 'category_id';
+begin
+  if v_category is not null and public.category_epistle(v_category) is null then
+    raise exception 'Invalid reading category';
+  end if;
+  insert into public.reading_profiles(user_id, category_id)
+  values (new.id, v_category) on conflict (user_id) do nothing;
+  return new;
+end;
+$$;
+drop trigger if exists create_reading_profile_after_signup on auth.users;
+create trigger create_reading_profile_after_signup after insert on auth.users
+  for each row execute function public.create_reading_profile();
+
+create or replace function public.set_reading_category(p_category_id text)
+returns public.reading_profiles
+language plpgsql security definer set search_path = public, pg_temp as $$
+declare
+  v_user_id uuid := auth.uid();
+  v_profile public.reading_profiles;
+begin
+  if v_user_id is null then raise exception 'Authentication is required'; end if;
+  if p_category_id is null or public.category_epistle(p_category_id) is null then
+    raise exception 'Invalid reading category';
+  end if;
+  perform pg_advisory_xact_lock(hashtext(v_user_id::text));
+  insert into public.reading_profiles(user_id) values (v_user_id)
+    on conflict (user_id) do nothing;
+  update public.reading_profiles
+  set epistle_revision = epistle_revision + case
+        when category_id is not null
+          and public.category_epistle(category_id) <> public.category_epistle(p_category_id)
+        then 1 else 0 end,
+      category_id = p_category_id,
+      updated_at = now()
+  where user_id = v_user_id returning * into v_profile;
+  return v_profile;
+end;
+$$;
+
+-- Indicii paginilor raman globali, inclusiv dupa schimbarea categoriei.
+create or replace function public.reading_route_pages(p_user_id uuid)
+returns table(page_index integer, page_size integer, book_key text)
+language sql stable security definer set search_path = public, pg_temp as $$
+  select v.page_index, max(v.page_size)::integer, public.reading_book_key(v.chapter_ref)
+  from public.verse_answers v
+  join public.reading_profiles p on p.user_id = p_user_id
+  where p.category_id is not null
+    and public.reading_book_key(v.chapter_ref) in (
+      '1samuel', '2samuel', public.category_epistle(p.category_id)
+    )
+  group by v.page_index, public.reading_book_key(v.chapter_ref);
+$$;
+
+create or replace function public.completed_page_count(
+  p_user_id uuid, p_cycle integer, p_baseline_at timestamptz
+)
+returns integer language sql stable security definer set search_path = public, pg_temp as $$
+  select count(*)::integer from (
+    select r.page_index
+    from public.reading_route_pages(p_user_id) r
+    join public.reading_profiles p on p.user_id = p_user_id
+    join public.events e on e.user_id = p_user_id
+      and coalesce(e.cycle, 0) = p_cycle and e.correct is true
+      and e.page_index = r.page_index
+      and (r.book_key in ('1samuel', '2samuel') or e.epistle_revision = p.epistle_revision)
+    group by r.page_index, r.page_size
+    having count(distinct e.verse_ref) >= r.page_size
+  ) done;
+$$;
+
+create or replace function public.next_reading_page(p_user_id uuid, p_cycle integer)
+returns integer language sql stable security definer set search_path = public, pg_temp as $$
+  select min(pending.page_index) from (
+    select r.page_index
+    from public.reading_route_pages(p_user_id) r
+    join public.reading_profiles p on p.user_id = p_user_id
+    left join public.events e on e.user_id = p_user_id
+      and coalesce(e.cycle, 0) = p_cycle and e.correct is true
+      and e.page_index = r.page_index
+      and (r.book_key in ('1samuel', '2samuel') or e.epistle_revision = p.epistle_revision)
+    group by r.page_index, r.page_size
+    having count(distinct e.verse_ref) < r.page_size
+  ) pending;
+$$;
+
+create or replace function public.recalculate_score_for_user(
+  p_user_id uuid, p_user_name text default null
+)
+returns void language plpgsql security definer set search_path = public, pg_temp as $$
+declare
+  v_score public.scores;
+  v_name text;
+  v_points integer;
+  v_total_pages integer;
+begin
+  if p_user_id is null then return; end if;
+  perform pg_advisory_xact_lock(hashtext(p_user_id::text));
+  select * into v_score from public.scores where user_id = p_user_id;
+  v_score.baseline_points := coalesce(v_score.baseline_points, 0);
+  v_score.baseline_at := coalesce(v_score.baseline_at, 'epoch'::timestamptz);
+  v_score.current_cycle := coalesce(v_score.current_cycle, 0);
+  select nullif(trim(raw_user_meta_data ->> 'username'), '') into v_name
+    from auth.users where id = p_user_id;
+  v_name := coalesce(nullif(trim(p_user_name), ''), v_name, v_score.user_name, 'Utilizator');
+  v_points := public.compute_user_points(p_user_id, v_score.baseline_at);
+  select count(*)::integer into v_total_pages from public.reading_route_pages(p_user_id);
+  if v_total_pages > 0 and public.completed_page_count(
+    p_user_id, v_score.current_cycle, v_score.baseline_at
+  ) >= v_total_pages then
+    v_score.current_cycle := v_score.current_cycle + 1;
+  end if;
+  insert into public.scores(user_id, user_name, points, baseline_points, baseline_at, current_cycle, updated_at)
+  values (p_user_id, v_name, v_score.baseline_points + v_points, v_score.baseline_points,
+    v_score.baseline_at, v_score.current_cycle, now())
+  on conflict (user_id) do update set
+    user_name = excluded.user_name, points = excluded.points,
+    current_cycle = excluded.current_cycle, updated_at = excluded.updated_at;
+end;
+$$;
+
+create or replace function public.verify_event_before_insert()
+returns trigger language plpgsql security definer set search_path = public, pg_temp as $$
+declare
+  v_user_id uuid := auth.uid();
+  v_key public.verse_answers;
+  v_profile public.reading_profiles;
+  v_cycle integer;
+  v_book text;
+  v_next_page integer;
+begin
+  if v_user_id is null then raise exception 'Authentication is required to record an event'; end if;
+  perform pg_advisory_xact_lock(hashtext(v_user_id::text));
+  -- Reincercarile deja acceptate nu trebuie sa intre in ciclul urmator.
+  if new.client_event_id is not null and exists (
+    select 1 from public.events where user_id = v_user_id and client_event_id = new.client_event_id
+  ) then return null; end if;
+  select * into v_profile from public.reading_profiles where user_id = v_user_id;
+  if v_profile.category_id is null then raise exception 'Choose a reading category before continuing'; end if;
+  select * into v_key from public.verse_answers where verse_ref = new.verse_ref;
+  if not found then raise exception 'Unknown verse reference: %', new.verse_ref; end if;
+  v_book := public.reading_book_key(v_key.chapter_ref);
+  select current_cycle into v_cycle from public.scores where user_id = v_user_id;
+  v_cycle := coalesce(v_cycle, 0);
+  -- Alt dispozitiv poate fi terminat deja aceleasi raspunsuri sau chiar ciclul.
+  -- Pastram creditul existent fara a muta reincercarea in ciclul urmator.
+  if coalesce(new.cycle, 0) < v_cycle and exists (
+    select 1 from public.events e
+    where e.user_id = v_user_id and coalesce(e.cycle, 0) = coalesce(new.cycle, 0)
+      and e.verse_ref = new.verse_ref and e.correct is true
+  ) then return null; end if;
+  v_next_page := public.next_reading_page(v_user_id, v_cycle);
+  -- Un lot offline poate contine sfarsitul unui ciclu si inceputul urmatorului.
+  if v_next_page is null and coalesce(new.cycle, 0) = v_cycle + 1 then
+    v_cycle := v_cycle + 1;
+    v_next_page := public.next_reading_page(v_user_id, v_cycle);
+    update public.scores set current_cycle = v_cycle where user_id = v_user_id;
+  end if;
+  if coalesce(new.cycle, 0) <> v_cycle then
+    raise exception using message = 'Reading cycle changed; refresh reading progress',
+      detail = 'STALE_READING_CYCLE';
+  end if;
+  if v_book not in ('1samuel', '2samuel')
+    and coalesce(new.epistle_revision, 0) <> v_profile.epistle_revision then
+    raise exception using message = 'Reading category changed; refresh reading progress',
+      detail = 'STALE_READING_REVISION';
+  end if;
+  if v_book not in ('1samuel', '2samuel', public.category_epistle(v_profile.category_id)) then
+    raise exception using message = 'This book is not in the selected reading category',
+      detail = 'STALE_READING_CATEGORY';
+  end if;
+  if exists (
+    select 1 from public.events e
+    where e.user_id = v_user_id and coalesce(e.cycle, 0) = v_cycle
+      and e.verse_ref = new.verse_ref and e.correct is true
+      and (v_book in ('1samuel', '2samuel') or e.epistle_revision = v_profile.epistle_revision)
+  ) then return null; end if;
+  if v_next_page is null or v_key.page_index <> v_next_page then
+    raise exception using message = 'Only the current reading page can be answered',
+      detail = 'STALE_READING_PAGE';
+  end if;
+  new.user_id := v_user_id;
+  new.answer := v_key.answer;
+  new.correct := new.chosen is not null and new.chosen = v_key.answer;
+  new.page_index := v_key.page_index;
+  new.page_size := v_key.page_size;
+  new.chapter_ref := v_key.chapter_ref;
+  new.chapter_size := v_key.chapter_size;
+  new.cycle := v_cycle;
+  new.epistle_revision := v_profile.epistle_revision;
+  new.user_name := coalesce(nullif(trim(auth.jwt() -> 'user_metadata' ->> 'username'), ''), 'Utilizator');
+  new.recorded_at := now();
+  new.created_at := greatest(least(coalesce(new.created_at, now()), now()), now() - interval '30 days');
+  return new;
+end;
+$$;
+
+revoke all on function public.category_epistle(text) from public, anon, authenticated;
+revoke all on function public.reading_book_key(text) from public, anon, authenticated;
+revoke all on function public.create_reading_profile() from public, anon, authenticated;
+revoke all on function public.reading_route_pages(uuid) from public, anon, authenticated;
+revoke all on function public.next_reading_page(uuid, integer) from public, anon, authenticated;
+revoke all on function public.set_reading_category(text) from public, anon, authenticated;
+grant execute on function public.set_reading_category(text) to authenticated;
+revoke all on function public.completed_page_count(uuid, integer, timestamptz) from public, anon, authenticated;
+revoke all on function public.recalculate_score_for_user(uuid, text) from public, anon, authenticated;
+revoke all on function public.verify_event_before_insert() from public, anon, authenticated;
+
+commit;
+
+
+-- ============================================================================
+-- supabase/20261110_03_citim_catalog_epistles.sql
+-- ============================================================================
+
+-- GENERAT de scripts/build-epistle-catalog.js. Nu modifica manual.
+-- Adaugă epistolele în public.citim_verse_catalog, folosit de triggerul live
+-- events_validate_citim_insert. Rulează DUPĂ 20261110_01 (cheia canonică) și
+-- înainte de publicarea aplicației. Fără catalog (bază nouă) nu face nimic.
+begin;
+do $$
+declare
+  v_rows integer;
+begin
+  if to_regclass('public.citim_verse_catalog') is null then
+    raise notice 'public.citim_verse_catalog lipsește; nimic de făcut';
+    return;
+  end if;
+  lock table public.citim_verse_catalog in share row exclusive mode;
+  insert into public.citim_verse_catalog
+    (verse_ref, correct_answer, valid_choices, page_index, page_size, chapter_ref, chapter_size)
+  select v.verse_ref, v.answer, c.choices, v.page_index, v.page_size, v.chapter_ref, v.chapter_size
+  from (values
+      ('Iuda 1:1', array['lepădat', 'lepădată', 'iubiți', 'lepădați']::text[]),
+      ('Iuda 1:2', array['cortului', 'înmulțite', 'corturi', 'crească']::text[]),
+      ('Iuda 1:3', array['despre', 'robia', 'robie', 'robiei']::text[]),
+      ('Iuda 1:4', array['damasc', 'darea', 'darul', 'harul']::text[]),
+      ('Iuda 1:5', array['poftit', 'pomenit', 'nimicit', 'popor']::text[]),
+      ('Iuda 1:6', array['dimprejurul', 'întuneric', 'dinadinsul', 'dinainte']::text[]),
+      ('Iuda 1:7', array['altuia', 'păstorul', 'păstrat', 'păstrată']::text[]),
+      ('Iuda 1:8', array['legăturile', 'legătură', 'leneviți', 'pângăresc']::text[]),
+      ('Iuda 1:9', array['Descopere', 'Descoperirea', 'Arhanghelul', 'Descoperiri']::text[]),
+      ('Iuda 1:10', array['zidesc', 'zidit', 'știu', 'zidită']::text[]),
+      ('Iuda 1:11', array['iudei', 'iudeii', 'iudeu', 'într']::text[]),
+      ('Iuda 1:12', array['îndoapă', 'târcoale', 'târziu', 'târâți']::text[]),
+      ('Iuda 1:13', array['mirați', 'vecie', 'miros', 'miră']::text[]),
+      ('Iuda 1:14', array['primească', 'primește', 'șaptelea', 'primim']::text[]),
+      ('Iuda 1:15', array['vorbit', 'vouă', 'vrea', 'ocară']::text[]),
+      ('Iuda 1:16', array['poftele', 'supunem', 'supuneți', 'supus']::text[]),
+      ('Iuda 1:17', array['blândețe', 'vorbele', 'blândețea', 'blândeții']::text[]),
+      ('Iuda 1:18', array['icoana', 'idoli', 'trăi', 'iefta']::text[]),
+      ('Iuda 1:19', array['felurit', 'felurite', 'femei', 'oameni']::text[]),
+      ('Iuda 1:20', array['capete', 'capre', 'capul', 'rugați']::text[]),
+      ('Iuda 1:21', array['trimiși', 'trufașe', 'viața', 'trup']::text[]),
+      ('Iuda 1:22', array['șteargă', 'despart', 'șterge', 'știind']::text[]),
+      ('Iuda 1:23', array['frică', 'întărit', 'învață', 'învechi']::text[]),
+      ('Iuda 1:24', array['rânduiala', 'rânduit', 'rânduită', 'înaintea']::text[]),
+      ('Iuda 1:25', array['luate', 'luați', 'slava', 'lucrare']::text[]),
+      ('1 Petru 1:1', array['răstignit', 'răstignită', 'împrăștiați', 'răstoarne']::text[]),
+      ('1 Petru 1:2', array['Curvie', 'Tatăl', 'Curând', 'Curăți']::text[]),
+      ('1 Petru 1:3', array['Tatăl', 'Ceresc', 'Cerești', 'Certa']::text[]),
+      ('1 Petru 1:4', array['întoarcem', 'întoarceți', 'întoarcă', 'păstrată']::text[]),
+      ('1 Petru 1:5', array['anume', 'apoi', 'gata', 'apuc']::text[]),
+      ('1 Petru 1:6', array['purta', 'sunteți', 'purtare', 'purtarea']::text[]),
+      ('1 Petru 1:7', array['cinstea', 'ținta', 'țintă', 'ținută']::text[]),
+      ('1 Petru 1:8', array['lăsat', 'lăsați', 'lăstari', 'văzut']::text[]),
+      ('1 Petru 1:9', array['femeiască', 'femeie', 'sfârșit', 'femeii']::text[]),
+      ('1 Petru 1:10', array['seminție', 'semne', 'despre', 'semnele']::text[]),
+      ('1 Petru 1:11', array['smeriți', 'smulgă', 'soarta', 'vedere']::text[]),
+      ('1 Petru 1:12', array['Evanghelia', 'Chemarea', 'Chemării', 'Chezașul']::text[]),
+      ('1 Petru 1:13', array['morți', 'fiți', 'morții', 'mult']::text[]),
+      ('1 Petru 1:14', array['fiicei', 'fiicele', 'târâți', 'fiii']::text[]),
+      ('1 Petru 1:15', array['lumesc', 'lumii', 'lumina', 'sfinți']::text[]),
+      ('1 Petru 1:16', array['scris', 'norodul', 'nouă', 'nuiaua']::text[]),
+      ('1 Petru 1:17', array['răzvrătit', 'faptele', 'sabat', 'sabie']::text[]),
+      ('1 Petru 1:18', array['ceruri', 'cerurile', 'deșert', 'cerut']::text[]),
+      ('1 Petru 1:19', array['vrut', 'vândut', 'vânturi', 'scump']::text[]),
+      ('1 Petru 1:20', array['fiecare', 'fiicei', 'fiicele', 'lumii']::text[]),
+      ('1 Petru 1:21', array['testament', 'ticălos', 'credința', 'timotei']::text[]),
+      ('1 Petru 1:22', array['mâinile', 'iubiți', 'mâinilor', 'mâna']::text[]),
+      ('1 Petru 1:23', array['născuți', 'vremurile', 'vreodată', 'vreun']::text[]),
+      ('1 Petru 1:24', array['cortul', 'creadă', 'cred', 'cade']::text[]),
+      ('1 Petru 1:25', array['Mântuirii', 'Mântuitor', 'Domnului', 'Mântuiți']::text[]),
+      ('1 Petru 2:1', array['disprețuit', 'prefăcătorie', 'dobitoacele', 'dobitoacelor']::text[]),
+      ('1 Petru 2:2', array['numele', 'numelui', 'curat', 'numit']::text[]),
+      ('1 Petru 2:3', array['voiți', 'vorba', 'vorbe', 'într']::text[]),
+      ('1 Petru 2:4', array['Apropiați', 'Facerea', 'Familia', 'Faptele']::text[]),
+      ('1 Petru 2:5', array['desăvârșirea', 'duhovnicești', 'desăvârșit', 'desăvârșite']::text[]),
+      ('1 Petru 2:6', array['așteptați', 'așteptăm', 'unghiului', 'așternut']::text[]),
+      ('1 Petru 2:7', array['stânci', 'stâncă', 'stăm', 'crezut']::text[]),
+      ('1 Petru 2:8', array['lovesc', 'hrana', 'hrană', 'hristos']::text[]),
+      ('1 Petru 2:9', array['cărora', 'minunată', 'căruia', 'cărări']::text[]),
+      ('1 Petru 2:10', array['Alergați', 'Alergăm', 'Aleșii', 'Dumnezeu']::text[]),
+      ('1 Petru 2:11', array['prevedea', 'prezbiter', 'străini', 'prețuiți']::text[]),
+      ('1 Petru 2:12', array['mărturisit', 'cercetării', 'mărăcini', 'nașterii']::text[]),
+      ('1 Petru 2:13', array['omenești', 'sunetul', 'suntem', 'sunteți']::text[]),
+      ('1 Petru 2:14', array['ridice', 'roabe', 'roabei', 'unii']::text[]),
+      ('1 Petru 2:15', array['cercetau', 'cerceteze', 'neștiutori', 'cercetezi']::text[]),
+      ('1 Petru 2:16', array['Botezul', 'Dumnezeu', 'Botezuri', 'Bucura']::text[]),
+      ('1 Petru 2:17', array['cinste', 'poftele', 'poftelor', 'poftește']::text[]),
+      ('1 Petru 2:18', array['sionului', 'slobozenia', 'slobozenie', 'stăpânilor']::text[]),
+      ('1 Petru 2:19', array['fiți', 'flacără', 'cineva', 'floarea']::text[]),
+      ('1 Petru 2:20', array['Curvie', 'Curând', 'Într', 'Curăți']::text[]),
+      ('1 Petru 2:21', array['zidesc', 'zidirea', 'zidit', 'lăsat']::text[]),
+      ('1 Petru 2:22', array['gura', 'neamul', 'necaz', 'negura']::text[]),
+      ('1 Petru 2:23', array['deșert', 'chinuit', 'diaconii', 'diavolul']::text[]),
+      ('1 Petru 2:24', array['asemenea', 'asemănat', 'păcate', 'asia']::text[]),
+      ('1 Petru 2:25', array['Cererile', 'Ceresc', 'Cerești', 'Păstorul']::text[]),
+      ('1 Petru 3:1', array['bărbaților', 'războiesc', 'răzbunarea', 'răzvrătirii']::text[]),
+      ('1 Petru 3:2', array['adesea', 'adevăr', 'adică', 'felul']::text[]),
+      ('1 Petru 3:3', array['slăbănogiți', 'slăvească', 'îmbrăcarea', 'smerenie']::text[]),
+      ('1 Petru 3:4', array['dobitoc', 'curăția', 'dobândi', 'dobândit']::text[]),
+      ('1 Petru 3:5', array['supuse', 'chipuri', 'chivot', 'chivotul']::text[]),
+      ('1 Petru 3:6', array['Tabără', 'Taie', 'Tale', 'Sara']::text[]),
+      ('1 Petru 3:7', array['învățat', 'învățători', 'împreună', 'învățătura']::text[]),
+      ('1 Petru 3:8', array['zilele', 'fiți', 'zise', 'ziua']::text[]),
+      ('1 Petru 3:9', array['întoarceți', 'leviților', 'liniștit', 'locuința']::text[]),
+      ('1 Petru 3:10', array['limba', 'clipă', 'clătina', 'coboară']::text[]),
+      ('1 Petru 3:11', array['ieșim', 'facă', 'ieșit', 'inima']::text[]),
+      ('1 Petru 3:12', array['supunea', 'supunem', 'ochii', 'supus']::text[]),
+      ('1 Petru 3:13', array['lăsăm', 'lăuda', 'lăudăm', 'bine']::text[]),
+      ('1 Petru 3:14', array['teamă', 'mâinile', 'mâna', 'mânați']::text[]),
+      ('1 Petru 3:15', array['Plăcut', 'Domn', 'Plătit', 'Poarte']::text[]),
+      ('1 Petru 3:16', array['făcuse', 'făcut', 'curat', 'făcute']::text[]),
+      ('1 Petru 3:17', array['gomora', 'grabă', 'grec', 'răul']::text[]),
+      ('1 Petru 3:18', array['Hristos', 'Începe', 'Început', 'Începutul']::text[]),
+      ('1 Petru 3:19', array['mijlocească', 'închisoare', 'mijlocitor', 'mijlocitorul']::text[]),
+      ('1 Petru 3:20', array['trebuie', 'îndelunga', 'trebuințele', 'trebuință']::text[]),
+      ('1 Petru 3:21', array['Icoana', 'Clătina', 'Clătinat', 'Coapsele']::text[]),
+      ('1 Petru 3:22', array['sfatul', 'sfeșnicul', 'sfintele', 'puterile']::text[]),
+      ('1 Petru 4:1', array['crucea', 'crucii', 'cucerit', 'păcatul']::text[]),
+      ('1 Petru 4:2', array['Dumnezeu', 'Desparte', 'Despartă', 'Despre']::text[]),
+      ('1 Petru 4:3', array['înșine', 'ospețe', 'înșivă', 'înșiși']::text[]),
+      ('1 Petru 4:4', array['inimă', 'intra', 'același', 'intrare']::text[]),
+      ('1 Petru 4:5', array['chezașul', 'chezășie', 'chinuit', 'înaintea']::text[]),
+      ('1 Petru 4:6', array['vestită', 'făcuți', 'făcând', 'făcându']::text[]),
+      ('1 Petru 4:7', array['dreptarul', 'aproape', 'dreptate', 'drepte']::text[]),
+      ('1 Petru 4:8', array['smeriți', 'smulgându', 'sumedenie', 'socotea']::text[]),
+      ('1 Petru 4:9', array['taurilor', 'temelia', 'temelii', 'primitori']::text[]),
+      ('1 Petru 4:10', array['nezguduit', 'ispravnici', 'nezguduită', 'neîncetat']::text[]),
+      ('1 Petru 4:11', array['slăvit', 'stricat', 'strigă', 'strigăte']::text[]),
+      ('1 Petru 4:12', array['către', 'căuta', 'căutam', 'mirați']::text[]),
+      ('1 Petru 4:13', array['slugilor', 'slujba', 'arătarea', 'slujbei']::text[]),
+      ('1 Petru 4:14', array['vede', 'ferice', 'vedea', 'vedeau']::text[]),
+      ('1 Petru 4:15', array['unul', 'negură', 'nespus', 'nevoie']::text[]),
+      ('1 Petru 4:16', array['Cunosc', 'Cunoscut', 'Cunoscute', 'Dumnezeu']::text[]),
+      ('1 Petru 4:17', array['negreșit', 'negrăită', 'judecata', 'negura']::text[]),
+      ('1 Petru 4:18', array['neam', 'face', 'neamul', 'necaz']::text[]),
+      ('1 Petru 4:19', array['voia', 'stâlpi', 'stânci', 'stâncă']::text[]),
+      ('1 Petru 5:1', array['desăvârșire', 'desăvârșit', 'sfătuiesc', 'desăvârșite']::text[]),
+      ('1 Petru 5:2', array['călca', 'turma', 'călcat', 'călcați']::text[]),
+      ('1 Petru 5:3', array['peste', 'lăsați', 'lăstari', 'lăsăm']::text[]),
+      ('1 Petru 5:4', array['binelui', 'bitinia', 'bizuie', 'arăta']::text[]),
+      ('1 Petru 5:5', array['intre', 'intră', 'bătrâni', 'intrăm']::text[]),
+      ('1 Petru 5:6', array['stelele', 'înalțe', 'stins', 'stricat']::text[]),
+      ('1 Petru 5:7', array['asupra', 'făcute', 'făcută', 'făcuți']::text[]),
+      ('1 Petru 5:8', array['obosite', 'obârșie', 'obște', 'treji']::text[]),
+      ('1 Petru 5:9', array['iubești', 'iubind', 'aceleași', 'iubitori']::text[]),
+      ('1 Petru 5:10', array['însuți', 'însăși', 'veșnică', 'întemeiat']::text[]),
+      ('1 Petru 5:11', array['slujească', 'slujește', 'slujim', 'vecilor']::text[]),
+      ('1 Petru 5:12', array['scris', 'mine', 'mint', 'minte']::text[]),
+      ('1 Petru 5:13', array['Venit', 'Marcu', 'Venită', 'Veste']::text[]),
+      ('1 Petru 5:14', array['obște', 'ocara', 'unii', 'ocară']::text[]),
+      ('Filipeni 1:1', array['chemați', 'către', 'chiar', 'chifa']::text[]),
+      ('Filipeni 1:2', array['Glasul', 'Gomora', 'Hristos', 'Grabă']::text[]),
+      ('Filipeni 1:3', array['Izbăvirea', 'Izgonește', 'Jertfirea', 'Dumnezeului']::text[]),
+      ('Filipeni 1:4', array['rugăciunile', 'slăvească', 'smulgându', 'socoteală']::text[]),
+      ('Filipeni 1:5', array['scăpare', 'luați', 'scăpat', 'scăpate']::text[]),
+      ('Filipeni 1:6', array['pătimiți', 'pătrunde', 'lucrare', 'păzească']::text[]),
+      ('Filipeni 1:7', array['bucura', 'bucurați', 'bucure', 'întrucât']::text[]),
+      ('Filipeni 1:8', array['dragoste', 'stăruință', 'stăruiți', 'stătea']::text[]),
+      ('Filipeni 1:9', array['coapsele', 'pricepere', 'coboară', 'cojoace']::text[]),
+      ('Filipeni 1:10', array['trupuri', 'trupurile', 'trâmbiță', 'lucrurile']::text[]),
+      ('Filipeni 1:11', array['clipă', 'clătina', 'lauda', 'coboară']::text[]),
+      ('Filipeni 1:12', array['Ierusalim', 'Evangheliei', 'Ierusalimul', 'Ierusalimului']::text[]),
+      ('Filipeni 1:13', array['Într', 'Bucur', 'Bucura', 'Bucure']::text[]),
+      ('Filipeni 1:14', array['amănuntul', 'amărăciune', 'apostolii', 'îmbărbătați']::text[]),
+      ('Filipeni 1:15', array['tale', 'tare', 'alții', 'tari']::text[]),
+      ('Filipeni 1:16', array['grec', 'unii', 'grele', 'greoi']::text[]),
+      ('Filipeni 1:17', array['lanțurile', 'dezlipească', 'deșartă', 'diaconii']::text[]),
+      ('Filipeni 1:18', array['mesele', 'meșter', 'mielul', 'lumii']::text[]),
+      ('Filipeni 1:19', array['binelui', 'biserica', 'acesta', 'biserică']::text[]),
+      ('Filipeni 1:20', array['legii', 'legile', 'aștept', 'legământ']::text[]),
+      ('Filipeni 1:21', array['înviați', 'învie', 'înviere', 'câștig']::text[]),
+      ('Filipeni 1:22', array['trup', 'mutat', 'mâhnit', 'mâini']::text[]),
+      ('Filipeni 1:23', array['robie', 'dori', 'robiei', 'robiți']::text[]),
+      ('Filipeni 1:24', array['plăcute', 'plăcută', 'rămân', 'plăcuți']::text[]),
+      ('Filipeni 1:25', array['socotiți', 'spunându', 'stacojie', 'înaintarea']::text[]),
+      ('Filipeni 1:26', array['pricină', 'împotriva', 'împotrivă', 'împrejur']::text[]),
+      ('Filipeni 1:27', array['bunăvoie', 'suflet', 'buzele', 'buzelor']::text[]),
+      ('Filipeni 1:28', array['înfățișarea', 'înfățișați', 'mântuirea', 'înfățișeze']::text[]),
+      ('Filipeni 1:29', array['știri', 'știu', 'știți', 'harul']::text[]),
+      ('Filipeni 1:30', array['seama', 'acum', 'seamă', 'secera']::text[]),
+      ('Filipeni 2:1', array['preasfânt', 'preasfântă', 'milostivire', 'preaînalt']::text[]),
+      ('Filipeni 2:2', array['deprins', 'aveți', 'deschis', 'desfrâu']::text[]),
+      ('Filipeni 2:3', array['nimic', 'făcut', 'făcute', 'făcută']::text[]),
+      ('Filipeni 2:4', array['slobodă', 'slobozi', 'slove', 'altora']::text[]),
+      ('Filipeni 2:5', array['fiilor', 'ființei', 'acesta', 'filipi']::text[]),
+      ('Filipeni 2:6', array['chefuri', 'apucat', 'chema', 'chemarea']::text[]),
+      ('Filipeni 2:7', array['chip', 'celei', 'celor', 'celui']::text[]),
+      ('Filipeni 2:8', array['firesc', 'firii', 'fiul', 'găsit']::text[]),
+      ('Filipeni 2:9', array['înapoi', 'înceapă', 'orice', 'începe']::text[]),
+      ('Filipeni 2:10', array['întâmpinat', 'întâmplat', 'genunchi', 'întâmplă']::text[]),
+      ('Filipeni 2:11', array['cădeți', 'căile', 'călca', 'spre']::text[]),
+      ('Filipeni 2:12', array['preaiubiților', 'propovăduită', 'proslăvească', 'păcătoșilor']::text[]),
+      ('Filipeni 2:13', array['Lucreze', 'Dumnezeu', 'Lucrul', 'Lucruri']::text[]),
+      ('Filipeni 2:14', array['aceleași', 'aceleiași', 'cârtiri', 'aceluiași']::text[]),
+      ('Filipeni 2:15', array['făcea', 'făceam', 'făceau', 'unui']::text[]),
+      ('Filipeni 2:16', array['Cuvântul', 'Înfrunzise', 'Înfrânarea', 'Înfrâneze']::text[]),
+      ('Filipeni 2:17', array['dintr', 'toți', 'dintre', 'dintâi']::text[]),
+      ('Filipeni 2:18', array['piatră', 'picioare', 'împreună', 'picioarele']::text[]),
+      ('Filipeni 2:19', array['Sângelui', 'Săgeata', 'Sămânța', 'Timotei']::text[]),
+      ('Filipeni 2:20', array['zămislească', 'îmbrăcarea', 'îmbrăcat', 'simțirile']::text[]),
+      ('Filipeni 2:21', array['întors', 'într', 'umblă', 'întrece']::text[]),
+      ('Filipeni 2:22', array['gustat', 'lucrat', 'guste', 'gând']::text[]),
+      ('Filipeni 2:23', array['nădăjduiesc', 'evanghelie', 'evangheliei', 'femeiască']::text[]),
+      ('Filipeni 2:24', array['Ziua', 'Zugrăvit', 'Zăbovi', 'Domnul']::text[]),
+      ('Filipeni 2:25', array['neamuri', 'neamurile', 'nevoile', 'neapărat']::text[]),
+      ('Filipeni 2:26', array['făcător', 'bolnav', 'făcători', 'făgăduit']::text[]),
+      ('Filipeni 2:27', array['foarte', 'mare', 'marea', 'marele']::text[]),
+      ('Filipeni 2:28', array['ziua', 'zăbovi', 'înalt', 'atât']::text[]),
+      ('Filipeni 2:29', array['Știința', 'Știm', 'Domnul', 'Știri']::text[]),
+      ('Filipeni 2:30', array['aproape', 'poruncile', 'poruncit', 'poruncă']::text[]),
+      ('Filipeni 3:1', array['trăi', 'trăim', 'trăit', 'vouă']::text[]),
+      ('Filipeni 3:2', array['câinii', 'singuri', 'singurul', 'singură']::text[]),
+      ('Filipeni 3:3', array['ascuțișul', 'pământești', 'asemenea', 'asemănare']::text[]),
+      ('Filipeni 3:4', array['Tine', 'Tocmai', 'Măcar', 'Toiag']::text[]),
+      ('Filipeni 3:5', array['lucrare', 'lucrarea', 'lucrat', 'împrejur']::text[]),
+      ('Filipeni 3:6', array['privește', 'făcându', 'făcător', 'făcători']::text[]),
+      ('Filipeni 3:7', array['răstignită', 'câștiguri', 'răstoarne', 'rătăcesc']::text[]),
+      ('Filipeni 3:8', array['Altul', 'Altă', 'Isus', 'Aluat']::text[]),
+      ('Filipeni 3:9', array['cercetării', 'cercetărilor', 'cincisprezece', 'neprihănirea']::text[]),
+      ('Filipeni 3:10', array['scaunul', 'învierii', 'scaunului', 'schimb']::text[]),
+      ('Filipeni 3:11', array['ajung', 'ține', 'ținem', 'țineți']::text[]),
+      ('Filipeni 3:12', array['oricărei', 'oricărui', 'ospețe', 'apucat']::text[]),
+      ('Filipeni 3:13', array['Spuneau', 'Spuneți', 'Fraților', 'Spunându']::text[]),
+      ('Filipeni 3:14', array['zidirea', 'premiul', 'zidit', 'ziditor']::text[]),
+      ('Filipeni 3:15', array['suntem', 'seamă', 'seamănă', 'secera']::text[]),
+      ('Filipeni 3:16', array['tovarăș', 'tovarăși', 'tovarășii', 'aceeași']::text[]),
+      ('Filipeni 3:17', array['dați', 'decât', 'pilda', 'degeaba']::text[]),
+      ('Filipeni 3:18', array['umblăm', 'vrăjmași', 'undeva', 'unghiului']::text[]),
+      ('Filipeni 3:19', array['pierzarea', 'neapărat', 'neascultare', 'neavând']::text[]),
+      ('Filipeni 3:20', array['Mântuitor', 'Judecata', 'Judecată', 'Judecați']::text[]),
+      ('Filipeni 3:21', array['duhurilor', 'lucrarea', 'dumnezei', 'dumnezeu']::text[]),
+      ('Filipeni 4:1', array['doriții', 'foarte', 'focului', 'foloasele']::text[]),
+      ('Filipeni 4:2', array['Socotit', 'Socotită', 'Socotiți', 'Sintichia']::text[]),
+      ('Filipeni 4:3', array['căutării', 'căzut', 'tovarăș', 'damasc']::text[]),
+      ('Filipeni 4:4', array['Temelii', 'Iarăși', 'Temere', 'Temeți']::text[]),
+      ('Filipeni 4:5', array['Blândețea', 'Desparte', 'Despartă', 'Despărțit']::text[]),
+      ('Filipeni 4:6', array['locurile', 'lovesc', 'luare', 'aduceți']::text[]),
+      ('Filipeni 4:7', array['mântuiască', 'mântuiește', 'pricepere', 'mântuire']::text[]),
+      ('Filipeni 4:8', array['desăvârșite', 'însuflețească', 'desăvârșiți', 'dezbinările']::text[]),
+      ('Filipeni 4:9', array['auzit', 'intre', 'intră', 'intrăm']::text[]),
+      ('Filipeni 4:10', array['prilejul', 'diavolului', 'dimpotrivă', 'dinadinsul']::text[]),
+      ('Filipeni 4:11', array['inima', 'vedere', 'inimii', 'inimile']::text[]),
+      ('Filipeni 4:12', array['ispitiți', 'ispită', 'smerit', 'isprăvi']::text[]),
+      ('Filipeni 4:13', array['iubești', 'iubitori', 'iudeilor', 'întărește']::text[]),
+      ('Filipeni 4:14', array['parte', 'jugul', 'jurat', 'jure']::text[]),
+      ('Filipeni 4:15', array['faceți', 'mine', 'faci', 'facă']::text[]),
+      ('Filipeni 4:16', array['vedeau', 'vedem', 'nevoile', 'vedere']::text[]),
+      ('Filipeni 4:17', array['gândesc', 'gândire', 'gândiți', 'daruri']::text[]),
+      ('Filipeni 4:18', array['mireasmă', 'treacă', 'trebui', 'trebuia']::text[]),
+      ('Filipeni 4:19', array['Închine', 'Hristos', 'Închină', 'Închis']::text[]),
+      ('Filipeni 4:20', array['Trupul', 'Amin', 'Trăi', 'Trăim']::text[]),
+      ('Filipeni 4:21', array['Isus', 'Sabie', 'Sabiei', 'Sale']::text[]),
+      ('Filipeni 4:22', array['încoace', 'încolo', 'încrede', 'sănătate']::text[]),
+      ('Filipeni 4:23', array['vârful', 'vârsta', 'toți', 'vârstă']::text[]),
+      ('Evrei 1:1', array['rânduri', 'scump', 'scumpă', 'scurt']::text[]),
+      ('Evrei 1:2', array['mulțumiți', 'munciți', 'munte', 'acestor']::text[]),
+      ('Evrei 1:3', array['vindecat', 'vindecați', 'păcatelor', 'visările']::text[]),
+      ('Evrei 1:4', array['faptele', 'decât', 'faptul', 'faptă']::text[]),
+      ('Evrei 1:5', array['iarăși', 'minunat', 'minunate', 'minunată']::text[]),
+      ('Evrei 1:6', array['plini', 'plină', 'ploaia', 'zice']::text[]),
+      ('Evrei 1:7', array['vreo', 'vreun', 'zice', 'vreți']::text[]),
+      ('Evrei 1:8', array['Astupați', 'Dumnezeule', 'Auziseră', 'Averilor']::text[]),
+      ('Evrei 1:9', array['iubit', 'socoti', 'socotit', 'sodoma']::text[]),
+      ('Evrei 1:10', array['mâinilor', 'tăierea', 'tăietor', 'tăișuri']::text[]),
+      ('Evrei 1:11', array['schimbă', 'haină', 'scos', 'scot']::text[]),
+      ('Evrei 1:12', array['scot', 'scrie', 'anii', 'scris']::text[]),
+      ('Evrei 1:13', array['ascultă', 'ascuns', 'ascunse', 'dintre']::text[]),
+      ('Evrei 1:14', array['duhuri', 'locul', 'locului', 'locurile']::text[]),
+      ('Evrei 2:1', array['cercetărilor', 'certurile', 'cetățenia', 'îndepărtați']::text[]),
+      ('Evrei 2:2', array['îngeri', 'credeți', 'credința', 'credință']::text[]),
+      ('Evrei 2:3', array['ajutorul', 'mântuire', 'aleasă', 'alergarea']::text[]),
+      ('Evrei 2:4', array['roabei', 'roabă', 'întărea', 'roada']::text[]),
+      ('Evrei 2:5', array['mergem', 'mergător', 'mesele', 'viitoare']::text[]),
+      ('Evrei 2:6', array['încă', 'adică', 'aduc', 'aduce']::text[]),
+      ('Evrei 2:7', array['Pune', 'Tale', 'Punem', 'Puneți']::text[]),
+      ('Evrei 2:8', array['nuiaua', 'nume', 'adevăr', 'numea']::text[]),
+      ('Evrei 2:9', array['dați', 'deasupra', 'decât', 'puțină']::text[]),
+      ('Evrei 2:10', array['preacurvia', 'mântuirii', 'preaiubiții', 'preasfânt']::text[]),
+      ('Evrei 2:11', array['numească', 'cinstiți', 'ciudat', 'clatină']::text[]),
+      ('Evrei 2:12', array['casă', 'caut', 'caute', 'vesti']::text[]),
+      ('Evrei 2:13', array['adăugată', 'afară', 'iarăși', 'afla']::text[]),
+      ('Evrei 2:14', array['amărăciune', 'nimicească', 'antiohia', 'apostoli']::text[]),
+      ('Evrei 2:15', array['erau', 'curăți', 'cusur', 'cuvânt']::text[]),
+      ('Evrei 2:16', array['Prinos', 'Prins', 'Printr', 'Avraam']::text[]),
+      ('Evrei 2:17', array['Iudeilor', 'Izbucnește', 'Dumnezeu', 'Izbăvească']::text[]),
+      ('Evrei 2:18', array['lăsat', 'ceea', 'lăsați', 'lăsăm']::text[]),
+      ('Evrei 3:1', array['jertfe', 'jertfă', 'frați', 'judeca']::text[]),
+      ('Evrei 3:2', array['Suspinând', 'Dumnezeu', 'Sângele', 'Sângelui']::text[]),
+      ('Evrei 3:3', array['casa', 'bine', 'binele', 'bizuie']::text[]),
+      ('Evrei 3:4', array['Cinstea', 'Cinstiți', 'Ciudat', 'Dumnezeu']::text[]),
+      ('Evrei 3:5', array['scape', 'scapă', 'casa', 'schimb']::text[]),
+      ('Evrei 3:6', array['turnat', 'lăudăm', 'tuturor', 'tâlcuit']::text[]),
+      ('Evrei 3:7', array['zice', 'stâlpi', 'stânci', 'stâncă']::text[]),
+      ('Evrei 3:8', array['bisericilor', 'biserică', 'blestemat', 'împietriți']::text[]),
+      ('Evrei 3:9', array['smerite', 'smeriți', 'ispitit', 'smulgându']::text[]),
+      ('Evrei 3:10', array['ispită', 'isprăvi', 'acesta', 'ispășire']::text[]),
+      ('Evrei 3:11', array['uscat', 'usucă', 'vaci', 'mânia']::text[]),
+      ('Evrei 3:12', array['dintre', 'sodoma', 'spini', 'spiță']::text[]),
+      ('Evrei 3:13', array['încredere', 'fiecare', 'încununat', 'îndată']::text[]),
+      ('Evrei 3:14', array['războiesc', 'răzbunarea', 'nezguduită', 'răzvrătirii']::text[]),
+      ('Evrei 3:15', array['obosite', 'obârșie', 'obște', 'inimile']::text[]),
+      ('Evrei 3:16', array['Cine', 'Voiți', 'Vorba', 'Vorbe']::text[]),
+      ('Evrei 3:17', array['așteaptă', 'pustie', 'aștept', 'aștepta']::text[]),
+      ('Evrei 3:18', array['înseși', 'însuși', 'intre', 'însuți']::text[]),
+      ('Evrei 3:19', array['despărțit', 'desăvârșească', 'desăvârși', 'necredinței']::text[]),
+      ('Evrei 4:1', array['tovarășul', 'pomenească', 'trebuințele', 'trebuință']::text[]),
+      ('Evrei 4:2', array['osândit', 'oștirile', 'cuvântul', 'partea']::text[]),
+      ('Evrei 4:3', array['duhului', 'duhuri', 'dându', 'lumii']::text[]),
+      ('Evrei 4:4', array['odihnit', 'puțin', 'puține', 'puțină']::text[]),
+      ('Evrei 4:5', array['străine', 'odihna', 'străini', 'străpuns']::text[]),
+      ('Evrei 4:6', array['sfânt', 'sfântă', 'unii', 'sfârși']::text[]),
+      ('Evrei 4:7', array['evrei', 'evreu', 'ești', 'atâta']::text[]),
+      ('Evrei 4:8', array['altă', 'avem', 'aveți', 'avraam']::text[]),
+      ('Evrei 4:9', array['împărăție', 'poporul', 'împărății', 'împărțite']::text[]),
+      ('Evrei 4:10', array['împăratul', 'împărăția', 'împărăție', 'odihnit']::text[]),
+      ('Evrei 4:11', array['stat', 'stau', 'odihna', 'stearpo']::text[]),
+      ('Evrei 4:12', array['îndeplinesc', 'încheieturile', 'îndepărtați', 'îndepărteze']::text[]),
+      ('Evrei 4:13', array['înaintea', 'războaie', 'război', 'războiesc']::text[]),
+      ('Evrei 4:14', array['supunem', 'supuneți', 'supuse', 'cerurile']::text[]),
+      ('Evrei 4:15', array['lăsăm', 'lăuda', 'milă', 'lăudăm']::text[]),
+      ('Evrei 4:16', array['avraam', 'deplină', 'avuție', 'având']::text[]),
+      ('Evrei 5:1', array['oameni', 'fire', 'firea', 'firesc']::text[]),
+      ('Evrei 5:2', array['astupați', 'astăzi', 'asupra', 'rătăciți']::text[]),
+      ('Evrei 5:3', array['botezuri', 'bucura', 'păcatele', 'bucurați']::text[]),
+      ('Evrei 5:4', array['legii', 'cinstea', 'legile', 'legăminte']::text[]),
+      ('Evrei 5:5', array['Mare', 'Obosim', 'Obște', 'Ocara']::text[]),
+      ('Evrei 5:6', array['ascuns', 'asia', 'aspră', 'veac']::text[]),
+      ('Evrei 5:7', array['curvari', 'curvia', 'către', 'curvie']::text[]),
+      ('Evrei 5:8', array['rodește', 'măcar', 'rodul', 'rostit']::text[]),
+      ('Evrei 5:9', array['unei', 'scumpă', 'scurt', 'scăpa']::text[]),
+      ('Evrei 5:10', array['numit', 'mulți', 'munciți', 'munte']::text[]),
+      ('Evrei 5:11', array['ancoră', 'făcut', 'anii', 'anume']::text[]),
+      ('Evrei 5:12', array['ierta', 'iertare', 'iarăși', 'ieșim']::text[]),
+      ('Evrei 5:13', array['călcat', 'călcați', 'călcător', 'despre']::text[]),
+      ('Evrei 5:14', array['deosebească', 'pedepseau', 'pedepsește', 'picioarele']::text[]),
+      ('Evrei 6:1', array['putem', 'putere', 'puteri', 'cele']::text[]),
+      ('Evrei 6:2', array['învierea', 'sufletul', 'sufletului', 'sumedenie']::text[]),
+      ('Evrei 6:3', array['Deplină', 'Dumnezeu', 'Deprins', 'Deschis']::text[]),
+      ('Evrei 6:4', array['prihană', 'prilej', 'gustat', 'prilejul']::text[]),
+      ('Evrei 6:5', array['Spumegă', 'Spuneau', 'Spuneți', 'Cuvântul']::text[]),
+      ('Evrei 6:6', array['Dumnezeu', 'Nuiaua', 'Numaidecât', 'Numească']::text[]),
+      ('Evrei 6:7', array['spusese', 'rodește', 'spălat', 'spălări']::text[]),
+      ('Evrei 6:8', array['certurile', 'cerului', 'mărăcini', 'ceruri']::text[]),
+      ('Evrei 6:9', array['ajunge', 'ajungă', 'ajuns', 'bune']::text[]),
+      ('Evrei 6:10', array['singură', 'osteneala', 'sintichia', 'sionului']::text[]),
+      ('Evrei 6:11', array['râvnă', 'unde', 'undeva', 'unei']::text[]),
+      ('Evrei 6:12', array['urmare', 'urmat', 'urmate', 'răbdare']::text[]),
+      ('Evrei 6:13', array['cortul', 'creadă', 'jure', 'cred']::text[]),
+      ('Evrei 6:14', array['uciderile', 'binecuvânta', 'unghiului', 'untdelemn']::text[]),
+      ('Evrei 6:15', array['așteptat', 'întoarceți', 'întoarcă', 'întocmite']::text[]),
+      ('Evrei 6:16', array['vederea', 'vedeți', 'vegheați', 'chezășie']::text[]),
+      ('Evrei 6:17', array['Păzească', 'Păzesc', 'Dumnezeu', 'Păziți']::text[]),
+      ('Evrei 6:18', array['mintă', 'apucăm', 'minunat', 'minunate']::text[]),
+      ('Evrei 6:19', array['neclintită', 'ceilalți', 'celălalt', 'cercetau']::text[]),
+      ('Evrei 6:20', array['Mare', 'Jertfa', 'Jertfe', 'Jertfă']::text[]),
+      ('Evrei 7:1', array['duhovnicesc', 'duhovnicești', 'împăraților', 'duhurilor']::text[]),
+      ('Evrei 7:2', array['lucrare', 'zeciuială', 'lucrarea', 'lucrată']::text[]),
+      ('Evrei 7:3', array['asemănat', 'neapărat', 'neavând', 'neclintit']::text[]),
+      ('Evrei 7:4', array['caut', 'caute', 'caută', 'mare']::text[]),
+      ('Evrei 7:5', array['păcat', 'păcate', 'slujba', 'păcatele']::text[]),
+      ('Evrei 7:6', array['dobitoacelor', 'făgăduințele', 'dobândească', 'dovedească']::text[]),
+      ('Evrei 7:7', array['mare', 'căreia', 'cărnii', 'căror']::text[]),
+      ('Evrei 7:8', array['împlinirea', 'împodobeau', 'împodobiți', 'mărturisește']::text[]),
+      ('Evrei 7:9', array['alese', 'aleșii', 'zicem', 'alipit']::text[]),
+      ('Evrei 7:10', array['Socotesc', 'Socotită', 'Melhisedec', 'Socotiți']::text[]),
+      ('Evrei 7:11', array['Credeau', 'Credeți', 'Crezut', 'Legea']::text[]),
+      ('Evrei 7:12', array['numaidecât', 'izbucnește', 'izbăvească', 'izbăvirea']::text[]),
+      ('Evrei 7:13', array['rătăciți', 'altarului', 'răutate', 'răutății']::text[]),
+      ('Evrei 7:14', array['băgare', 'bărbat', 'seminție', 'bărbaților']::text[]),
+      ('Evrei 7:15', array['Mergător', 'Mijlocească', 'Mijlocitor', 'Melhisedec']::text[]),
+      ('Evrei 7:16', array['vieți', 'spusese', 'spălat', 'spălări']::text[]),
+      ('Evrei 7:17', array['rămână', 'ești', 'rănile', 'răul']::text[]),
+      ('Evrei 7:18', array['dator', 'dată', 'aici', 'david']::text[]),
+      ('Evrei 7:19', array['grabă', 'grec', 'grele', 'bună']::text[]),
+      ('Evrei 7:20', array['ales', 'alese', 'aleșii', 'acesta']::text[]),
+      ('Evrei 7:21', array['Sfârși', 'Sfârșit', 'Domnul', 'Sfârșiți']::text[]),
+      ('Evrei 7:22', array['uciși', 'făcut', 'uitat', 'uitați']::text[]),
+      ('Evrei 7:23', array['moartea', 'bunăvoie', 'buzele', 'buzelor']::text[]),
+      ('Evrei 7:24', array['ospețe', 'osânda', 'pace', 'unul']::text[]),
+      ('Evrei 7:25', array['făgăduințele', 'făgăduințelor', 'mijlocească', 'făgăduință']::text[]),
+      ('Evrei 7:26', array['cunoaște', 'trebuia', 'cunosc', 'cunoscut']::text[]),
+      ('Evrei 7:27', array['nevoie', 'capre', 'capul', 'capăt']::text[]),
+      ('Evrei 7:28', array['avea', 'aveau', 'aveați', 'niște']::text[]),
+      ('Evrei 8:1', array['Veți', 'Preot', 'Viața', 'Vieți']::text[]),
+      ('Evrei 8:2', array['asemenea', 'asemănare', 'slujitor', 'asemănarea']::text[]),
+      ('Evrei 8:3', array['prihană', 'prilejul', 'primească', 'trebuință']::text[]),
+      ('Evrei 8:4', array['Lege', 'Sătul', 'Tabără', 'Taie']::text[]),
+      ('Evrei 8:5', array['primirea', 'arătat', 'primise', 'primit']::text[]),
+      ('Evrei 8:6', array['necredinței', 'necunoscut', 'legământul', 'necurăția']::text[]),
+      ('Evrei 8:7', array['duceți', 'ducă', 'duhul', 'vorba']::text[]),
+      ('Evrei 8:8', array['zice', 'cadă', 'cain', 'cale']::text[]),
+      ('Evrei 8:9', array['cuvinte', 'apucat', 'cuvânt', 'cuvântul']::text[]),
+      ('Evrei 8:10', array['aduși', 'adăpat', 'adăugat', 'legile']::text[]),
+      ('Evrei 8:11', array['harul', 'harului', 'zicând', 'hrana']::text[]),
+      ('Evrei 8:12', array['împărțeală', 'nelegiuirile', 'înaintarea', 'începătoare']::text[]),
+      ('Evrei 8:13', array['faptul', 'răbdare', 'răcnește', 'rădăcină']::text[]),
+      ('Evrei 9:1', array['dumnezeiască', 'diavolului', 'dimpotrivă', 'dimprejurul']::text[]),
+      ('Evrei 9:2', array['supuse', 'supuși', 'suspinând', 'dinainte']::text[]),
+      ('Evrei 9:3', array['laud', 'lauda', 'afla', 'laude']::text[]),
+      ('Evrei 9:4', array['vederea', 'chivotul', 'vedeți', 'vegheați']::text[]),
+      ('Evrei 9:5', array['ispășirii', 'semnele', 'sfeșnicul', 'sfintele']::text[]),
+      ('Evrei 9:6', array['aștept', 'aștepta', 'așteptare', 'preoții']::text[]),
+      ('Evrei 9:7', array['pietre', 'pilda', 'preot', 'pilde']::text[]),
+      ('Evrei 9:8', array['Filipi', 'Sfânt', 'Fire', 'Firea']::text[]),
+      ('Evrei 9:9', array['vremurile', 'pierdut', 'pieritoare', 'pierzare']::text[]),
+      ('Evrei 9:10', array['spălări', 'vorbim', 'vorbind', 'vorbit']::text[]),
+      ('Evrei 9:11', array['călcător', 'zidirea', 'căldură', 'călători']::text[]),
+      ('Evrei 9:12', array['moșteniserăți', 'moștenitor', 'răscumpărare', 'moștenitori']::text[]),
+      ('Evrei 9:13', array['genunchii', 'ghedeon', 'glasul', 'trupului']::text[]),
+      ('Evrei 9:14', array['Dumnezeu', 'Facerea', 'Faceți', 'Familia']::text[]),
+      ('Evrei 9:15', array['ierusalim', 'veșnica', 'ieșim', 'ieșirea']::text[]),
+      ('Evrei 9:16', array['feciori', 'felul', 'făcut', 'felului']::text[]),
+      ('Evrei 9:17', array['galateni', 'galatia', 'galatiei', 'trăiește']::text[]),
+      ('Evrei 9:18', array['întâiul', 'lumesc', 'lumii', 'lumina']::text[]),
+      ('Evrei 9:19', array['astupați', 'cartea', 'astăzi', 'asupra']::text[]),
+      ('Evrei 9:20', array['ascultați', 'poruncit', 'asculte', 'ascultă']::text[]),
+      ('Evrei 9:21', array['vasele', 'aaron', 'abatere', 'abată']::text[]),
+      ('Evrei 9:22', array['arătat', 'arătăm', 'asculta', 'vărsare']::text[]),
+      ('Evrei 9:23', array['dinainte', 'dincolo', 'deoarece', 'dintre']::text[]),
+      ('Evrei 9:24', array['isus', 'chiar', 'italia', 'iubesc']::text[]),
+      ('Evrei 9:25', array['fiecare', 'bunăvoie', 'buzele', 'buzelor']::text[]),
+      ('Evrei 9:26', array['astupați', 'astăzi', 'asupra', 'jertfa']::text[]),
+      ('Evrei 9:27', array['intrat', 'intre', 'rânduit', 'intră']::text[]),
+      ('Evrei 9:28', array['aduce', 'multora', 'aduceau', 'aducem']::text[]),
+      ('Evrei 10:1', array['aproape', 'aproapele', 'adevărată', 'apropiat']::text[]),
+      ('Evrei 10:2', array['veacului', 'păcate', 'vechi', 'vechime']::text[]),
+      ('Evrei 10:3', array['aducerea', 'stăpân', 'stăpâni', 'stăpânilor']::text[]),
+      ('Evrei 10:4', array['oaspeți', 'obicei', 'obișnuit', 'sângele']::text[]),
+      ('Evrei 10:5', array['sfântă', 'sfârșește', 'pregătit', 'sfârși']::text[]),
+      ('Evrei 10:6', array['târâți', 'păcat', 'tăia', 'tăiat']::text[]),
+      ('Evrei 10:7', array['Iată', 'Scris', 'Scrise', 'Scriu']::text[]),
+      ('Evrei 10:8', array['iubește', 'iubești', 'iubind', 'primit']::text[]),
+      ('Evrei 10:9', array['clipa', 'clipă', 'pună', 'cobora']::text[]),
+      ('Evrei 10:10', array['desființat', 'desfrânare', 'totdeauna', 'desfrânarea']::text[]),
+      ('Evrei 10:11', array['dincolo', 'dintr', 'dintre', 'preot']::text[]),
+      ('Evrei 10:12', array['adus', 'david', 'dați', 'decât']::text[]),
+      ('Evrei 10:13', array['călcător', 'făcuți', 'căldură', 'călători']::text[]),
+      ('Evrei 10:14', array['prejos', 'premiul', 'făcut', 'preot']::text[]),
+      ('Evrei 10:15', array['Rămân', 'Rămâne', 'Rămânem', 'Lucrul']::text[]),
+      ('Evrei 10:16', array['Iată', 'Făcuse', 'Făcut', 'Făcute']::text[]),
+      ('Evrei 10:17', array['date', 'aminte', 'datinile', 'dator']::text[]),
+      ('Evrei 10:18', array['schimba', 'schimbe', 'păcat', 'schimbă']::text[]),
+      ('Evrei 10:19', array['suferă', 'suflet', 'suflete', 'sângele']::text[]),
+      ('Evrei 10:20', array['cortul', 'corturi', 'creadă', 'adică']::text[]),
+      ('Evrei 10:21', array['supus', 'supuse', 'casa', 'supuși']::text[]),
+      ('Evrei 10:22', array['mulțumiri', 'deplină', 'mulțumit', 'mulțumiți']::text[]),
+      ('Evrei 10:23', array['credincios', 'trimisul', 'trupești', 'trupului']::text[]),
+      ('Evrei 10:24', array['uitând', 'uităm', 'umbla', 'unii']::text[]),
+      ('Evrei 10:25', array['milos', 'miloși', 'mult', 'milă']::text[]),
+      ('Evrei 10:26', array['desființat', 'cunoștința', 'desființează', 'desfrânare']::text[]),
+      ('Evrei 10:27', array['mistui', 'mărturia', 'mărturie', 'mărăcini']::text[]),
+      ('Evrei 10:28', array['smulgă', 'soarta', 'soartă', 'trei']::text[]),
+      ('Evrei 10:29', array['Milă', 'Mine', 'Duhul', 'Mint']::text[]),
+      ('Evrei 10:30', array['altă', 'zadar', 'zecile', 'zice']::text[]),
+      ('Evrei 10:31', array['parte', 'mâinile', 'partea', 'partide']::text[]),
+      ('Evrei 10:32', array['supunem', 'supuneți', 'zilele', 'supus']::text[]),
+      ('Evrei 10:33', array['multora', 'multă', 'mulți', 'soartă']::text[]),
+      ('Evrei 10:34', array['Într', 'Esau', 'Evodia', 'Evrei']::text[]),
+      ('Evrei 10:35', array['înapoiat', 'părăsiți', 'înarmați', 'înceapă']::text[]),
+      ('Evrei 10:36', array['ridice', 'roabe', 'puteți', 'roabei']::text[]),
+      ('Evrei 10:37', array['foarte', 'focului', 'folos', 'zăbovi']::text[]),
+      ('Evrei 10:38', array['sufletul', 'pătimit', 'pătimiți', 'pătrunde']::text[]),
+      ('Evrei 10:39', array['avraam', 'înapoi', 'avut', 'avuție']::text[]),
+      ('Evrei 11:1', array['asemănat', 'asia', 'aspră', 'despre']::text[]),
+      ('Evrei 11:2', array['vechime', 'judecați', 'judece', 'judecă']::text[]),
+      ('Evrei 11:3', array['laptele', 'lumea', 'lasă', 'laud']::text[]),
+      ('Evrei 11:4', array['Țapi', 'Țara', 'Abel', 'Țară']::text[]),
+      ('Evrei 11:5', array['duceți', 'ducă', 'duhul', 'pământ']::text[]),
+      ('Evrei 11:6', array['răsplătește', 'preasfântă', 'preaînalt', 'preaînalte']::text[]),
+      ('Evrei 11:7', array['izbăvească', 'înștiințat', 'izbăvirea', 'izgonește']::text[]),
+      ('Evrei 11:8', array['viței', 'voia', 'chemat', 'voie']::text[]),
+      ('Evrei 11:9', array['naști', 'neam', 'neamul', 'venit']::text[]),
+      ('Evrei 11:10', array['laud', 'tari', 'lauda', 'laude']::text[]),
+      ('Evrei 11:11', array['primit', 'găsit', 'găsiți', 'găzduise']::text[]),
+      ('Evrei 11:12', array['gândire', 'gândiți', 'gândul', 'singur']::text[]),
+      ('Evrei 11:13', array['veșnică', 'veșteji', 'văzut', 'veți']::text[]),
+      ('Evrei 11:14', array['luare', 'patrii', 'luat', 'luate']::text[]),
+      ('Evrei 11:15', array['întoarcă', 'oaspeți', 'obicei', 'obișnuiesc']::text[]),
+      ('Evrei 11:16', array['soarta', 'soartă', 'socoti', 'bună']::text[]),
+      ('Evrei 11:17', array['Spusese', 'Spălat', 'Isaac', 'Spălări']::text[]),
+      ('Evrei 11:18', array['găsiți', 'avea', 'haină', 'harul']::text[]),
+      ('Evrei 11:19', array['vorbind', 'câștigat', 'câștigați', 'câștigul']::text[]),
+      ('Evrei 11:20', array['Esau', 'Închis', 'Încolo', 'Încă']::text[]),
+      ('Evrei 11:21', array['Aducând', 'Iacov', 'Aducă', 'Adus']::text[]),
+      ('Evrei 11:22', array['cârtitori', 'câștigat', 'sfârșitul', 'câștigați']::text[]),
+      ('Evrei 11:23', array['umblați', 'umblăm', 'undeva', 'părinții']::text[]),
+      ('Evrei 11:24', array['Faraon', 'Preoția', 'Preoție', 'Preoții']::text[]),
+      ('Evrei 11:25', array['Înaintea', 'Dumnezeu', 'Înaltă', 'Înalțe']::text[]),
+      ('Evrei 11:26', array['naști', 'neam', 'avea', 'neamul']::text[]),
+      ('Evrei 11:27', array['auzit', 'auziți', 'avea', 'teamă']::text[]),
+      ('Evrei 11:28', array['întâi', 'fiului', 'fiți', 'flacără']::text[]),
+      ('Evrei 11:29', array['Înșală', 'Roșie', 'Înșine', 'Înșivă']::text[]),
+      ('Evrei 11:30', array['Privitoare', 'Propovăduiesc', 'Propovăduim', 'Ierihonului']::text[]),
+      ('Evrei 11:31', array['lăudăm', 'macedonia', 'găzduise', 'maicii']::text[]),
+      ('Evrei 11:32', array['Proroci', 'Samson', 'Prorocii', 'Prorocit']::text[]),
+      ('Evrei 11:33', array['împărății', 'purtare', 'purtarea', 'purtați']::text[]),
+      ('Evrei 11:34', array['pierde', 'pierdere', 'pierdeți', 'vrăjmașe']::text[]),
+      ('Evrei 11:35', array['sfatul', 'sfeșnicul', 'înviați', 'sfintele']::text[]),
+      ('Evrei 11:36', array['alții', 'bătăi', 'amin', 'aminte']::text[]),
+      ('Evrei 11:37', array['prigoniți', 'dezlipească', 'deșartă', 'diaconii']::text[]),
+      ('Evrei 11:38', array['nelegiuit', 'nelegiuite', 'nelegiuiți', 'vrednică']::text[]),
+      ('Evrei 11:39', array['zeciuială', 'zicând', 'credința', 'zidarii']::text[]),
+      ('Evrei 11:40', array['iubit', 'iubitori', 'vedere', 'iubiți']::text[]),
+      ('Evrei 12:1', array['laoparte', 'slujitori', 'slujitorul', 'slujiți']::text[]),
+      ('Evrei 12:2', array['Iubiți', 'Iuda', 'Iudeea', 'Isus']::text[]),
+      ('Evrei 12:3', array['legați', 'lege', 'cumva', 'legea']::text[]),
+      ('Evrei 12:4', array['rămână', 'sânge', 'rănile', 'răpirea']::text[]),
+      ('Evrei 12:5', array['Fiule', 'Scriși', 'Sculat', 'Scule']::text[]),
+      ('Evrei 12:6', array['seminței', 'semințelor', 'seminția', 'pedepsește']::text[]),
+      ('Evrei 12:7', array['sângelui', 'sănătate', 'pedepsește', 'sărbătoare']::text[]),
+      ('Evrei 12:8', array['aștepta', 'niște', 'babilon', 'balaam']::text[]),
+      ('Evrei 12:9', array['trebuie', 'scrie', 'scriptura', 'scriptură']::text[]),
+      ('Evrei 12:10', array['adevăr', 'acestor', 'acestora', 'acești']::text[]),
+      ('Evrei 12:11', array['luate', 'aduce', 'luați', 'lucrare']::text[]),
+      ('Evrei 12:12', array['bețiile', 'binele', 'mâinile', 'binelea']::text[]),
+      ('Evrei 12:13', array['întărirea', 'întărită', 'întăriți', 'picioarele']::text[]),
+      ('Evrei 12:14', array['Urmăriți', 'Închinat', 'Închine', 'Închină']::text[]),
+      ('Evrei 12:15', array['călători', 'nimeni', 'cămașa', 'căpăta']::text[]),
+      ('Evrei 12:16', array['Slujitorul', 'Slujiți', 'Vegheați', 'Slăbiciune']::text[]),
+      ('Evrei 12:17', array['Gurile', 'Gustat', 'Guste', 'Știți']::text[]),
+      ('Evrei 12:18', array['cuprins', 'alergarea', 'alergat', 'alergați']::text[]),
+      ('Evrei 12:19', array['nevoie', 'glasul', 'nevoile', 'nevăzut']::text[]),
+      ('Evrei 12:20', array['lovesc', 'munte', 'luare', 'luat']::text[]),
+      ('Evrei 12:21', array['înfricoșătoare', 'simțămintele', 'slăbiciunile', 'strâmtorarea']::text[]),
+      ('Evrei 12:22', array['munți', 'murit', 'muritori', 'muntele']::text[]),
+      ('Evrei 12:23', array['fiecărui', 'fierbinte', 'născuți', 'fiicei']::text[]),
+      ('Evrei 12:24', array['bețiile', 'decât', 'bine', 'binele']::text[]),
+      ('Evrei 12:25', array['scăpat', 'trupul', 'trupului', 'trupuri']::text[]),
+      ('Evrei 12:26', array['bogat', 'boli', 'bolnav', 'încă']::text[]),
+      ('Evrei 12:27', array['isaac', 'isop', 'arată', 'ispitit']::text[]),
+      ('Evrei 12:28', array['guste', 'frică', 'gând', 'gândea']::text[]),
+      ('Evrei 12:29', array['Dumnezeul', 'Treburile', 'Treceți', 'Trecută']::text[]),
+      ('Evrei 13:1', array['schimbă', 'frățească', 'scrijeliții', 'scriptura']::text[]),
+      ('Evrei 13:2', array['tari', 'tată', 'știe', 'tatăl']::text[]),
+      ('Evrei 13:3', array['supuși', 'sute', 'sânge', 'aminte']::text[]),
+      ('Evrei 13:4', array['ținută', 'îndoapă', 'îndoială', 'îndurare']::text[]),
+      ('Evrei 13:5', array['apropiați', 'iubitori', 'apropie', 'apropiem']::text[]),
+      ('Evrei 13:6', array['vecii', 'vecilor', 'putem', 'vecinul']::text[]),
+      ('Evrei 13:7', array['Deasupra', 'Degeaba', 'Degrabă', 'Dumnezeu']::text[]),
+      ('Evrei 13:8', array['Isus', 'Călcat', 'Cămașa', 'Căpăta']::text[]),
+      ('Evrei 13:9', array['primitori', 'întărită', 'primită', 'primiți']::text[]),
+      ('Evrei 13:10', array['legii', 'legile', 'leilor', 'altar']::text[]),
+      ('Evrei 13:11', array['vorbim', 'vorbind', 'păcat', 'vorbit']::text[]),
+      ('Evrei 13:12', array['găsesc', 'însuși', 'găsește', 'găsim']::text[]),
+      ('Evrei 13:13', array['suferim', 'parte', 'partea', 'partide']::text[]),
+      ('Evrei 13:14', array['deșartă', 'deșert', 'diaconii', 'căutarea']::text[]),
+      ('Evrei 13:15', array['Putință', 'Putrezi', 'Dumnezeu', 'Putrezirea']::text[]),
+      ('Evrei 13:16', array['potrivnice', 'binefacerea', 'potrivnici', 'potrivnicul']::text[]),
+      ('Evrei 13:17', array['sufletelor', 'ieșiseră', 'intrării', 'iscoadele']::text[]),
+      ('Evrei 13:18', array['lumini', 'luminos', 'luni', 'purtăm']::text[]),
+      ('Evrei 13:19', array['viii', 'viitoare', 'lucrul', 'viitor']::text[]),
+      ('Evrei 13:20', array['vesti', 'vestit', 'oilor', 'vestite']::text[]),
+      ('Evrei 13:21', array['Religia', 'Repede', 'Rezemat', 'Hristos']::text[]),
+      ('Evrei 13:22', array['primiți', 'treizeci', 'treji', 'tremur']::text[]),
+      ('Evrei 13:23', array['împlinirea', 'împreună', 'împlinit', 'împliniți']::text[]),
+      ('Evrei 13:24', array['veți', 'viața', 'trimit', 'vicleșug']::text[]),
+      ('Evrei 13:25', array['Slabe', 'Slava', 'Slavei', 'Harul']::text[]),
+      ('Galateni 1:1', array['Fire', 'Firea', 'Pavel', 'Firesc']::text[]),
+      ('Galateni 1:2', array['măsură', 'către', 'naște', 'naștere']::text[]),
+      ('Galateni 1:3', array['Hristos', 'Uitat', 'Uitați', 'Uitând']::text[]),
+      ('Galateni 1:4', array['Slujiri', 'Slujit', 'Slujitor', 'Însuși']::text[]),
+      ('Galateni 1:5', array['lăsați', 'lăstari', 'vecilor', 'lăsăm']::text[]),
+      ('Galateni 1:6', array['doreau', 'altă', 'doresc', 'dori']::text[]),
+      ('Galateni 1:7', array['tulbură', 'lapte', 'laptele', 'lauda']::text[]),
+      ('Galateni 1:8', array['vrednică', 'vremurile', 'vremurilor', 'evanghelie']::text[]),
+      ('Galateni 1:9', array['desfrâu', 'deslușit', 'deosebită', 'despart']::text[]),
+      ('Galateni 1:10', array['suit', 'sulul', 'oare', 'suntem']::text[]),
+      ('Galateni 1:11', array['preoția', 'preoție', 'preoții', 'obârșie']::text[]),
+      ('Galateni 1:12', array['primit', 'uite', 'uitând', 'uităm']::text[]),
+      ('Galateni 1:13', array['stâlpi', 'mult', 'stânci', 'stâncă']::text[]),
+      ('Galateni 1:14', array['preoți', 'preoția', 'vârstă', 'preoție']::text[]),
+      ('Galateni 1:15', array['preaînalt', 'preaînalte', 'prefacă', 'pântecele']::text[]),
+      ('Galateni 1:16', array['neamuri', 'vreți', 'vrăjmașe', 'vrăjmași']::text[]),
+      ('Galateni 1:17', array['smerit', 'mine', 'smulgă', 'soarta']::text[]),
+      ('Galateni 1:18', array['mărturisească', 'mărturisesc', 'cincisprezece', 'mărturisește']::text[]),
+      ('Galateni 1:19', array['măduva', 'mănânce', 'măreția', 'decât']::text[]),
+      ('Galateni 1:20', array['vestiți', 'veșnic', 'veșnica', 'scriu']::text[]),
+      ('Galateni 1:21', array['Neamul', 'Neamuri', 'Ciliciei', 'Neamurile']::text[]),
+      ('Galateni 1:22', array['tomnatici', 'necunoscut', 'totdeauna', 'tovarăși']::text[]),
+      ('Galateni 1:23', array['propovăduiește', 'împărtășească', 'împărătească', 'încheieturile']::text[]),
+      ('Galateni 1:24', array['idolești', 'idoli', 'iefta', 'pricina']::text[]),
+      ('Galateni 2:1', array['apoi', 'luat', 'apuc', 'apucat']::text[]),
+      ('Galateni 2:2', array['turmei', 'turnat', 'vază', 'târziu']::text[]),
+      ('Galateni 2:3', array['facă', 'fală', 'fapta', 'mine']::text[]),
+      ('Galateni 2:4', array['pândească', 'câștigul', 'câștiguri', 'călcați']::text[]),
+      ('Galateni 2:5', array['anii', 'rămână', 'antiohia', 'anume']::text[]),
+      ('Galateni 2:6', array['faptă', 'faraon', 'fața', 'față']::text[]),
+      ('Galateni 2:7', array['singurul', 'singurului', 'sintichia', 'dimpotrivă']::text[]),
+      ('Galateni 2:8', array['tăiați', 'rătăcite', 'rătăciți', 'răul']::text[]),
+      ('Galateni 2:9', array['înarmați', 'însoțire', 'înceapă', 'începe']::text[]),
+      ('Galateni 2:10', array['turnat', 'tuturor', 'tâlcuit', 'căutat']::text[]),
+      ('Galateni 2:11', array['flacără', 'floarea', 'venit', 'flămând']::text[]),
+      ('Galateni 2:12', array['slujitor', 'tăiați', 'slujiți', 'slăveau']::text[]),
+      ('Galateni 2:13', array['iudei', 'smerit', 'smerite', 'smeriți']::text[]),
+      ('Galateni 2:14', array['dovadă', 'dovedit', 'dragoste', 'tuturor']::text[]),
+      ('Galateni 2:15', array['găsit', 'găsiți', 'fire', 'haină']::text[]),
+      ('Galateni 2:16', array['închis', 'socotiți', 'închisoare', 'închiși']::text[]),
+      ('Galateni 2:17', array['păcătoși', 'harului', 'heruvimii', 'hotărârii']::text[]),
+      ('Galateni 2:18', array['foarte', 'focului', 'folos', 'zidesc']::text[]),
+      ('Galateni 2:19', array['chivot', 'chivotul', 'trăiesc', 'ciliciei']::text[]),
+      ('Galateni 2:20', array['Poarte', 'Poartă', 'Sine', 'Poate']::text[]),
+      ('Galateni 2:21', array['Mulți', 'Mulțumesc', 'Mulțumiri', 'Hristos']::text[]),
+      ('Galateni 3:1', array['fermecat', 'mustrat', 'mustrați', 'mustre']::text[]),
+      ('Galateni 3:2', array['felurit', 'felurite', 'femei', 'faptele']::text[]),
+      ('Galateni 3:3', array['drepte', 'dreptul', 'vreți', 'drumul']::text[]),
+      ('Galateni 3:4', array['poftit', 'adevăr', 'pomenit', 'pomi']::text[]),
+      ('Galateni 3:5', array['Duhul', 'Mele', 'Mereu', 'Mergem']::text[]),
+      ('Galateni 3:6', array['anatema', 'ancoră', 'anii', 'crezut']::text[]),
+      ('Galateni 3:7', array['apostolii', 'apostolul', 'credință', 'aproape']::text[]),
+      ('Galateni 3:8', array['copil', 'tine', 'core', 'cort']::text[]),
+      ('Galateni 3:9', array['binecuvântați', 'dregătorilor', 'duhovnicească', 'duhovnicesc']::text[]),
+      ('Galateni 3:10', array['lucrurile', 'zilelor', 'zugrăvit', 'zădărniciei']::text[]),
+      ('Galateni 3:11', array['luni', 'trăi', 'lupta', 'luptă']::text[]),
+      ('Galateni 3:12', array['creșteți', 'creștin', 'credință', 'croiți']::text[]),
+      ('Galateni 3:13', array['uitat', 'uitați', 'uite', 'lemn']::text[]),
+      ('Galateni 3:14', array['peste', 'puneți', 'pună', 'purta']::text[]),
+      ('Galateni 3:15', array['răcnește', 'nimeni', 'rădăcină', 'rămas']::text[]),
+      ('Galateni 3:16', array['supune', 'supunea', 'multe', 'supunem']::text[]),
+      ('Galateni 3:17', array['Scăpa', 'Scăpat', 'Seama', 'Iată']::text[]),
+      ('Galateni 3:18', array['vine', 'pomi', 'pont', 'popor']::text[]),
+      ('Galateni 3:19', array['nădăjduite', 'mijlocitor', 'oamenilor', 'obișnuiesc']::text[]),
+      ('Galateni 3:20', array['Ridicați', 'Dumnezeu', 'Ridice', 'Ridicându']::text[]),
+      ('Galateni 3:21', array['Dumnezeu', 'Apostol', 'Apostoli', 'Apostolii']::text[]),
+      ('Galateni 3:22', array['plăcut', 'plăcute', 'plăcută', 'închis']::text[]),
+      ('Galateni 3:23', array['împodobiți', 'împotriva', 'credinței', 'împotrivea']::text[]),
+      ('Galateni 3:24', array['primită', 'credință', 'primiți', 'prinos']::text[]),
+      ('Galateni 3:25', array['îndrumătorul', 'înșelătoare', 'înștiințat', 'înțelegeți']::text[]),
+      ('Galateni 3:26', array['Bogat', 'Boli', 'Bolnav', 'Isus']::text[]),
+      ('Galateni 3:27', array['Lucrat', 'Lucru', 'Toți', 'Lucrul']::text[]),
+      ('Galateni 3:28', array['acum', 'slobod', 'adam', 'adauge']::text[]),
+      ('Galateni 3:29', array['Avraam', 'Aducă', 'Adunarea', 'Adunării']::text[]),
+      ('Galateni 4:1', array['știu', 'știți', 'țapi', 'vreme']::text[]),
+      ('Galateni 4:2', array['rânduită', 'băuturi', 'băutură', 'capacul']::text[]),
+      ('Galateni 4:3', array['abată', 'robia', 'abel', 'aceeași']::text[]),
+      ('Galateni 4:4', array['vechi', 'vechime', 'femeie', 'veci']::text[]),
+      ('Galateni 4:5', array['smulgă', 'soarta', 'soartă', 'căpătăm']::text[]),
+      ('Galateni 4:6', array['Tată', 'Cadă', 'Cain', 'Cale']::text[]),
+      ('Galateni 4:7', array['Rușinile', 'Dumnezeu', 'Rânduiala', 'Rânduit']::text[]),
+      ('Galateni 4:8', array['Înălțat', 'Înșală', 'Dumnezeu', 'Înșelați']::text[]),
+      ('Galateni 4:9', array['neputința', 'neputinței', 'neputință', 'întoarceți']::text[]),
+      ('Galateni 4:10', array['înnoită', 'vremuri', 'înnoiți', 'însemnat']::text[]),
+      ('Galateni 4:11', array['ostenit', 'sfârșit', 'sfârșitul', 'sfârșiți']::text[]),
+      ('Galateni 4:12', array['știți', 'țapi', 'țara', 'fiți']::text[]),
+      ('Galateni 4:13', array['învierea', 'învierii', 'neputința', 'învățat']::text[]),
+      ('Galateni 4:14', array['sămânță', 'dispreț', 'sănătate', 'săraci']::text[]),
+      ('Galateni 4:15', array['putință', 'plăcute', 'plăcută', 'plăcuți']::text[]),
+      ('Galateni 4:16', array['păstrăm', 'pătimit', 'păzesc', 'făcut']::text[]),
+      ('Galateni 4:17', array['arăta', 'arătat', 'fiți', 'arătăm']::text[]),
+      ('Galateni 4:18', array['pricină', 'plini', 'prihană', 'prilej']::text[]),
+      ('Galateni 4:19', array['nașterii', 'slăveau', 'slăvesc', 'slăvit']::text[]),
+      ('Galateni 4:20', array['glasul', 'având', 'așadar', 'așezat']::text[]),
+      ('Galateni 4:21', array['Vestite', 'Legea', 'Vestită', 'Vestiți']::text[]),
+      ('Galateni 4:22', array['viței', 'voia', 'femeia', 'voie']::text[]),
+      ('Galateni 4:23', array['ziua', 'zugrăvit', 'zăbovi', 'femeia']::text[]),
+      ('Galateni 4:24', array['două', 'opta', 'orice', 'oricui']::text[]),
+      ('Galateni 4:25', array['Trei', 'Arabia', 'Treizeci', 'Treji']::text[]),
+      ('Galateni 4:26', array['partea', 'pasă', 'mama', 'patrie']::text[]),
+      ('Galateni 4:27', array['ascultați', 'asculte', 'ascultă', 'durerile']::text[]),
+      ('Galateni 4:28', array['sunteți', 'prețuiți', 'prețul', 'pribegiei']::text[]),
+      ('Galateni 4:29', array['aducerea', 'întâmplat', 'aduceți', 'aducând']::text[]),
+      ('Galateni 4:30', array['mutarea', 'mutase', 'mutat', 'slobode']::text[]),
+      ('Galateni 4:31', array['usucă', 'valuri', 'slobode', 'vasele']::text[]),
+      ('Galateni 5:1', array['Arătat', 'Arătăm', 'Rămâneți', 'Asculta']::text[]),
+      ('Galateni 5:2', array['căreia', 'folosi', 'cărnii', 'căror']::text[]),
+      ('Galateni 5:3', array['dată', 'feriți', 'fiicei', 'fiii']::text[]),
+      ('Galateni 5:4', array['schimbare', 'schimbarea', 'schimbate', 'despărțit']::text[]),
+      ('Galateni 5:5', array['vârsta', 'vârstă', 'credință', 'văpaia']::text[]),
+      ('Galateni 5:6', array['învățători', 'netăierea', 'învățătura', 'învățături']::text[]),
+      ('Galateni 5:7', array['adevăr', 'laud', 'lauda', 'laude']::text[]),
+      ('Galateni 5:8', array['abată', 'abel', 'acesta', 'vine']::text[]),
+      ('Galateni 5:9', array['nemulțumiți', 'nepieritoare', 'plămădeala', 'neprefăcută']::text[]),
+      ('Galateni 5:10', array['neamuri', 'neamurile', 'oricine', 'neapărat']::text[]),
+      ('Galateni 5:11', array['anii', 'anume', 'apoi', 'mine']::text[]),
+      ('Galateni 5:12', array['odată', 'spiță', 'spre', 'spumegă']::text[]),
+      ('Galateni 5:13', array['domnul', 'faceți', 'domnului', 'dorea']::text[]),
+      ('Galateni 5:14', array['cereri', 'cererile', 'singură', 'ceresc']::text[]),
+      ('Galateni 5:15', array['luptați', 'lăsați', 'lăstari', 'nimiciți']::text[]),
+      ('Galateni 5:16', array['umblați', 'împărat', 'împăratul', 'împărăția']::text[]),
+      ('Galateni 5:17', array['pune', 'firii', 'punem', 'punerea']::text[]),
+      ('Galateni 5:18', array['Înainte', 'Înalt', 'Duhul', 'Înaltă']::text[]),
+      ('Galateni 5:19', array['ascultă', 'ascuns', 'ascunse', 'curvia']::text[]),
+      ('Galateni 5:20', array['călcat', 'călcați', 'călcător', 'partide']::text[]),
+      ('Galateni 5:21', array['inima', 'inimii', 'spun', 'inimă']::text[]),
+      ('Galateni 5:22', array['vorbi', 'răbdare', 'vorbim', 'vorbind']::text[]),
+      ('Galateni 5:23', array['Lege', 'Doreau', 'Doresc', 'Dori']::text[]),
+      ('Galateni 5:24', array['oricărui', 'ospețe', 'ospătează', 'împreună']::text[]),
+      ('Galateni 5:25', array['stânci', 'stâncă', 'trăim', 'stăm']::text[]),
+      ('Galateni 5:26', array['dispreț', 'pizmuindu', 'disprețui', 'disprețuit']::text[]),
+      ('Galateni 6:1', array['îndeplinesc', 'duhovnicești', 'îndepărtați', 'îndepărteze']::text[]),
+      ('Galateni 6:2', array['malul', 'mama', 'unii', 'mamă']::text[]),
+      ('Galateni 6:3', array['deschis', 'desfrâu', 'despart', 'măcar']::text[]),
+      ('Galateni 6:4', array['Fiecare', 'Bucurați', 'Bucure', 'Bucuria']::text[]),
+      ('Galateni 6:5', array['întrebat', 'însuși', 'întrece', 'întrucât']::text[]),
+      ('Galateni 6:6', array['aici', 'aiurea', 'facă', 'ajung']::text[]),
+      ('Galateni 6:7', array['prăpăd', 'prăznuit', 'punctul', 'seamănă']::text[]),
+      ('Galateni 6:8', array['putrezirea', 'făgăduise', 'făgăduit', 'făgăduite']::text[]),
+      ('Galateni 6:9', array['preoți', 'oboseală', 'preoția', 'preoție']::text[]),
+      ('Galateni 6:10', array['roada', 'robi', 'robia', 'toți']::text[]),
+      ('Galateni 6:11', array['Gurile', 'Gustat', 'Uitați', 'Guste']::text[]),
+      ('Galateni 6:12', array['muritori', 'împrejur', 'mustrare', 'mustrat']::text[]),
+      ('Galateni 6:13', array['păzesc', 'înșelați', 'înșine', 'înșivă']::text[]),
+      ('Galateni 6:14', array['auzeau', 'auzirea', 'auziseră', 'altceva']::text[]),
+      ('Galateni 6:15', array['altfel', 'altora', 'făptură', 'altuia']::text[]),
+      ('Galateni 6:16', array['părăsite', 'acesta', 'părăsiți', 'părți']::text[]),
+      ('Galateni 6:17', array['necăjească', 'privitoare', 'propovăduim', 'propovăduit']::text[]),
+      ('Galateni 6:18', array['Câștigați', 'Câștigul', 'Câștiguri', 'Hristos']::text[])
+  ) as c(verse_ref, choices)
+  join public.verse_answers v using (verse_ref)
+  on conflict (verse_ref) do update set
+    correct_answer = excluded.correct_answer,
+    valid_choices = excluded.valid_choices,
+    page_index = excluded.page_index,
+    page_size = excluded.page_size,
+    chapter_ref = excluded.chapter_ref,
+    chapter_size = excluded.chapter_size;
+  get diagnostics v_rows = row_count;
+  if v_rows <> 686 then
+    raise exception 'Catalogul epistolelor: % rânduri în loc de 686. Rulează întâi 20261110_01_epistle_answer_key.sql.', v_rows;
+  end if;
+  if exists (
+    select 1 from public.citim_verse_catalog c
+    where c.verse_ref !~ '^[12] Samuel ' and not (c.correct_answer = any(c.valid_choices))
+  ) then
+    raise exception 'Catalog: răspuns corect absent din variante';
+  end if;
+end;
+$$;
 commit;
 

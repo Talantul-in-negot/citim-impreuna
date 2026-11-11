@@ -1,5 +1,65 @@
 # Migrări Supabase
 
+## Categorii și epistole — ediția 2027
+
+Pentru proiectul live deja actualizat cu paginarea pe capitole, aplică în ordine,
+înainte de publicarea noului client:
+
+1. `20261110_01_epistle_answer_key.sql` adaugă cheia epistolelor după paginile
+   existente din Samuel. Indicii paginilor și răspunsurile din Samuel se păstrează.
+2. `20261110_02_reading_categories.sql` adaugă profilul de lectură, categoria,
+   revizia epistolei și validarea traseului. Migrarea nu rescrie punctajele,
+   pragurile `baseline_at` sau ciclurile existente.
+3. `20261110_03_citim_catalog_epistles.sql` (generată de
+   `scripts/build-epistle-catalog.js`) adaugă cele 686 de versete din epistole în
+   `public.citim_verse_catalog`. Rulează după 01; se oprește cu eroare dacă 01
+   lipsește și nu face nimic pe o bază fără catalog.
+
+**Diferență între repo și baza live (descoperită pe 2026-11-11):** producția are
+un al doilea trigger `BEFORE INSERT` pe `events`, `events_validate_citim_insert`
+→ `validate_citim_event_insert()`, plus tabelul `public.citim_verse_catalog`.
+Niciunul nu e în repo. Triggerul rulează înaintea lui `events_verify_before_insert`
+(ordine alfabetică) și respinge orice verset absent din catalog sau orice alegere
+care nu e una dintre cele 4 variante. Fără pasul 3, orice răspuns la o epistolă
+ar fi refuzat. Când se schimbă corpusul, regenerează și această migrare.
+
+Aplicarea în producție necesită confirmarea utilizatorului. Pentru o bază nouă,
+`apply_all.sql` include și aceste două migrări la final. Pentru o bază live cu
+categorii deja activate, aplică numai migrările noi relevante. Nu reaplica
+întregul istoric pentru actualizarea categoriei sau a corpusului. Garda de la
+începutul bundle-ului oprește execuția înaintea modificărilor dacă există deja
+`reading_profiles`, deoarece istoricul ar reinstala regulile bazate numai pe Samuel.
+
+`reading_profiles` permite citirea exclusiv a propriului profil. Categoria se
+modifică prin RPC-ul autentificat `set_reading_category(p_category_id)`, care
+validează identificatorul și întoarce profilul actualizat. La înscriere, categoria
+validă din `auth.users.raw_user_meta_data.category_id` se copiază în profil.
+Conturile vechi primesc categoria NULL, pentru alegerea explicită în client.
+
+Traseul se calculează din categoria salvată: 1 Samuel, 2 Samuel, apoi epistola.
+Serverul validează pagina curentă, ciclul și revizia epistolei. Toate scrierile
+de categorie și evenimentele sunt serializate per utilizator cu același lacăt
+ca recalculul scorului. Clientul sincronizează coada înaintea schimbării categoriei.
+
+Schimbarea către altă epistolă mărește `epistle_revision`. Progresul epistolei
+folosește această revizie, astfel încât noua epistolă începe de la prima pagină.
+Progresul din Samuel și deduplicarea punctelor continuă să folosească ciclul,
+independent de revizie. Revenirea la o epistolă deja punctată în același ciclu
+nu mai acordă punctele respective. Ciclul se încheie după toate paginile traseului
+selectat. Ciclurile istorice nu se redeschid.
+
+Coada offline trebuie să transmită `cycle` și `epistle_revision`. Reîncercarea
+aceluiași `client_event_id` este ignorată înainte de verificarea progresului,
+inclusiv după trecerea la ciclul următor. Răspunsurile deja corecte trimise de
+alt dispozitiv sunt și ele ignorate, inclusiv în cicluri anterioare. Evenimentele
+neacceptate anterior, cu un ciclu sau o revizie expirată, sunt respinse pentru
+resincronizare, nu mutate în ciclul nou. Detaliile erorii PostgREST sunt
+`STALE_READING_CYCLE`, `STALE_READING_REVISION`, `STALE_READING_CATEGORY` sau
+`STALE_READING_PAGE`, pentru ca clientul să poată păstra separat intrările
+expirate și să informeze utilizatorul fără blocarea întregii cozi.
+
+## Istoricul migrărilor
+
 Se aplică **în ordine alfabetică a numelor de fișiere**, din SQL Editor.
 Ordinea alfabetică este acum și ordinea corectă — nu a fost mereu, vezi mai jos.
 
@@ -48,7 +108,12 @@ coada offline rămâne intactă.
 
 ## Cel mai simplu: un singur fișier
 
-`apply_all.sql` concatenează, în ordine, fișierele 1, 8, 9, 10, 11, 12, 13 și 14 într-un singur script — se lipește o singură dată în SQL Editor și se rulează. Regenerează-l cu `node scripts/build-apply-all.js` dacă se adaugă o migrație nouă. `npm run check:migrations` verifică sincronizarea și păstrarea corecțiilor de ciclu. Complet idempotent — sigur de rulat chiar dacă unele fișiere au rulat deja parțial pe acel proiect.
+`apply_all.sql` concatenează migrările necesare unei baze noi, inclusiv paginarea,
+epistolele și categoriile. Regenerează-l cu `node scripts/build-apply-all.js` dacă
+se adaugă o migrație nouă. `npm run check:migrations` verifică sincronizarea și
+păstrarea corecțiilor de ciclu. După activarea categoriilor, folosește numai
+migrările incrementale. Garda bundle-ului refuză reaplicarea istoricului complet
+pe o bază care are deja `reading_profiles`.
 
 **Pentru punctaj blocat după terminarea cărții:** verifică pe proiectul live dacă
 evenimentele vechi au metadatele paginii și dacă `completed_page_count()` exclude

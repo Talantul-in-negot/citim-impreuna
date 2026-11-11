@@ -34,12 +34,14 @@ const MILESTONE_VERSES = [
   { text: "Căci Domnul dă înțelepciune; din gura Lui iese cunoștință și pricepere.", ref: "Proverbele 2:6" },
 ];
 
-const PAGES = buildChapterPages(VERSES, PAGE_SIZE);
-const totalPages = PAGES.length;
+const SAMUEL_VERSES = VERSES;
+const SAMUEL_PAGE_COUNT = buildChapterPages(SAMUEL_VERSES, PAGE_SIZE).length;
+let PAGES = buildChapterPages(SAMUEL_VERSES, PAGE_SIZE);
+let totalPages = PAGES.length;
 
 // Verset → indexul paginii pe care se află (pentru sincronizarea progresului
 // între dispozitive, calculată din evenimentele stocate în Supabase).
-const REF_PAGE = new Map(PAGES.flatMap((verses, pageIndex) => verses.map((v) => [v.ref, pageIndex])));
+let REF_PAGE = new Map(PAGES.flatMap((verses, pageIndex) => verses.map((v) => [v.ref, pageIndex])));
 const CHAPTER_SIZES = new Map();
 for (const verse of VERSES) {
   const chapterRef = verse.ref.replace(/:\d+$/, "");
@@ -82,6 +84,15 @@ const el = {
   authLogoutBtn: document.getElementById("auth-logout-btn"),
   authCloseBtn: document.getElementById("auth-close-btn"),
   registerBtn: document.getElementById("register-btn"),
+  registerCategory: document.getElementById("register-category"),
+  accountCategory: document.getElementById("account-category"),
+  changeCategoryBtn: document.getElementById("change-category-btn"),
+  categoryModal: document.getElementById("category-modal"),
+  readingCategory: document.getElementById("reading-category"),
+  categoryError: document.getElementById("category-error"),
+  categorySaveBtn: document.getElementById("category-save-btn"),
+  categoryCancelBtn: document.getElementById("category-cancel-btn"),
+  categoryLogoutBtn: document.getElementById("category-logout-btn"),
   // reminder modal
   reminderModal: document.getElementById("reminder-modal"),
   reminderEnabled: document.getElementById("reminder-enabled"),
@@ -98,6 +109,13 @@ let page = parseInt(localStorage.getItem(STORAGE_PROGRESS), 10) || 0;
 // reluarea unei pagini în același ciclu nu mai adaugă puncte.
 let cycle = parseInt(localStorage.getItem(STORAGE_CYCLE), 10) || 0;
 let userName = "";
+let readingProfile = null;
+let categoryOwnerId = null;
+let readingEpistleRevision = 0;
+let categoryReady = false;
+let sessionSyncPromise = null;
+let sessionSyncOwner = null;
+let categorySaving = false;
 let readingStreakDays = null;
 let readingStreakStatus = null;
 let streakFetchPromise = null;
@@ -237,13 +255,16 @@ async function saveReminder() {
 }
 
 function pageMistakeKey(cycleNumber = cycle, pageNumber = page) {
-  return `${cycleNumber}:${pageNumber}`;
+  const ref = PAGES[pageNumber]?.[0]?.ref;
+  const revision = ReadingPath.isSamuelRef(ref) ? "" : `:${readingEpistleRevision}`;
+  return `${cycleNumber}:${ref || pageNumber}${revision}`;
 }
 
 function hasPageMistake(cycleNumber = cycle, pageNumber = page) {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_PAGE_MISTAKES) || "{}");
-    return saved[pageMistakeKey(cycleNumber, pageNumber)] === true;
+    return saved[pageMistakeKey(cycleNumber, pageNumber)] === true ||
+      (pageNumber < SAMUEL_PAGE_COUNT && saved[`${cycleNumber}:${pageNumber}`] === true);
   } catch {
     return false;
   }
@@ -264,6 +285,7 @@ function clearPageMistake(cycleNumber = cycle, pageNumber = page) {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_PAGE_MISTAKES) || "{}");
     delete saved[pageMistakeKey(cycleNumber, pageNumber)];
+    if (pageNumber < SAMUEL_PAGE_COUNT) delete saved[`${cycleNumber}:${pageNumber}`];
     localStorage.setItem(STORAGE_PAGE_MISTAKES, JSON.stringify(saved));
   } catch {
     localStorage.removeItem(STORAGE_PAGE_MISTAKES);
@@ -290,10 +312,17 @@ function resetLocalProgressForAccountSwitch() {
   cycle = 0;
   solvedThisCycle = new Set();
   correctThisCycle = new Set();
+  creditedThisCycle = new Set();
   hadMistake = false;
+  readingProfile = null;
+  categoryReady = false;
+  categoryOwnerId = null;
+  readingStreakDays = null;
+  readingStreakStatus = null;
   localStorage.removeItem(STORAGE_PAGE_MISTAKES);
   localStorage.removeItem(STORAGE_SOLVED);
   localStorage.removeItem(STORAGE_CORRECT);
+  localStorage.removeItem(STORAGE_CREDITED);
   save();
 }
 
@@ -325,10 +354,20 @@ const STORAGE_CORRECT = "ci_correct_verses";
 let correctThisCycle = new Set();
 try {
   const raw = JSON.parse(localStorage.getItem(STORAGE_CORRECT) || "null");
-  if (raw?.cycle === cycle) correctThisCycle = new Set(raw.refs);
+  if (raw?.cycle === cycle) {
+    correctThisCycle = new Set(raw.refs);
+    readingEpistleRevision = Number(raw.epistle_revision) || 0;
+  }
 } catch { /* ignorăm progresul corupt */ }
+const STORAGE_CREDITED = "ci_credited_verses";
+let creditedThisCycle = new Set(correctThisCycle);
+try {
+  const raw = JSON.parse(localStorage.getItem(STORAGE_CREDITED) || "null");
+  if (raw?.cycle === cycle) raw.refs.forEach(ref => creditedThisCycle.add(ref));
+} catch { /* Păstrăm referințele corecte când istoricul local este corupt. */ }
 function saveCorrectThisCycle() {
-  localStorage.setItem(STORAGE_CORRECT, JSON.stringify({ cycle, refs: [...correctThisCycle] }));
+  localStorage.setItem(STORAGE_CORRECT, JSON.stringify({ cycle, refs: [...correctThisCycle], epistle_revision: readingEpistleRevision }));
+  localStorage.setItem(STORAGE_CREDITED, JSON.stringify({ cycle, refs: [...creditedThisCycle] }));
 }
 function saveSolvedThisCycle() {
   localStorage.setItem(STORAGE_SOLVED, JSON.stringify({ cycle, pages: [...solvedThisCycle] }));
@@ -366,6 +405,165 @@ function migrateLocalPagination() {
   localStorage.setItem(STORAGE_PAGE_LAYOUT, PAGE_LAYOUT_VERSION);
 }
 migrateLocalPagination();
+// Versiunile vechi puteau păstra doar paginile rezolvate, fără lista versetelor.
+for (const solvedPage of solvedThisCycle) {
+  for (const verse of PAGES[solvedPage] || []) {
+    correctThisCycle.add(verse.ref);
+    creditedThisCycle.add(verse.ref);
+  }
+}
+
+function hasReadingCategory() {
+  return categoryReady && !!ReadingPath.getCategory(readingProfile?.category_id) && categoryOwnerId === Auth.getUserId();
+}
+
+function isCurrentPathEvent(event) {
+  return REF_PAGE.has(event.verse_ref) && (ReadingPath.isSamuelRef(event.verse_ref) ||
+    Number(event.epistle_revision || 0) === readingEpistleRevision);
+}
+
+function categoryCacheKey(owner) { return `ci_reading_profile:${owner}`; }
+
+function cachedReadingProfile(owner) {
+  try {
+    const profile = JSON.parse(localStorage.getItem(categoryCacheKey(owner)) || "null");
+    return ReadingPath.getCategory(profile?.category_id) && Number.isInteger(profile.epistle_revision) ? profile : null;
+  } catch { return null; }
+}
+
+function applyReadingProfile(profile, owner) {
+  if (owner !== Auth.getUserId()) return;
+  if (!ReadingPath.getCategory(profile?.category_id)) {
+    readingProfile = null;
+    categoryOwnerId = owner;
+    categoryReady = false;
+    renderPage();
+    openCategoryModal();
+    return;
+  }
+  const verses = ReadingPath.buildVerses(profile.category_id, SAMUEL_VERSES, EPISTLES);
+  const revision = Number(profile.epistle_revision) || 0;
+  if (revision !== readingEpistleRevision) {
+    correctThisCycle = new Set([...correctThisCycle].filter(ReadingPath.isSamuelRef));
+  }
+  readingEpistleRevision = revision;
+  readingProfile = profile;
+  categoryOwnerId = owner;
+  PAGES = buildChapterPages(verses, PAGE_SIZE);
+  totalPages = PAGES.length;
+  REF_PAGE = new Map(PAGES.flatMap((items, index) => items.map(verse => [verse.ref, index])));
+  CHAPTER_SIZES.clear();
+  for (const verse of verses) {
+    const chapter = verse.ref.replace(/:\d+$/, "");
+    CHAPTER_SIZES.set(chapter, (CHAPTER_SIZES.get(chapter) || 0) + 1);
+  }
+  solvedThisCycle = new Set(PAGES.flatMap((items, index) => items.every(verse => correctThisCycle.has(verse.ref)) ? [index] : []));
+  page = firstUnsolvedPage(solvedThisCycle);
+  if (page < 0) page = totalPages - 1;
+  categoryReady = true;
+  localStorage.setItem(categoryCacheKey(owner), JSON.stringify(profile));
+  save();
+  saveSolvedThisCycle();
+  el.accountCategory.textContent = ReadingPath.getCategory(profile.category_id).label;
+  renderPage();
+}
+
+async function loadReadingProfile(owner) {
+  let profile;
+  try {
+    profile = await Tracker.fetchOwnProfile();
+  } catch (error) {
+    if (owner !== Auth.getUserId()) return false;
+    profile = cachedReadingProfile(owner);
+    if (!profile) {
+      categoryReady = false;
+      renderPage();
+      openCategoryModal();
+      setAuthError(el.categoryError, "Categoria nu poate fi verificată. Conectează-te la internet și salvează categoria pentru a continua.");
+      return false;
+    }
+  }
+  if (owner !== Auth.getUserId()) return false;
+  try {
+    applyReadingProfile(profile, owner);
+    return hasReadingCategory();
+  } catch (error) {
+    categoryReady = false;
+    renderPage();
+    openCategoryModal();
+    setAuthError(el.categoryError, error.message || "Categoria nu poate fi încărcată. Reîncarcă aplicația.");
+    return false;
+  }
+}
+
+// Mesaj vizibil (nu doar în consolă) pentru probleme de sincronizare pe care
+// utilizatorul trebuie să le știe; rămâne până îl închide.
+function showSyncNotice(text) {
+  document.querySelector(".sync-notice")?.remove();
+  const notice = document.createElement("div");
+  notice.className = "sync-notice";
+  notice.setAttribute("role", "status");
+  const message = document.createElement("p");
+  message.textContent = text;
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "btn secondary";
+  close.textContent = "Am înțeles";
+  close.addEventListener("click", () => notice.remove());
+  notice.append(message, close);
+  document.body.appendChild(notice);
+}
+
+function openCategoryModal() {
+  el.categoryModal.hidden = false;
+  el.readingCategory.value = readingProfile?.category_id || "";
+  el.categoryError.hidden = true;
+  el.categoryCancelBtn.hidden = !hasReadingCategory();
+  el.readingCategory.focus();
+}
+
+async function handleCategorySave() {
+  if (categorySaving) return;
+  const category = el.readingCategory.value;
+  if (!ReadingPath.getCategory(category)) {
+    setAuthError(el.categoryError, "Alege categoria de vârstă.");
+    return;
+  }
+  const owner = Auth.getUserId();
+  categorySaving = true;
+  el.categorySaveBtn.disabled = true;
+  el.categorySaveBtn.textContent = "Se salvează…";
+  try {
+    // O sincronizare deja pornită poate aplica, după salvare, categoria/revizia
+    // veche citită înainte de ea; categorySaving oprește pornirea alteia noi.
+    if (sessionSyncPromise) await sessionSyncPromise.catch(() => {});
+    if (owner !== Auth.getUserId()) return;
+    // Profilul autoritativ decide: prima categorie se salvează ÎNAINTE de trimiterea
+    // cozii (serverul respinge evenimentele unui cont fără categorie, deci un cont
+    // vechi cu răspunsuri Samuel în așteptare altfel nu și-ar putea alege niciodată
+    // categoria); doar schimbările ulterioare cer întâi coada goală.
+    const current = await Tracker.fetchOwnProfile();
+    if (owner !== Auth.getUserId()) return;
+    const initial = !current.category_id;
+    if (!initial) {
+      await Tracker.flush();
+      if (Tracker.hasPendingEvents()) throw new Error("Răspunsurile tale încă se sincronizează. Conectează-te la internet și încearcă din nou.");
+    }
+    const profile = await Tracker.saveCategory(category, { initial });
+    if (owner !== Auth.getUserId()) return;
+    applyReadingProfile(profile, owner);
+    el.categoryModal.hidden = true;
+    hideAuthModal();
+    categorySaving = false;
+    await syncSessionFromCloud();
+  } catch (error) {
+    if (owner === Auth.getUserId()) setAuthError(el.categoryError, error.message || "Categoria nu a putut fi salvată. Încearcă din nou.");
+  } finally {
+    categorySaving = false;
+    el.categorySaveBtn.disabled = false;
+    el.categorySaveBtn.textContent = "Salvează categoria";
+  }
+}
 
 function shuffle(arr) {
   const a = arr.slice();
@@ -437,7 +635,9 @@ function showMilestone(m) {
 }
 
 async function syncScoreFromServer() {
+  const owner = Auth.getUserId();
   const serverScore = await Tracker.fetchOwnScore();
+  if (owner !== Auth.getUserId()) return;
   if (!Number.isFinite(serverScore) || serverScore < 0) return;
   score = serverScore;
   renderScore();
@@ -654,6 +854,15 @@ function buildSolvedVerseCard(v) {
 }
 
 function renderPage() {
+  if (!hasReadingCategory()) {
+    el.bookTitle.textContent = "Citim împreună";
+    el.progress.textContent = "";
+    el.container.innerHTML = "<section class=\"card\"><p>Alege categoria de vârstă din cont pentru a începe sau continua lectura.</p></section>";
+    el.checkBtn.hidden = true;
+    el.nextBtn.hidden = true;
+    el.cheer.hidden = true;
+    return;
+  }
   hadMistake = hasPageMistake();
 
   // Pagină deja terminată corect în acest ciclu, ultima din carte — se
@@ -668,7 +877,7 @@ function renderPage() {
 
   el.progress.textContent = `Pagina ${page + 1} din ${totalPages}`;
   const firstRef = pageVerses[0]?.ref || "";
-  el.bookTitle.textContent = firstRef.includes("2 Samuel") ? "Cartea 2 Samuel" : "Cartea 1 Samuel";
+  el.bookTitle.textContent = ReadingPath.bookName(firstRef);
   el.cheer.hidden = true;
   el.cheer.innerHTML = "";
   el.container.innerHTML = "";
@@ -703,6 +912,8 @@ function updateSceneBackground(pageVerses) {
 }
 
 function checkAnswers() {
+  if (!hasReadingCategory() || categorySaving) return;
+  const pageWasCredited = PAGES[page].every(verse => creditedThisCycle.has(verse.ref));
   const selects = [...el.container.querySelectorAll("select.blank")];
   if (selects.some((s) => s.value === "")) {
     selects.filter((s) => s.value === "").forEach((s) => flashWrong(s, false));
@@ -720,6 +931,7 @@ function checkAnswers() {
       chosen: s.value,
       correct: s.value === s.dataset.answer,
       cycle,
+      epistle_revision: readingEpistleRevision,
       page_index: page,
       page_size: PAGES[page].length,
       ...chapter,
@@ -730,7 +942,8 @@ function checkAnswers() {
       span.className = "locked";
       span.textContent = s.dataset.answer;
       s.replaceWith(span);
-      earned += POINTS_PER_VERSE;
+      if (!creditedThisCycle.has(s.dataset.ref)) earned += POINTS_PER_VERSE;
+      creditedThisCycle.add(s.dataset.ref);
     } else {
       hadMistake = true;
       setPageMistake();
@@ -743,7 +956,7 @@ function checkAnswers() {
 
   if (!el.container.querySelector("select.blank")) {
     let bonus = 0;
-    if (!hadMistake) {
+    if (!hadMistake && !pageWasCredited) {
       bonus = PAGE_CLEAN_BONUS;
       updateScore(bonus);
     }
@@ -789,7 +1002,12 @@ function celebrate(bonus) {
     el.nextBtn.hidden = false;
   } else {
     el.nextBtn.hidden = true;
-    setTimeout(showFinal, 1600);
+    const owner = Auth.getUserId();
+    const completedCycle = cycle;
+    const revision = readingEpistleRevision;
+    setTimeout(() => {
+      if (owner === Auth.getUserId() && cycle === completedCycle && readingEpistleRevision === revision) showFinal();
+    }, 1600);
   }
   launchCelebration();
 }
@@ -844,6 +1062,7 @@ function nextUnsolvedPageAfter(from) {
 }
 
 function nextPage() {
+  if (!hasReadingCategory() || categorySaving || !solvedThisCycle.has(page)) return;
   const target = nextUnsolvedPageAfter(page);
   if (target < 0) {
     showFinal();
@@ -860,6 +1079,7 @@ function nextPage() {
 }
 
 function showFinal() {
+  if (!hasReadingCategory() || categorySaving) return;
   // Ultima pagină rezolvată nu dovedește că toate paginile anterioare au
   // fost salvate (ex. progres venit de pe alt dispozitiv, cu goluri).
   const missingPage = firstUnsolvedPage(solvedThisCycle);
@@ -874,6 +1094,7 @@ function showFinal() {
   cycle += 1;
   solvedThisCycle = new Set();
   correctThisCycle = new Set();
+  creditedThisCycle = new Set();
   page = 0;
   save();
   saveSolvedThisCycle();
@@ -888,7 +1109,8 @@ function showFinal() {
   div.className = "final card";
   div.innerHTML = `
     <div class="trophy">🏆</div>
-    <h2>Ai terminat toate versetele!</h2>
+    <h2>Ai terminat toate cele trei cărți!</h2>
+    <p>Următorul parcurs începe din nou cu 1 Samuel.</p>
     <p>Punctaj total: <strong>⭐ ${score}</strong></p>
   `;
   const restart = document.createElement("button");
@@ -911,6 +1133,11 @@ function updateUserChip() {
   el.logoutBtn.hidden = !name;
   renderScore();
   if (!name) {
+    categoryReady = false;
+    readingProfile = null;
+    categoryOwnerId = null;
+    el.categoryModal.hidden = true;
+    renderPage();
     readingStreakDays = null;
     renderReadingStreak();
   }
@@ -933,6 +1160,7 @@ function showAuthModal() {
     el.authLogged.hidden = false;
     el.authForm.hidden = true;
     el.authUsernameDisplay.textContent = Auth.currentUser();
+    el.accountCategory.textContent = ReadingPath.getCategory(readingProfile?.category_id)?.label || "Categoria nu este aleasă";
   } else {
     el.authLogged.hidden = true;
     el.authForm.hidden = false;
@@ -962,7 +1190,7 @@ async function handleLogin() {
     updateUserChip();
     el.loginPassword.value = "";
     await syncSessionFromCloud();
-    showWelcomeMessage(userName);
+    if (hasReadingCategory()) showWelcomeMessage(userName);
   } catch (err) {
     setAuthError(el.loginError, err.message);
   } finally {
@@ -974,16 +1202,31 @@ async function handleLogin() {
 async function handleRegister() {
   const username = el.loginUsername.value.trim();
   const password = el.loginPassword.value;
+  const category = el.registerCategory.value;
   if (!username || !password) { setAuthError(el.loginError, "Completează ambele câmpuri."); return; }
+  if (!ReadingPath.getCategory(category)) { setAuthError(el.loginError, "Alege categoria de vârstă pentru contul nou."); return; }
   el.registerBtn.disabled = true;
   el.registerBtn.textContent = "Se creează…";
   try {
-    userName = await Auth.signUp(username, password);
+    userName = await Auth.signUp(username, password, category);
+    guardAgainstAccountSwitch();
+    const owner = Auth.getUserId();
+    try {
+      const profile = await Tracker.saveCategory(category);
+      if (owner === Auth.getUserId()) applyReadingProfile(profile, owner);
+    } catch {
+      if (owner === Auth.getUserId()) {
+        hideAuthModal();
+        openCategoryModal();
+        el.readingCategory.value = category;
+        setAuthError(el.categoryError, "Contul a fost creat. Categoria nu a putut fi confirmată. Apasă Salvează categoria pentru a reîncerca.");
+      }
+    }
     hideAuthModal();
     updateUserChip();
     el.loginPassword.value = "";
     await syncSessionFromCloud();
-    showWelcomeMessage(userName);
+    if (hasReadingCategory()) showWelcomeMessage(userName);
   } catch (err) {
     setAuthError(el.loginError, err.message);
   } finally {
@@ -1013,7 +1256,7 @@ function firstUnsolvedPage(solvedPages) {
 
 function resumePageFromEvents(events, curCycle) {
   const hasActivity = events.some((e) =>
-    (e.cycle == null ? 0 : e.cycle) === curCycle && REF_PAGE.has(e.verse_ref)
+    (e.cycle == null ? 0 : e.cycle) === curCycle && isCurrentPathEvent(e)
   );
   if (!hasActivity) return -1;
   const missingPage = firstUnsolvedPage(computeSolvedPagesForCycle(events, curCycle));
@@ -1026,7 +1269,7 @@ function resumePageFromEvents(events, curCycle) {
 function computeSolvedPagesForCycle(events, curCycle) {
   const correctByPage = new Map();
   for (const e of events) {
-    if (!e.correct) continue;
+    if (!e.correct || !isCurrentPathEvent(e)) continue;
     if ((e.cycle == null ? 0 : e.cycle) !== curCycle) continue;
     const p = REF_PAGE.get(e.verse_ref);
     if (p == null) continue;
@@ -1044,7 +1287,7 @@ function computeSolvedPagesForCycle(events, curCycle) {
 function pageHadMistakeBeforeCompletion(events, targetPage, curCycle) {
   const pageRefs = (PAGES[targetPage] || []).map((v) => v.ref);
   const pageEvents = events
-    .filter((e) => (e.cycle == null ? 0 : e.cycle) === curCycle && REF_PAGE.get(e.verse_ref) === targetPage)
+    .filter((e) => (e.cycle == null ? 0 : e.cycle) === curCycle && isCurrentPathEvent(e) && REF_PAGE.get(e.verse_ref) === targetPage)
     .sort((a, b) => (a.created_at || "").localeCompare(b.created_at || ""));
   const solved = new Set();
   for (const e of pageEvents) {
@@ -1060,14 +1303,20 @@ function pageHadMistakeBeforeCompletion(events, targetPage, curCycle) {
 // când și de câte ori se reîncearcă.
 let progressSynced = false;
 async function syncProgressFromCloud() {
-  if (progressSynced || !Tracker.enabled || !userName) return;
+  if (progressSynced || !Tracker.enabled || !userName || !hasReadingCategory()) return;
   progressSynced = true;
+  const requestedOwner = Auth.getUserId();
   try {
     await Tracker.flush();
+    const rejected = Tracker.takeUnseenRejections();
+    if (rejected > 0) {
+      showSyncNotice(`${rejected} ${rejected === 1 ? "răspuns vechi nu a mai putut fi salvat" : "răspunsuri vechi nu au mai putut fi salvate"}: progresul tău se schimbase între timp (categorie, ciclu sau pagină, de exemplu pe alt dispozitiv). Au rămas păstrate pe acest dispozitiv, iar progresul a fost reîncărcat de pe server.`);
+    }
     // Nu înlocuim progresul local cu o copie cloud incompletă cât timp există
     // răspunsuri ale contului care încă așteaptă trimiterea.
     if (Tracker.hasPendingEvents()) throw new Error("Progress upload pending");
     const events = await Tracker.fetchUserEvents(userName);
+    if (requestedOwner !== Auth.getUserId()) return;
     refreshReadingStreak();
 
     // Sincronizează ciclul curent de pe orice dispozitiv, folosind ciclul
@@ -1081,6 +1330,7 @@ async function syncProgressFromCloud() {
       if (c > cloudCycle) cloudCycle = c;
     }
     const serverCycle = await Tracker.fetchOwnCycle();
+    if (requestedOwner !== Auth.getUserId()) return;
     // Un final afișat prematur poate lăsa ciclul LOCAL înaintea serverului.
     // După trimiterea cozii, serverul decide; altfel golurile nu se mai repară.
     const newCycle = Math.max(cloudCycle, serverCycle ?? cycle);
@@ -1090,12 +1340,16 @@ async function syncProgressFromCloud() {
     // Nu calculam scorul din evenimente in browser: totalul serverului include
     // baseline-ul si bonusurile, deci ramane identic cu cel din clasament.
     await refreshAndSyncScore();
+    if (requestedOwner !== Auth.getUserId()) return;
 
     // Paginile deja terminate în ciclul curent, calculate din cloud — astfel
     // restricția „nu poți relua o pagină" ține și dacă schimbă dispozitivul.
     solvedThisCycle = computeSolvedPagesForCycle(events, cycle);
-    correctThisCycle = new Set(events
+    creditedThisCycle = new Set(events
       .filter((e) => e.correct && (e.cycle == null ? 0 : e.cycle) === cycle)
+      .map((e) => e.verse_ref));
+    correctThisCycle = new Set(events
+      .filter((e) => e.correct && (e.cycle == null ? 0 : e.cycle) === cycle && isCurrentPathEvent(e))
       .map((e) => e.verse_ref));
     saveSolvedThisCycle();
 
@@ -1127,14 +1381,27 @@ async function syncProgressFromCloud() {
 // un singur blip de rețea chiar în momentul intrării lasă pagina blocată pe
 // starea locală veche, nesincronizată cu ce s-a citit pe alt dispozitiv.
 async function syncSessionFromCloud() {
-  guardAgainstAccountSwitch();
-  await refreshAndSyncScore();
-  for (let attempt = 0; attempt < 3; attempt++) {
-    progressSynced = false;
-    await syncProgressFromCloud();
-    if (progressSynced) return;
-    if (attempt < 2) await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
-  }
+  const owner = Auth.getUserId();
+  if (!owner || categorySaving) return;
+  if (sessionSyncPromise && sessionSyncOwner === owner) return sessionSyncPromise;
+  sessionSyncOwner = owner;
+  const pending = (async () => {
+    guardAgainstAccountSwitch();
+    if (!await loadReadingProfile(owner) || owner !== Auth.getUserId()) return;
+    el.categoryModal.hidden = true;
+    hideAuthModal();
+    await refreshAndSyncScore();
+    if (owner !== Auth.getUserId()) return;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      progressSynced = false;
+      await syncProgressFromCloud();
+      if (owner !== Auth.getUserId() || progressSynced) return;
+      if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 1000 * (attempt + 1)));
+    }
+  })();
+  sessionSyncPromise = pending;
+  try { await pending; }
+  finally { if (sessionSyncPromise === pending) sessionSyncPromise = null; }
 }
 
 /* --- Ecran de statistici (agregate din evenimentele Supabase) --- */
@@ -1536,6 +1803,19 @@ el.reminderSaveBtn.addEventListener("click", saveReminder);
 el.reminderCloseBtn.addEventListener("click", closeReminderModal);
 el.reminderModal.addEventListener("click", (e) => { if (e.target === el.reminderModal) closeReminderModal(); });
 
+for (const select of [el.registerCategory, el.readingCategory]) {
+  for (const category of ReadingPath.categories) {
+    const option = document.createElement("option");
+    option.value = category.id;
+    option.textContent = category.label;
+    select.appendChild(option);
+  }
+}
+el.categorySaveBtn.addEventListener("click", handleCategorySave);
+el.changeCategoryBtn.addEventListener("click", () => { hideAuthModal(); openCategoryModal(); });
+el.categoryCancelBtn.addEventListener("click", () => { if (hasReadingCategory()) el.categoryModal.hidden = true; });
+el.categoryLogoutBtn.addEventListener("click", handleLogout);
+
 // auth modal events (optional chaining = rezistență la SW care servește HTML vechi)
 el.userChip.addEventListener("click", showAuthModal);
 el.logoutBtn?.addEventListener("click", handleLogout);
@@ -1550,7 +1830,6 @@ renderScore();
 updateReminderButton();
 scheduleDailyReminder();
 persistReminderSettingsForWorker(reminderIsEnabled(), reminderTime());
-if (page >= totalPages) page = 0;
 renderPage();
 Tracker.flush();
 
@@ -1582,15 +1861,22 @@ showAuthModal();
 
 Auth.init((user) => {
   userName = user || "";
+  if (categoryOwnerId !== Auth.getUserId()) {
+    categoryReady = false;
+    renderPage();
+  }
   updateUserChip();
-  if (user) hideAuthModal();
+  if (user) {
+    // Citim sesiunea după callback, pentru a evita blocarea internă a SDK-ului.
+    setTimeout(() => syncSessionFromCloud(), 0);
+  }
 }).then(async (user) => {
   userName = user || "";
   updateUserChip();
   if (user) {
     hideAuthModal();
     await syncSessionFromCloud();
-    showWelcomeMessage(userName);
+    if (hasReadingCategory()) showWelcomeMessage(userName);
   }
 });
 

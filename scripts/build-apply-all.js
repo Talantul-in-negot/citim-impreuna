@@ -30,6 +30,9 @@ const FILES = [
   "20260907_02_fix_completed_page_count_baseline.sql",
   "20261024_01_streak_day_starts_at_03.sql",
   "20261029_01_chapter_pages.sql",
+  "20261110_01_epistle_answer_key.sql",
+  "20261110_02_reading_categories.sql",
+  "20261110_03_citim_catalog_epistles.sql",
 ];
 
 function main() {
@@ -49,8 +52,9 @@ function main() {
     "-- comoditate ca sa nu mai existe loc pentru \"am rulat unele, nu toate, in",
     "-- ordine gresita, in alt proiect\" - vezi tasks/lessons.md L07.",
     "--",
-    "-- Idempotent in intregime: sigur de rulat de mai multe ori, inclusiv peste",
-    "-- o baza de date pe care unele dintre aceste fisiere au rulat deja partial.",
+    "-- Pentru o baza noua sau pentru proiectul anterior activarii categoriilor.",
+    "-- Dupa activarea categoriilor se aplica doar migrarile incrementale noi.",
+    "-- Garda de mai jos refuza reaplicarea istoricului pe o baza cu categorii.",
     "--",
     "-- Inainte sa rulezi: confirma ca esti pe proiectul corect (bara de adrese a",
     "-- dashboard-ului trebuie sa contina codul din SUPABASE_URL din js/config.js).",
@@ -61,7 +65,16 @@ function main() {
     "",
   ].join("\n");
 
-  const parts = [header];
+  const parts = [header, [
+    "do $category_bundle_guard$",
+    "begin",
+    "  if to_regclass('public.reading_profiles') is not null then",
+    "    raise exception 'Reading categories are already enabled. Apply only incremental migrations; replaying the historical bundle would replace route-aware cycle rules.';",
+    "  end if;",
+    "end;",
+    "$category_bundle_guard$;",
+    "",
+  ].join("\n")];
   for (const rel of relFiles) {
     const filePath = path.join(ROOT, rel);
     if (!fs.existsSync(filePath)) {

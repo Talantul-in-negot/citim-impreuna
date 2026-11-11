@@ -9,7 +9,7 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icons/icon.svg" />
-  <link rel="stylesheet" href="css/style.css?v=52" />
+  <link rel="stylesheet" href="css/style.css?v=53" />
 </head>
 <body>
   <canvas id="scene-canvas"></canvas>
@@ -83,6 +83,12 @@
         <p class="auth-intro">Conectează-te ca să-ți salvezi rezultatul și să apari în clasament.</p>
         <input id="login-username" type="text" maxlength="30" placeholder="Nume utilizator" autocomplete="username" />
         <input id="login-password" type="password" maxlength="50" placeholder="Parolă" autocomplete="current-password" />
+        <label class="category-label" for="register-category">Categoria de vârstă</label>
+        <select class="category-select" id="register-category" aria-describedby="register-category-note">
+          <option value="">Alege categoria</option>
+        </select>
+        <p class="category-note" id="register-category-note">Necesară pentru un cont nou. Poți folosi aplicația și doar pentru lectură și antrenament.</p>
+        <p class="category-note">Clasa a XII-a: 18–35 de ani. Clasa a XI-a: X–XI, inclusiv la 18 ani. Pentru ediția 2027, cei care împlinesc 35 de ani până la 31 decembrie 2026 aleg 35+.</p>
         <p class="auth-error" id="login-error" hidden></p>
         <div class="modal-actions">
           <button class="btn primary" id="login-btn">Intră în cont</button>
@@ -94,6 +100,8 @@
       <div id="auth-logged" hidden>
         <div class="auth-avatar">👤</div>
         <p class="auth-welcome">Conectat ca<br><strong id="auth-username-display"></strong></p>
+        <p class="category-current" id="account-category"></p>
+        <button class="btn secondary" id="change-category-btn">Schimbă categoria</button>
         <button class="btn secondary" id="auth-logout-btn">Ieși din cont</button>
       </div>
 
@@ -122,19 +130,39 @@
     </section>
   </div>
 
+  <div class="modal-backdrop" id="category-modal" hidden>
+    <section class="modal category-modal" role="dialog" aria-modal="true" aria-labelledby="category-title">
+      <h2 id="category-title">Categoria de vârstă</h2>
+      <p>Alege grupa pentru parcursul tău: 1 Samuel → 2 Samuel → epistola categoriei.</p>
+      <label class="category-label" for="reading-category">Categoria de vârstă</label>
+      <select class="category-select" id="reading-category" required><option value="">Alege categoria</option></select>
+      <p class="category-note">Poți citi și pentru antrenament, fără participare la concurs.</p>
+      <p class="category-note">Clasa a XII-a: 18–35 de ani. Clasa a XI-a: X–XI, inclusiv la 18 ani. Pentru ediția 2027, cei care împlinesc 35 de ani până la 31 decembrie 2026 aleg 35+.</p>
+      <p class="category-note">Dacă schimbi epistola, lectura ei începe de la prima pagină. Punctele deja câștigate se păstrează.</p>
+      <p class="auth-error" id="category-error" role="alert" hidden></p>
+      <div class="modal-actions">
+        <button class="btn primary" id="category-save-btn">Salvează categoria</button>
+        <button class="btn secondary" id="category-cancel-btn" hidden>Renunță</button>
+        <button class="btn secondary" id="category-logout-btn">Ieși din cont</button>
+      </div>
+    </section>
+  </div>
+
   <canvas id="confetti"></canvas>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"
           integrity="sha384-AkNSQdptcXlJ0/NBZc4qGk86cDVXcCevwoWgEKIpHOEfbvlXGLlIkimQtONt8KNf"
           crossorigin="anonymous"></script>
   <script src="js/config.js?v=44"></script>
-  <script src="js/auth.js?v=46"></script>
+  <script src="js/auth.js?v=47"></script>
   <script src="js/scenes.js?v=44"></script>
   <script src="js/verses-1samuel.js?v=45"></script>
   <script src="js/verses-2samuel.js?v=46"></script>
   <script src="js/verses.js?v=44"></script>
-  <script src="js/tracker.js?v=56"></script>
+  <script src="js/verses-epistles.js?v=1"></script>
+  <script src="js/reading-path.js?v=1"></script>
+  <script src="js/tracker.js?v=57"></script>
   <script src="js/pagination.js?v=1"></script>
-  <script src="js/app.js?v=67"></script>
+  <script src="js/app.js?v=68"></script>
 </body>
 </html>

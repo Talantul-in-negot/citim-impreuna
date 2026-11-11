@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -13,11 +16,26 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: npm
+
+      # PGlite (devDependency) rulează migrațiile reale într-un PostgreSQL local.
+      - name: Install dev dependencies
+        run: npm ci
+
+      # Sintaxa fiecărui fișier livrat browserului.
+      - name: Syntax-check shipped JavaScript
+        run: npm run check:syntax
 
       # Versetele: o singură completare per verset, patru variante unice,
       # răspunsul prezent în variante și absent din restul textului.
       - name: Validate verses
         run: npm run validate:verses
+
+      # Exercițiile epistolelor și cheile de răspunsuri din supabase/ trebuie să
+      # corespundă versetelor livrate; altfel triggerul serverului ar marca
+      # greșit răspunsuri corecte.
+      - name: Generated exercises and answer keys are up to date
+        run: npm run check:generated
 
       - name: Full verse texts match the reference
         run: npm run audit:reference
@@ -26,13 +44,6 @@ jobs:
       # cache-busted, altfel o instalare PWA curată rămâne fără fișiere offline.
       - name: Check asset versions
         run: npm run check:assets
-
-      # Sintaxa fiecărui fișier livrat browserului.
-      - name: Syntax-check shipped JavaScript
-        run: |
-          for f in sw.js js/*.js; do
-            node --check "$f"
-          done
 
       # Numele cu diacritice: bug-ul cu \b a aparut de doua ori, independent.
       - name: Username normalizer
@@ -44,13 +55,19 @@ jobs:
       - name: Progress resumes at missing pages
         run: npm run check:progress
 
+      - name: Offline queue survives stale answers
+        run: npm run check:offline-queue
+
       - name: Reading day starts at 03:00 Romania time
         run: npm run check:reading-day
 
       - name: Chapters start on a new page
         run: npm run check:chapter-pages
 
-      # Cheia de răspunsuri din supabase/ trebuie să corespundă versetelor
-      # livrate; altfel triggerul serverului ar marca greșit răspunsuri corecte.
-      - name: Answer key matches the shipped verses
-        run: npm run build:answer-key -- --check
+      - name: Category routes, RLS and revisions on real PostgreSQL
+        run: npm run check:category-db
+
+      # Catalogul live de versete (folosit de triggerul events_validate_citim_insert)
+      # trebuie să conțină epistolele, altfel serverul le respinge.
+      - name: Epistles are added to the live verse catalog
+        run: npm run check:epistle-catalog
