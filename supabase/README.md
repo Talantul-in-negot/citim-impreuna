@@ -200,3 +200,10 @@ trebuie regenerată **și reaplicată**, altfel triggerul respinge versetele noi
 apelat de nicăieri și a fost șters din client. Tabelul nu se mai creează; dacă
 mărimea clasamentului devine configurabilă, se adaugă atunci, împreună cu codul
 care chiar o folosește.
+# Corectarea numelor conturilor fără metadata.username
+
+Pe o bază existentă, aplică separat `20261111_02_account_display_names.sql`.
+Migrarea repară numele din `scores` și numele scrise ulterior în `events` și
+`scores`. Prioritatea este username-ul din metadate, apoi identificatorul din
+adresele interne `@citim.app` sau `@test.com`. Alte adrese de email nu sunt
+folosite ca nume publice. Punctele și ciclurile existente sunt păstrate.

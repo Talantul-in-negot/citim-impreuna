@@ -34,6 +34,7 @@ const FILES = [
   "20261110_02_reading_categories.sql",
   "20261110_03_citim_catalog_epistles.sql",
   "20261111_01_events_scores_fk_cascade.sql",
+  "20261111_02_account_display_names.sql",
 ];
 
 function main() {

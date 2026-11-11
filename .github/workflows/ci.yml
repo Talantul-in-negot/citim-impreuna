@@ -58,6 +58,9 @@ jobs:
       - name: Scores belong to the authenticated account before category selection
         run: npm run check:account-score
 
+      - name: Account names are preserved in the leaderboard
+        run: npm run check:account-names
+
       - name: Offline queue survives stale answers
         run: npm run check:offline-queue
 
