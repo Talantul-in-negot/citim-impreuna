@@ -55,6 +55,9 @@ jobs:
       - name: Progress resumes at missing pages
         run: npm run check:progress
 
+      - name: Scores belong to the authenticated account before category selection
+        run: npm run check:account-score
+
       - name: Offline queue survives stale answers
         run: npm run check:offline-queue
 

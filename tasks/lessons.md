@@ -1,5 +1,13 @@
 # Lessons — Citim împreună
 
+## Scorul se sincronizează și înaintea alegerii categoriei (2026-11-11)
+
+Un cont fără categorie vedea scorul local al contului anterior deoarece
+sincronizarea sesiunii se oprea la dialogul obligatoriu înainte de citirea
+scorului. Citește scorul contului independent de accesul la lectură și verifică
+proprietarul cache-ului înainte de afișarea unei valori locale. Verifică și
+valoarea zero, lipsa rețelei și răspunsurile întârziate după schimbarea contului.
+
 ## L12 — Ultima pagină atinsă nu dovedește completarea parcurgerii (2026-10-24)
 
 În live, Sergiu avea 297/301 pagini complete în ciclul 1, cu paginile 6–9

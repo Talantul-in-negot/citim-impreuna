@@ -620,8 +620,11 @@ function shuffle(arr) {
 // Cât timp nu există sesiune afișăm „–", nu o cifră care nu e a lui.
 function renderScore() {
   const loggedIn = !!userName;
-  el.score.textContent = loggedIn ? score : "–";
-  el.scoreChip.title = loggedIn ? "Punctajul tău" : "Conectează-te ca să-ți vezi punctajul";
+  const ownsScore = loggedIn && Auth.getUserId() === localStorage.getItem(STORAGE_USER);
+  el.score.textContent = ownsScore ? score : "–";
+  el.scoreChip.title = loggedIn
+    ? (ownsScore ? "Punctajul tău" : "Se încarcă punctajul…")
+    : "Conectează-te ca să-ți vezi punctajul";
 }
 
 function updateScore(points) {
@@ -1427,6 +1430,9 @@ async function syncSessionFromCloud() {
   sessionSyncOwner = owner;
   const pending = (async () => {
     guardAgainstAccountSwitch();
+    // Punctajul aparține contului și se citește inclusiv înainte de alegerea categoriei.
+    await syncScoreFromServer();
+    if (owner !== Auth.getUserId()) return;
     if (!await loadReadingProfile(owner) || owner !== Auth.getUserId()) return;
     el.categoryModal.hidden = true;
     hideAuthModal();
