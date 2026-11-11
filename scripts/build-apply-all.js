@@ -33,6 +33,7 @@ const FILES = [
   "20261110_01_epistle_answer_key.sql",
   "20261110_02_reading_categories.sql",
   "20261110_03_citim_catalog_epistles.sql",
+  "20261111_01_events_scores_fk_cascade.sql",
 ];
 
 function main() {

@@ -15,6 +15,11 @@ Pentru proiectul live deja actualizat cu paginarea pe capitole, aplică în ordi
    `public.citim_verse_catalog`. Rulează după 01; se oprește cu eroare dacă 01
    lipsește și nu face nimic pe o bază fără catalog.
 
+4. `20261111_01_events_scores_fk_cascade.sql` face `on delete cascade` cheile
+   `events.user_id` și `scores.user_id` spre `auth.users`. Pe live erau `NO ACTION`
+   (tabelele create manual, înainte de migrații), deci un cont cu răspunsuri sau
+   scor nu putea fi șters din dashboard. Idempotentă, nu modifică rânduri.
+
 **Diferență între repo și baza live (descoperită pe 2026-11-11):** producția are
 un al doilea trigger `BEFORE INSERT` pe `events`, `events_validate_citim_insert`
 → `validate_citim_event_insert()`, plus tabelul `public.citim_verse_catalog`.

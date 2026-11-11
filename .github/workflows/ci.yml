@@ -72,5 +72,8 @@ jobs:
 
       # Catalogul live de versete (folosit de triggerul events_validate_citim_insert)
       # trebuie să conțină epistolele, altfel serverul le respinge.
+      - name: Deleting a user cascades to events and scores
+        run: npm run check:fk-cascade
+
       - name: Epistles are added to the live verse catalog
         run: npm run check:epistle-catalog
