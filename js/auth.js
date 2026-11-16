@@ -61,6 +61,7 @@ const Auth = (() => {
     if (msg.includes('already registered') || msg.includes('already been registered')) return 'Acest nume de utilizator este deja folosit.';
     if (msg.includes('Password should')) return 'Parola trebuie să aibă cel puțin 6 caractere.';
     if (msg.includes('same_password') || msg.includes('different from the old')) return 'Alege o parolă diferită de cea actuală.';
+    if (msg.includes('Current password required') || msg.includes('current_password')) return 'Parola actuală este necesară pentru a o schimba. Reîncearcă.';
     if (msg.includes('reauthentication') || msg.includes('reauthenticate')) return 'Intră din nou în cont, apoi reîncearcă schimbarea parolei.';
     if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) return 'Nu se poate contacta serverul. Verifică conexiunea la internet.';
     if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) return 'Prea multe încercări. Încearcă mai târziu.';
@@ -161,7 +162,11 @@ const Auth = (() => {
       }
       // Actualizăm numai identitatea verificată, chiar dacă alt tab schimbă
       // contul principal în timp ce această cerere este în curs.
-      const updated = await verifier.auth.updateUser({ password: newPassword });
+      // Proiectul Supabase cere parola actuală la schimbare ("Secure password
+      // change"); fără `current_password` serverul răspunde „Current password
+      // required when setting new password”. Câmpul trece neschimbat prin
+      // updateUser către API.
+      const updated = await verifier.auth.updateUser({ password: newPassword, current_password: currentPassword });
       if (updated.error) throw new Error(translateError(updated.error.message));
     } finally {
       // O eroare de logout nu transformă o schimbare reușită în eșec.

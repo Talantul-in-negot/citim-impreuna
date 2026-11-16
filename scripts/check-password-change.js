@@ -97,6 +97,8 @@ async function main() {
     assert.equal(test.requests[0][1].email, email, 'Must verify the actual account, never a username fallback');
     assert.equal(test.requests.filter(([kind]) => kind === 'verify').length, 1);
     assert.equal(test.requests.find(([kind]) => kind === 'update')[1].password, 'new-password');
+    assert.equal(test.requests.find(([kind]) => kind === 'update')[1].current_password, 'old-password',
+      'The project requires the current password on update (found on the live app)');
     assert.equal(test.api.getUserId(), null, 'Successful changes require fresh login');
     const isolated = test.options[1].auth;
     assert.equal(isolated.persistSession, false);
