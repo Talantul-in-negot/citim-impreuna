@@ -60,6 +60,9 @@ const Auth = (() => {
     if (msg.includes('Invalid login') || msg.includes('invalid_credentials')) return 'Nume sau parolă incorectă.';
     if (msg.includes('already registered') || msg.includes('already been registered')) return 'Acest nume de utilizator este deja folosit.';
     if (msg.includes('Password should')) return 'Parola trebuie să aibă cel puțin 6 caractere.';
+    if (msg.includes('same_password') || msg.includes('different from the old')) return 'Alege o parolă diferită de cea actuală.';
+    if (msg.includes('reauthentication') || msg.includes('reauthenticate')) return 'Intră din nou în cont, apoi reîncearcă schimbarea parolei.';
+    if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) return 'Nu se poate contacta serverul. Verifică conexiunea la internet.';
     if (msg.includes('rate limit') || msg.includes('over_email_send_rate_limit')) return 'Prea multe încercări. Încearcă mai târziu.';
     if (msg.includes('Email not confirmed')) return 'Confirmarea prin email este activată — contactează administratorul.';
     return msg;
@@ -125,6 +128,56 @@ const Auth = (() => {
     _session = null;
   }
 
+  async function changePassword(currentPassword, newPassword, confirmation) {
+    const c = client();
+    const owner = getUserId();
+    if (!c || !owner) throw new Error('Intră în cont pentru a schimba parola.');
+    if (!currentPassword) throw new Error('Completează parola actuală.');
+    if (newPassword.length < 6) throw new Error('Parola nouă trebuie să aibă cel puțin 6 caractere.');
+    if (newPassword.length > 50) throw new Error('Parola nouă poate avea cel mult 50 de caractere.');
+    if (newPassword !== confirmation) throw new Error('Parolele noi nu coincid.');
+    if (newPassword === currentPassword) throw new Error('Alege o parolă diferită de cea actuală.');
+
+    // O adresă redenumită de administrator poate fi încă veche în sesiunea
+    // locală; citim identitatea actuală de pe server înainte de verificare.
+    const account = await c.auth.getUser();
+    if (account.error) throw new Error(translateError(account.error.message));
+    const email = account.data?.user?.email;
+    if (!email || account.data.user.id !== owner || getUserId() !== owner) {
+      throw new Error('Contul s-a schimbat. Reîncearcă din contul dorit.');
+    }
+
+    // Verificarea nu trebuie să înlocuiască sesiunea din ci_auth. Folosim
+    // adresa reală, inclusiv pentru conturile vechi sau nume duplicate.
+    const verifier = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false,
+        storageKey: 'ci_password_check' },
+    });
+    try {
+      const { data, error } = await verifier.auth.signInWithPassword({ email, password: currentPassword });
+      if (error) throw new Error(isInvalidCredentials(error) ? 'Parola actuală este incorectă.' : translateError(error.message));
+      if (data?.user?.id !== owner || getUserId() !== owner) {
+        throw new Error('Contul s-a schimbat. Reîncearcă din contul dorit.');
+      }
+      // Actualizăm numai identitatea verificată, chiar dacă alt tab schimbă
+      // contul principal în timp ce această cerere este în curs.
+      const updated = await verifier.auth.updateUser({ password: newPassword });
+      if (updated.error) throw new Error(translateError(updated.error.message));
+    } finally {
+      // O eroare de logout nu transformă o schimbare reușită în eșec.
+      try { await verifier.auth.signOut({ scope: 'local' }); } catch { /* cleanup */ }
+    }
+    if (getUserId() === owner) {
+      // Schimbarea parolei poate revoca celelalte sesiuni: cerem o conectare
+      // nouă și curățăm sesiunea veche numai pentru contul inițiator.
+      try { await c.auth.signOut({ scope: 'local' }); } catch { /* password already changed */ }
+      if (getUserId() === owner) {
+        _session = null;
+        if (_onChangeCb) _onChangeCb(null);
+      }
+    }
+  }
+
   function currentUser() {
     if (!_session) return null;
     return extractUsername(_session.user);
@@ -154,5 +207,5 @@ const Auth = (() => {
     return _session?.user?.id || null;
   }
 
-  return { init, signIn, signUp, signOut, currentUser, isLoggedIn, getAccessToken, getUserId, normalizeUsername };
+  return { init, signIn, signUp, signOut, changePassword, currentUser, isLoggedIn, getAccessToken, getUserId, normalizeUsername };
 })();

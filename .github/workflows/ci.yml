@@ -49,6 +49,9 @@ jobs:
       - name: Username normalizer
         run: npm run check:names
 
+      - name: Password change validation and session isolation
+        run: npm run check:auth
+
       - name: Migration bundle preserves cycle fixes
         run: npm run check:migrations
 

@@ -9,7 +9,7 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="icons/icon.svg" />
-  <link rel="stylesheet" href="css/style.css?v=54" />
+  <link rel="stylesheet" href="css/style.css?v=55" />
 </head>
 <body>
   <canvas id="scene-canvas"></canvas>
@@ -102,8 +102,25 @@
         <p class="auth-welcome">Conectat ca<br><strong id="auth-username-display"></strong></p>
         <p class="category-current" id="account-category"></p>
         <button class="btn secondary" id="change-category-btn">Schimbă categoria</button>
+        <button class="btn secondary" id="change-password-btn" type="button" aria-expanded="false" aria-controls="change-password-form">Schimbă parola</button>
+        <form class="password-form" id="change-password-form" hidden>
+          <label for="current-password">Parola actuală</label>
+          <input id="current-password" type="password" autocomplete="current-password" required />
+          <label for="new-password">Parola nouă</label>
+          <input id="new-password" type="password" autocomplete="new-password" minlength="6" maxlength="50" required aria-describedby="password-note" />
+          <label for="confirm-password">Confirmă parola nouă</label>
+          <input id="confirm-password" type="password" autocomplete="new-password" minlength="6" maxlength="50" required />
+          <p class="category-note" id="password-note">Folosește între 6 și 50 de caractere. După salvare, intră din nou cu parola nouă.</p>
+          <p class="auth-error" id="password-error" role="alert" hidden></p>
+          <div class="modal-actions">
+            <button class="btn primary" id="password-save-btn" type="submit">Salvează parola</button>
+            <button class="btn secondary" id="password-cancel-btn" type="button">Renunță</button>
+          </div>
+        </form>
         <button class="btn secondary" id="auth-logout-btn">Ieși din cont</button>
       </div>
+
+      <p class="auth-success" id="password-success" role="status" hidden></p>
 
       <p class="app-version" id="app-version"></p>
 
@@ -155,7 +172,7 @@
           integrity="sha384-AkNSQdptcXlJ0/NBZc4qGk86cDVXcCevwoWgEKIpHOEfbvlXGLlIkimQtONt8KNf"
           crossorigin="anonymous"></script>
   <script src="js/config.js?v=44"></script>
-  <script src="js/auth.js?v=47"></script>
+  <script src="js/auth.js?v=48"></script>
   <script src="js/scenes.js?v=44"></script>
   <script src="js/verses-1samuel.js?v=45"></script>
   <script src="js/verses-2samuel.js?v=46"></script>
@@ -164,6 +181,6 @@
   <script src="js/reading-path.js?v=1"></script>
   <script src="js/tracker.js?v=57"></script>
   <script src="js/pagination.js?v=1"></script>
-  <script src="js/app.js?v=70"></script>
+  <script src="js/app.js?v=71"></script>
 </body>
 </html>

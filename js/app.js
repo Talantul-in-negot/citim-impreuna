@@ -87,6 +87,15 @@ const el = {
   registerCategory: document.getElementById("register-category"),
   accountCategory: document.getElementById("account-category"),
   changeCategoryBtn: document.getElementById("change-category-btn"),
+  changePasswordBtn: document.getElementById("change-password-btn"),
+  passwordForm: document.getElementById("change-password-form"),
+  currentPassword: document.getElementById("current-password"),
+  newPassword: document.getElementById("new-password"),
+  confirmPassword: document.getElementById("confirm-password"),
+  passwordError: document.getElementById("password-error"),
+  passwordSuccess: document.getElementById("password-success"),
+  passwordSaveBtn: document.getElementById("password-save-btn"),
+  passwordCancelBtn: document.getElementById("password-cancel-btn"),
   categoryModal: document.getElementById("category-modal"),
   readingCategory: document.getElementById("reading-category"),
   categoryError: document.getElementById("category-error"),
@@ -1171,6 +1180,7 @@ function showFinal() {
 
 /* --- Utilizator: autentificare prin Supabase Auth --- */
 function updateUserChip() {
+  if (passwordFormOwner && passwordFormOwner !== Auth.getUserId()) resetPasswordForm();
   const name = Auth.currentUser();
   el.userName.textContent = name || "Conectează-te";
   el.logoutBtn.hidden = !name;
@@ -1197,6 +1207,8 @@ function appVersionText() {
 }
 
 function showAuthModal() {
+  resetPasswordForm();
+  if (el.passwordSuccess) el.passwordSuccess.hidden = true;
   el.appVersion.textContent = appVersionText();
   el.authModal.hidden = false;
   if (Auth.isLoggedIn()) {
@@ -1213,12 +1225,62 @@ function showAuthModal() {
 }
 
 function hideAuthModal() {
+  resetPasswordForm();
   el.authModal.hidden = true;
 }
 
 function setAuthError(el2, msg) {
   el2.textContent = msg;
   el2.hidden = false;
+}
+
+let passwordSaving = false;
+let passwordFormOwner = null;
+
+function resetPasswordForm() {
+  passwordFormOwner = null;
+  if (!el.passwordForm) return;
+  el.passwordForm.reset();
+  el.passwordForm.hidden = true;
+  el.passwordError.hidden = true;
+  el.changePasswordBtn.setAttribute("aria-expanded", "false");
+}
+
+function showPasswordForm() {
+  if (!Auth.isLoggedIn() || passwordSaving) return;
+  resetPasswordForm();
+  el.passwordSuccess.hidden = true;
+  passwordFormOwner = Auth.getUserId();
+  el.passwordForm.hidden = false;
+  el.changePasswordBtn.setAttribute("aria-expanded", "true");
+  el.currentPassword.focus();
+}
+
+async function handlePasswordChange(event) {
+  event.preventDefault();
+  if (passwordSaving || passwordFormOwner !== Auth.getUserId()) return;
+  const owner = passwordFormOwner;
+  passwordSaving = true;
+  el.passwordError.hidden = true;
+  el.passwordSaveBtn.disabled = true;
+  el.passwordSaveBtn.textContent = "Se salvează…";
+  try {
+    await Auth.changePassword(el.currentPassword.value, el.newPassword.value, el.confirmPassword.value);
+    if (Auth.getUserId() && Auth.getUserId() !== owner) return;
+    userName = Auth.currentUser() || "";
+    updateUserChip();
+    showAuthModal();
+    el.passwordSuccess.textContent = "Parola a fost schimbată. Intră din nou în cont cu parola nouă.";
+    el.passwordSuccess.hidden = false;
+    el.loginPassword.value = "";
+    el.loginPassword.focus();
+  } catch (error) {
+    if (passwordFormOwner === owner && Auth.getUserId() === owner) setAuthError(el.passwordError, error.message);
+  } finally {
+    passwordSaving = false;
+    el.passwordSaveBtn.disabled = false;
+    el.passwordSaveBtn.textContent = "Salvează parola";
+  }
 }
 
 async function handleLogin() {
@@ -1871,6 +1933,9 @@ el.authLogoutBtn?.addEventListener("click", handleLogout);
 el.loginPassword?.addEventListener("keydown", (e) => { if (e.key === "Enter") handleLogin(); });
 el.registerBtn?.addEventListener("click", handleRegister);
 el.authCloseBtn?.addEventListener("click", hideAuthModal);
+el.changePasswordBtn?.addEventListener("click", showPasswordForm);
+el.passwordForm?.addEventListener("submit", handlePasswordChange);
+el.passwordCancelBtn?.addEventListener("click", resetPasswordForm);
 el.authModal?.addEventListener("click", (e) => { if (e.target === el.authModal) hideAuthModal(); });
 
 renderScore();
