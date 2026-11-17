@@ -90,5 +90,8 @@ jobs:
       - name: Internal functions are closed to anon and authenticated
         run: npm run check:function-privileges
 
+      - name: Account category label follows the signed-in account
+        run: npm run check:account-switch-view
+
       - name: Epistles are added to the live verse catalog
         run: npm run check:epistle-catalog

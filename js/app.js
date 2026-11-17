@@ -1215,7 +1215,10 @@ function showAuthModal() {
     el.authLogged.hidden = false;
     el.authForm.hidden = true;
     el.authUsernameDisplay.textContent = Auth.currentUser();
-    el.accountCategory.textContent = ReadingPath.getCategory(readingProfile?.category_id)?.label || "Categoria nu este aleasă";
+    // Profilul aparține contului din categoryOwnerId; după o schimbare de cont
+    // nu afișăm categoria celuilalt cont cât timp a noului nu s-a încărcat.
+    const ownProfile = categoryOwnerId === Auth.getUserId() ? readingProfile : null;
+    el.accountCategory.textContent = ReadingPath.getCategory(ownProfile?.category_id)?.label || "Categoria nu este aleasă";
   } else {
     el.authLogged.hidden = true;
     el.authForm.hidden = false;
@@ -1976,6 +1979,13 @@ Auth.init((user) => {
   if (categoryOwnerId !== Auth.getUserId()) {
     categoryReady = false;
     renderPage();
+    // Contul s-a schimbat fără deconectare: streakul vechi nu trebuie să
+    // rămână afișat până termină sincronizarea noului cont.
+    if (user && readingStreakDays) {
+      readingStreakDays = null;
+      readingStreakStatus = null;
+      renderReadingStreak();
+    }
   }
   updateUserChip();
   if (user) {

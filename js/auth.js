@@ -125,7 +125,17 @@ const Auth = (() => {
   }
 
   async function signOut() {
-    if (client()) await client().auth.signOut();
+    const c = client();
+    if (c) {
+      // Fără rețea, revocarea globală eșuează, iar SDK-ul păstrează sesiunea
+      // salvată: la reîncărcare utilizatorul ar apărea din nou conectat.
+      // Închidem atunci măcar sesiunea acestui dispozitiv.
+      let failed = false;
+      try { failed = !!(await c.auth.signOut()).error; } catch { failed = true; }
+      if (failed) {
+        try { await c.auth.signOut({ scope: 'local' }); } catch { /* sesiune deja curățată */ }
+      }
+    }
     _session = null;
   }
 

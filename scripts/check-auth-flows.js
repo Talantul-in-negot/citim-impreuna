@@ -60,6 +60,26 @@ async function main() {
   }
   const duplicate = load({signUp:async () => ({data:{},error:{message:'User already registered'}})});
   await assert.rejects(() => duplicate.api.signUp('Test','example-password','grades_2_3'), /deja folosit/);
+  // Fără rețea, signOut global întoarce eroare și SDK-ul păstrează sesiunea:
+  // trebuie închisă măcar local, ca la reîncărcare să nu reapară conectat.
+  const offline = load();
+  const scopes = [];
+  offline.auth.signOut = async args => {
+    scopes.push(args?.scope || 'global');
+    return args?.scope === 'local' ? {error:null} : {error:{message:'Failed to fetch'}};
+  };
+  await offline.api.init(() => {});
+  offline.change(offline.session);
+  assert.equal(offline.api.isLoggedIn(), true);
+  await offline.api.signOut();
+  assert.deepEqual(scopes, ['global', 'local'], 'Offline logout falls back to clearing the local session');
+  assert.equal(offline.api.getUserId(), null);
+  const online = load();
+  const onlineScopes = [];
+  online.auth.signOut = async args => { onlineScopes.push(args?.scope || 'global'); return {error:null}; };
+  await online.api.init(() => {});
+  await online.api.signOut();
+  assert.deepEqual(onlineScopes, ['global'], 'A successful logout needs no local fallback');
   console.log('Auth flows: signup validation, category metadata, logout, manual accounts, legacy login and network errors passed.');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });
