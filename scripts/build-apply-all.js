@@ -36,6 +36,7 @@ const FILES = [
   "20261111_01_events_scores_fk_cascade.sql",
   "20261111_02_account_display_names.sql",
   "20261117_01_revoke_internal_function_execute.sql",
+  "20261117_02_revoke_validate_citim_event_insert.sql",
 ];
 
 function main() {

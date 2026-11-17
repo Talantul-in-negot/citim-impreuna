@@ -217,3 +217,10 @@ Retrage `EXECUTE` de la `public`, `anon` și `authenticated` pentru
 Verificare după aplicare: `select p.proname, has_function_privilege('authenticated', p.oid, 'execute') from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' order by 1;`
 — pe `authenticated` trebuie să rămână `true` doar pentru `get_public_leaderboard`,
 `get_own_score`, `upsert_own_score` și `set_reading_category`.
+
+# Funcția live validate_citim_event_insert
+
+Pe o bază existentă, aplică și `20261117_02_revoke_validate_citim_event_insert.sql`
+(închide EXECUTE pentru `anon`/`authenticated`; nu face nimic dacă funcția lipsește).
+Definiția funcției și a catalogului din producție e păstrată ca referință în
+`supabase/live-only/`.

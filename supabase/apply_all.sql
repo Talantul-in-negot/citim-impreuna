@@ -34,6 +34,7 @@
 --   supabase/20261111_01_events_scores_fk_cascade.sql
 --   supabase/20261111_02_account_display_names.sql
 --   supabase/20261117_01_revoke_internal_function_execute.sql
+--   supabase/20261117_02_revoke_validate_citim_event_insert.sql
 
 
 do $category_bundle_guard$
@@ -4585,5 +4586,27 @@ revoke all on function public.completed_page_count(uuid, integer, timestamptz) f
 revoke all on function public.recalculate_score_for_user(uuid, text) from public, anon, authenticated;
 revoke all on function public.verify_event_before_insert() from public, anon, authenticated;
 
+commit;
+
+
+-- ============================================================================
+-- supabase/20261117_02_revoke_validate_citim_event_insert.sql
+-- ============================================================================
+
+-- validate_citim_event_insert() este funcția triggerului live
+-- events_validate_citim_insert (vezi supabase/live-only/). Funcțiile de trigger
+-- nu pot fi apelate direct, dar fiindcă a fost creată în afara repo-ului a
+-- păstrat EXECUTE pentru anon și authenticated (privilegiile implicite
+-- Supabase). Triggerul rulează ca proprietar și nu depinde de aceste drepturi.
+-- Pe o bază fără funcție (bază nouă) nu face nimic. Sigur la rulări repetate.
+begin;
+do $$
+begin
+  if to_regprocedure('public.validate_citim_event_insert()') is null then
+    raise notice 'public.validate_citim_event_insert() lipsește; nimic de făcut';
+    return;
+  end if;
+  revoke all on function public.validate_citim_event_insert() from public, anon, authenticated;
+end $$;
 commit;
 
