@@ -114,6 +114,39 @@ async function main() {
     await db.exec('reset role');
     for (const file of newFiles) await db.exec(fs.readFileSync(path.join(ROOT, 'supabase', file), 'utf8'));
     assert.equal(await scalar('select current_cycle from public.scores where user_id=$1', [A]), 1, 'Incremental migrations are repeatable');
+    // Verifică ambele granițe pentru fiecare categorie, cu triggerul real.
+    for (const [index, category] of categories.entries()) {
+      const id = `00000000-0000-4000-8000-${String(index + 10).padStart(12, '0')}`;
+      await db.query('insert into auth.users(id,email,raw_user_meta_data) values ($1,$2,$3)',
+        [id, `route${index}@citim.app`, {category_id:category.id}]);
+      const route = (await db.query('select * from public.reading_route_pages($1) order by page_index', [id])).rows;
+      const epistle = route.filter(row => !['1samuel', '2samuel'].includes(row.book_key));
+      const lastSamuelPage = 323;
+      async function seedPages(indices) {
+        await db.exec('alter table public.events disable trigger user');
+        try {
+          await db.query(`insert into public.events(user_id,verse_ref,chosen,answer,correct,cycle,page_index,page_size,chapter_ref,chapter_size)
+            select $1,verse_ref,answer,answer,true,0,page_index,page_size,chapter_ref,chapter_size
+            from public.verse_answers where page_index = any($2::integer[])`, [id, indices]);
+        } finally { await db.exec('alter table public.events enable trigger user'); }
+      }
+      await seedPages(Array.from({length:lastSamuelPage}, (_, i) => i));
+      assert.equal(await scalar('select public.next_reading_page($1,0)', [id]), lastSamuelPage);
+      await asUser(id, () => insertPage(lastSamuelPage, 0, 0, `${category.id}-samuel`));
+      assert.equal(await scalar('select current_cycle from public.scores where user_id=$1', [id]), 0,
+        `${category.id}: finishing Samuel must not restart the cycle`);
+      assert.equal(await scalar('select public.next_reading_page($1,0)', [id]), epistle[0].page_index);
+      await asUser(id, () => insertPage(epistle[0].page_index, 0, 0, `${category.id}-epistle-first`));
+      await seedPages(epistle.slice(1, -1).map(row => row.page_index));
+      await asUser(id, () => assert.rejects(() => insertPage(0, 1, 0, `${category.id}-premature`), /cycle changed/));
+      await asUser(id, () => insertPage(epistle.at(-1).page_index, 0, 0, `${category.id}-epistle-last`));
+      assert.equal(await scalar('select current_cycle from public.scores where user_id=$1', [id]), 1);
+      assert.equal(await scalar('select public.next_reading_page($1,1)', [id]), 0);
+      const pointsBeforeRestart = await scalar('select points from public.scores where user_id=$1', [id]);
+      await asUser(id, () => insertPage(0, 1, 0, `${category.id}-restart`));
+      assert.equal(await scalar('select points from public.scores where user_id=$1', [id]), pointsBeforeRestart + 70);
+      console.log(`Route verified: ${category.label} -> ${category.epistle} -> 1 Samuel (new cycle).`);
+    }
     console.log('Category database: migrations, preserved history, all routes, RLS, revisions, deduplication and cycle restart passed.');
   } finally { await db.close(); }
 }

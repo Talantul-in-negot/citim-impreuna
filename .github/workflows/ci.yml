@@ -49,7 +49,7 @@ jobs:
       - name: Username normalizer
         run: npm run check:names
 
-      - name: Password change validation and session isolation
+      - name: Signup, login, logout and legacy accounts
         run: npm run check:auth
 
       - name: Migration bundle preserves cycle fixes
@@ -78,6 +78,9 @@ jobs:
 
       - name: Category routes, RLS and revisions on real PostgreSQL
         run: npm run check:category-db
+
+      - name: Reading transitions from Samuel to epistle and restart
+        run: npm run check:reading-transitions
 
       # Catalogul live de versete (folosit de triggerul events_validate_citim_insert)
       # trebuie să conțină epistolele, altfel serverul le respinge.
