@@ -207,3 +207,13 @@ Migrarea repară numele din `scores` și numele scrise ulterior în `events` și
 `scores`. Prioritatea este username-ul din metadate, apoi identificatorul din
 adresele interne `@citim.app` sau `@test.com`. Alte adrese de email nu sunt
 folosite ca nume publice. Punctele și ciclurile existente sunt păstrate.
+
+# Funcții interne închise pentru utilizatori
+
+Pe o bază existentă, aplică separat `20261117_01_revoke_internal_function_execute.sql`.
+Retrage `EXECUTE` de la `public`, `anon` și `authenticated` pentru
+`compute_user_points`, `verse_total_pages` și `recalculate_scores_after_event_insert`
+(celelalte trei interne erau deja închise). RPC-urile publice nu se schimbă.
+Verificare după aplicare: `select p.proname, has_function_privilege('authenticated', p.oid, 'execute') from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' order by 1;`
+— pe `authenticated` trebuie să rămână `true` doar pentru `get_public_leaderboard`,
+`get_own_score`, `upsert_own_score` și `set_reading_category`.

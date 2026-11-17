@@ -87,5 +87,8 @@ jobs:
       - name: Deleting a user cascades to events and scores
         run: npm run check:fk-cascade
 
+      - name: Internal functions are closed to anon and authenticated
+        run: npm run check:function-privileges
+
       - name: Epistles are added to the live verse catalog
         run: npm run check:epistle-catalog
