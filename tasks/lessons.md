@@ -139,3 +139,19 @@ Both bugs were invisible to `git diff`-style code review (the SQL reads as reaso
 **Rule:** `alter table ... add column` on a table with existing rows creates two populations — rows with the new column meaningfully set, and rows without — and every function that reads that column needs to be *deliberately* correct for both, not just accidentally not-yet-tested against the old ones. A "preserve existing totals, start fresh from here" migration (any `baseline_at`/`baseline_points`-shaped pattern) is doing something similar but worse: it's not silent about old data, it's *permanently excluding* it from every function that later reuses the same filter — including functions whose actual job has nothing to do with why the filter was added in the first place (see also L05: know who produced each value a formula reads, and *why* — a filter correct for one purpose copied into a function with a different purpose is a bug that reads as intentional).
 
 **How to apply:** when adding a column to a table with existing rows, either backfill it in the same migration or make every reader explicitly handle `NULL` as "unknown, not false." When adding a `baseline_*`-style fresh-start cutoff, grep every function that will filter by it and check, for each one, whether that function's actual question is about money (correct to filter) or about history/state (almost certainly wrong to filter) — don't let one migration's filter propagate into unrelated functions just because they happen to read the same timestamp column. When a live symptom survives a fix that was correctly diagnosed and correctly shipped, that itself means there's a second, independent cause — go looking for it immediately rather than re-verifying the first fix again.
+
+## L11 — `git add <directory>` stages every untracked file in it, including files meant to stay local (2026-11-17)
+
+While committing the `validate_citim_event_insert` work, `git add scripts` also staged `scripts/reset-test-password.ps1`, a local helper deliberately kept out of the repo. It was caught by reading `git status` before pushing and removed with `git rm --cached` plus `git commit --amend --no-edit`, so nothing reached `origin`. It would have been published had the pre-push check been skipped.
+
+**Rule:** a directory path in `git add` means "everything untracked under it", not "the files I just changed". Untracked files that must stay local are exactly the ones a directory add picks up.
+
+**How to apply:** stage by explicit file path. Before every commit, read `git status --short` and `git diff --cached --stat`, and confirm each staged file is one you meant to ship. If an unwanted file is staged and not yet pushed, `git rm --cached <file>` and amend. Never rewrite history that is already pushed.
+
+## L12 — A test-only `window.fetch` patch persists in the live tab and can fake an app bug (2026-11-18)
+
+During the live offline-logout test, `window.fetch` was monkeypatched in the app tab to block Supabase. It intercepted nothing (supabase-js holds its own fetch reference), so the test was inconclusive. The patch stayed in the page, though, and later made `Tracker.fetchOwnProfile()` fail with "Failed to fetch". The app showed "Categoria nu poate fi verificată" for a fresh account without a category, which looked like a real bug until the page was reloaded and the message disappeared.
+
+**Rule:** a failure seen after an in-page test hook is not evidence about the app until the hook is gone. Fetch-level patches also cannot simulate offline for code that captured its own fetch.
+
+**How to apply:** reload the tab after any in-page monkeypatch before judging behaviour. Simulate offline with browser-level throttling (DevTools Network → Offline) instead of patching `fetch`. When a symptom appears right after test tooling touched the page, rule the tooling out first.
