@@ -1,0 +1,2 @@
+# Fisierele vendor se verifica prin hash SRI: nu au voie sa-si schimbe octetii (CRLF).
+js/vendor/* -text

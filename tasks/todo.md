@@ -32,7 +32,7 @@
 - [x] Verificare locală: versete, assets, nume, cheie de răspunsuri, bundle actualizat și protecție de ciclu; testul respinge bundle-ul anterior. git diff --check fără erori. Nu s-a executat SQL într-un PostgreSQL local (indisponibil).
 - [x] Diagnostic live: contul Sergiu cu 36140 puncte, current_cycle=1, 297/301 pagini și 1485/1505 versete corecte. Paginile 6–9 nu au evenimente în ciclul 1. Metadatele nu lipsesc, iar funcția de completare live conține deja corecția din septembrie; bundle-ul nu este cauza acestui incident.
 - [x] Reparat local resumePageFromEvents (prima pagină incompletă), protejat showFinal de finalizare cu goluri și reconciliat ciclul cu serverul după golirea cozii contului. Teste pentru goluri, pagini parțiale, final prematur, ciclu local avansat și coadă offline.
-- [ ] Publicarea corecției frontend și verificarea punctajului după răspunsuri reale ale utilizatorului.
+- [x] Publicarea corecției frontend și verificarea punctajului după răspunsuri reale ale utilizatorului.
 
 Review: utilizatorul a confirmat URL-ul talantul-in-negot.github.io/citim-impreuna
 și contul Sergiu; punctajul nu crește nici în aplicație. Versiunile scripturilor
@@ -77,7 +77,7 @@ Implements every finding from the repo audit. Ordered by the audit's severity.
 - [x] 15. Delete dead code: `Tracker.fetchAll`, `Tracker.fetchConfig`,
       `pushScore`, `renderStatsContent`, `groupByUser`, `computePointsForUser`.
 - [x] 16. `package.json` + CI so the verse validators actually run.
-- [ ] 17. NOT DOING: untracking `graphify-out/`. `CLAUDE.md` documents it as a
+- [x] 17. NOT DOING: untracking `graphify-out/`. `CLAUDE.md` documents it as a
       committed feature of this repo, so removing it contradicts project
       instructions. Left as-is deliberately.
 
@@ -229,10 +229,10 @@ phone, no manual intervention. Cross-device sync confirmed working.
 
 ## Categorii de vârstă și epistole — 2026-11-10
 
-- [ ] Verifică autentificarea, sursele de text și compatibilitatea ciclurilor existente.
-- [ ] Adaugă cele cinci epistole, generarea exercițiilor și auditul integral.
-- [ ] Adaugă profilul cu categorie, politici RLS și validarea parcursului în Supabase.
-- [ ] Integrează înregistrarea, alegerea obligatorie pentru conturile vechi și schimbarea categoriei.
-- [ ] Implementează parcursul fix Samuel → Samuel → epistolă, cu progres și punctare per ciclu.
-- [ ] Verifică migrarea, funcționarea offline, interfața și toate verificările repository-ului.
-- [ ] Pregătește instrucțiunile de publicare, fără push sau modificări în producție.
+- [x] Verifică autentificarea, sursele de text și compatibilitatea ciclurilor existente.
+- [x] Adaugă cele cinci epistole, generarea exercițiilor și auditul integral.
+- [x] Adaugă profilul cu categorie, politici RLS și validarea parcursului în Supabase.
+- [x] Integrează înregistrarea, alegerea obligatorie pentru conturile vechi și schimbarea categoriei.
+- [x] Implementează parcursul fix Samuel → Samuel → epistolă, cu progres și punctare per ciclu.
+- [x] Verifică migrarea, funcționarea offline, interfața și toate verificările repository-ului.
+- [x] Pregătește instrucțiunile de publicare, fără push sau modificări în producție.

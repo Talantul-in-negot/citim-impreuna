@@ -82,8 +82,6 @@ jobs:
       - name: Reading transitions from Samuel to epistle and restart
         run: npm run check:reading-transitions
 
-      # Catalogul live de versete (folosit de triggerul events_validate_citim_insert)
-      # trebuie să conțină epistolele, altfel serverul le respinge.
       - name: Deleting a user cascades to events and scores
         run: npm run check:fk-cascade
 
@@ -93,5 +91,10 @@ jobs:
       - name: Account category label follows the signed-in account
         run: npm run check:account-switch-view
 
+      - name: Local state is reset on any account switch, also from another tab
+        run: npm run check:account-guard
+
+      # Catalogul live de versete (folosit de triggerul events_validate_citim_insert)
+      # trebuie să conțină epistolele, altfel serverul le respinge.
       - name: Epistles are added to the live verse catalog
         run: npm run check:epistle-catalog

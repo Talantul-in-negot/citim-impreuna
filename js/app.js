@@ -336,13 +336,19 @@ function resetLocalProgressForAccountSwitch() {
   save();
 }
 
+// Contul căruia îi aparține starea din memoria ACESTUI tab. Nu se poate citi
+// din STORAGE_USER la fiecare verificare: dacă utilizatorul schimbă contul în
+// alt tab, acela rescrie STORAGE_USER, iar acest tab ar vedea „același cont"
+// și ar păstra progresul lui A atribuit lui B.
+let localStateOwner = localStorage.getItem(STORAGE_USER);
+
 function guardAgainstAccountSwitch() {
   const currentId = typeof Auth !== "undefined" && Auth.getUserId ? Auth.getUserId() : null;
   if (!currentId) return;
-  const lastId = localStorage.getItem(STORAGE_USER);
-  if (lastId && lastId !== currentId) {
+  if (localStateOwner && localStateOwner !== currentId) {
     resetLocalProgressForAccountSwitch();
   }
+  localStateOwner = currentId;
   localStorage.setItem(STORAGE_USER, currentId);
 }
 

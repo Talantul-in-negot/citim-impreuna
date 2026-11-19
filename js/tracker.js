@@ -79,15 +79,23 @@ const Tracker = (() => {
       const at = Date.parse(evt.created_at || "");
       return Number.isFinite(at) && now - at < UNCLAIMED_TTL_MS;
     });
-    const owned = fresh.filter((evt) => evt[EVENT_OWNER_FIELD]);
-    const unclaimed = fresh.filter((evt) => !evt[EVENT_OWNER_FIELD]);
-    if (owned.length <= MAX_QUEUE_EVENTS && unclaimed.length <= MAX_UNCLAIMED_EVENTS) {
-      return fresh;
+    // Plafonul de 500 se aplică fiecărui cont în parte: pe un dispozitiv
+    // comun, răspunsurile netrimise ale lui A nu au voie să fie șterse pentru
+    // că B a citit mult offline.
+    const byOwner = new Map();
+    const unclaimed = [];
+    for (const evt of fresh) {
+      const owner = evt[EVENT_OWNER_FIELD];
+      if (!owner) { unclaimed.push(evt); continue; }
+      if (!byOwner.has(owner)) byOwner.set(owner, []);
+      byOwner.get(owner).push(evt);
     }
-    // Se păstrează cele mai recente din fiecare categorie, dar ordinea
-    // originală a cozii rămâne neschimbată (identitatea obiectelor).
+    const overCap = [...byOwner.values()].some((list) => list.length > MAX_QUEUE_EVENTS);
+    if (!overCap && unclaimed.length <= MAX_UNCLAIMED_EVENTS) return fresh;
+    // Se păstrează cele mai recente din fiecare grup, dar ordinea originală a
+    // cozii rămâne neschimbată (identitatea obiectelor).
     const keep = new Set([
-      ...owned.slice(Math.max(0, owned.length - MAX_QUEUE_EVENTS)),
+      ...[...byOwner.values()].flatMap((list) => list.slice(Math.max(0, list.length - MAX_QUEUE_EVENTS))),
       ...unclaimed.slice(Math.max(0, unclaimed.length - MAX_UNCLAIMED_EVENTS)),
     ]);
     return fresh.filter((evt) => keep.has(evt));

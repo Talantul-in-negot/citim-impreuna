@@ -9,6 +9,7 @@ const vm = require('node:vm');
 
 const source = fs.readFileSync(path.join(__dirname, '..', 'js', 'tracker.js'), 'utf8');
 const USER = 'user-1';
+let currentUser = USER;
 
 function load(server) {
   const storage = new Map();
@@ -17,7 +18,7 @@ function load(server) {
   const context = {
     SUPABASE_URL: 'https://example.supabase.co',
     SUPABASE_ANON_KEY: 'anon',
-    Auth: { getUserId: () => USER, getAccessToken: async () => 'token' },
+    Auth: { getUserId: () => currentUser, getAccessToken: async () => 'token' },
     localStorage: {
       getItem: (k) => (storage.has(k) ? storage.get(k) : null),
       setItem: (k, v) => storage.set(k, String(v)),
@@ -121,6 +122,22 @@ async function main() {
     assert.deepEqual(calls.slice(before).map((c) => c.url.split('/').pop()), ['set_reading_category'],
       'Initial save must not try to flush the queue first');
     await assert.rejects(Tracker.saveCategory('grades_6_7'), /sincronizarea/, 'A change requires an empty queue');
+  }
+
+  // 5) Plafonul cozii e per cont: răspunsurile netrimise ale lui A nu se pierd
+  //    când B adună multe offline, iar fiecare cont își păstrează ultimele 500.
+  {
+    const { Tracker, storage } = load(() => response(503));
+    currentUser = 'user-a';
+    seed(Tracker, Array.from({ length: 80 }, (_, i) => `A${i}`));
+    currentUser = 'user-b';
+    seed(Tracker, Array.from({ length: 600 }, (_, i) => `B${i}`));
+    currentUser = USER;
+    const queue = JSON.parse(storage.get('ci_pending_events'));
+    const count = (owner) => queue.filter((e) => e._ci_owner_id === owner).length;
+    assert.equal(count('user-a'), 80, 'Account A must keep all its unsent answers');
+    assert.equal(count('user-b'), 500, 'Account B is capped at its own 500');
+    assert.equal(queue.find((e) => e._ci_owner_id === 'user-b').verse_ref, 'B100', 'B keeps the newest answers');
   }
 
   console.log('Offline queue: stale answers quarantined without blocking, transient errors preserved, first category saves with a pending queue.');

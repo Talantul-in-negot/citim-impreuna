@@ -19,6 +19,9 @@ const ROOT = path.resolve(__dirname, "..");
 const OUT_FILE = path.join(ROOT, "supabase", "apply_all.sql");
 
 // Ordinea recomandata pentru o baza de date noua, per supabase/README.md.
+// Cele patru migrari 20260813_* si cele doua 20260824_* lipsesc INTENTIONAT:
+// sunt istorice si 00000000_baseline_schema.sql contine deja coloanele lor.
+// Raman in supabase/ doar pentru o baza veche care trebuie adusa la zi.
 const FILES = [
   "00000000_baseline_schema.sql",
   "20260903_01_verse_answer_key.sql",
