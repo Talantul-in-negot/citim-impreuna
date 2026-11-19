@@ -97,6 +97,9 @@ jobs:
       - name: Table grants are minimal and the daily answer limit works
         run: npm run check:table-grants
 
+      - name: Published site has every app file and no internal folders
+        run: npm run check:pages-site
+
       # Catalogul live de versete (folosit de triggerul events_validate_citim_insert)
       # trebuie să conțină epistolele, altfel serverul le respinge.
       - name: Epistles are added to the live verse catalog
