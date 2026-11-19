@@ -129,6 +129,7 @@ let categorySaving = false;
 let readingStreakDays = null;
 let readingStreakStatus = null;
 let streakFetchPromise = null;
+let streakFetchOwner = null;
 let hadMistake = false;
 let reminderTimer = null;
 let serviceWorkerRegistration = null;
@@ -807,32 +808,38 @@ async function refreshReadingStreak({ afterWrite = false } = {}) {
     renderReadingStreak();
     return;
   }
-  if (streakFetchPromise) {
+  // Cererea aparține contului care a pornit-o, identificat prin id: două conturi
+  // pot avea același nume afișat (sergiu@citim.app și sergiu@test.com), iar o
+  // cerere încă în curs a contului anterior nu are voie să fie refolosită.
+  const requestedOwner = Auth.getUserId();
+  if (streakFetchPromise && streakFetchOwner === requestedOwner) {
     if (!afterWrite) return streakFetchPromise;
     await streakFetchPromise;
+    if (requestedOwner !== Auth.getUserId()) return;
   }
-  const requestedUser = userName;
   renderReadingStreak();
-  streakFetchPromise = (async () => {
+  const pending = (async () => {
     try {
       const readingData = await Tracker.fetchOwnReadingData();
-      if (requestedUser !== userName) return;
+      if (requestedOwner !== Auth.getUserId()) return;
       if (!readingData) return;
       readingStreakStatus = calculateReadingStreak(readingData.events, readingData.baselineAt);
       readingStreakDays = readingStreakStatus.days;
       renderReadingStreak();
     } catch {
       // Păstrăm ultima valoare confirmată când rețeaua e offline.
-      if (requestedUser === userName && readingStreakDays == null) {
+      if (requestedOwner === Auth.getUserId() && readingStreakDays == null) {
         const label = "Streakul nu este disponibil acum";
         el.streakCaption.textContent = label;
         el.streakStars.setAttribute("aria-label", label);
       }
     }
   })().finally(() => {
-    streakFetchPromise = null;
+    if (streakFetchPromise === pending) streakFetchPromise = null;
   });
-  return streakFetchPromise;
+  streakFetchOwner = requestedOwner;
+  streakFetchPromise = pending;
+  return pending;
 }
 
 function buildVerseCard(v) {
@@ -1325,6 +1332,11 @@ async function handleRegister() {
     userName = await Auth.signUp(username, password, category);
     guardAgainstAccountSwitch();
     const owner = Auth.getUserId();
+    // Evenimentul de autentificare pornește deja o sincronizare; fără acest
+    // semnal ea poate citi profilul înainte să se salveze categoria, poate
+    // vedea „fără categorie" și poate deschide fereastra de categorie, pe care
+    // sincronizarea de mai jos (aceeași promisiune) nu o mai închide.
+    categorySaving = true;
     try {
       const profile = await Tracker.saveCategory(category);
       if (owner === Auth.getUserId()) applyReadingProfile(profile, owner);
@@ -1335,6 +1347,8 @@ async function handleRegister() {
         el.readingCategory.value = category;
         setAuthError(el.categoryError, "Contul a fost creat. Categoria nu a putut fi confirmată. Apasă Salvează categoria pentru a reîncerca.");
       }
+    } finally {
+      categorySaving = false;
     }
     hideAuthModal();
     updateUserChip();

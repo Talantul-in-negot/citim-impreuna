@@ -1,7 +1,7 @@
 // Keep these URLs in lock-step with the cache-busted URLs in index.html.
 // CacheStorage matches query strings, so precaching `js/app.js` does not make
 // `js/app.js?v=N` available on a fresh offline install.
-const CACHE = "citim-impreuna-v96";
+const CACHE = "citim-impreuna-v97";
 const ASSETS = [
   ".",
   "index.html",
@@ -17,7 +17,7 @@ const ASSETS = [
   "js/reading-path.js?v=1",
   "js/tracker.js?v=58",
   "js/pagination.js?v=1",
-  "js/app.js?v=73",
+  "js/app.js?v=74",
   "manifest.webmanifest",
   "icons/icon.svg",
   "media/bible-book.jpg?v=2",
@@ -62,7 +62,18 @@ self.addEventListener("fetch", (event) => {
         }
         return response;
       })
-      .catch(() => caches.match(event.request))
+      .catch(async () => {
+        const exact = await caches.match(event.request);
+        if (exact) return exact;
+        // După o publicare nouă, index.html poate cere js/app.js?v=N+1 pe care
+        // cache-ul (încă pe ?v=N) nu-l are, iar o singură cerere eșuată lasă
+        // aplicația moartă offline. Pentru scripturi și stiluri servim, ca
+        // ultimă soluție, aceeași cale dintr-o versiune anterioară.
+        if (/\/(js|css)\//.test(new URL(event.request.url).pathname)) {
+          return caches.match(event.request, { ignoreSearch: true });
+        }
+        return undefined;
+      })
   );
 });
 

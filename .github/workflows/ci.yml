@@ -100,6 +100,9 @@ jobs:
       - name: Published site has every app file and no internal folders
         run: npm run check:pages-site
 
+      - name: Streak, registration and offline script fallback races
+        run: npm run check:client-races
+
       # Catalogul live de versete (folosit de triggerul events_validate_citim_insert)
       # trebuie să conțină epistolele, altfel serverul le respinge.
       - name: Epistles are added to the live verse catalog
