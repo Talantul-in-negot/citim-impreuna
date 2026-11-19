@@ -40,6 +40,8 @@ const FILES = [
   "20261111_02_account_display_names.sql",
   "20261117_01_revoke_internal_function_execute.sql",
   "20261117_02_revoke_validate_citim_event_insert.sql",
+  "20261119_01_harden_names_and_table_grants.sql",
+  "20261119_02_event_rate_limit.sql",
 ];
 
 function main() {

@@ -224,3 +224,46 @@ Pe o bază existentă, aplică și `20261117_02_revoke_validate_citim_event_inse
 (închide EXECUTE pentru `anon`/`authenticated`; nu face nimic dacă funcția lipsește).
 Definiția funcției și a catalogului din producție e păstrată ca referință în
 `supabase/live-only/`.
+
+# Nume sigure, drepturi pe tabele și limită de viteză (2026-11-19)
+
+Pe o bază existentă, aplică separat, în această ordine:
+
+1. `20261119_01_harden_names_and_table_grants.sql`
+   - `account_display_name()` folosește `username` din metadate **doar dacă**,
+     transformat ca la înregistrare (trim, litere mici, spațiile în `_`), este
+     identic cu partea locală a adresei; altfel folosește adresa. Până acum orice
+     utilizator logat își putea pune numele altui participant prin
+     `auth.updateUser({data:{username}})`. Pe producție (39 de conturi, verificat
+     la 2026-11-19) niciun nume afișat nu se schimbă. Conturile din alt domeniu
+     nu publică niciodată adresa și apar ca „Utilizator”.
+     **Limită:** regula oprește schimbarea ulterioară a numelui, nu și o
+     înregistrare nouă cu același nume (aplicația permite deja `sergiu@citim.app`
+     și `sergiu@test.com`). Nume unice cer o regulă de unicitate la înregistrare.
+   - `anon`/`authenticated` pierd drepturile de care aplicația nu are nevoie:
+     `verse_answers` fără niciun drept, `events` doar `SELECT, INSERT`, `scores` și
+     `reading_profiles` doar `SELECT` pentru `authenticated`, `app_config` fără
+     scriere (rămâne citibil). Supabase acordă implicit `ALL`, inclusiv `TRUNCATE`.
+2. `20261119_02_event_rate_limit.sql` (opțională, o decizie de produs)
+   - cel mult 1000 de răspunsuri corecte per cont într-o fereastră de 24 h;
+     al 1001-lea e refuzat cu `RATE_LIMITED` (HTTP 429), iar clientul îl păstrează în
+     coadă și îl retrimite. Un lot offline este un singur `INSERT`: dacă un rând
+     depășește limita, tot lotul așteaptă până se eliberează fereastra. Pragul (1000) e peste maximul observat pe producție (775 pe zi;
+     740 pe oră într-o rafală offline). Limita nu oprește un script hotărât, doar
+     îi plafonează câștigul; cheia de răspunsuri rămâne livrată în aplicație.
+   - adaugă indexul `events_user_recorded_idx`.
+
+Verificări după aplicare (citire):
+```sql
+-- drepturile rămase pe tabele pentru anon/authenticated
+select table_name, grantee, string_agg(privilege_type, ',' order by privilege_type)
+from information_schema.role_table_grants
+where table_schema='public' and grantee in ('anon','authenticated')
+group by 1,2 order by 1,2;
+-- trigger-ul de limită există și rulează după verify
+select tgname from pg_trigger where tgrelid='public.events'::regclass and not tgisinternal order by tgname;
+```
+Așteptat: `events` -> `authenticated: INSERT,SELECT`; `scores`/`reading_profiles` ->
+`authenticated: SELECT`; `verse_answers` lipsește; `app_config` -> doar `SELECT`.
+Triggerele pe `events`: `events_recalculate_scores`, `events_validate_citim_insert`,
+`events_verify_before_insert`, `events_verify_rate_limit`, `zz_events_account_display_name`.

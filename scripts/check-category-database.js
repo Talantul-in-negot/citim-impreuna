@@ -43,7 +43,11 @@ async function main() {
     const files = [...buildSource.match(/const FILES = \[([^]*?)\];/)[1].matchAll(/"([^"]+\.sql)"/g)].map(m => m[1]);
     const newFiles = files.filter(file => file.startsWith('20261110_'));
     assert.deepEqual(newFiles, ['20261110_01_epistle_answer_key.sql', '20261110_02_reading_categories.sql', '20261110_03_citim_catalog_epistles.sql']);
-    for (const file of files.filter(file => !newFiles.includes(file))) {
+    // Limita zilnică de răspunsuri (20261119_02) are testul ei
+    // (check-table-grants-and-rate-limit.js); aici un singur cont parcurge
+    // instant mai multe cărți, adică mult peste 1000 de răspunsuri corecte.
+    const RATE_LIMIT_FILE = '20261119_02_event_rate_limit.sql';
+    for (const file of files.filter(file => !newFiles.includes(file) && file !== RATE_LIMIT_FILE)) {
       await db.exec(fs.readFileSync(path.join(ROOT, 'supabase', file), 'utf8'));
     }
     await db.query('insert into auth.users(id,email) values ($1,$2),($3,$4)', [A, 'a@citim.app', B, 'b@citim.app']);

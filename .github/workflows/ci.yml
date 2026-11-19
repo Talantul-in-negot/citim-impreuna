@@ -94,6 +94,9 @@ jobs:
       - name: Local state is reset on any account switch, also from another tab
         run: npm run check:account-guard
 
+      - name: Table grants are minimal and the daily answer limit works
+        run: npm run check:table-grants
+
       # Catalogul live de versete (folosit de triggerul events_validate_citim_insert)
       # trebuie să conțină epistolele, altfel serverul le respinge.
       - name: Epistles are added to the live verse catalog
