@@ -42,6 +42,7 @@ const FILES = [
   "20261117_02_revoke_validate_citim_event_insert.sql",
   "20261119_01_harden_names_and_table_grants.sql",
   "20261119_02_event_rate_limit.sql",
+  "20261125_01_epistle_options.sql",
 ];
 
 function main() {

@@ -83,18 +83,8 @@ function renderSql(rows) {
   ].join('\n');
 }
 
-if (require.main === module) {
-  const rows = catalogChoices();
-  const sql = renderSql(rows);
-  if (process.argv.includes('--check')) {
-    if (!fs.existsSync(OUTPUT) || fs.readFileSync(OUTPUT, 'utf8').replace(/\r\n/g, '\n') !== sql) {
-      throw new Error('Catalogul epistolelor trebuie regenerat: node scripts/build-epistle-catalog.js');
-    }
-    console.log(`Catalogul epistolelor verificat: ${rows.length} versete.`);
-  } else {
-    fs.writeFileSync(OUTPUT, sql, 'utf8');
-    console.log(`Catalogul epistolelor generat: ${rows.length} versete.`);
-  }
-}
+// 20261110_03 este aplicată în producție și rămâne înghețată. Variantele noi se
+// publică prin scripts/build-epistle-options.js; acest modul oferă doar
+// catalogChoices() și renderSql().
 
 module.exports = { catalogChoices, renderSql, OUTPUT };

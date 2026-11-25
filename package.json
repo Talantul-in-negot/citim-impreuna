@@ -17,7 +17,7 @@
     "check:names": "node scripts/check-username-normalizer.js",
     "build:epistles": "node scripts/build-epistles.js",
     "build:epistle-answer-key": "node scripts/build-epistle-answer-key.js",
-    "check:generated": "node scripts/build-epistles.js --check && node scripts/build-answer-key.js --check && node scripts/build-epistle-answer-key.js --check && node scripts/build-epistle-catalog.js --check",
+    "check:generated": "node scripts/build-epistles.js --check && node scripts/build-answer-key.js --check && node scripts/build-epistle-answer-key.js --check && node scripts/build-epistle-options.js --check",
     "check:syntax": "node -e \"const fs=require('fs');const {execFileSync}=require('child_process');for(const f of ['sw.js',...fs.readdirSync('js').filter(n=>n.endsWith('.js')).map(n=>'js/'+n)])execFileSync(process.execPath,['--check',f],{stdio:'inherit'})\"",
     "check:category-db": "node scripts/check-category-database.js",
     "check:offline-queue": "node scripts/check-offline-queue.js",

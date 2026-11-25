@@ -9,10 +9,10 @@ const EPISTLES = {
         {
           "answer": "iubiți",
           "options": [
-            "lepădat",
-            "lepădată",
+            "robiți",
+            "deosebiți",
             "iubiți",
-            "lepădați"
+            "moșteniți"
           ]
         }
       ]
@@ -24,10 +24,10 @@ const EPISTLES = {
         {
           "answer": "înmulțite",
           "options": [
-            "cortului",
+            "curățite",
             "înmulțite",
-            "corturi",
-            "crească"
+            "împărțite",
+            "vestite"
           ]
         }
       ]
@@ -40,9 +40,9 @@ const EPISTLES = {
           "answer": "despre",
           "options": [
             "despre",
-            "robia",
-            "robie",
-            "robiei"
+            "spre",
+            "capre",
+            "urmare"
           ]
         }
       ]
@@ -54,9 +54,9 @@ const EPISTLES = {
         {
           "answer": "harul",
           "options": [
-            "damasc",
-            "darea",
             "darul",
+            "ajutorul",
+            "poporul",
             "harul"
           ]
         }
@@ -69,10 +69,10 @@ const EPISTLES = {
         {
           "answer": "nimicit",
           "options": [
-            "poftit",
-            "pomenit",
+            "poruncit",
+            "prorocit",
             "nimicit",
-            "popor"
+            "rătăcit"
           ]
         }
       ]
@@ -84,10 +84,10 @@ const EPISTLES = {
         {
           "answer": "întuneric",
           "options": [
-            "dimprejurul",
+            "nevârstnic",
             "întuneric",
-            "dinadinsul",
-            "dinainte"
+            "zadarnic",
+            "vrednic"
           ]
         }
       ]
@@ -100,9 +100,9 @@ const EPISTLES = {
           "answer": "altuia",
           "options": [
             "altuia",
-            "păstorul",
-            "păstrat",
-            "păstrată"
+            "căruia",
+            "trebuia",
+            "ploaia"
           ]
         }
       ]
@@ -114,9 +114,9 @@ const EPISTLES = {
         {
           "answer": "pângăresc",
           "options": [
-            "legăturile",
-            "legătură",
-            "leneviți",
+            "ceresc",
+            "firesc",
+            "adeveresc",
             "pângăresc"
           ]
         }
@@ -129,10 +129,10 @@ const EPISTLES = {
         {
           "answer": "Arhanghelul",
           "options": [
-            "Descopere",
-            "Descoperirea",
+            "Israelul",
+            "Apostolul",
             "Arhanghelul",
-            "Descoperiri"
+            "Măcelul"
           ]
         }
       ]
@@ -144,10 +144,10 @@ const EPISTLES = {
         {
           "answer": "știu",
           "options": [
-            "zidesc",
-            "zidit",
+            "târziu",
+            "scriu",
             "știu",
-            "zidită"
+            "marcu"
           ]
         }
       ]
@@ -159,9 +159,9 @@ const EPISTLES = {
         {
           "answer": "într",
           "options": [
-            "iudei",
-            "iudeii",
-            "iudeu",
+            "dintr",
+            "printr",
+            "fiilor",
             "într"
           ]
         }
@@ -175,9 +175,9 @@ const EPISTLES = {
           "answer": "îndoapă",
           "options": [
             "îndoapă",
-            "târcoale",
-            "târziu",
-            "târâți"
+            "înceapă",
+            "scapă",
+            "scumpă"
           ]
         }
       ]
@@ -189,10 +189,10 @@ const EPISTLES = {
         {
           "answer": "vecie",
           "options": [
-            "mirați",
+            "veșnicie",
             "vecie",
-            "miros",
-            "miră"
+            "avuție",
+            "bucurie"
           ]
         }
       ]
@@ -204,10 +204,10 @@ const EPISTLES = {
         {
           "answer": "șaptelea",
           "options": [
-            "primească",
-            "primește",
+            "binelea",
+            "calea",
             "șaptelea",
-            "primim"
+            "doilea"
           ]
         }
       ]
@@ -219,9 +219,9 @@ const EPISTLES = {
         {
           "answer": "ocară",
           "options": [
-            "vorbit",
-            "vouă",
-            "vrea",
+            "afară",
+            "moară",
+            "oară",
             "ocară"
           ]
         }
@@ -235,9 +235,9 @@ const EPISTLES = {
           "answer": "poftele",
           "options": [
             "poftele",
-            "supunem",
-            "supuneți",
-            "supus"
+            "nevestele",
+            "muntele",
+            "laptele"
           ]
         }
       ]
@@ -249,10 +249,10 @@ const EPISTLES = {
         {
           "answer": "vorbele",
           "options": [
-            "blândețe",
+            "slujbele",
             "vorbele",
-            "blândețea",
-            "blândeții"
+            "vrajbele",
+            "stelele"
           ]
         }
       ]
@@ -264,10 +264,10 @@ const EPISTLES = {
         {
           "answer": "trăi",
           "options": [
-            "icoana",
-            "idoli",
+            "bătăi",
+            "inimii",
             "trăi",
-            "iefta"
+            "spălări"
           ]
         }
       ]
@@ -279,9 +279,9 @@ const EPISTLES = {
         {
           "answer": "oameni",
           "options": [
-            "felurit",
-            "felurite",
-            "femei",
+            "nimeni",
+            "moșteni",
+            "veni",
             "oameni"
           ]
         }
@@ -294,9 +294,9 @@ const EPISTLES = {
         {
           "answer": "rugați",
           "options": [
-            "capete",
-            "capre",
-            "capul",
+            "legați",
+            "câștigați",
+            "alergați",
             "rugați"
           ]
         }
@@ -309,10 +309,10 @@ const EPISTLES = {
         {
           "answer": "viața",
           "options": [
-            "trimiși",
-            "trufașe",
+            "fața",
+            "voința",
             "viața",
-            "trup"
+            "sămânța"
           ]
         }
       ]
@@ -324,10 +324,10 @@ const EPISTLES = {
         {
           "answer": "despart",
           "options": [
-            "șteargă",
+            "deșert",
             "despart",
-            "șterge",
-            "știind"
+            "scurt",
+            "cort"
           ]
         }
       ]
@@ -340,9 +340,9 @@ const EPISTLES = {
           "answer": "frică",
           "options": [
             "frică",
-            "întărit",
-            "învață",
-            "învechi"
+            "biserică",
+            "veșnică",
+            "piedică"
           ]
         }
       ]
@@ -354,9 +354,9 @@ const EPISTLES = {
         {
           "answer": "înaintea",
           "options": [
-            "rânduiala",
-            "rânduit",
-            "rânduită",
+            "mintea",
+            "bunătatea",
+            "vestea",
             "înaintea"
           ]
         }
@@ -369,10 +369,10 @@ const EPISTLES = {
         {
           "answer": "slava",
           "options": [
-            "luate",
-            "luați",
+            "undeva",
+            "cumva",
             "slava",
-            "lucrare"
+            "cineva"
           ]
         }
       ]
@@ -386,10 +386,10 @@ const EPISTLES = {
         {
           "answer": "împrăștiați",
           "options": [
-            "răstignit",
-            "răstignită",
+            "netăiați",
+            "îngrijorați",
             "împrăștiați",
-            "răstoarne"
+            "gândeați"
           ]
         }
       ]
@@ -401,10 +401,10 @@ const EPISTLES = {
         {
           "answer": "Tatăl",
           "options": [
-            "Curvie",
+            "Îngerul",
             "Tatăl",
-            "Curând",
-            "Curăți"
+            "Împăratul",
+            "Preotul"
           ]
         }
       ]
@@ -417,9 +417,9 @@ const EPISTLES = {
           "answer": "Tatăl",
           "options": [
             "Tatăl",
-            "Ceresc",
-            "Cerești",
-            "Certa"
+            "Învățătorul",
+            "Apostolul",
+            "Stăpânul"
           ]
         }
       ]
@@ -431,9 +431,9 @@ const EPISTLES = {
         {
           "answer": "păstrată",
           "options": [
-            "întoarcem",
-            "întoarceți",
-            "întoarcă",
+            "curată",
+            "arată",
+            "lucrată",
             "păstrată"
           ]
         }
@@ -446,10 +446,10 @@ const EPISTLES = {
         {
           "answer": "gata",
           "options": [
-            "anume",
-            "apoi",
+            "săgeata",
+            "judecata",
             "gata",
-            "apuc"
+            "manta"
           ]
         }
       ]
@@ -461,10 +461,10 @@ const EPISTLES = {
         {
           "answer": "sunteți",
           "options": [
-            "purta",
+            "creșteți",
             "sunteți",
-            "purtare",
-            "purtarea"
+            "puteți",
+            "vreți"
           ]
         }
       ]
@@ -477,9 +477,9 @@ const EPISTLES = {
           "answer": "cinstea",
           "options": [
             "cinstea",
-            "ținta",
-            "țintă",
-            "ținută"
+            "vestea",
+            "dragostea",
+            "înaintea"
           ]
         }
       ]
@@ -491,9 +491,9 @@ const EPISTLES = {
         {
           "answer": "văzut",
           "options": [
-            "lăsat",
-            "lăsați",
-            "lăstari",
+            "nevăzut",
+            "căzut",
+            "șezut",
             "văzut"
           ]
         }
@@ -506,10 +506,10 @@ const EPISTLES = {
         {
           "answer": "sfârșit",
           "options": [
-            "femeiască",
-            "femeie",
+            "desăvârșit",
+            "negreșit",
             "sfârșit",
-            "femeii"
+            "deslușit"
           ]
         }
       ]
@@ -521,10 +521,10 @@ const EPISTLES = {
         {
           "answer": "despre",
           "options": [
-            "seminție",
-            "semne",
+            "spre",
+            "capre",
             "despre",
-            "semnele"
+            "răbdare"
           ]
         }
       ]
@@ -536,9 +536,9 @@ const EPISTLES = {
         {
           "answer": "vedere",
           "options": [
-            "smeriți",
-            "smulgă",
-            "soarta",
+            "cădere",
+            "încredere",
+            "pierdere",
             "vedere"
           ]
         }
@@ -552,9 +552,9 @@ const EPISTLES = {
           "answer": "Evanghelia",
           "options": [
             "Evanghelia",
-            "Chemarea",
-            "Chemării",
-            "Chezașul"
+            "Temelia",
+            "Italia",
+            "Familia"
           ]
         }
       ]
@@ -566,10 +566,10 @@ const EPISTLES = {
         {
           "answer": "fiți",
           "options": [
-            "morți",
+            "lipsiți",
             "fiți",
-            "morții",
-            "mult"
+            "trăiți",
+            "păziți"
           ]
         }
       ]
@@ -581,10 +581,10 @@ const EPISTLES = {
         {
           "answer": "târâți",
           "options": [
-            "fiicei",
-            "fiicele",
+            "ridicați",
+            "dați",
             "târâți",
-            "fiii"
+            "înviați"
           ]
         }
       ]
@@ -596,9 +596,9 @@ const EPISTLES = {
         {
           "answer": "sfinți",
           "options": [
-            "lumesc",
-            "lumii",
-            "lumina",
+            "munți",
+            "robiți",
+            "părți",
             "sfinți"
           ]
         }
@@ -612,9 +612,9 @@ const EPISTLES = {
           "answer": "scris",
           "options": [
             "scris",
-            "norodul",
-            "nouă",
-            "nuiaua"
+            "ucis",
+            "închis",
+            "trimis"
           ]
         }
       ]
@@ -626,10 +626,10 @@ const EPISTLES = {
         {
           "answer": "faptele",
           "options": [
-            "răzvrătit",
+            "păcatele",
             "faptele",
-            "sabat",
-            "sabie"
+            "nevestele",
+            "poftele"
           ]
         }
       ]
@@ -641,10 +641,10 @@ const EPISTLES = {
         {
           "answer": "deșert",
           "options": [
-            "ceruri",
-            "cerurile",
+            "port",
+            "despart",
             "deșert",
-            "cerut"
+            "scurt"
           ]
         }
       ]
@@ -656,9 +656,9 @@ const EPISTLES = {
         {
           "answer": "scump",
           "options": [
-            "vrut",
-            "vândut",
-            "vânturi",
+            "timp",
+            "potop",
+            "trup",
             "scump"
           ]
         }
@@ -671,9 +671,9 @@ const EPISTLES = {
         {
           "answer": "lumii",
           "options": [
-            "fiecare",
-            "fiicei",
-            "fiicele",
+            "vremii",
+            "inimii",
+            "heruvimii",
             "lumii"
           ]
         }
@@ -686,10 +686,10 @@ const EPISTLES = {
         {
           "answer": "credința",
           "options": [
-            "testament",
-            "ticălos",
+            "locuința",
+            "făgăduința",
             "credința",
-            "timotei"
+            "știința"
           ]
         }
       ]
@@ -701,10 +701,10 @@ const EPISTLES = {
         {
           "answer": "iubiți",
           "options": [
-            "mâinile",
+            "robiți",
             "iubiți",
-            "mâinilor",
-            "mâna"
+            "deosebiți",
+            "socotiți"
           ]
         }
       ]
@@ -717,9 +717,9 @@ const EPISTLES = {
           "answer": "născuți",
           "options": [
             "născuți",
-            "vremurile",
-            "vreodată",
-            "vreun"
+            "făcuți",
+            "plăcuți",
+            "cunoscuți"
           ]
         }
       ]
@@ -731,9 +731,9 @@ const EPISTLES = {
         {
           "answer": "cade",
           "options": [
-            "cortul",
-            "creadă",
-            "cred",
+            "șade",
+            "pilde",
+            "pierde",
             "cade"
           ]
         }
@@ -746,10 +746,10 @@ const EPISTLES = {
         {
           "answer": "Domnului",
           "options": [
-            "Mântuirii",
-            "Mântuitor",
+            "Proorocului",
+            "Apostolului",
             "Domnului",
-            "Mântuiți"
+            "Stăpânului"
           ]
         }
       ]
@@ -761,10 +761,10 @@ const EPISTLES = {
         {
           "answer": "prefăcătorie",
           "options": [
-            "disprețuit",
+            "mărturie",
             "prefăcătorie",
-            "dobitoacele",
-            "dobitoacelor"
+            "evanghelie",
+            "slobozenie"
           ]
         }
       ]
@@ -776,10 +776,10 @@ const EPISTLES = {
         {
           "answer": "curat",
           "options": [
-            "numele",
-            "numelui",
+            "jurat",
+            "urat",
             "curat",
-            "numit"
+            "lucrat"
           ]
         }
       ]
@@ -791,9 +791,9 @@ const EPISTLES = {
         {
           "answer": "într",
           "options": [
-            "voiți",
-            "vorba",
-            "vorbe",
+            "dintr",
+            "printr",
+            "martor",
             "într"
           ]
         }
@@ -807,9 +807,9 @@ const EPISTLES = {
           "answer": "Apropiați",
           "options": [
             "Apropiați",
-            "Facerea",
-            "Familia",
-            "Faptele"
+            "Mustrați",
+            "Lepădați",
+            "Lăsați"
           ]
         }
       ]
@@ -821,10 +821,10 @@ const EPISTLES = {
         {
           "answer": "duhovnicești",
           "options": [
-            "desăvârșirea",
+            "strămoșești",
             "duhovnicești",
-            "desăvârșit",
-            "desăvârșite"
+            "pământești",
+            "trăiești"
           ]
         }
       ]
@@ -836,10 +836,10 @@ const EPISTLES = {
         {
           "answer": "unghiului",
           "options": [
-            "așteptați",
-            "așteptăm",
+            "toiagului",
+            "focului",
             "unghiului",
-            "așternut"
+            "cerului"
           ]
         }
       ]
@@ -851,9 +851,9 @@ const EPISTLES = {
         {
           "answer": "crezut",
           "options": [
-            "stânci",
-            "stâncă",
-            "stăm",
+            "șezut",
+            "văzut",
+            "căzut",
             "crezut"
           ]
         }
@@ -867,9 +867,9 @@ const EPISTLES = {
           "answer": "lovesc",
           "options": [
             "lovesc",
-            "hrana",
-            "hrană",
-            "hristos"
+            "slăvesc",
+            "privesc",
+            "bârfesc"
           ]
         }
       ]
@@ -881,10 +881,10 @@ const EPISTLES = {
         {
           "answer": "minunată",
           "options": [
-            "cărora",
+            "neîntinată",
             "minunată",
-            "căruia",
-            "cărări"
+            "arată",
+            "poată"
           ]
         }
       ]
@@ -896,9 +896,9 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Alergați",
-            "Alergăm",
-            "Aleșii",
+            "Ilie",
+            "Isaac",
+            "Avraam",
             "Dumnezeu"
           ]
         }
@@ -911,10 +911,10 @@ const EPISTLES = {
         {
           "answer": "străini",
           "options": [
-            "prevedea",
-            "prezbiter",
+            "lumini",
+            "plini",
             "străini",
-            "prețuiți"
+            "mâini"
           ]
         }
       ]
@@ -926,10 +926,10 @@ const EPISTLES = {
         {
           "answer": "cercetării",
           "options": [
-            "mărturisit",
+            "adunării",
             "cercetării",
-            "mărăcini",
-            "nașterii"
+            "uitării",
+            "intrării"
           ]
         }
       ]
@@ -942,9 +942,9 @@ const EPISTLES = {
           "answer": "omenești",
           "options": [
             "omenești",
-            "sunetul",
-            "suntem",
-            "sunteți"
+            "trăiești",
+            "silești",
+            "iubești"
           ]
         }
       ]
@@ -956,9 +956,9 @@ const EPISTLES = {
         {
           "answer": "unii",
           "options": [
-            "ridice",
-            "roabe",
-            "roabei",
+            "cărnii",
+            "oamenii",
+            "anii",
             "unii"
           ]
         }
@@ -971,10 +971,10 @@ const EPISTLES = {
         {
           "answer": "neștiutori",
           "options": [
-            "cercetau",
-            "cerceteze",
+            "îngrijitori",
+            "martori",
             "neștiutori",
-            "cercetezi"
+            "muritori"
           ]
         }
       ]
@@ -986,10 +986,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Botezul",
+            "Iosif",
             "Dumnezeu",
-            "Botezuri",
-            "Bucura"
+            "Samuel",
+            "Moise"
           ]
         }
       ]
@@ -1002,9 +1002,9 @@ const EPISTLES = {
           "answer": "cinste",
           "options": [
             "cinste",
-            "poftele",
-            "poftelor",
-            "poftește"
+            "guste",
+            "veste",
+            "dragoste"
           ]
         }
       ]
@@ -1016,9 +1016,9 @@ const EPISTLES = {
         {
           "answer": "stăpânilor",
           "options": [
-            "sionului",
-            "slobozenia",
-            "slobozenie",
+            "bunurilor",
+            "vremurilor",
+            "neamurilor",
             "stăpânilor"
           ]
         }
@@ -1031,10 +1031,10 @@ const EPISTLES = {
         {
           "answer": "cineva",
           "options": [
-            "fiți",
-            "flacără",
+            "undeva",
+            "altceva",
             "cineva",
-            "floarea"
+            "ceva"
           ]
         }
       ]
@@ -1046,10 +1046,10 @@ const EPISTLES = {
         {
           "answer": "Într",
           "options": [
-            "Curvie",
-            "Curând",
+            "Dintr",
+            "Printr",
             "Într",
-            "Curăți"
+            "Marilor"
           ]
         }
       ]
@@ -1061,9 +1061,9 @@ const EPISTLES = {
         {
           "answer": "lăsat",
           "options": [
-            "zidesc",
-            "zidirea",
-            "zidit",
+            "păsat",
+            "ridicat",
+            "mustrat",
             "lăsat"
           ]
         }
@@ -1077,9 +1077,9 @@ const EPISTLES = {
           "answer": "gura",
           "options": [
             "gura",
-            "neamul",
-            "necaz",
-            "negura"
+            "negura",
+            "bucura",
+            "intra"
           ]
         }
       ]
@@ -1091,10 +1091,10 @@ const EPISTLES = {
         {
           "answer": "chinuit",
           "options": [
-            "deșert",
+            "prăznuit",
             "chinuit",
-            "diaconii",
-            "diavolul"
+            "obișnuit",
+            "rânduit"
           ]
         }
       ]
@@ -1106,10 +1106,10 @@ const EPISTLES = {
         {
           "answer": "păcate",
           "options": [
-            "asemenea",
-            "asemănat",
+            "luate",
+            "frate",
             "păcate",
-            "asia"
+            "urmate"
           ]
         }
       ]
@@ -1121,9 +1121,9 @@ const EPISTLES = {
         {
           "answer": "Păstorul",
           "options": [
-            "Cererile",
-            "Ceresc",
-            "Cerești",
+            "Judecătorul",
+            "Nimicitorul",
+            "Îndrumătorul",
             "Păstorul"
           ]
         }
@@ -1137,9 +1137,9 @@ const EPISTLES = {
           "answer": "bărbaților",
           "options": [
             "bărbaților",
-            "războiesc",
-            "răzbunarea",
-            "răzvrătirii"
+            "necazurilor",
+            "morților",
+            "taurilor"
           ]
         }
       ]
@@ -1151,9 +1151,9 @@ const EPISTLES = {
         {
           "answer": "felul",
           "options": [
-            "adesea",
-            "adevăr",
-            "adică",
+            "măcelul",
+            "copilul",
+            "malul",
             "felul"
           ]
         }
@@ -1166,10 +1166,10 @@ const EPISTLES = {
         {
           "answer": "îmbrăcarea",
           "options": [
-            "slăbănogiți",
-            "slăvească",
+            "ascultarea",
+            "înfățișarea",
             "îmbrăcarea",
-            "smerenie"
+            "schimbarea"
           ]
         }
       ]
@@ -1181,10 +1181,10 @@ const EPISTLES = {
         {
           "answer": "curăția",
           "options": [
-            "dobitoc",
+            "bogăția",
             "curăția",
-            "dobândi",
-            "dobândit"
+            "necurăția",
+            "seminția"
           ]
         }
       ]
@@ -1197,9 +1197,9 @@ const EPISTLES = {
           "answer": "supuse",
           "options": [
             "supuse",
-            "chipuri",
-            "chivot",
-            "chivotul"
+            "spuse",
+            "făcuse",
+            "născuse"
           ]
         }
       ]
@@ -1211,9 +1211,9 @@ const EPISTLES = {
         {
           "answer": "Sara",
           "options": [
-            "Tabără",
-            "Taie",
-            "Tale",
+            "Țara",
+            "Ocara",
+            "Gomora",
             "Sara"
           ]
         }
@@ -1226,10 +1226,10 @@ const EPISTLES = {
         {
           "answer": "împreună",
           "options": [
-            "învățat",
-            "învățători",
+            "furtună",
+            "pună",
             "împreună",
-            "învățătura"
+            "bună"
           ]
         }
       ]
@@ -1241,10 +1241,10 @@ const EPISTLES = {
         {
           "answer": "fiți",
           "options": [
-            "zilele",
+            "voiți",
             "fiți",
-            "zise",
-            "ziua"
+            "zidiți",
+            "priviți"
           ]
         }
       ]
@@ -1257,9 +1257,9 @@ const EPISTLES = {
           "answer": "întoarceți",
           "options": [
             "întoarceți",
-            "leviților",
-            "liniștit",
-            "locuința"
+            "aduceți",
+            "treceți",
+            "pierdeți"
           ]
         }
       ]
@@ -1272,9 +1272,9 @@ const EPISTLES = {
           "answer": "limba",
           "options": [
             "limba",
-            "clipă",
-            "clătina",
-            "coboară"
+            "schimba",
+            "iarba",
+            "vorba"
           ]
         }
       ]
@@ -1286,10 +1286,10 @@ const EPISTLES = {
         {
           "answer": "facă",
           "options": [
-            "ieșim",
+            "prefacă",
             "facă",
-            "ieșit",
-            "inima"
+            "treacă",
+            "usucă"
           ]
         }
       ]
@@ -1301,10 +1301,10 @@ const EPISTLES = {
         {
           "answer": "ochii",
           "options": [
-            "supunea",
-            "supunem",
+            "genunchii",
+            "copiii",
             "ochii",
-            "supus"
+            "fiii"
           ]
         }
       ]
@@ -1316,9 +1316,9 @@ const EPISTLES = {
         {
           "answer": "bine",
           "options": [
-            "lăsăm",
-            "lăuda",
-            "lăudăm",
+            "tine",
+            "oricine",
+            "vine",
             "bine"
           ]
         }
@@ -1332,9 +1332,9 @@ const EPISTLES = {
           "answer": "teamă",
           "options": [
             "teamă",
-            "mâinile",
-            "mâna",
-            "mânați"
+            "seamă",
+            "mamă",
+            "pizmă"
           ]
         }
       ]
@@ -1346,10 +1346,10 @@ const EPISTLES = {
         {
           "answer": "Domn",
           "options": [
-            "Plăcut",
+            "Lemn",
             "Domn",
-            "Plătit",
-            "Poarte"
+            "Îndemn",
+            "Creștin"
           ]
         }
       ]
@@ -1361,10 +1361,10 @@ const EPISTLES = {
         {
           "answer": "curat",
           "options": [
-            "făcuse",
-            "făcut",
+            "urat",
+            "jurat",
             "curat",
-            "făcute"
+            "păstrat"
           ]
         }
       ]
@@ -1376,9 +1376,9 @@ const EPISTLES = {
         {
           "answer": "răul",
           "options": [
-            "gomora",
-            "grabă",
-            "grec",
+            "rândul",
+            "darul",
+            "aurul",
             "răul"
           ]
         }
@@ -1392,9 +1392,9 @@ const EPISTLES = {
           "answer": "Hristos",
           "options": [
             "Hristos",
-            "Începe",
-            "Început",
-            "Începutul"
+            "Iacov",
+            "Ilie",
+            "Avraam"
           ]
         }
       ]
@@ -1406,10 +1406,10 @@ const EPISTLES = {
         {
           "answer": "închisoare",
           "options": [
-            "mijlocească",
+            "începătoare",
             "închisoare",
-            "mijlocitor",
-            "mijlocitorul"
+            "înșelătoare",
+            "asemănătoare"
           ]
         }
       ]
@@ -1421,10 +1421,10 @@ const EPISTLES = {
         {
           "answer": "îndelunga",
           "options": [
-            "trebuie",
+            "înșelăciunea",
             "îndelunga",
-            "trebuințele",
-            "trebuință"
+            "bucuria",
+            "înaintea"
           ]
         }
       ]
@@ -1437,9 +1437,9 @@ const EPISTLES = {
           "answer": "Icoana",
           "options": [
             "Icoana",
-            "Clătina",
-            "Clătinat",
-            "Coapsele"
+            "Hrana",
+            "Sarcina",
+            "Mâna"
           ]
         }
       ]
@@ -1451,9 +1451,9 @@ const EPISTLES = {
         {
           "answer": "puterile",
           "options": [
-            "sfatul",
-            "sfeșnicul",
-            "sfintele",
+            "visările",
+            "legăturile",
+            "gurile",
             "puterile"
           ]
         }
@@ -1466,9 +1466,9 @@ const EPISTLES = {
         {
           "answer": "păcatul",
           "options": [
-            "crucea",
-            "crucii",
-            "cucerit",
+            "adevăratul",
+            "împăratul",
+            "sfatul",
             "păcatul"
           ]
         }
@@ -1482,9 +1482,9 @@ const EPISTLES = {
           "answer": "Dumnezeu",
           "options": [
             "Dumnezeu",
-            "Desparte",
-            "Despartă",
-            "Despre"
+            "Pavel",
+            "Avraam",
+            "Ilie"
           ]
         }
       ]
@@ -1496,10 +1496,10 @@ const EPISTLES = {
         {
           "answer": "ospețe",
           "options": [
-            "înșine",
+            "blândețe",
             "ospețe",
-            "înșivă",
-            "înșiși"
+            "învețe",
+            "înalțe"
           ]
         }
       ]
@@ -1511,10 +1511,10 @@ const EPISTLES = {
         {
           "answer": "același",
           "options": [
-            "inimă",
-            "intra",
+            "aceeași",
+            "aceleiași",
             "același",
-            "intrare"
+            "vrăjmași"
           ]
         }
       ]
@@ -1526,9 +1526,9 @@ const EPISTLES = {
         {
           "answer": "înaintea",
           "options": [
-            "chezașul",
-            "chezășie",
-            "chinuit",
+            "mintea",
+            "socotea",
+            "șaptea",
             "înaintea"
           ]
         }
@@ -1542,9 +1542,9 @@ const EPISTLES = {
           "answer": "vestită",
           "options": [
             "vestită",
-            "făcuți",
-            "făcând",
-            "făcându"
+            "neclintită",
+            "socotită",
+            "adeverită"
           ]
         }
       ]
@@ -1556,10 +1556,10 @@ const EPISTLES = {
         {
           "answer": "aproape",
           "options": [
-            "dreptarul",
+            "scape",
             "aproape",
-            "dreptate",
-            "drepte"
+            "începe",
+            "buzele"
           ]
         }
       ]
@@ -1571,10 +1571,10 @@ const EPISTLES = {
         {
           "answer": "sumedenie",
           "options": [
-            "smeriți",
-            "smulgându",
+            "smerenie",
+            "slobozenie",
             "sumedenie",
-            "socotea"
+            "domnie"
           ]
         }
       ]
@@ -1586,9 +1586,9 @@ const EPISTLES = {
         {
           "answer": "primitori",
           "options": [
-            "taurilor",
-            "temelia",
-            "temelii",
+            "călători",
+            "ascultători",
+            "iubitori",
             "primitori"
           ]
         }
@@ -1601,10 +1601,10 @@ const EPISTLES = {
         {
           "answer": "ispravnici",
           "options": [
-            "nezguduit",
+            "potrivnici",
             "ispravnici",
-            "nezguduită",
-            "neîncetat"
+            "nevârstnici",
+            "tomnatici"
           ]
         }
       ]
@@ -1617,9 +1617,9 @@ const EPISTLES = {
           "answer": "slăvit",
           "options": [
             "slăvit",
-            "stricat",
-            "strigă",
-            "strigăte"
+            "proslăvit",
+            "izbăvit",
+            "zugrăvit"
           ]
         }
       ]
@@ -1631,9 +1631,9 @@ const EPISTLES = {
         {
           "answer": "mirați",
           "options": [
-            "către",
-            "căuta",
-            "căutam",
+            "curați",
+            "bucurați",
+            "frați",
             "mirați"
           ]
         }
@@ -1646,10 +1646,10 @@ const EPISTLES = {
         {
           "answer": "arătarea",
           "options": [
-            "slugilor",
-            "slujba",
+            "următoarea",
+            "înaintarea",
             "arătarea",
-            "slujbei"
+            "adunarea"
           ]
         }
       ]
@@ -1661,10 +1661,10 @@ const EPISTLES = {
         {
           "answer": "ferice",
           "options": [
-            "vede",
+            "orice",
             "ferice",
-            "vedea",
-            "vedeau"
+            "zice",
+            "ridice"
           ]
         }
       ]
@@ -1677,9 +1677,9 @@ const EPISTLES = {
           "answer": "unul",
           "options": [
             "unul",
-            "negură",
-            "nespus",
-            "nevoie"
+            "vreunul",
+            "scaunul",
+            "vecinul"
           ]
         }
       ]
@@ -1691,9 +1691,9 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Cunosc",
-            "Cunoscut",
-            "Cunoscute",
+            "Avraam",
+            "Ilie",
+            "Petru",
             "Dumnezeu"
           ]
         }
@@ -1706,10 +1706,10 @@ const EPISTLES = {
         {
           "answer": "judecata",
           "options": [
-            "negreșit",
-            "negrăită",
+            "săgeata",
+            "gata",
             "judecata",
-            "negura"
+            "aștepta"
           ]
         }
       ]
@@ -1721,10 +1721,10 @@ const EPISTLES = {
         {
           "answer": "face",
           "options": [
-            "neam",
+            "pace",
             "face",
-            "neamul",
-            "necaz"
+            "încoace",
+            "cojoace"
           ]
         }
       ]
@@ -1737,9 +1737,9 @@ const EPISTLES = {
           "answer": "voia",
           "options": [
             "voia",
-            "stâlpi",
-            "stânci",
-            "stâncă"
+            "văpaia",
+            "căreia",
+            "mânia"
           ]
         }
       ]
@@ -1751,10 +1751,10 @@ const EPISTLES = {
         {
           "answer": "sfătuiesc",
           "options": [
-            "desăvârșire",
-            "desăvârșit",
+            "trăiesc",
+            "voiesc",
             "sfătuiesc",
-            "desăvârșite"
+            "obișnuiesc"
           ]
         }
       ]
@@ -1766,10 +1766,10 @@ const EPISTLES = {
         {
           "answer": "turma",
           "options": [
-            "călca",
+            "urma",
             "turma",
-            "călcat",
-            "călcați"
+            "chema",
+            "inima"
           ]
         }
       ]
@@ -1782,9 +1782,9 @@ const EPISTLES = {
           "answer": "peste",
           "options": [
             "peste",
-            "lăsați",
-            "lăstari",
-            "lăsăm"
+            "veste",
+            "dragoste",
+            "cinste"
           ]
         }
       ]
@@ -1796,9 +1796,9 @@ const EPISTLES = {
         {
           "answer": "arăta",
           "options": [
-            "binelui",
-            "bitinia",
-            "bizuie",
+            "atâta",
+            "gata",
+            "căuta",
             "arăta"
           ]
         }
@@ -1811,10 +1811,10 @@ const EPISTLES = {
         {
           "answer": "bătrâni",
           "options": [
-            "intre",
-            "intră",
+            "stăpâni",
+            "moșteni",
             "bătrâni",
-            "intrăm"
+            "minuni"
           ]
         }
       ]
@@ -1826,10 +1826,10 @@ const EPISTLES = {
         {
           "answer": "înalțe",
           "options": [
-            "stelele",
+            "învețe",
             "înalțe",
-            "stins",
-            "stricat"
+            "ospețe",
+            "blândețe"
           ]
         }
       ]
@@ -1842,9 +1842,9 @@ const EPISTLES = {
           "answer": "asupra",
           "options": [
             "asupra",
-            "făcute",
-            "făcută",
-            "făcuți"
+            "deasupra",
+            "secera",
+            "unora"
           ]
         }
       ]
@@ -1856,9 +1856,9 @@ const EPISTLES = {
         {
           "answer": "treji",
           "options": [
-            "obosite",
-            "obârșie",
-            "obște",
+            "viteji",
+            "veșteji",
+            "treceți",
             "treji"
           ]
         }
@@ -1871,10 +1871,10 @@ const EPISTLES = {
         {
           "answer": "aceleași",
           "options": [
-            "iubești",
-            "iubind",
+            "aceeași",
+            "aceluiași",
             "aceleași",
-            "iubitori"
+            "părtași"
           ]
         }
       ]
@@ -1886,10 +1886,10 @@ const EPISTLES = {
         {
           "answer": "veșnică",
           "options": [
-            "însuți",
-            "însăși",
+            "puternică",
+            "vrednică",
             "veșnică",
-            "întemeiat"
+            "piedică"
           ]
         }
       ]
@@ -1901,9 +1901,9 @@ const EPISTLES = {
         {
           "answer": "vecilor",
           "options": [
-            "slujească",
-            "slujește",
-            "slujim",
+            "ochilor",
+            "iudeilor",
+            "călcărilor",
             "vecilor"
           ]
         }
@@ -1917,9 +1917,9 @@ const EPISTLES = {
           "answer": "scris",
           "options": [
             "scris",
-            "mine",
-            "mint",
-            "minte"
+            "ucis",
+            "trimis",
+            "închis"
           ]
         }
       ]
@@ -1931,10 +1931,10 @@ const EPISTLES = {
         {
           "answer": "Marcu",
           "options": [
-            "Venit",
+            "Vreau",
             "Marcu",
-            "Venită",
-            "Veste"
+            "Scriu",
+            "Erau"
           ]
         }
       ]
@@ -1946,10 +1946,10 @@ const EPISTLES = {
         {
           "answer": "unii",
           "options": [
-            "obște",
-            "ocara",
+            "oamenii",
+            "anii",
             "unii",
-            "ocară"
+            "cărnii"
           ]
         }
       ]
@@ -1963,10 +1963,10 @@ const EPISTLES = {
         {
           "answer": "către",
           "options": [
-            "chemați",
+            "intre",
             "către",
-            "chiar",
-            "chifa"
+            "pietre",
+            "mustre"
           ]
         }
       ]
@@ -1978,10 +1978,10 @@ const EPISTLES = {
         {
           "answer": "Hristos",
           "options": [
-            "Glasul",
-            "Gomora",
+            "Samuel",
+            "Isaac",
             "Hristos",
-            "Grabă"
+            "Petru"
           ]
         }
       ]
@@ -1993,9 +1993,9 @@ const EPISTLES = {
         {
           "answer": "Dumnezeului",
           "options": [
-            "Izbăvirea",
-            "Izgonește",
-            "Jertfirea",
+            "Proorocului",
+            "Preotului",
+            "Împăratului",
             "Dumnezeului"
           ]
         }
@@ -2009,9 +2009,9 @@ const EPISTLES = {
           "answer": "rugăciunile",
           "options": [
             "rugăciunile",
-            "slăvească",
-            "smulgându",
-            "socoteală"
+            "sarcinile",
+            "datinile",
+            "rușinile"
           ]
         }
       ]
@@ -2023,10 +2023,10 @@ const EPISTLES = {
         {
           "answer": "luați",
           "options": [
-            "scăpare",
+            "mânați",
             "luați",
-            "scăpat",
-            "scăpate"
+            "bucurați",
+            "căutați"
           ]
         }
       ]
@@ -2038,10 +2038,10 @@ const EPISTLES = {
         {
           "answer": "lucrare",
           "options": [
-            "pătimiți",
-            "pătrunde",
+            "îndurare",
+            "tulburare",
             "lucrare",
-            "păzească"
+            "intrare"
           ]
         }
       ]
@@ -2053,9 +2053,9 @@ const EPISTLES = {
         {
           "answer": "întrucât",
           "options": [
-            "bucura",
-            "bucurați",
-            "bucure",
+            "numaidecât",
+            "decât",
+            "omorât",
             "întrucât"
           ]
         }
@@ -2069,9 +2069,9 @@ const EPISTLES = {
           "answer": "dragoste",
           "options": [
             "dragoste",
-            "stăruință",
-            "stăruiți",
-            "stătea"
+            "peste",
+            "guste",
+            "veste"
           ]
         }
       ]
@@ -2083,10 +2083,10 @@ const EPISTLES = {
         {
           "answer": "pricepere",
           "options": [
-            "coapsele",
+            "răscumpere",
             "pricepere",
-            "coboară",
-            "cojoace"
+            "descopere",
+            "înviere"
           ]
         }
       ]
@@ -2098,9 +2098,9 @@ const EPISTLES = {
         {
           "answer": "lucrurile",
           "options": [
-            "trupuri",
-            "trupurile",
-            "trâmbiță",
+            "cerurile",
+            "neamurile",
+            "comorile",
             "lucrurile"
           ]
         }
@@ -2113,10 +2113,10 @@ const EPISTLES = {
         {
           "answer": "lauda",
           "options": [
-            "clipă",
-            "clătina",
+            "lăuda",
+            "iuda",
             "lauda",
-            "coboară"
+            "osânda"
           ]
         }
       ]
@@ -2128,10 +2128,10 @@ const EPISTLES = {
         {
           "answer": "Evangheliei",
           "options": [
-            "Ierusalim",
+            "Galatiei",
             "Evangheliei",
-            "Ierusalimul",
-            "Ierusalimului"
+            "Ciliciei",
+            "Fățărniciei"
           ]
         }
       ]
@@ -2144,9 +2144,9 @@ const EPISTLES = {
           "answer": "Într",
           "options": [
             "Într",
-            "Bucur",
-            "Bucura",
-            "Bucure"
+            "Printr",
+            "Dintr",
+            "Altar"
           ]
         }
       ]
@@ -2158,9 +2158,9 @@ const EPISTLES = {
         {
           "answer": "îmbărbătați",
           "options": [
-            "amănuntul",
-            "amărăciune",
-            "apostolii",
+            "îndepărtați",
+            "binecuvântați",
+            "ascultați",
             "îmbărbătați"
           ]
         }
@@ -2173,10 +2173,10 @@ const EPISTLES = {
         {
           "answer": "alții",
           "options": [
-            "tale",
-            "tare",
+            "preoții",
+            "vieții",
             "alții",
-            "tari"
+            "minții"
           ]
         }
       ]
@@ -2188,10 +2188,10 @@ const EPISTLES = {
         {
           "answer": "unii",
           "options": [
-            "grec",
+            "anii",
             "unii",
-            "grele",
-            "greoi"
+            "cărnii",
+            "oamenii"
           ]
         }
       ]
@@ -2204,9 +2204,9 @@ const EPISTLES = {
           "answer": "lanțurile",
           "options": [
             "lanțurile",
-            "dezlipească",
-            "deșartă",
-            "diaconii"
+            "visările",
+            "certurile",
+            "ținuturile"
           ]
         }
       ]
@@ -2218,9 +2218,9 @@ const EPISTLES = {
         {
           "answer": "lumii",
           "options": [
-            "mesele",
-            "meșter",
-            "mielul",
+            "vremii",
+            "inimii",
+            "heruvimii",
             "lumii"
           ]
         }
@@ -2233,10 +2233,10 @@ const EPISTLES = {
         {
           "answer": "acesta",
           "options": [
-            "binelui",
-            "biserica",
+            "vârsta",
+            "judecata",
             "acesta",
-            "biserică"
+            "gata"
           ]
         }
       ]
@@ -2248,10 +2248,10 @@ const EPISTLES = {
         {
           "answer": "aștept",
           "options": [
-            "legii",
-            "legile",
+            "nedrept",
+            "drept",
             "aștept",
-            "legământ"
+            "egipt"
           ]
         }
       ]
@@ -2263,9 +2263,9 @@ const EPISTLES = {
         {
           "answer": "câștig",
           "options": [
-            "înviați",
-            "învie",
-            "înviere",
+            "alerg",
+            "ajung",
+            "toiag",
             "câștig"
           ]
         }
@@ -2279,9 +2279,9 @@ const EPISTLES = {
           "answer": "trup",
           "options": [
             "trup",
-            "mutat",
-            "mâhnit",
-            "mâini"
+            "scump",
+            "chip",
+            "timp"
           ]
         }
       ]
@@ -2293,10 +2293,10 @@ const EPISTLES = {
         {
           "answer": "dori",
           "options": [
-            "robie",
+            "feciori",
             "dori",
-            "robiei",
-            "robiți"
+            "martori",
+            "nori"
           ]
         }
       ]
@@ -2308,10 +2308,10 @@ const EPISTLES = {
         {
           "answer": "rămân",
           "options": [
-            "plăcute",
-            "plăcută",
+            "stăpân",
+            "ghedeon",
             "rămân",
-            "plăcuți"
+            "spun"
           ]
         }
       ]
@@ -2323,9 +2323,9 @@ const EPISTLES = {
         {
           "answer": "înaintarea",
           "options": [
-            "socotiți",
-            "spunându",
-            "stacojie",
+            "următoarea",
+            "chemarea",
+            "încercarea",
             "înaintarea"
           ]
         }
@@ -2339,9 +2339,9 @@ const EPISTLES = {
           "answer": "pricină",
           "options": [
             "pricină",
-            "împotriva",
-            "împotrivă",
-            "împrejur"
+            "rădăcină",
+            "clatină",
+            "vină"
           ]
         }
       ]
@@ -2353,10 +2353,10 @@ const EPISTLES = {
         {
           "answer": "suflet",
           "options": [
-            "bunăvoie",
+            "cuget",
             "suflet",
-            "buzele",
-            "buzelor"
+            "chivot",
+            "testament"
           ]
         }
       ]
@@ -2368,10 +2368,10 @@ const EPISTLES = {
         {
           "answer": "mântuirea",
           "options": [
-            "înfățișarea",
-            "înfățișați",
+            "nelegiuirea",
+            "venirea",
             "mântuirea",
-            "înfățișeze"
+            "fericirea"
           ]
         }
       ]
@@ -2383,9 +2383,9 @@ const EPISTLES = {
         {
           "answer": "harul",
           "options": [
-            "știri",
-            "știu",
-            "știți",
+            "darul",
+            "poporul",
+            "aurul",
             "harul"
           ]
         }
@@ -2398,10 +2398,10 @@ const EPISTLES = {
         {
           "answer": "acum",
           "options": [
-            "seama",
+            "oricum",
             "acum",
-            "seamă",
-            "secera"
+            "zicem",
+            "balaam"
           ]
         }
       ]
@@ -2413,10 +2413,10 @@ const EPISTLES = {
         {
           "answer": "milostivire",
           "options": [
-            "preasfânt",
-            "preasfântă",
+            "împotrivire",
+            "părtinire",
             "milostivire",
-            "preaînalt"
+            "moștenire"
           ]
         }
       ]
@@ -2428,10 +2428,10 @@ const EPISTLES = {
         {
           "answer": "aveți",
           "options": [
-            "deprins",
+            "veți",
             "aveți",
-            "deschis",
-            "desfrâu"
+            "puteți",
+            "oaspeți"
           ]
         }
       ]
@@ -2444,9 +2444,9 @@ const EPISTLES = {
           "answer": "nimic",
           "options": [
             "nimic",
-            "făcut",
-            "făcute",
-            "făcută"
+            "veșnic",
+            "vrednic",
+            "întuneric"
           ]
         }
       ]
@@ -2458,9 +2458,9 @@ const EPISTLES = {
         {
           "answer": "altora",
           "options": [
-            "slobodă",
-            "slobozi",
-            "slove",
+            "acestora",
+            "multora",
+            "cobora",
             "altora"
           ]
         }
@@ -2473,10 +2473,10 @@ const EPISTLES = {
         {
           "answer": "acesta",
           "options": [
-            "fiilor",
-            "ființei",
+            "vârsta",
+            "fapta",
             "acesta",
-            "filipi"
+            "gata"
           ]
         }
       ]
@@ -2488,10 +2488,10 @@ const EPISTLES = {
         {
           "answer": "apucat",
           "options": [
-            "chefuri",
+            "ferecat",
             "apucat",
-            "chema",
-            "chemarea"
+            "plecat",
+            "fermecat"
           ]
         }
       ]
@@ -2504,9 +2504,9 @@ const EPISTLES = {
           "answer": "chip",
           "options": [
             "chip",
-            "celei",
-            "celor",
-            "celui"
+            "trup",
+            "scump",
+            "potop"
           ]
         }
       ]
@@ -2518,9 +2518,9 @@ const EPISTLES = {
         {
           "answer": "găsit",
           "options": [
-            "firesc",
-            "firii",
-            "fiul",
+            "părăsit",
+            "pedepsit",
+            "primit",
             "găsit"
           ]
         }
@@ -2533,10 +2533,10 @@ const EPISTLES = {
         {
           "answer": "orice",
           "options": [
-            "înapoi",
-            "înceapă",
+            "ferice",
+            "ridice",
             "orice",
-            "începe"
+            "zice"
           ]
         }
       ]
@@ -2548,10 +2548,10 @@ const EPISTLES = {
         {
           "answer": "genunchi",
           "options": [
-            "întâmpinat",
-            "întâmplat",
+            "învechi",
+            "vechi",
             "genunchi",
-            "întâmplă"
+            "marii"
           ]
         }
       ]
@@ -2563,9 +2563,9 @@ const EPISTLES = {
         {
           "answer": "spre",
           "options": [
-            "cădeți",
-            "căile",
-            "călca",
+            "despre",
+            "capre",
+            "băgare",
             "spre"
           ]
         }
@@ -2579,9 +2579,9 @@ const EPISTLES = {
           "answer": "preaiubiților",
           "options": [
             "preaiubiților",
-            "propovăduită",
-            "proslăvească",
-            "păcătoșilor"
+            "lucrurilor",
+            "veacurilor",
+            "bărbaților"
           ]
         }
       ]
@@ -2593,10 +2593,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Lucreze",
+            "Avraam",
             "Dumnezeu",
-            "Lucrul",
-            "Lucruri"
+            "David",
+            "Iosif"
           ]
         }
       ]
@@ -2608,10 +2608,10 @@ const EPISTLES = {
         {
           "answer": "cârtiri",
           "options": [
-            "aceleași",
-            "aceleiași",
+            "știri",
+            "mântuiri",
             "cârtiri",
-            "aceluiași"
+            "mulțumiri"
           ]
         }
       ]
@@ -2623,9 +2623,9 @@ const EPISTLES = {
         {
           "answer": "unui",
           "options": [
-            "făcea",
-            "făceam",
-            "făceau",
+            "mistui",
+            "cărui",
+            "oricui",
             "unui"
           ]
         }
@@ -2639,9 +2639,9 @@ const EPISTLES = {
           "answer": "Cuvântul",
           "options": [
             "Cuvântul",
-            "Înfrunzise",
-            "Înfrânarea",
-            "Înfrâneze"
+            "Punctul",
+            "Egiptul",
+            "Jurământul"
           ]
         }
       ]
@@ -2653,10 +2653,10 @@ const EPISTLES = {
         {
           "answer": "toți",
           "options": [
-            "dintr",
+            "preoți",
             "toți",
-            "dintre",
-            "dintâi"
+            "auziți",
+            "păziți"
           ]
         }
       ]
@@ -2668,10 +2668,10 @@ const EPISTLES = {
         {
           "answer": "împreună",
           "options": [
-            "piatră",
-            "picioare",
+            "furtună",
+            "bună",
             "împreună",
-            "picioarele"
+            "pună"
           ]
         }
       ]
@@ -2683,9 +2683,9 @@ const EPISTLES = {
         {
           "answer": "Timotei",
           "options": [
-            "Sângelui",
-            "Săgeata",
-            "Sămânța",
+            "Ciliciei",
+            "Ființei",
+            "Siriei",
             "Timotei"
           ]
         }
@@ -2698,9 +2698,9 @@ const EPISTLES = {
         {
           "answer": "simțirile",
           "options": [
-            "zămislească",
-            "îmbrăcarea",
-            "îmbrăcat",
+            "chipurile",
+            "zidurile",
+            "darurile",
             "simțirile"
           ]
         }
@@ -2713,10 +2713,10 @@ const EPISTLES = {
         {
           "answer": "umblă",
           "options": [
-            "întors",
-            "într",
+            "milă",
+            "silă",
             "umblă",
-            "întrece"
+            "înșală"
           ]
         }
       ]
@@ -2728,10 +2728,10 @@ const EPISTLES = {
         {
           "answer": "lucrat",
           "options": [
-            "gustat",
+            "adevărat",
             "lucrat",
-            "guste",
-            "gând"
+            "păstrat",
+            "curat"
           ]
         }
       ]
@@ -2744,9 +2744,9 @@ const EPISTLES = {
           "answer": "nădăjduiesc",
           "options": [
             "nădăjduiesc",
-            "evanghelie",
-            "evangheliei",
-            "femeiască"
+            "obișnuiesc",
+            "sfătuiesc",
+            "propovăduiesc"
           ]
         }
       ]
@@ -2758,9 +2758,9 @@ const EPISTLES = {
         {
           "answer": "Domnul",
           "options": [
-            "Ziua",
-            "Zugrăvit",
-            "Zăbovi",
+            "Stăpânul",
+            "Împăratul",
+            "Proorocul",
             "Domnul"
           ]
         }
@@ -2773,10 +2773,10 @@ const EPISTLES = {
         {
           "answer": "nevoile",
           "options": [
-            "neamuri",
-            "neamurile",
+            "mâniile",
+            "comorile",
             "nevoile",
-            "neapărat"
+            "zidurile"
           ]
         }
       ]
@@ -2788,10 +2788,10 @@ const EPISTLES = {
         {
           "answer": "bolnav",
           "options": [
-            "făcător",
+            "mârșav",
             "bolnav",
-            "făcători",
-            "făgăduit"
+            "rahav",
+            "grozav"
           ]
         }
       ]
@@ -2804,9 +2804,9 @@ const EPISTLES = {
           "answer": "foarte",
           "options": [
             "foarte",
-            "mare",
-            "marea",
-            "marele"
+            "parte",
+            "desparte",
+            "laoparte"
           ]
         }
       ]
@@ -2818,9 +2818,9 @@ const EPISTLES = {
         {
           "answer": "atât",
           "options": [
-            "ziua",
-            "zăbovi",
-            "înalt",
+            "omorât",
+            "decât",
+            "întrucât",
             "atât"
           ]
         }
@@ -2833,10 +2833,10 @@ const EPISTLES = {
         {
           "answer": "Domnul",
           "options": [
-            "Știința",
-            "Știm",
+            "Apostolul",
+            "Stăpânul",
             "Domnul",
-            "Știri"
+            "Învățătorul"
           ]
         }
       ]
@@ -2849,9 +2849,9 @@ const EPISTLES = {
           "answer": "aproape",
           "options": [
             "aproape",
-            "poruncile",
-            "poruncit",
-            "poruncă"
+            "scape",
+            "începe",
+            "lege"
           ]
         }
       ]
@@ -2863,9 +2863,9 @@ const EPISTLES = {
         {
           "answer": "vouă",
           "options": [
-            "trăi",
-            "trăim",
-            "trăit",
+            "două",
+            "nouă",
+            "plăcută",
             "vouă"
           ]
         }
@@ -2879,9 +2879,9 @@ const EPISTLES = {
           "answer": "câinii",
           "options": [
             "câinii",
-            "singuri",
-            "singurul",
-            "singură"
+            "egiptenii",
+            "oamenii",
+            "unii"
           ]
         }
       ]
@@ -2893,10 +2893,10 @@ const EPISTLES = {
         {
           "answer": "pământești",
           "options": [
-            "ascuțișul",
+            "silești",
             "pământești",
-            "asemenea",
-            "asemănare"
+            "duhovnicești",
+            "trăiești"
           ]
         }
       ]
@@ -2908,10 +2908,10 @@ const EPISTLES = {
         {
           "answer": "Măcar",
           "options": [
-            "Tine",
-            "Tocmai",
+            "Altar",
+            "Zadar",
             "Măcar",
-            "Toiag"
+            "Așadar"
           ]
         }
       ]
@@ -2923,9 +2923,9 @@ const EPISTLES = {
         {
           "answer": "împrejur",
           "options": [
-            "lucrare",
-            "lucrarea",
-            "lucrat",
+            "cutremur",
+            "tremur",
+            "singur",
             "împrejur"
           ]
         }
@@ -2939,9 +2939,9 @@ const EPISTLES = {
           "answer": "privește",
           "options": [
             "privește",
-            "făcându",
-            "făcător",
-            "făcători"
+            "răsplătește",
+            "trăiește",
+            "slujește"
           ]
         }
       ]
@@ -2953,10 +2953,10 @@ const EPISTLES = {
         {
           "answer": "câștiguri",
           "options": [
-            "răstignită",
+            "singuri",
             "câștiguri",
-            "răstoarne",
-            "rătăcesc"
+            "adevăruri",
+            "corturi"
           ]
         }
       ]
@@ -2968,10 +2968,10 @@ const EPISTLES = {
         {
           "answer": "Isus",
           "options": [
-            "Altul",
-            "Altă",
+            "Moise",
+            "Iacov",
             "Isus",
-            "Aluat"
+            "Avraam"
           ]
         }
       ]
@@ -2983,9 +2983,9 @@ const EPISTLES = {
         {
           "answer": "neprihănirea",
           "options": [
-            "cercetării",
-            "cercetărilor",
-            "cincisprezece",
+            "stropirea",
+            "oglindirea",
+            "curățirea",
             "neprihănirea"
           ]
         }
@@ -2998,10 +2998,10 @@ const EPISTLES = {
         {
           "answer": "învierii",
           "options": [
-            "scaunul",
+            "cunoașterii",
             "învierii",
-            "scaunului",
-            "schimb"
+            "nașterii",
+            "prezbiterii"
           ]
         }
       ]
@@ -3014,9 +3014,9 @@ const EPISTLES = {
           "answer": "ajung",
           "options": [
             "ajung",
-            "ține",
-            "ținem",
-            "țineți"
+            "vicleșug",
+            "aleg",
+            "toiag"
           ]
         }
       ]
@@ -3028,9 +3028,9 @@ const EPISTLES = {
         {
           "answer": "apucat",
           "options": [
-            "oricărei",
-            "oricărui",
-            "ospețe",
+            "uscat",
+            "păcat",
+            "nespurcat",
             "apucat"
           ]
         }
@@ -3043,10 +3043,10 @@ const EPISTLES = {
         {
           "answer": "Fraților",
           "options": [
-            "Spuneau",
-            "Spuneți",
+            "Patimilor",
+            "Leilor",
             "Fraților",
-            "Spunându"
+            "Veacurilor"
           ]
         }
       ]
@@ -3058,10 +3058,10 @@ const EPISTLES = {
         {
           "answer": "premiul",
           "options": [
-            "zidirea",
+            "întâiul",
             "premiul",
-            "zidit",
-            "ziditor"
+            "niciunul",
+            "patul"
           ]
         }
       ]
@@ -3074,9 +3074,9 @@ const EPISTLES = {
           "answer": "suntem",
           "options": [
             "suntem",
-            "seamă",
-            "seamănă",
-            "secera"
+            "putem",
+            "rămânem",
+            "supunem"
           ]
         }
       ]
@@ -3088,9 +3088,9 @@ const EPISTLES = {
         {
           "answer": "aceeași",
           "options": [
-            "tovarăș",
-            "tovarăși",
-            "tovarășii",
+            "aceleași",
+            "aceluiași",
+            "vrăjmași",
             "aceeași"
           ]
         }
@@ -3103,10 +3103,10 @@ const EPISTLES = {
         {
           "answer": "pilda",
           "options": [
-            "dați",
-            "decât",
+            "osânda",
+            "lauda",
             "pilda",
-            "degeaba"
+            "prada"
           ]
         }
       ]
@@ -3118,10 +3118,10 @@ const EPISTLES = {
         {
           "answer": "vrăjmași",
           "options": [
-            "umblăm",
+            "aceeași",
             "vrăjmași",
-            "undeva",
-            "unghiului"
+            "aceleași",
+            "aceleiași"
           ]
         }
       ]
@@ -3134,9 +3134,9 @@ const EPISTLES = {
           "answer": "pierzarea",
           "options": [
             "pierzarea",
-            "neapărat",
-            "neascultare",
-            "neavând"
+            "starea",
+            "înaintarea",
+            "mutarea"
           ]
         }
       ]
@@ -3149,9 +3149,9 @@ const EPISTLES = {
           "answer": "Mântuitor",
           "options": [
             "Mântuitor",
-            "Judecata",
-            "Judecată",
-            "Judecați"
+            "Păstor",
+            "Judecător",
+            "Tăietor"
           ]
         }
       ]
@@ -3163,10 +3163,10 @@ const EPISTLES = {
         {
           "answer": "lucrarea",
           "options": [
-            "duhurilor",
+            "încercarea",
             "lucrarea",
-            "dumnezei",
-            "dumnezeu"
+            "starea",
+            "arătarea"
           ]
         }
       ]
@@ -3179,9 +3179,9 @@ const EPISTLES = {
           "answer": "doriții",
           "options": [
             "doriții",
-            "foarte",
-            "focului",
-            "foloasele"
+            "leviții",
+            "părinții",
+            "răutății"
           ]
         }
       ]
@@ -3193,9 +3193,9 @@ const EPISTLES = {
         {
           "answer": "Sintichia",
           "options": [
-            "Socotit",
-            "Socotită",
-            "Socotiți",
+            "Antiohia",
+            "Împărăția",
+            "Căsătoria",
             "Sintichia"
           ]
         }
@@ -3208,10 +3208,10 @@ const EPISTLES = {
         {
           "answer": "tovarăș",
           "options": [
-            "căutării",
-            "căzut",
+            "părtaș",
+            "locaș",
             "tovarăș",
-            "damasc"
+            "credință"
           ]
         }
       ]
@@ -3223,10 +3223,10 @@ const EPISTLES = {
         {
           "answer": "Iarăși",
           "options": [
-            "Temelii",
+            "Tovarăși",
             "Iarăși",
-            "Temere",
-            "Temeți"
+            "Însăși",
+            "Scriși"
           ]
         }
       ]
@@ -3239,9 +3239,9 @@ const EPISTLES = {
           "answer": "Blândețea",
           "options": [
             "Blândețea",
-            "Desparte",
-            "Despartă",
-            "Despărțit"
+            "Purtarea",
+            "Fericirea",
+            "Căutarea"
           ]
         }
       ]
@@ -3253,9 +3253,9 @@ const EPISTLES = {
         {
           "answer": "aduceți",
           "options": [
-            "locurile",
-            "lovesc",
-            "luare",
+            "faceți",
+            "duceți",
+            "treceți",
             "aduceți"
           ]
         }
@@ -3268,10 +3268,10 @@ const EPISTLES = {
         {
           "answer": "pricepere",
           "options": [
-            "mântuiască",
-            "mântuiește",
+            "descopere",
+            "răscumpere",
             "pricepere",
-            "mântuire"
+            "înviere"
           ]
         }
       ]
@@ -3283,10 +3283,10 @@ const EPISTLES = {
         {
           "answer": "însuflețească",
           "options": [
-            "desăvârșite",
+            "sfințească",
             "însuflețească",
-            "desăvârșiți",
-            "dezbinările"
+            "dovedească",
+            "deosebească"
           ]
         }
       ]
@@ -3299,9 +3299,9 @@ const EPISTLES = {
           "answer": "auzit",
           "options": [
             "auzit",
-            "intre",
-            "intră",
-            "intrăm"
+            "păzit",
+            "îngrozit",
+            "sfârșit"
           ]
         }
       ]
@@ -3314,8 +3314,8 @@ const EPISTLES = {
           "answer": "prilejul",
           "options": [
             "prilejul",
-            "diavolului",
-            "dimpotrivă",
+            "chipul",
+            "tovarășul",
             "dinadinsul"
           ]
         }
@@ -3328,10 +3328,10 @@ const EPISTLES = {
         {
           "answer": "vedere",
           "options": [
-            "inima",
+            "cădere",
             "vedere",
-            "inimii",
-            "inimile"
+            "pierdere",
+            "încredere"
           ]
         }
       ]
@@ -3343,10 +3343,10 @@ const EPISTLES = {
         {
           "answer": "smerit",
           "options": [
-            "ispitiți",
-            "ispită",
+            "pierit",
+            "ferit",
             "smerit",
-            "isprăvi"
+            "suferit"
           ]
         }
       ]
@@ -3358,9 +3358,9 @@ const EPISTLES = {
         {
           "answer": "întărește",
           "options": [
-            "iubești",
-            "iubitori",
-            "iudeilor",
+            "pedepsește",
+            "deosebește",
+            "odihnește",
             "întărește"
           ]
         }
@@ -3374,9 +3374,9 @@ const EPISTLES = {
           "answer": "parte",
           "options": [
             "parte",
-            "jugul",
-            "jurat",
-            "jure"
+            "desparte",
+            "departe",
+            "laoparte"
           ]
         }
       ]
@@ -3388,10 +3388,10 @@ const EPISTLES = {
         {
           "answer": "mine",
           "options": [
-            "faceți",
+            "puține",
             "mine",
-            "faci",
-            "facă"
+            "oricine",
+            "ține"
           ]
         }
       ]
@@ -3403,10 +3403,10 @@ const EPISTLES = {
         {
           "answer": "nevoile",
           "options": [
-            "vedeau",
-            "vedem",
+            "sarcinile",
+            "bunurile",
             "nevoile",
-            "vedere"
+            "lanțurile"
           ]
         }
       ]
@@ -3418,9 +3418,9 @@ const EPISTLES = {
         {
           "answer": "daruri",
           "options": [
-            "gândesc",
-            "gândire",
-            "gândiți",
+            "ceruri",
+            "lucruri",
+            "adevăruri",
             "daruri"
           ]
         }
@@ -3434,9 +3434,9 @@ const EPISTLES = {
           "answer": "mireasmă",
           "options": [
             "mireasmă",
-            "treacă",
-            "trebui",
-            "trebuia"
+            "urmă",
+            "pizmă",
+            "inimă"
           ]
         }
       ]
@@ -3448,10 +3448,10 @@ const EPISTLES = {
         {
           "answer": "Hristos",
           "options": [
-            "Închine",
+            "Samuel",
             "Hristos",
-            "Închină",
-            "Închis"
+            "Pavel",
+            "Moise"
           ]
         }
       ]
@@ -3463,10 +3463,10 @@ const EPISTLES = {
         {
           "answer": "Amin",
           "options": [
-            "Trupul",
+            "Beniamin",
             "Amin",
-            "Trăi",
-            "Trăim"
+            "Cain",
+            "Plin"
           ]
         }
       ]
@@ -3479,9 +3479,9 @@ const EPISTLES = {
           "answer": "Isus",
           "options": [
             "Isus",
-            "Sabie",
-            "Sabiei",
-            "Sale"
+            "Ilie",
+            "Moise",
+            "Iacov"
           ]
         }
       ]
@@ -3493,9 +3493,9 @@ const EPISTLES = {
         {
           "answer": "sănătate",
           "options": [
-            "încoace",
-            "încolo",
-            "încrede",
+            "dreptate",
+            "cetate",
+            "răutate",
             "sănătate"
           ]
         }
@@ -3508,10 +3508,10 @@ const EPISTLES = {
         {
           "answer": "toți",
           "options": [
-            "vârful",
-            "vârsta",
+            "preoți",
+            "vieți",
             "toți",
-            "vârstă"
+            "voiți"
           ]
         }
       ]
@@ -3526,9 +3526,9 @@ const EPISTLES = {
           "answer": "rânduri",
           "options": [
             "rânduri",
-            "scump",
-            "scumpă",
-            "scurt"
+            "gânduri",
+            "daruri",
+            "ceruri"
           ]
         }
       ]
@@ -3540,9 +3540,9 @@ const EPISTLES = {
         {
           "answer": "acestor",
           "options": [
-            "mulțumiți",
-            "munciți",
-            "munte",
+            "călcător",
+            "mijlocitor",
+            "îndrumător",
             "acestor"
           ]
         }
@@ -3555,10 +3555,10 @@ const EPISTLES = {
         {
           "answer": "păcatelor",
           "options": [
-            "vindecat",
-            "vindecați",
+            "picioarelor",
+            "semințelor",
             "păcatelor",
-            "visările"
+            "suferințelor"
           ]
         }
       ]
@@ -3570,10 +3570,10 @@ const EPISTLES = {
         {
           "answer": "decât",
           "options": [
-            "faptele",
+            "întrucât",
             "decât",
-            "faptul",
-            "faptă"
+            "omorât",
+            "pont"
           ]
         }
       ]
@@ -3586,9 +3586,9 @@ const EPISTLES = {
           "answer": "iarăși",
           "options": [
             "iarăși",
-            "minunat",
-            "minunate",
-            "minunată"
+            "tovarăși",
+            "însăși",
+            "înseși"
           ]
         }
       ]
@@ -3600,9 +3600,9 @@ const EPISTLES = {
         {
           "answer": "zice",
           "options": [
-            "plini",
-            "plină",
-            "ploaia",
+            "orice",
+            "veșnice",
+            "ridice",
             "zice"
           ]
         }
@@ -3615,10 +3615,10 @@ const EPISTLES = {
         {
           "answer": "zice",
           "options": [
-            "vreo",
-            "vreun",
+            "orice",
+            "ferice",
             "zice",
-            "vreți"
+            "ridice"
           ]
         }
       ]
@@ -3630,10 +3630,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeule",
           "options": [
-            "Astupați",
+            "Proorocule",
             "Dumnezeule",
-            "Auziseră",
-            "Averilor"
+            "Stăpâne",
+            "Învățătorule"
           ]
         }
       ]
@@ -3646,9 +3646,9 @@ const EPISTLES = {
           "answer": "iubit",
           "options": [
             "iubit",
-            "socoti",
-            "socotit",
-            "sodoma"
+            "vorbit",
+            "pomenit",
+            "sfârșit"
           ]
         }
       ]
@@ -3661,9 +3661,9 @@ const EPISTLES = {
           "answer": "mâinilor",
           "options": [
             "mâinilor",
-            "tăierea",
-            "tăietor",
-            "tăișuri"
+            "morților",
+            "filipenilor",
+            "duhurilor"
           ]
         }
       ]
@@ -3675,10 +3675,10 @@ const EPISTLES = {
         {
           "answer": "haină",
           "options": [
-            "schimbă",
+            "puțină",
             "haină",
-            "scos",
-            "scot"
+            "rădăcină",
+            "deplină"
           ]
         }
       ]
@@ -3690,10 +3690,10 @@ const EPISTLES = {
         {
           "answer": "anii",
           "options": [
-            "scot",
-            "scrie",
+            "cărnii",
+            "unii",
             "anii",
-            "scris"
+            "oamenii"
           ]
         }
       ]
@@ -3705,9 +3705,9 @@ const EPISTLES = {
         {
           "answer": "dintre",
           "options": [
-            "ascultă",
-            "ascuns",
-            "ascunse",
+            "printre",
+            "intre",
+            "către",
             "dintre"
           ]
         }
@@ -3721,9 +3721,9 @@ const EPISTLES = {
           "answer": "duhuri",
           "options": [
             "duhuri",
-            "locul",
-            "locului",
-            "locurile"
+            "adevăruri",
+            "ceruri",
+            "vânturi"
           ]
         }
       ]
@@ -3735,9 +3735,9 @@ const EPISTLES = {
         {
           "answer": "îndepărtați",
           "options": [
-            "cercetărilor",
-            "certurile",
-            "cetățenia",
+            "îmbărbătați",
+            "binecuvântați",
+            "întristați",
             "îndepărtați"
           ]
         }
@@ -3751,9 +3751,9 @@ const EPISTLES = {
           "answer": "îngeri",
           "options": [
             "îngeri",
-            "credeți",
-            "credința",
-            "credință"
+            "pieri",
+            "peșteri",
+            "cereri"
           ]
         }
       ]
@@ -3765,10 +3765,10 @@ const EPISTLES = {
         {
           "answer": "mântuire",
           "options": [
-            "ajutorul",
+            "sfătuire",
             "mântuire",
-            "aleasă",
-            "alergarea"
+            "viețuire",
+            "părtinire"
           ]
         }
       ]
@@ -3780,10 +3780,10 @@ const EPISTLES = {
         {
           "answer": "întărea",
           "options": [
-            "roabei",
-            "roabă",
+            "răzbunarea",
+            "răpirea",
             "întărea",
-            "roada"
+            "învierea"
           ]
         }
       ]
@@ -3795,9 +3795,9 @@ const EPISTLES = {
         {
           "answer": "viitoare",
           "options": [
-            "mergem",
-            "mergător",
-            "mesele",
+            "dătătoare",
+            "picioare",
+            "privitoare",
             "viitoare"
           ]
         }
@@ -3811,9 +3811,9 @@ const EPISTLES = {
           "answer": "încă",
           "options": [
             "încă",
-            "adică",
-            "aduc",
-            "aduce"
+            "poruncă",
+            "stâncă",
+            "ducă"
           ]
         }
       ]
@@ -3825,10 +3825,10 @@ const EPISTLES = {
         {
           "answer": "Tale",
           "options": [
-            "Pune",
+            "Sale",
             "Tale",
-            "Punem",
-            "Puneți"
+            "Cale",
+            "Târcoale"
           ]
         }
       ]
@@ -3840,10 +3840,10 @@ const EPISTLES = {
         {
           "answer": "adevăr",
           "options": [
-            "nuiaua",
-            "nume",
+            "număr",
+            "celor",
             "adevăr",
-            "numea"
+            "mistuitor"
           ]
         }
       ]
@@ -3855,9 +3855,9 @@ const EPISTLES = {
         {
           "answer": "puțină",
           "options": [
-            "dați",
-            "deasupra",
-            "decât",
+            "rădăcină",
+            "vină",
+            "haină",
             "puțină"
           ]
         }
@@ -3870,10 +3870,10 @@ const EPISTLES = {
         {
           "answer": "mântuirii",
           "options": [
-            "preacurvia",
+            "răzvrătirii",
             "mântuirii",
-            "preaiubiții",
-            "preasfânt"
+            "venirii",
+            "mărturisirii"
           ]
         }
       ]
@@ -3886,9 +3886,9 @@ const EPISTLES = {
           "answer": "numească",
           "options": [
             "numească",
-            "cinstiți",
-            "ciudat",
-            "clatină"
+            "rostească",
+            "privească",
+            "sfințească"
           ]
         }
       ]
@@ -3900,9 +3900,9 @@ const EPISTLES = {
         {
           "answer": "vesti",
           "options": [
-            "casă",
-            "caut",
-            "caute",
+            "ești",
+            "cerești",
+            "naști",
             "vesti"
           ]
         }
@@ -3915,10 +3915,10 @@ const EPISTLES = {
         {
           "answer": "iarăși",
           "options": [
-            "adăugată",
-            "afară",
+            "tovarăși",
+            "însăși",
             "iarăși",
-            "afla"
+            "puși"
           ]
         }
       ]
@@ -3930,10 +3930,10 @@ const EPISTLES = {
         {
           "answer": "nimicească",
           "options": [
-            "amărăciune",
+            "cerească",
             "nimicească",
-            "antiohia",
-            "apostoli"
+            "dezlipească",
+            "vestească"
           ]
         }
       ]
@@ -3946,9 +3946,9 @@ const EPISTLES = {
           "answer": "erau",
           "options": [
             "erau",
-            "curăți",
-            "cusur",
-            "cuvânt"
+            "stau",
+            "vreau",
+            "auzeau"
           ]
         }
       ]
@@ -3960,9 +3960,9 @@ const EPISTLES = {
         {
           "answer": "Avraam",
           "options": [
-            "Prinos",
-            "Prins",
-            "Printr",
+            "Balaam",
+            "Adam",
+            "Căutam",
             "Avraam"
           ]
         }
@@ -3975,10 +3975,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Iudeilor",
-            "Izbucnește",
+            "Petru",
+            "Pavel",
             "Dumnezeu",
-            "Izbăvească"
+            "David"
           ]
         }
       ]
@@ -3990,10 +3990,10 @@ const EPISTLES = {
         {
           "answer": "ceea",
           "options": [
-            "lăsat",
+            "iudeea",
             "ceea",
-            "lăsați",
-            "lăsăm"
+            "curtea",
+            "vrea"
           ]
         }
       ]
@@ -4005,10 +4005,10 @@ const EPISTLES = {
         {
           "answer": "frați",
           "options": [
-            "jertfe",
-            "jertfă",
+            "păstrați",
+            "bucurați",
             "frați",
-            "judeca"
+            "curați"
           ]
         }
       ]
@@ -4020,10 +4020,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Suspinând",
+            "Ilie",
             "Dumnezeu",
-            "Sângele",
-            "Sângelui"
+            "Iosif",
+            "Isaac"
           ]
         }
       ]
@@ -4036,9 +4036,9 @@ const EPISTLES = {
           "answer": "casa",
           "options": [
             "casa",
-            "bine",
-            "binele",
-            "bizuie"
+            "masa",
+            "lipsa",
+            "pedeapsa"
           ]
         }
       ]
@@ -4050,9 +4050,9 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Cinstea",
-            "Cinstiți",
-            "Ciudat",
+            "Iacov",
+            "Ilie",
+            "Avraam",
             "Dumnezeu"
           ]
         }
@@ -4065,10 +4065,10 @@ const EPISTLES = {
         {
           "answer": "casa",
           "options": [
-            "scape",
-            "scapă",
+            "masa",
+            "lipsa",
             "casa",
-            "schimb"
+            "pedeapsa"
           ]
         }
       ]
@@ -4080,10 +4080,10 @@ const EPISTLES = {
         {
           "answer": "lăudăm",
           "options": [
-            "turnat",
+            "apucăm",
             "lăudăm",
-            "tuturor",
-            "tâlcuit"
+            "alergăm",
+            "umblăm"
           ]
         }
       ]
@@ -4096,9 +4096,9 @@ const EPISTLES = {
           "answer": "zice",
           "options": [
             "zice",
-            "stâlpi",
-            "stânci",
-            "stâncă"
+            "veșnice",
+            "ridice",
+            "ferice"
           ]
         }
       ]
@@ -4110,9 +4110,9 @@ const EPISTLES = {
         {
           "answer": "împietriți",
           "options": [
-            "bisericilor",
-            "biserică",
-            "blestemat",
+            "smeriți",
+            "suferiți",
+            "păstoriți",
             "împietriți"
           ]
         }
@@ -4125,10 +4125,10 @@ const EPISTLES = {
         {
           "answer": "ispitit",
           "options": [
-            "smerite",
-            "smeriți",
+            "socotit",
+            "poftit",
             "ispitit",
-            "smulgându"
+            "plătit"
           ]
         }
       ]
@@ -4140,10 +4140,10 @@ const EPISTLES = {
         {
           "answer": "acesta",
           "options": [
-            "ispită",
-            "isprăvi",
+            "vârsta",
+            "fapta",
             "acesta",
-            "ispășire"
+            "purta"
           ]
         }
       ]
@@ -4155,9 +4155,9 @@ const EPISTLES = {
         {
           "answer": "mânia",
           "options": [
-            "uscat",
-            "usucă",
-            "vaci",
+            "cetățenia",
+            "macedonia",
+            "căpetenia",
             "mânia"
           ]
         }
@@ -4171,9 +4171,9 @@ const EPISTLES = {
           "answer": "dintre",
           "options": [
             "dintre",
-            "sodoma",
-            "spini",
-            "spiță"
+            "printre",
+            "intre",
+            "mustre"
           ]
         }
       ]
@@ -4185,10 +4185,10 @@ const EPISTLES = {
         {
           "answer": "fiecare",
           "options": [
-            "încredere",
+            "mâncare",
             "fiecare",
-            "încununat",
-            "îndată"
+            "încercare",
+            "tare"
           ]
         }
       ]
@@ -4200,10 +4200,10 @@ const EPISTLES = {
         {
           "answer": "nezguduită",
           "options": [
-            "războiesc",
-            "răzbunarea",
+            "rânduită",
+            "făgăduită",
             "nezguduită",
-            "răzvrătirii"
+            "propovăduită"
           ]
         }
       ]
@@ -4215,9 +4215,9 @@ const EPISTLES = {
         {
           "answer": "inimile",
           "options": [
-            "obosite",
-            "obârșie",
-            "obște",
+            "patimile",
+            "puterile",
+            "lucrările",
             "inimile"
           ]
         }
@@ -4231,9 +4231,9 @@ const EPISTLES = {
           "answer": "Cine",
           "options": [
             "Cine",
-            "Voiți",
-            "Vorba",
-            "Vorbe"
+            "Oricine",
+            "Închine",
+            "Străine"
           ]
         }
       ]
@@ -4245,10 +4245,10 @@ const EPISTLES = {
         {
           "answer": "pustie",
           "options": [
-            "așteaptă",
+            "știe",
             "pustie",
-            "aștept",
-            "aștepta"
+            "sabie",
+            "robie"
           ]
         }
       ]
@@ -4260,10 +4260,10 @@ const EPISTLES = {
         {
           "answer": "intre",
           "options": [
-            "înseși",
-            "însuși",
+            "dintre",
+            "printre",
             "intre",
-            "însuți"
+            "către"
           ]
         }
       ]
@@ -4275,9 +4275,9 @@ const EPISTLES = {
         {
           "answer": "necredinței",
           "options": [
-            "despărțit",
-            "desăvârșească",
-            "desăvârși",
+            "pocăinței",
+            "credinței",
+            "făgăduinței",
             "necredinței"
           ]
         }
@@ -4290,10 +4290,10 @@ const EPISTLES = {
         {
           "answer": "pomenească",
           "options": [
-            "tovarășul",
+            "slăvească",
             "pomenească",
-            "trebuințele",
-            "trebuință"
+            "dospească",
+            "vestească"
           ]
         }
       ]
@@ -4305,10 +4305,10 @@ const EPISTLES = {
         {
           "answer": "cuvântul",
           "options": [
-            "osândit",
-            "oștirile",
+            "jurământul",
+            "pământul",
             "cuvântul",
-            "partea"
+            "legământul"
           ]
         }
       ]
@@ -4320,9 +4320,9 @@ const EPISTLES = {
         {
           "answer": "lumii",
           "options": [
-            "duhului",
-            "duhuri",
-            "dându",
+            "vremii",
+            "inimii",
+            "heruvimii",
             "lumii"
           ]
         }
@@ -4336,9 +4336,9 @@ const EPISTLES = {
           "answer": "odihnit",
           "options": [
             "odihnit",
-            "puțin",
-            "puține",
-            "puțină"
+            "mâhnit",
+            "prigonit",
+            "împlinit"
           ]
         }
       ]
@@ -4350,10 +4350,10 @@ const EPISTLES = {
         {
           "answer": "odihna",
           "options": [
-            "străine",
+            "mâna",
             "odihna",
-            "străini",
-            "străpuns"
+            "hrana",
+            "clătina"
           ]
         }
       ]
@@ -4365,10 +4365,10 @@ const EPISTLES = {
         {
           "answer": "unii",
           "options": [
-            "sfânt",
-            "sfântă",
+            "oamenii",
+            "anii",
             "unii",
-            "sfârși"
+            "cărnii"
           ]
         }
       ]
@@ -4380,9 +4380,9 @@ const EPISTLES = {
         {
           "answer": "atâta",
           "options": [
-            "evrei",
-            "evreu",
-            "ești",
+            "arăta",
+            "lupta",
+            "cânta",
             "atâta"
           ]
         }
@@ -4396,9 +4396,9 @@ const EPISTLES = {
           "answer": "altă",
           "options": [
             "altă",
-            "avem",
-            "aveți",
-            "avraam"
+            "înaltă",
+            "multă",
+            "ascultă"
           ]
         }
       ]
@@ -4410,10 +4410,10 @@ const EPISTLES = {
         {
           "answer": "poporul",
           "options": [
-            "împărăție",
+            "slujitorul",
             "poporul",
-            "împărății",
-            "împărțite"
+            "urzitorul",
+            "ajutorul"
           ]
         }
       ]
@@ -4425,9 +4425,9 @@ const EPISTLES = {
         {
           "answer": "odihnit",
           "options": [
-            "împăratul",
-            "împărăția",
-            "împărăție",
+            "mâhnit",
+            "îmbătrânit",
+            "prigonit",
             "odihnit"
           ]
         }
@@ -4440,10 +4440,10 @@ const EPISTLES = {
         {
           "answer": "odihna",
           "options": [
-            "stat",
-            "stau",
+            "mâna",
+            "sarcina",
             "odihna",
-            "stearpo"
+            "hrana"
           ]
         }
       ]
@@ -4455,10 +4455,10 @@ const EPISTLES = {
         {
           "answer": "încheieturile",
           "options": [
-            "îndeplinesc",
+            "neînțelegerile",
             "încheieturile",
-            "îndepărtați",
-            "îndepărteze"
+            "adevărurile",
+            "împrejurările"
           ]
         }
       ]
@@ -4471,9 +4471,9 @@ const EPISTLES = {
           "answer": "înaintea",
           "options": [
             "înaintea",
-            "războaie",
-            "război",
-            "războiesc"
+            "mintea",
+            "partea",
+            "socotea"
           ]
         }
       ]
@@ -4485,9 +4485,9 @@ const EPISTLES = {
         {
           "answer": "cerurile",
           "options": [
-            "supunem",
-            "supuneți",
-            "supuse",
+            "ținuturile",
+            "lanțurile",
+            "visările",
             "cerurile"
           ]
         }
@@ -4500,10 +4500,10 @@ const EPISTLES = {
         {
           "answer": "milă",
           "options": [
-            "lăsăm",
-            "lăuda",
+            "silă",
+            "fală",
             "milă",
-            "lăudăm"
+            "umblă"
           ]
         }
       ]
@@ -4515,10 +4515,10 @@ const EPISTLES = {
         {
           "answer": "deplină",
           "options": [
-            "avraam",
+            "plină",
             "deplină",
-            "avuție",
-            "având"
+            "rădăcină",
+            "puțină"
           ]
         }
       ]
@@ -4531,9 +4531,9 @@ const EPISTLES = {
           "answer": "oameni",
           "options": [
             "oameni",
-            "fire",
-            "firea",
-            "firesc"
+            "nimeni",
+            "moșteni",
+            "galateni"
           ]
         }
       ]
@@ -4545,9 +4545,9 @@ const EPISTLES = {
         {
           "answer": "rătăciți",
           "options": [
-            "astupați",
-            "astăzi",
-            "asupra",
+            "nimiciți",
+            "străluciți",
+            "munciți",
             "rătăciți"
           ]
         }
@@ -4560,10 +4560,10 @@ const EPISTLES = {
         {
           "answer": "păcatele",
           "options": [
-            "botezuri",
-            "bucura",
+            "poftele",
+            "cuvintele",
             "păcatele",
-            "bucurați"
+            "muntele"
           ]
         }
       ]
@@ -4575,10 +4575,10 @@ const EPISTLES = {
         {
           "answer": "cinstea",
           "options": [
-            "legii",
+            "dragostea",
             "cinstea",
-            "legile",
-            "legăminte"
+            "vestea",
+            "partea"
           ]
         }
       ]
@@ -4591,9 +4591,9 @@ const EPISTLES = {
           "answer": "Mare",
           "options": [
             "Mare",
-            "Obosim",
-            "Obște",
-            "Ocara"
+            "Urmare",
+            "Vărsare",
+            "Tare"
           ]
         }
       ]
@@ -4605,9 +4605,9 @@ const EPISTLES = {
         {
           "answer": "veac",
           "options": [
-            "ascuns",
-            "asia",
-            "aspră",
+            "plac",
+            "barac",
+            "isaac",
             "veac"
           ]
         }
@@ -4620,10 +4620,10 @@ const EPISTLES = {
         {
           "answer": "către",
           "options": [
-            "curvari",
-            "curvia",
+            "dintre",
+            "printre",
             "către",
-            "curvie"
+            "intre"
           ]
         }
       ]
@@ -4635,10 +4635,10 @@ const EPISTLES = {
         {
           "answer": "măcar",
           "options": [
-            "rodește",
+            "altar",
             "măcar",
-            "rodul",
-            "rostit"
+            "chiar",
+            "zadar"
           ]
         }
       ]
@@ -4651,9 +4651,9 @@ const EPISTLES = {
           "answer": "unei",
           "options": [
             "unei",
-            "scumpă",
-            "scurt",
-            "scăpa"
+            "evrei",
+            "iudei",
+            "trei"
           ]
         }
       ]
@@ -4666,9 +4666,9 @@ const EPISTLES = {
           "answer": "numit",
           "options": [
             "numit",
-            "mulți",
-            "munciți",
-            "munte"
+            "mulțumit",
+            "pătimit",
+            "trimit"
           ]
         }
       ]
@@ -4680,10 +4680,10 @@ const EPISTLES = {
         {
           "answer": "făcut",
           "options": [
-            "ancoră",
+            "plăcut",
             "făcut",
-            "anii",
-            "anume"
+            "născut",
+            "cunoscut"
           ]
         }
       ]
@@ -4695,10 +4695,10 @@ const EPISTLES = {
         {
           "answer": "iarăși",
           "options": [
-            "ierta",
-            "iertare",
+            "tovarăși",
+            "însăși",
             "iarăși",
-            "ieșim"
+            "supuși"
           ]
         }
       ]
@@ -4710,9 +4710,9 @@ const EPISTLES = {
         {
           "answer": "despre",
           "options": [
-            "călcat",
-            "călcați",
-            "călcător",
+            "spre",
+            "capre",
+            "către",
             "despre"
           ]
         }
@@ -4726,9 +4726,9 @@ const EPISTLES = {
           "answer": "deosebească",
           "options": [
             "deosebească",
-            "pedepseau",
-            "pedepsește",
-            "picioarele"
+            "păzească",
+            "împietrească",
+            "trăiască"
           ]
         }
       ]
@@ -4740,9 +4740,9 @@ const EPISTLES = {
         {
           "answer": "cele",
           "options": [
-            "putem",
-            "putere",
-            "puteri",
+            "zilele",
+            "stele",
+            "fratele",
             "cele"
           ]
         }
@@ -4756,9 +4756,9 @@ const EPISTLES = {
           "answer": "învierea",
           "options": [
             "învierea",
-            "sufletul",
-            "sufletului",
-            "sumedenie"
+            "tăierea",
+            "netăierea",
+            "binefacerea"
           ]
         }
       ]
@@ -4770,10 +4770,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Deplină",
+            "Petru",
             "Dumnezeu",
-            "Deprins",
-            "Deschis"
+            "Moise",
+            "David"
           ]
         }
       ]
@@ -4785,10 +4785,10 @@ const EPISTLES = {
         {
           "answer": "gustat",
           "options": [
-            "prihană",
-            "prilej",
+            "dezgustat",
+            "stat",
             "gustat",
-            "prilejul"
+            "căpătat"
           ]
         }
       ]
@@ -4800,9 +4800,9 @@ const EPISTLES = {
         {
           "answer": "Cuvântul",
           "options": [
-            "Spumegă",
-            "Spuneau",
-            "Spuneți",
+            "Punctul",
+            "Egiptul",
+            "Chivotul",
             "Cuvântul"
           ]
         }
@@ -4816,9 +4816,9 @@ const EPISTLES = {
           "answer": "Dumnezeu",
           "options": [
             "Dumnezeu",
-            "Nuiaua",
-            "Numaidecât",
-            "Numească"
+            "Iosif",
+            "Isaac",
+            "Moise"
           ]
         }
       ]
@@ -4830,10 +4830,10 @@ const EPISTLES = {
         {
           "answer": "rodește",
           "options": [
-            "spusese",
+            "pedepsește",
             "rodește",
-            "spălat",
-            "spălări"
+            "răcnește",
+            "întărește"
           ]
         }
       ]
@@ -4845,10 +4845,10 @@ const EPISTLES = {
         {
           "answer": "mărăcini",
           "options": [
-            "certurile",
-            "cerului",
+            "lumini",
+            "împlini",
             "mărăcini",
-            "ceruri"
+            "străini"
           ]
         }
       ]
@@ -4860,9 +4860,9 @@ const EPISTLES = {
         {
           "answer": "bune",
           "options": [
-            "ajunge",
-            "ajungă",
-            "ajuns",
+            "pune",
+            "supune",
+            "rămâne",
             "bune"
           ]
         }
@@ -4875,10 +4875,10 @@ const EPISTLES = {
         {
           "answer": "osteneala",
           "options": [
-            "singură",
+            "plămădeala",
             "osteneala",
-            "sintichia",
-            "sionului"
+            "rânduiala",
+            "școala"
           ]
         }
       ]
@@ -4891,9 +4891,9 @@ const EPISTLES = {
           "answer": "râvnă",
           "options": [
             "râvnă",
-            "unde",
-            "undeva",
-            "unei"
+            "hrană",
+            "mană",
+            "plină"
           ]
         }
       ]
@@ -4905,9 +4905,9 @@ const EPISTLES = {
         {
           "answer": "răbdare",
           "options": [
-            "urmare",
-            "urmat",
-            "urmate",
+            "lepădare",
+            "pare",
+            "întristare",
             "răbdare"
           ]
         }
@@ -4920,10 +4920,10 @@ const EPISTLES = {
         {
           "answer": "jure",
           "options": [
-            "cortul",
-            "creadă",
+            "singure",
+            "bucure",
             "jure",
-            "cred"
+            "părere"
           ]
         }
       ]
@@ -4935,10 +4935,10 @@ const EPISTLES = {
         {
           "answer": "binecuvânta",
           "options": [
-            "uciderile",
+            "dreapta",
             "binecuvânta",
-            "unghiului",
-            "untdelemn"
+            "săgeata",
+            "asculta"
           ]
         }
       ]
@@ -4951,9 +4951,9 @@ const EPISTLES = {
           "answer": "așteptat",
           "options": [
             "așteptat",
-            "întoarceți",
-            "întoarcă",
-            "întocmite"
+            "gustat",
+            "mutat",
+            "încetat"
           ]
         }
       ]
@@ -4965,9 +4965,9 @@ const EPISTLES = {
         {
           "answer": "chezășie",
           "options": [
-            "vederea",
-            "vedeți",
-            "vegheați",
+            "obârșie",
+            "roșie",
+            "patrie",
             "chezășie"
           ]
         }
@@ -4980,10 +4980,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Păzească",
-            "Păzesc",
+            "Iosif",
+            "Petru",
             "Dumnezeu",
-            "Păziți"
+            "Pavel"
           ]
         }
       ]
@@ -4995,10 +4995,10 @@ const EPISTLES = {
         {
           "answer": "apucăm",
           "options": [
-            "mintă",
+            "căutăm",
             "apucăm",
-            "minunat",
-            "minunate"
+            "așteptăm",
+            "îndemnăm"
           ]
         }
       ]
@@ -5011,9 +5011,9 @@ const EPISTLES = {
           "answer": "neclintită",
           "options": [
             "neclintită",
-            "ceilalți",
-            "celălalt",
-            "cercetau"
+            "socotită",
+            "vestită",
+            "răstignită"
           ]
         }
       ]
@@ -5026,9 +5026,9 @@ const EPISTLES = {
           "answer": "Mare",
           "options": [
             "Mare",
-            "Jertfa",
-            "Jertfe",
-            "Jertfă"
+            "Urmare",
+            "Tare",
+            "Mâncare"
           ]
         }
       ]
@@ -5040,10 +5040,10 @@ const EPISTLES = {
         {
           "answer": "împăraților",
           "options": [
-            "duhovnicesc",
-            "duhovnicești",
+            "iudeilor",
+            "neamurilor",
             "împăraților",
-            "duhurilor"
+            "îngerilor"
           ]
         }
       ]
@@ -5055,10 +5055,10 @@ const EPISTLES = {
         {
           "answer": "zeciuială",
           "options": [
-            "lucrare",
+            "îndoială",
             "zeciuială",
-            "lucrarea",
-            "lucrată"
+            "îndrăzneală",
+            "greșeală"
           ]
         }
       ]
@@ -5071,9 +5071,9 @@ const EPISTLES = {
           "answer": "asemănat",
           "options": [
             "asemănat",
-            "neapărat",
-            "neavând",
-            "neclintit"
+            "turnat",
+            "clătinat",
+            "închinat"
           ]
         }
       ]
@@ -5085,9 +5085,9 @@ const EPISTLES = {
         {
           "answer": "mare",
           "options": [
-            "caut",
-            "caute",
-            "caută",
+            "urmare",
+            "băgare",
+            "lucrare",
             "mare"
           ]
         }
@@ -5100,10 +5100,10 @@ const EPISTLES = {
         {
           "answer": "slujba",
           "options": [
-            "păcat",
-            "păcate",
+            "iarba",
+            "vorba",
             "slujba",
-            "păcatele"
+            "schimba"
           ]
         }
       ]
@@ -5115,10 +5115,10 @@ const EPISTLES = {
         {
           "answer": "făgăduințele",
           "options": [
-            "dobitoacelor",
+            "trebuințele",
             "făgăduințele",
-            "dobândească",
-            "dovedească"
+            "picioarele",
+            "sufletele"
           ]
         }
       ]
@@ -5131,9 +5131,9 @@ const EPISTLES = {
           "answer": "mare",
           "options": [
             "mare",
-            "căreia",
-            "cărnii",
-            "căror"
+            "urmare",
+            "iertare",
+            "tare"
           ]
         }
       ]
@@ -5145,9 +5145,9 @@ const EPISTLES = {
         {
           "answer": "mărturisește",
           "options": [
-            "împlinirea",
-            "împodobeau",
-            "împodobiți",
+            "întărește",
+            "răsplătește",
+            "sfârșește",
             "mărturisește"
           ]
         }
@@ -5160,10 +5160,10 @@ const EPISTLES = {
         {
           "answer": "zicem",
           "options": [
-            "alese",
-            "aleșii",
+            "aducem",
+            "facem",
             "zicem",
-            "alipit"
+            "întoarcem"
           ]
         }
       ]
@@ -5175,10 +5175,10 @@ const EPISTLES = {
         {
           "answer": "Melhisedec",
           "options": [
-            "Socotesc",
-            "Socotită",
+            "Duhovnicesc",
+            "Pământesc",
             "Melhisedec",
-            "Socotiți"
+            "Moștenesc"
           ]
         }
       ]
@@ -5190,9 +5190,9 @@ const EPISTLES = {
         {
           "answer": "Legea",
           "options": [
-            "Credeau",
-            "Credeți",
-            "Crezut",
+            "Marea",
+            "Iudeea",
+            "Adesea",
             "Legea"
           ]
         }
@@ -5206,9 +5206,9 @@ const EPISTLES = {
           "answer": "numaidecât",
           "options": [
             "numaidecât",
-            "izbucnește",
-            "izbăvească",
-            "izbăvirea"
+            "întrucât",
+            "omorât",
+            "asemănat"
           ]
         }
       ]
@@ -5220,10 +5220,10 @@ const EPISTLES = {
         {
           "answer": "altarului",
           "options": [
-            "rătăciți",
+            "strămoșului",
             "altarului",
-            "răutate",
-            "răutății"
+            "legământului",
+            "scaunului"
           ]
         }
       ]
@@ -5235,10 +5235,10 @@ const EPISTLES = {
         {
           "answer": "seminție",
           "options": [
-            "băgare",
-            "bărbat",
+            "bogăție",
+            "împărăție",
             "seminție",
-            "bărbaților"
+            "avuție"
           ]
         }
       ]
@@ -5250,9 +5250,9 @@ const EPISTLES = {
         {
           "answer": "Melhisedec",
           "options": [
-            "Mergător",
-            "Mijlocească",
-            "Mijlocitor",
+            "Vorbesc",
+            "Răstignesc",
+            "Duhovnicesc",
             "Melhisedec"
           ]
         }
@@ -5266,9 +5266,9 @@ const EPISTLES = {
           "answer": "vieți",
           "options": [
             "vieți",
-            "spusese",
-            "spălat",
-            "spălări"
+            "sunteți",
+            "oaspeți",
+            "creșteți"
           ]
         }
       ]
@@ -5280,10 +5280,10 @@ const EPISTLES = {
         {
           "answer": "ești",
           "options": [
-            "rămână",
+            "silești",
             "ești",
-            "rănile",
-            "răul"
+            "cerești",
+            "acești"
           ]
         }
       ]
@@ -5295,10 +5295,10 @@ const EPISTLES = {
         {
           "answer": "aici",
           "options": [
-            "dator",
-            "dată",
+            "prunci",
+            "stânci",
             "aici",
-            "david"
+            "săraci"
           ]
         }
       ]
@@ -5310,9 +5310,9 @@ const EPISTLES = {
         {
           "answer": "bună",
           "options": [
-            "grabă",
-            "grec",
-            "grele",
+            "furtună",
+            "pună",
+            "împreună",
             "bună"
           ]
         }
@@ -5325,9 +5325,9 @@ const EPISTLES = {
         {
           "answer": "acesta",
           "options": [
-            "ales",
-            "alese",
-            "aleșii",
+            "vârsta",
+            "căuta",
+            "purta",
             "acesta"
           ]
         }
@@ -5340,10 +5340,10 @@ const EPISTLES = {
         {
           "answer": "Domnul",
           "options": [
-            "Sfârși",
-            "Sfârșit",
+            "Apostolul",
+            "Preotul",
             "Domnul",
-            "Sfârșiți"
+            "Stăpânul"
           ]
         }
       ]
@@ -5355,10 +5355,10 @@ const EPISTLES = {
         {
           "answer": "făcut",
           "options": [
-            "uciși",
+            "plăcut",
             "făcut",
-            "uitat",
-            "uitați"
+            "născut",
+            "trecut"
           ]
         }
       ]
@@ -5371,9 +5371,9 @@ const EPISTLES = {
           "answer": "moartea",
           "options": [
             "moartea",
-            "bunăvoie",
-            "buzele",
-            "buzelor"
+            "partea",
+            "cartea",
+            "curtea"
           ]
         }
       ]
@@ -5385,9 +5385,9 @@ const EPISTLES = {
         {
           "answer": "unul",
           "options": [
-            "ospețe",
-            "osânda",
-            "pace",
+            "scaunul",
+            "vreunul",
+            "vecinul",
             "unul"
           ]
         }
@@ -5400,10 +5400,10 @@ const EPISTLES = {
         {
           "answer": "mijlocească",
           "options": [
-            "făgăduințele",
-            "făgăduințelor",
+            "propovăduiască",
+            "pomenească",
             "mijlocească",
-            "făgăduință"
+            "împietrească"
           ]
         }
       ]
@@ -5415,10 +5415,10 @@ const EPISTLES = {
         {
           "answer": "trebuia",
           "options": [
-            "cunoaște",
+            "căruia",
             "trebuia",
-            "cunosc",
-            "cunoscut"
+            "altuia",
+            "cetățenia"
           ]
         }
       ]
@@ -5431,9 +5431,9 @@ const EPISTLES = {
           "answer": "nevoie",
           "options": [
             "nevoie",
-            "capre",
-            "capul",
-            "capăt"
+            "voie",
+            "bunăvoie",
+            "smerenie"
           ]
         }
       ]
@@ -5445,9 +5445,9 @@ const EPISTLES = {
         {
           "answer": "niște",
           "options": [
-            "avea",
-            "aveau",
-            "aveați",
+            "iubește",
+            "vorbește",
+            "naște",
             "niște"
           ]
         }
@@ -5460,10 +5460,10 @@ const EPISTLES = {
         {
           "answer": "Preot",
           "options": [
-            "Veți",
+            "Scot",
             "Preot",
-            "Viața",
-            "Vieți"
+            "Chivot",
+            "Nimicit"
           ]
         }
       ]
@@ -5475,10 +5475,10 @@ const EPISTLES = {
         {
           "answer": "slujitor",
           "options": [
-            "asemenea",
-            "asemănare",
+            "viitor",
+            "stăpânitor",
             "slujitor",
-            "asemănarea"
+            "moștenitor"
           ]
         }
       ]
@@ -5490,9 +5490,9 @@ const EPISTLES = {
         {
           "answer": "trebuință",
           "options": [
-            "prihană",
-            "prilejul",
-            "primească",
+            "putință",
+            "bunăvoință",
+            "neștiință",
             "trebuință"
           ]
         }
@@ -5506,9 +5506,9 @@ const EPISTLES = {
           "answer": "Lege",
           "options": [
             "Lege",
-            "Sătul",
-            "Tabără",
-            "Taie"
+            "Șterge",
+            "Ajunge",
+            "Atinge"
           ]
         }
       ]
@@ -5520,10 +5520,10 @@ const EPISTLES = {
         {
           "answer": "arătat",
           "options": [
-            "primirea",
+            "căpătat",
             "arătat",
-            "primise",
-            "primit"
+            "încetat",
+            "purtat"
           ]
         }
       ]
@@ -5535,10 +5535,10 @@ const EPISTLES = {
         {
           "answer": "legământul",
           "options": [
-            "necredinței",
-            "necunoscut",
+            "amănuntul",
+            "jurământul",
             "legământul",
-            "necurăția"
+            "pământul"
           ]
         }
       ]
@@ -5550,9 +5550,9 @@ const EPISTLES = {
         {
           "answer": "vorba",
           "options": [
-            "duceți",
-            "ducă",
-            "duhul",
+            "iarba",
+            "slujba",
+            "limba",
             "vorba"
           ]
         }
@@ -5566,9 +5566,9 @@ const EPISTLES = {
           "answer": "zice",
           "options": [
             "zice",
-            "cadă",
-            "cain",
-            "cale"
+            "orice",
+            "ferice",
+            "ridice"
           ]
         }
       ]
@@ -5580,10 +5580,10 @@ const EPISTLES = {
         {
           "answer": "apucat",
           "options": [
-            "cuvinte",
+            "încercat",
             "apucat",
-            "cuvânt",
-            "cuvântul"
+            "nespurcat",
+            "păcat"
           ]
         }
       ]
@@ -5595,9 +5595,9 @@ const EPISTLES = {
         {
           "answer": "legile",
           "options": [
-            "aduși",
-            "adăpat",
-            "adăugat",
+            "veacurile",
+            "zecile",
+            "darurile",
             "legile"
           ]
         }
@@ -5610,10 +5610,10 @@ const EPISTLES = {
         {
           "answer": "zicând",
           "options": [
-            "harul",
-            "harului",
+            "aducând",
+            "făcând",
             "zicând",
-            "hrana"
+            "flămând"
           ]
         }
       ]
@@ -5625,10 +5625,10 @@ const EPISTLES = {
         {
           "answer": "nelegiuirile",
           "options": [
-            "împărțeală",
+            "adevărurile",
             "nelegiuirile",
-            "înaintarea",
-            "începătoare"
+            "neamurile",
+            "legăturile"
           ]
         }
       ]
@@ -5641,9 +5641,9 @@ const EPISTLES = {
           "answer": "faptul",
           "options": [
             "faptul",
-            "răbdare",
-            "răcnește",
-            "rădăcină"
+            "dreptul",
+            "cugetul",
+            "sfârșitul"
           ]
         }
       ]
@@ -5656,9 +5656,9 @@ const EPISTLES = {
           "answer": "dumnezeiască",
           "options": [
             "dumnezeiască",
-            "diavolului",
-            "dimpotrivă",
-            "dimprejurul"
+            "dezlipească",
+            "dobândească",
+            "îndeplinească"
           ]
         }
       ]
@@ -5670,9 +5670,9 @@ const EPISTLES = {
         {
           "answer": "dinainte",
           "options": [
-            "supuse",
-            "supuși",
-            "suspinând",
+            "fierbinte",
+            "legăminte",
+            "aminte",
             "dinainte"
           ]
         }
@@ -5685,10 +5685,10 @@ const EPISTLES = {
         {
           "answer": "afla",
           "options": [
-            "laud",
-            "lauda",
+            "școala",
+            "umbla",
             "afla",
-            "laude"
+            "slava"
           ]
         }
       ]
@@ -5700,10 +5700,10 @@ const EPISTLES = {
         {
           "answer": "chivotul",
           "options": [
-            "vederea",
+            "patul",
             "chivotul",
-            "vedeți",
-            "vegheați"
+            "sunetul",
+            "jurământul"
           ]
         }
       ]
@@ -5716,9 +5716,9 @@ const EPISTLES = {
           "answer": "ispășirii",
           "options": [
             "ispășirii",
-            "semnele",
-            "sfeșnicul",
-            "sfintele"
+            "stropirii",
+            "mărturisirii",
+            "răzvrătirii"
           ]
         }
       ]
@@ -5730,9 +5730,9 @@ const EPISTLES = {
         {
           "answer": "preoții",
           "options": [
-            "aștept",
-            "aștepta",
-            "așteptare",
+            "judecății",
+            "vieții",
+            "frații",
             "preoții"
           ]
         }
@@ -5745,10 +5745,10 @@ const EPISTLES = {
         {
           "answer": "preot",
           "options": [
-            "pietre",
-            "pilda",
+            "chivot",
+            "scot",
             "preot",
-            "pilde"
+            "intrat"
           ]
         }
       ]
@@ -5760,10 +5760,10 @@ const EPISTLES = {
         {
           "answer": "Sfânt",
           "options": [
-            "Filipi",
+            "Legământ",
             "Sfânt",
-            "Fire",
-            "Firea"
+            "Jurământ",
+            "Cuvânt"
           ]
         }
       ]
@@ -5776,9 +5776,9 @@ const EPISTLES = {
           "answer": "vremurile",
           "options": [
             "vremurile",
-            "pierdut",
-            "pieritoare",
-            "pierzare"
+            "lanțurile",
+            "crăpăturile",
+            "chipurile"
           ]
         }
       ]
@@ -5791,9 +5791,9 @@ const EPISTLES = {
           "answer": "spălări",
           "options": [
             "spălări",
-            "vorbim",
-            "vorbind",
-            "vorbit"
+            "întări",
+            "pângări",
+            "cărări"
           ]
         }
       ]
@@ -5805,10 +5805,10 @@ const EPISTLES = {
         {
           "answer": "zidirea",
           "options": [
-            "călcător",
+            "oglindirea",
             "zidirea",
-            "căldură",
-            "călători"
+            "sfințirea",
+            "stăpânirea"
           ]
         }
       ]
@@ -5820,10 +5820,10 @@ const EPISTLES = {
         {
           "answer": "răscumpărare",
           "options": [
-            "moșteniserăți",
-            "moștenitor",
+            "tulburare",
+            "încredințare",
             "răscumpărare",
-            "moștenitori"
+            "privitoare"
           ]
         }
       ]
@@ -5835,9 +5835,9 @@ const EPISTLES = {
         {
           "answer": "trupului",
           "options": [
-            "genunchii",
-            "ghedeon",
-            "glasul",
+            "păcatului",
+            "strămoșului",
+            "sufletului",
             "trupului"
           ]
         }
@@ -5851,9 +5851,9 @@ const EPISTLES = {
           "answer": "Dumnezeu",
           "options": [
             "Dumnezeu",
-            "Facerea",
-            "Faceți",
-            "Familia"
+            "Iosif",
+            "Moise",
+            "Pavel"
           ]
         }
       ]
@@ -5865,10 +5865,10 @@ const EPISTLES = {
         {
           "answer": "veșnica",
           "options": [
-            "ierusalim",
+            "frica",
             "veșnica",
-            "ieșim",
-            "ieșirea"
+            "împiedica",
+            "biserica"
           ]
         }
       ]
@@ -5880,10 +5880,10 @@ const EPISTLES = {
         {
           "answer": "făcut",
           "options": [
-            "feciori",
-            "felul",
+            "plăcut",
+            "născut",
             "făcut",
-            "felului"
+            "cunoscut"
           ]
         }
       ]
@@ -5895,9 +5895,9 @@ const EPISTLES = {
         {
           "answer": "trăiește",
           "options": [
-            "galateni",
-            "galatia",
-            "galatiei",
+            "sfârșește",
+            "pedepsește",
+            "hrănește",
             "trăiește"
           ]
         }
@@ -5911,9 +5911,9 @@ const EPISTLES = {
           "answer": "întâiul",
           "options": [
             "întâiul",
-            "lumesc",
-            "lumii",
-            "lumina"
+            "premiul",
+            "împăratul",
+            "începutul"
           ]
         }
       ]
@@ -5925,10 +5925,10 @@ const EPISTLES = {
         {
           "answer": "cartea",
           "options": [
-            "astupați",
+            "partea",
             "cartea",
-            "astăzi",
-            "asupra"
+            "curtea",
+            "moartea"
           ]
         }
       ]
@@ -5940,10 +5940,10 @@ const EPISTLES = {
         {
           "answer": "poruncit",
           "options": [
-            "ascultați",
+            "nimicit",
             "poruncit",
-            "asculte",
-            "ascultă"
+            "prorocit",
+            "rătăcit"
           ]
         }
       ]
@@ -5956,9 +5956,9 @@ const EPISTLES = {
           "answer": "vasele",
           "options": [
             "vasele",
-            "aaron",
-            "abatere",
-            "abată"
+            "coapsele",
+            "mesele",
+            "oasele"
           ]
         }
       ]
@@ -5970,9 +5970,9 @@ const EPISTLES = {
         {
           "answer": "vărsare",
           "options": [
-            "arătat",
-            "arătăm",
-            "asculta",
+            "pieritoare",
+            "pierzare",
+            "luare",
             "vărsare"
           ]
         }
@@ -5985,10 +5985,10 @@ const EPISTLES = {
         {
           "answer": "deoarece",
           "options": [
-            "dinainte",
-            "dincolo",
+            "trece",
+            "întrece",
             "deoarece",
-            "dintre"
+            "plece"
           ]
         }
       ]
@@ -6000,10 +6000,10 @@ const EPISTLES = {
         {
           "answer": "chiar",
           "options": [
-            "isus",
+            "altar",
             "chiar",
-            "italia",
-            "iubesc"
+            "zadar",
+            "măcar"
           ]
         }
       ]
@@ -6016,9 +6016,9 @@ const EPISTLES = {
           "answer": "fiecare",
           "options": [
             "fiecare",
-            "bunăvoie",
-            "buzele",
-            "buzelor"
+            "încercare",
+            "mâncare",
+            "iertare"
           ]
         }
       ]
@@ -6030,9 +6030,9 @@ const EPISTLES = {
         {
           "answer": "jertfa",
           "options": [
-            "astupați",
-            "astăzi",
-            "asupra",
+            "chifa",
+            "aiurea",
+            "întărirea",
             "jertfa"
           ]
         }
@@ -6045,10 +6045,10 @@ const EPISTLES = {
         {
           "answer": "rânduit",
           "options": [
-            "intrat",
-            "intre",
+            "făgăduit",
+            "nezguduit",
             "rânduit",
-            "intră"
+            "găzduit"
           ]
         }
       ]
@@ -6060,10 +6060,10 @@ const EPISTLES = {
         {
           "answer": "multora",
           "options": [
-            "aduce",
+            "altora",
             "multora",
-            "aduceau",
-            "aducem"
+            "acestora",
+            "unora"
           ]
         }
       ]
@@ -6075,10 +6075,10 @@ const EPISTLES = {
         {
           "answer": "adevărată",
           "options": [
-            "aproape",
-            "aproapele",
+            "păstrată",
+            "curată",
             "adevărată",
-            "apropiat"
+            "lucrată"
           ]
         }
       ]
@@ -6090,10 +6090,10 @@ const EPISTLES = {
         {
           "answer": "păcate",
           "options": [
-            "veacului",
+            "frate",
             "păcate",
-            "vechi",
-            "vechime"
+            "luate",
+            "schimbate"
           ]
         }
       ]
@@ -6106,9 +6106,9 @@ const EPISTLES = {
           "answer": "aducerea",
           "options": [
             "aducerea",
-            "stăpân",
-            "stăpâni",
-            "stăpânilor"
+            "netăierea",
+            "plăcerea",
+            "întemeierea"
           ]
         }
       ]
@@ -6120,9 +6120,9 @@ const EPISTLES = {
         {
           "answer": "sângele",
           "options": [
-            "oaspeți",
-            "obicei",
-            "obișnuit",
+            "pizmele",
+            "tablele",
+            "nevestele",
             "sângele"
           ]
         }
@@ -6135,10 +6135,10 @@ const EPISTLES = {
         {
           "answer": "pregătit",
           "options": [
-            "sfântă",
-            "sfârșește",
+            "plătit",
+            "răzvrătit",
             "pregătit",
-            "sfârși"
+            "ispitit"
           ]
         }
       ]
@@ -6150,10 +6150,10 @@ const EPISTLES = {
         {
           "answer": "păcat",
           "options": [
-            "târâți",
+            "îmbrăcat",
             "păcat",
-            "tăia",
-            "tăiat"
+            "stricat",
+            "apucat"
           ]
         }
       ]
@@ -6166,9 +6166,9 @@ const EPISTLES = {
           "answer": "Iată",
           "options": [
             "Iată",
-            "Scris",
-            "Scrise",
-            "Scriu"
+            "Curată",
+            "Pată",
+            "Deodată"
           ]
         }
       ]
@@ -6180,9 +6180,9 @@ const EPISTLES = {
         {
           "answer": "primit",
           "options": [
-            "iubește",
-            "iubești",
-            "iubind",
+            "trimit",
+            "pătimit",
+            "mulțumit",
             "primit"
           ]
         }
@@ -6195,10 +6195,10 @@ const EPISTLES = {
         {
           "answer": "pună",
           "options": [
-            "clipa",
-            "clipă",
+            "furtună",
+            "bună",
             "pună",
-            "cobora"
+            "împreună"
           ]
         }
       ]
@@ -6210,10 +6210,10 @@ const EPISTLES = {
         {
           "answer": "totdeauna",
           "options": [
-            "desființat",
-            "desfrânare",
+            "cununa",
+            "sarcina",
             "totdeauna",
-            "desfrânarea"
+            "clătina"
           ]
         }
       ]
@@ -6225,9 +6225,9 @@ const EPISTLES = {
         {
           "answer": "preot",
           "options": [
-            "dincolo",
-            "dintr",
-            "dintre",
+            "scot",
+            "chivot",
+            "așezat",
             "preot"
           ]
         }
@@ -6241,9 +6241,9 @@ const EPISTLES = {
           "answer": "adus",
           "options": [
             "adus",
-            "david",
-            "dați",
-            "decât"
+            "presus",
+            "supus",
+            "nespus"
           ]
         }
       ]
@@ -6255,10 +6255,10 @@ const EPISTLES = {
         {
           "answer": "făcuți",
           "options": [
-            "călcător",
+            "născuți",
             "făcuți",
-            "căldură",
-            "călători"
+            "plăcuți",
+            "cunoscuți"
           ]
         }
       ]
@@ -6270,10 +6270,10 @@ const EPISTLES = {
         {
           "answer": "făcut",
           "options": [
-            "prejos",
-            "premiul",
+            "plăcut",
+            "trecut",
             "făcut",
-            "preot"
+            "născut"
           ]
         }
       ]
@@ -6285,9 +6285,9 @@ const EPISTLES = {
         {
           "answer": "Lucrul",
           "options": [
-            "Rămân",
-            "Rămâne",
-            "Rămânem",
+            "Dreptarul",
+            "Singurul",
+            "Poporul",
             "Lucrul"
           ]
         }
@@ -6301,9 +6301,9 @@ const EPISTLES = {
           "answer": "Iată",
           "options": [
             "Iată",
-            "Făcuse",
-            "Făcut",
-            "Făcute"
+            "Arată",
+            "Îndată",
+            "Deodată"
           ]
         }
       ]
@@ -6315,10 +6315,10 @@ const EPISTLES = {
         {
           "answer": "aminte",
           "options": [
-            "date",
+            "fierbinte",
             "aminte",
-            "datinile",
-            "dator"
+            "minte",
+            "înainte"
           ]
         }
       ]
@@ -6330,10 +6330,10 @@ const EPISTLES = {
         {
           "answer": "păcat",
           "options": [
-            "schimba",
-            "schimbe",
+            "îmbrăcat",
+            "stricat",
             "păcat",
-            "schimbă"
+            "uscat"
           ]
         }
       ]
@@ -6345,9 +6345,9 @@ const EPISTLES = {
         {
           "answer": "sângele",
           "options": [
-            "suferă",
-            "suflet",
-            "suflete",
+            "vorbele",
+            "mele",
+            "oasele",
             "sângele"
           ]
         }
@@ -6360,9 +6360,9 @@ const EPISTLES = {
         {
           "answer": "adică",
           "options": [
-            "cortul",
-            "corturi",
-            "creadă",
+            "piedică",
+            "biserică",
+            "vrednică",
             "adică"
           ]
         }
@@ -6375,10 +6375,10 @@ const EPISTLES = {
         {
           "answer": "casa",
           "options": [
-            "supus",
-            "supuse",
+            "masa",
+            "lipsa",
             "casa",
-            "supuși"
+            "pedeapsa"
           ]
         }
       ]
@@ -6390,10 +6390,10 @@ const EPISTLES = {
         {
           "answer": "deplină",
           "options": [
-            "mulțumiri",
+            "plină",
             "deplină",
-            "mulțumit",
-            "mulțumiți"
+            "vină",
+            "rădăcină"
           ]
         }
       ]
@@ -6406,9 +6406,9 @@ const EPISTLES = {
           "answer": "credincios",
           "options": [
             "credincios",
-            "trimisul",
-            "trupești",
-            "trupului"
+            "prinos",
+            "luminos",
+            "prejos"
           ]
         }
       ]
@@ -6420,9 +6420,9 @@ const EPISTLES = {
         {
           "answer": "unii",
           "options": [
-            "uitând",
-            "uităm",
-            "umbla",
+            "anii",
+            "oamenii",
+            "cărnii",
             "unii"
           ]
         }
@@ -6435,10 +6435,10 @@ const EPISTLES = {
         {
           "answer": "mult",
           "options": [
-            "milos",
-            "miloși",
+            "înalt",
+            "celălalt",
             "mult",
-            "milă"
+            "rânduit"
           ]
         }
       ]
@@ -6450,10 +6450,10 @@ const EPISTLES = {
         {
           "answer": "cunoștința",
           "options": [
-            "desființat",
+            "dorința",
             "cunoștința",
-            "desființează",
-            "desfrânare"
+            "știința",
+            "locuința"
           ]
         }
       ]
@@ -6466,9 +6466,9 @@ const EPISTLES = {
           "answer": "mistui",
           "options": [
             "mistui",
-            "mărturia",
-            "mărturie",
-            "mărăcini"
+            "fratelui",
+            "omului",
+            "cărui"
           ]
         }
       ]
@@ -6480,9 +6480,9 @@ const EPISTLES = {
         {
           "answer": "trei",
           "options": [
-            "smulgă",
-            "soarta",
-            "soartă",
+            "evrei",
+            "cărei",
+            "oricărei",
             "trei"
           ]
         }
@@ -6495,10 +6495,10 @@ const EPISTLES = {
         {
           "answer": "Duhul",
           "options": [
-            "Milă",
-            "Mine",
+            "Stăpânul",
+            "Apostolul",
             "Duhul",
-            "Mint"
+            "Proorocul"
           ]
         }
       ]
@@ -6511,9 +6511,9 @@ const EPISTLES = {
           "answer": "altă",
           "options": [
             "altă",
-            "zadar",
-            "zecile",
-            "zice"
+            "înaltă",
+            "ascultă",
+            "multă"
           ]
         }
       ]
@@ -6525,10 +6525,10 @@ const EPISTLES = {
         {
           "answer": "mâinile",
           "options": [
-            "parte",
+            "datinile",
             "mâinile",
-            "partea",
-            "partide"
+            "rușinile",
+            "pâinile"
           ]
         }
       ]
@@ -6540,10 +6540,10 @@ const EPISTLES = {
         {
           "answer": "zilele",
           "options": [
-            "supunem",
-            "supuneți",
+            "stelele",
+            "tablele",
             "zilele",
-            "supus"
+            "marele"
           ]
         }
       ]
@@ -6555,9 +6555,9 @@ const EPISTLES = {
         {
           "answer": "soartă",
           "options": [
-            "multora",
-            "multă",
-            "mulți",
+            "despartă",
+            "ceartă",
+            "poartă",
             "soartă"
           ]
         }
@@ -6571,9 +6571,9 @@ const EPISTLES = {
           "answer": "Într",
           "options": [
             "Într",
-            "Esau",
-            "Evodia",
-            "Evrei"
+            "Dintr",
+            "Printr",
+            "Ochilor"
           ]
         }
       ]
@@ -6585,10 +6585,10 @@ const EPISTLES = {
         {
           "answer": "părăsiți",
           "options": [
-            "înapoiat",
+            "lipsiți",
             "părăsiți",
-            "înarmați",
-            "înceapă"
+            "găsiți",
+            "vestiți"
           ]
         }
       ]
@@ -6600,10 +6600,10 @@ const EPISTLES = {
         {
           "answer": "puteți",
           "options": [
-            "ridice",
-            "roabe",
+            "sunteți",
+            "creșteți",
             "puteți",
-            "roabei"
+            "vedeți"
           ]
         }
       ]
@@ -6615,9 +6615,9 @@ const EPISTLES = {
         {
           "answer": "zăbovi",
           "options": [
-            "foarte",
-            "focului",
-            "folos",
+            "isprăvi",
+            "levi",
+            "valuri",
             "zăbovi"
           ]
         }
@@ -6631,9 +6631,9 @@ const EPISTLES = {
           "answer": "sufletul",
           "options": [
             "sufletul",
-            "pătimit",
-            "pătimiți",
-            "pătrunde"
+            "sunetul",
+            "cugetul",
+            "altul"
           ]
         }
       ]
@@ -6645,10 +6645,10 @@ const EPISTLES = {
         {
           "answer": "înapoi",
           "options": [
-            "avraam",
+            "apoi",
             "înapoi",
-            "avut",
-            "avuție"
+            "gunoi",
+            "război"
           ]
         }
       ]
@@ -6660,9 +6660,9 @@ const EPISTLES = {
         {
           "answer": "despre",
           "options": [
-            "asemănat",
-            "asia",
-            "aspră",
+            "spre",
+            "capre",
+            "către",
             "despre"
           ]
         }
@@ -6676,9 +6676,9 @@ const EPISTLES = {
           "answer": "vechime",
           "options": [
             "vechime",
-            "judecați",
-            "judece",
-            "judecă"
+            "vreme",
+            "anume",
+            "lume"
           ]
         }
       ]
@@ -6690,10 +6690,10 @@ const EPISTLES = {
         {
           "answer": "lumea",
           "options": [
-            "laptele",
+            "numea",
             "lumea",
-            "lasă",
-            "laud"
+            "vremea",
+            "avea"
           ]
         }
       ]
@@ -6705,10 +6705,10 @@ const EPISTLES = {
         {
           "answer": "Abel",
           "options": [
-            "Țapi",
-            "Țara",
+            "Pavel",
+            "Israel",
             "Abel",
-            "Țară"
+            "Samuel"
           ]
         }
       ]
@@ -6720,9 +6720,9 @@ const EPISTLES = {
         {
           "answer": "pământ",
           "options": [
-            "duceți",
-            "ducă",
-            "duhul",
+            "jurământ",
+            "legământ",
+            "sfânt",
             "pământ"
           ]
         }
@@ -6736,9 +6736,9 @@ const EPISTLES = {
           "answer": "răsplătește",
           "options": [
             "răsplătește",
-            "preasfântă",
-            "preaînalt",
-            "preaînalte"
+            "primește",
+            "răcnește",
+            "prisosește"
           ]
         }
       ]
@@ -6750,10 +6750,10 @@ const EPISTLES = {
         {
           "answer": "înștiințat",
           "options": [
-            "izbăvească",
+            "încredințat",
             "înștiințat",
-            "izbăvirea",
-            "izgonește"
+            "desființat",
+            "înălțat"
           ]
         }
       ]
@@ -6765,10 +6765,10 @@ const EPISTLES = {
         {
           "answer": "chemat",
           "options": [
-            "viței",
-            "voia",
+            "rezemat",
+            "urmat",
             "chemat",
-            "voie"
+            "lăsat"
           ]
         }
       ]
@@ -6780,9 +6780,9 @@ const EPISTLES = {
         {
           "answer": "venit",
           "options": [
-            "naști",
-            "neam",
-            "neamul",
+            "moștenit",
+            "pomenit",
+            "ostenit",
             "venit"
           ]
         }
@@ -6795,10 +6795,10 @@ const EPISTLES = {
         {
           "answer": "tari",
           "options": [
-            "laud",
+            "lăstari",
             "tari",
-            "lauda",
-            "laude"
+            "mari",
+            "duhuri"
           ]
         }
       ]
@@ -6811,9 +6811,9 @@ const EPISTLES = {
           "answer": "primit",
           "options": [
             "primit",
-            "găsit",
-            "găsiți",
-            "găzduise"
+            "pătimit",
+            "trimit",
+            "numit"
           ]
         }
       ]
@@ -6825,9 +6825,9 @@ const EPISTLES = {
         {
           "answer": "singur",
           "options": [
-            "gândire",
-            "gândiți",
-            "gândul",
+            "tremur",
+            "cutremur",
+            "împrejur",
             "singur"
           ]
         }
@@ -6840,10 +6840,10 @@ const EPISTLES = {
         {
           "answer": "văzut",
           "options": [
-            "veșnică",
-            "veșteji",
+            "căzut",
+            "nevăzut",
             "văzut",
-            "veți"
+            "șezut"
           ]
         }
       ]
@@ -6855,10 +6855,10 @@ const EPISTLES = {
         {
           "answer": "patrii",
           "options": [
-            "luare",
+            "venirii",
             "patrii",
-            "luat",
-            "luate"
+            "făcătorii",
+            "mării"
           ]
         }
       ]
@@ -6871,9 +6871,9 @@ const EPISTLES = {
           "answer": "întoarcă",
           "options": [
             "întoarcă",
-            "oaspeți",
-            "obicei",
-            "obișnuiesc"
+            "păzească",
+            "crească",
+            "treacă"
           ]
         }
       ]
@@ -6885,9 +6885,9 @@ const EPISTLES = {
         {
           "answer": "bună",
           "options": [
-            "soarta",
-            "soartă",
-            "socoti",
+            "pună",
+            "furtună",
+            "împreună",
             "bună"
           ]
         }
@@ -6900,10 +6900,10 @@ const EPISTLES = {
         {
           "answer": "Isaac",
           "options": [
-            "Spusese",
-            "Spălat",
+            "Barac",
+            "Veac",
             "Isaac",
-            "Spălări"
+            "Plac"
           ]
         }
       ]
@@ -6915,10 +6915,10 @@ const EPISTLES = {
         {
           "answer": "avea",
           "options": [
-            "găsiți",
+            "stătea",
             "avea",
-            "haină",
-            "harul"
+            "vremea",
+            "starea"
           ]
         }
       ]
@@ -6931,9 +6931,9 @@ const EPISTLES = {
           "answer": "vorbind",
           "options": [
             "vorbind",
-            "câștigat",
-            "câștigați",
-            "câștigul"
+            "iubind",
+            "știind",
+            "simțind"
           ]
         }
       ]
@@ -6946,9 +6946,9 @@ const EPISTLES = {
           "answer": "Esau",
           "options": [
             "Esau",
-            "Închis",
-            "Încolo",
-            "Încă"
+            "Credeau",
+            "Spuneau",
+            "Doreau"
           ]
         }
       ]
@@ -6960,10 +6960,10 @@ const EPISTLES = {
         {
           "answer": "Iacov",
           "options": [
-            "Aducând",
+            "Grozav",
             "Iacov",
-            "Aducă",
-            "Adus"
+            "Mârșav",
+            "Bolnav"
           ]
         }
       ]
@@ -6975,10 +6975,10 @@ const EPISTLES = {
         {
           "answer": "sfârșitul",
           "options": [
-            "cârtitori",
-            "câștigat",
+            "chivotul",
+            "cugetul",
             "sfârșitul",
-            "câștigați"
+            "faptul"
           ]
         }
       ]
@@ -6990,9 +6990,9 @@ const EPISTLES = {
         {
           "answer": "părinții",
           "options": [
-            "umblați",
-            "umblăm",
-            "undeva",
+            "minții",
+            "sfinții",
+            "cărții",
             "părinții"
           ]
         }
@@ -7006,9 +7006,9 @@ const EPISTLES = {
           "answer": "Faraon",
           "options": [
             "Faraon",
-            "Preoția",
-            "Preoție",
-            "Preoții"
+            "Ghedeon",
+            "Aaron",
+            "Sion"
           ]
         }
       ]
@@ -7020,10 +7020,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Înaintea",
+            "Iacov",
             "Dumnezeu",
-            "Înaltă",
-            "Înalțe"
+            "Avraam",
+            "Petru"
           ]
         }
       ]
@@ -7035,10 +7035,10 @@ const EPISTLES = {
         {
           "answer": "avea",
           "options": [
-            "naști",
-            "neam",
+            "numea",
+            "stătea",
             "avea",
-            "neamul"
+            "partea"
           ]
         }
       ]
@@ -7050,9 +7050,9 @@ const EPISTLES = {
         {
           "answer": "teamă",
           "options": [
-            "auzit",
-            "auziți",
-            "avea",
+            "seamă",
+            "mamă",
+            "urmă",
             "teamă"
           ]
         }
@@ -7066,9 +7066,9 @@ const EPISTLES = {
           "answer": "întâi",
           "options": [
             "întâi",
-            "fiului",
-            "fiți",
-            "flacără"
+            "dintâi",
+            "rămâi",
+            "fiii"
           ]
         }
       ]
@@ -7080,10 +7080,10 @@ const EPISTLES = {
         {
           "answer": "Roșie",
           "options": [
-            "Înșală",
+            "Obârșie",
             "Roșie",
-            "Înșine",
-            "Înșivă"
+            "Chezășie",
+            "Veșnicie"
           ]
         }
       ]
@@ -7095,9 +7095,9 @@ const EPISTLES = {
         {
           "answer": "Ierihonului",
           "options": [
-            "Privitoare",
-            "Propovăduiesc",
-            "Propovăduim",
+            "Ierusalimului",
+            "Cortului",
+            "Sionului",
             "Ierihonului"
           ]
         }
@@ -7110,10 +7110,10 @@ const EPISTLES = {
         {
           "answer": "găzduise",
           "options": [
-            "lăudăm",
-            "macedonia",
+            "făgăduise",
+            "primise",
             "găzduise",
-            "maicii"
+            "scrise"
           ]
         }
       ]
@@ -7125,10 +7125,10 @@ const EPISTLES = {
         {
           "answer": "Samson",
           "options": [
-            "Proroci",
+            "Aaron",
             "Samson",
-            "Prorocii",
-            "Prorocit"
+            "Faraon",
+            "Babilon"
           ]
         }
       ]
@@ -7141,9 +7141,9 @@ const EPISTLES = {
           "answer": "împărății",
           "options": [
             "împărății",
-            "purtare",
-            "purtarea",
-            "purtați"
+            "răutății",
+            "judecății",
+            "frații"
           ]
         }
       ]
@@ -7155,9 +7155,9 @@ const EPISTLES = {
         {
           "answer": "vrăjmașe",
           "options": [
-            "pierde",
-            "pierdere",
-            "pierdeți",
+            "trufașe",
+            "șovăire",
+            "rodește",
             "vrăjmașe"
           ]
         }
@@ -7170,10 +7170,10 @@ const EPISTLES = {
         {
           "answer": "înviați",
           "options": [
-            "sfatul",
-            "sfeșnicul",
+            "netăiați",
+            "tăiați",
             "înviați",
-            "sfintele"
+            "plecați"
           ]
         }
       ]
@@ -7185,10 +7185,10 @@ const EPISTLES = {
         {
           "answer": "bătăi",
           "options": [
-            "alții",
+            "trăi",
             "bătăi",
-            "amin",
-            "aminte"
+            "tăișuri",
+            "cărui"
           ]
         }
       ]
@@ -7201,9 +7201,9 @@ const EPISTLES = {
           "answer": "prigoniți",
           "options": [
             "prigoniți",
-            "dezlipească",
-            "deșartă",
-            "diaconii"
+            "pironiți",
+            "moșteniți",
+            "neprihăniți"
           ]
         }
       ]
@@ -7215,9 +7215,9 @@ const EPISTLES = {
         {
           "answer": "vrednică",
           "options": [
-            "nelegiuit",
-            "nelegiuite",
-            "nelegiuiți",
+            "veșnică",
+            "puternică",
+            "piedică",
             "vrednică"
           ]
         }
@@ -7230,10 +7230,10 @@ const EPISTLES = {
         {
           "answer": "credința",
           "options": [
-            "zeciuială",
-            "zicând",
+            "cunoștința",
+            "neputința",
             "credința",
-            "zidarii"
+            "locuința"
           ]
         }
       ]
@@ -7245,10 +7245,10 @@ const EPISTLES = {
         {
           "answer": "vedere",
           "options": [
-            "iubit",
-            "iubitori",
+            "cădere",
+            "pierdere",
             "vedere",
-            "iubiți"
+            "încredere"
           ]
         }
       ]
@@ -7261,9 +7261,9 @@ const EPISTLES = {
           "answer": "laoparte",
           "options": [
             "laoparte",
-            "slujitori",
-            "slujitorul",
-            "slujiți"
+            "departe",
+            "foarte",
+            "poarte"
           ]
         }
       ]
@@ -7275,9 +7275,9 @@ const EPISTLES = {
         {
           "answer": "Isus",
           "options": [
-            "Iubiți",
-            "Iuda",
-            "Iudeea",
+            "Iacov",
+            "Isaac",
+            "David",
             "Isus"
           ]
         }
@@ -7290,10 +7290,10 @@ const EPISTLES = {
         {
           "answer": "cumva",
           "options": [
-            "legați",
-            "lege",
+            "cineva",
+            "slava",
             "cumva",
-            "legea"
+            "altceva"
           ]
         }
       ]
@@ -7305,10 +7305,10 @@ const EPISTLES = {
         {
           "answer": "sânge",
           "options": [
-            "rămână",
+            "atinge",
             "sânge",
-            "rănile",
-            "răpirea"
+            "ajunge",
+            "adauge"
           ]
         }
       ]
@@ -7321,9 +7321,9 @@ const EPISTLES = {
           "answer": "Fiule",
           "options": [
             "Fiule",
-            "Scriși",
-            "Sculat",
-            "Scule"
+            "Scule",
+            "Fiicele",
+            "Femeile"
           ]
         }
       ]
@@ -7335,9 +7335,9 @@ const EPISTLES = {
         {
           "answer": "pedepsește",
           "options": [
-            "seminței",
-            "semințelor",
-            "seminția",
+            "sufletește",
+            "întărește",
+            "poftește",
             "pedepsește"
           ]
         }
@@ -7350,10 +7350,10 @@ const EPISTLES = {
         {
           "answer": "pedepsește",
           "options": [
-            "sângelui",
-            "sănătate",
+            "privește",
+            "răcnește",
             "pedepsește",
-            "sărbătoare"
+            "iubește"
           ]
         }
       ]
@@ -7365,10 +7365,10 @@ const EPISTLES = {
         {
           "answer": "niște",
           "options": [
-            "aștepta",
+            "primește",
             "niște",
-            "babilon",
-            "balaam"
+            "iubește",
+            "obște"
           ]
         }
       ]
@@ -7381,9 +7381,9 @@ const EPISTLES = {
           "answer": "trebuie",
           "options": [
             "trebuie",
-            "scrie",
-            "scriptura",
-            "scriptură"
+            "bizuie",
+            "stăruie",
+            "dăinuie"
           ]
         }
       ]
@@ -7396,9 +7396,9 @@ const EPISTLES = {
           "answer": "adevăr",
           "options": [
             "adevăr",
-            "acestor",
-            "acestora",
-            "acești"
+            "număr",
+            "dintr",
+            "sfinților"
           ]
         }
       ]
@@ -7410,10 +7410,10 @@ const EPISTLES = {
         {
           "answer": "aduce",
           "options": [
-            "luate",
+            "duce",
             "aduce",
-            "luați",
-            "lucrare"
+            "cruce",
+            "cojoace"
           ]
         }
       ]
@@ -7425,10 +7425,10 @@ const EPISTLES = {
         {
           "answer": "mâinile",
           "options": [
-            "bețiile",
-            "binele",
+            "datinile",
+            "sarcinile",
             "mâinile",
-            "binelea"
+            "rănile"
           ]
         }
       ]
@@ -7440,9 +7440,9 @@ const EPISTLES = {
         {
           "answer": "picioarele",
           "options": [
-            "întărirea",
-            "întărită",
-            "întăriți",
+            "faptele",
+            "semnele",
+            "făgăduințele",
             "picioarele"
           ]
         }
@@ -7456,9 +7456,9 @@ const EPISTLES = {
           "answer": "Urmăriți",
           "options": [
             "Urmăriți",
-            "Închinat",
-            "Închine",
-            "Închină"
+            "Întăriți",
+            "Mulțumiți",
+            "Împotriviți"
           ]
         }
       ]
@@ -7470,10 +7470,10 @@ const EPISTLES = {
         {
           "answer": "nimeni",
           "options": [
-            "călători",
+            "oameni",
             "nimeni",
-            "cămașa",
-            "căpăta"
+            "moșteni",
+            "galateni"
           ]
         }
       ]
@@ -7485,10 +7485,10 @@ const EPISTLES = {
         {
           "answer": "Vegheați",
           "options": [
-            "Slujitorul",
-            "Slujiți",
+            "Cunoșteați",
+            "Aveați",
             "Vegheați",
-            "Slăbiciune"
+            "Gândeați"
           ]
         }
       ]
@@ -7500,9 +7500,9 @@ const EPISTLES = {
         {
           "answer": "Știți",
           "options": [
-            "Gurile",
-            "Gustat",
-            "Guste",
+            "Ispitiți",
+            "Ațintiți",
+            "Vestiți",
             "Știți"
           ]
         }
@@ -7516,9 +7516,9 @@ const EPISTLES = {
           "answer": "cuprins",
           "options": [
             "cuprins",
-            "alergarea",
-            "alergat",
-            "alergați"
+            "deprins",
+            "prins",
+            "stins"
           ]
         }
       ]
@@ -7530,10 +7530,10 @@ const EPISTLES = {
         {
           "answer": "glasul",
           "options": [
-            "nevoie",
+            "trimisul",
             "glasul",
-            "nevoile",
-            "nevăzut"
+            "folosul",
+            "dinadinsul"
           ]
         }
       ]
@@ -7545,10 +7545,10 @@ const EPISTLES = {
         {
           "answer": "munte",
           "options": [
-            "lovesc",
+            "minte",
             "munte",
-            "luare",
-            "luat"
+            "aminte",
+            "cuvinte"
           ]
         }
       ]
@@ -7561,9 +7561,9 @@ const EPISTLES = {
           "answer": "înfricoșătoare",
           "options": [
             "înfricoșătoare",
-            "simțămintele",
-            "slăbiciunile",
-            "strâmtorarea"
+            "asemănătoare",
+            "înșelătoare",
+            "stăruitoare"
           ]
         }
       ]
@@ -7575,9 +7575,9 @@ const EPISTLES = {
         {
           "answer": "muntele",
           "options": [
-            "munți",
-            "murit",
-            "muritori",
+            "cuvintele",
+            "sfintele",
+            "laptele",
             "muntele"
           ]
         }
@@ -7590,10 +7590,10 @@ const EPISTLES = {
         {
           "answer": "născuți",
           "options": [
-            "fiecărui",
-            "fierbinte",
+            "plăcuți",
+            "cunoscuți",
             "născuți",
-            "fiicei"
+            "însuți"
           ]
         }
       ]
@@ -7605,10 +7605,10 @@ const EPISTLES = {
         {
           "answer": "decât",
           "options": [
-            "bețiile",
+            "întrucât",
             "decât",
-            "bine",
-            "binele"
+            "atât",
+            "omorât"
           ]
         }
       ]
@@ -7621,9 +7621,9 @@ const EPISTLES = {
           "answer": "scăpat",
           "options": [
             "scăpat",
-            "trupul",
-            "trupului",
-            "trupuri"
+            "adăpat",
+            "astupat",
+            "bărbat"
           ]
         }
       ]
@@ -7635,9 +7635,9 @@ const EPISTLES = {
         {
           "answer": "încă",
           "options": [
-            "bogat",
-            "boli",
-            "bolnav",
+            "stâncă",
+            "poruncă",
+            "adică",
             "încă"
           ]
         }
@@ -7650,10 +7650,10 @@ const EPISTLES = {
         {
           "answer": "arată",
           "options": [
-            "isaac",
-            "isop",
+            "curată",
+            "păstrată",
             "arată",
-            "ispitit"
+            "lucrată"
           ]
         }
       ]
@@ -7665,10 +7665,10 @@ const EPISTLES = {
         {
           "answer": "frică",
           "options": [
-            "guste",
+            "biserică",
             "frică",
-            "gând",
-            "gândea"
+            "piedică",
+            "vrednică"
           ]
         }
       ]
@@ -7681,9 +7681,9 @@ const EPISTLES = {
           "answer": "Dumnezeul",
           "options": [
             "Dumnezeul",
-            "Treburile",
-            "Treceți",
-            "Trecută"
+            "Israelul",
+            "Egiptul",
+            "Nimicitorul"
           ]
         }
       ]
@@ -7695,10 +7695,10 @@ const EPISTLES = {
         {
           "answer": "frățească",
           "options": [
-            "schimbă",
+            "femeiască",
             "frățească",
-            "scrijeliții",
-            "scriptura"
+            "pândească",
+            "zămislească"
           ]
         }
       ]
@@ -7710,10 +7710,10 @@ const EPISTLES = {
         {
           "answer": "știe",
           "options": [
-            "tari",
-            "tată",
+            "pustie",
+            "taie",
             "știe",
-            "tatăl"
+            "femeie"
           ]
         }
       ]
@@ -7725,9 +7725,9 @@ const EPISTLES = {
         {
           "answer": "aminte",
           "options": [
-            "supuși",
-            "sute",
-            "sânge",
+            "cuvinte",
+            "legăminte",
+            "înainte",
             "aminte"
           ]
         }
@@ -7741,9 +7741,9 @@ const EPISTLES = {
           "answer": "ținută",
           "options": [
             "ținută",
-            "îndoapă",
-            "îndoială",
-            "îndurare"
+            "caută",
+            "cerută",
+            "plăcută"
           ]
         }
       ]
@@ -7755,10 +7755,10 @@ const EPISTLES = {
         {
           "answer": "iubitori",
           "options": [
-            "apropiați",
+            "martori",
             "iubitori",
-            "apropie",
-            "apropiem"
+            "slujitori",
+            "neștiutori"
           ]
         }
       ]
@@ -7770,10 +7770,10 @@ const EPISTLES = {
         {
           "answer": "putem",
           "options": [
-            "vecii",
-            "vecilor",
+            "suntem",
+            "vedem",
             "putem",
-            "vecinul"
+            "ținem"
           ]
         }
       ]
@@ -7785,9 +7785,9 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Deasupra",
-            "Degeaba",
-            "Degrabă",
+            "Avraam",
+            "Petru",
+            "Samuel",
             "Dumnezeu"
           ]
         }
@@ -7801,9 +7801,9 @@ const EPISTLES = {
           "answer": "Isus",
           "options": [
             "Isus",
-            "Călcat",
-            "Cămașa",
-            "Căpăta"
+            "Iosif",
+            "Pavel",
+            "Ilie"
           ]
         }
       ]
@@ -7815,10 +7815,10 @@ const EPISTLES = {
         {
           "answer": "întărită",
           "options": [
-            "primitori",
+            "descoperită",
             "întărită",
-            "primită",
-            "primiți"
+            "adeverită",
+            "nezguduită"
           ]
         }
       ]
@@ -7830,9 +7830,9 @@ const EPISTLES = {
         {
           "answer": "altar",
           "options": [
-            "legii",
-            "legile",
-            "leilor",
+            "chiar",
+            "zadar",
+            "măcar",
             "altar"
           ]
         }
@@ -7845,10 +7845,10 @@ const EPISTLES = {
         {
           "answer": "păcat",
           "options": [
-            "vorbim",
-            "vorbind",
+            "îmbrăcat",
+            "fermecat",
             "păcat",
-            "vorbit"
+            "vindecat"
           ]
         }
       ]
@@ -7860,10 +7860,10 @@ const EPISTLES = {
         {
           "answer": "însuși",
           "options": [
-            "găsesc",
+            "aduși",
             "însuși",
-            "găsește",
-            "găsim"
+            "puși",
+            "supuși"
           ]
         }
       ]
@@ -7876,9 +7876,9 @@ const EPISTLES = {
           "answer": "suferim",
           "options": [
             "suferim",
-            "parte",
-            "partea",
-            "partide"
+            "dorim",
+            "trăim",
+            "grăbim"
           ]
         }
       ]
@@ -7890,9 +7890,9 @@ const EPISTLES = {
         {
           "answer": "căutarea",
           "options": [
-            "deșartă",
-            "deșert",
-            "diaconii",
+            "următoarea",
+            "schimbarea",
+            "ascultarea",
             "căutarea"
           ]
         }
@@ -7905,10 +7905,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Putință",
-            "Putrezi",
+            "Isaac",
+            "Iosif",
             "Dumnezeu",
-            "Putrezirea"
+            "Ilie"
           ]
         }
       ]
@@ -7920,10 +7920,10 @@ const EPISTLES = {
         {
           "answer": "binefacerea",
           "options": [
-            "potrivnice",
+            "plăcerea",
             "binefacerea",
-            "potrivnici",
-            "potrivnicul"
+            "învierea",
+            "întoarcerea"
           ]
         }
       ]
@@ -7936,9 +7936,9 @@ const EPISTLES = {
           "answer": "sufletelor",
           "options": [
             "sufletelor",
-            "ieșiseră",
-            "intrării",
-            "iscoadele"
+            "nevestelor",
+            "picioarelor",
+            "dobitoacelor"
           ]
         }
       ]
@@ -7950,9 +7950,9 @@ const EPISTLES = {
         {
           "answer": "purtăm",
           "options": [
-            "lumini",
-            "luminos",
-            "luni",
+            "stăm",
+            "așteptăm",
+            "uităm",
             "purtăm"
           ]
         }
@@ -7965,10 +7965,10 @@ const EPISTLES = {
         {
           "answer": "lucrul",
           "options": [
-            "viii",
-            "viitoare",
+            "ajutorul",
+            "harul",
             "lucrul",
-            "viitor"
+            "poporul"
           ]
         }
       ]
@@ -7980,10 +7980,10 @@ const EPISTLES = {
         {
           "answer": "oilor",
           "options": [
-            "vesti",
-            "vestit",
+            "leilor",
+            "morților",
             "oilor",
-            "vestite"
+            "ocărilor"
           ]
         }
       ]
@@ -7995,9 +7995,9 @@ const EPISTLES = {
         {
           "answer": "Hristos",
           "options": [
-            "Religia",
-            "Repede",
-            "Rezemat",
+            "Pavel",
+            "Iacov",
+            "Samuel",
             "Hristos"
           ]
         }
@@ -8011,9 +8011,9 @@ const EPISTLES = {
           "answer": "primiți",
           "options": [
             "primiți",
-            "treizeci",
-            "treji",
-            "tremur"
+            "pătimiți",
+            "nimiciți",
+            "împodobiți"
           ]
         }
       ]
@@ -8025,10 +8025,10 @@ const EPISTLES = {
         {
           "answer": "împreună",
           "options": [
-            "împlinirea",
+            "furtună",
             "împreună",
-            "împlinit",
-            "împliniți"
+            "bună",
+            "pună"
           ]
         }
       ]
@@ -8040,10 +8040,10 @@ const EPISTLES = {
         {
           "answer": "trimit",
           "options": [
-            "veți",
-            "viața",
+            "pătimit",
+            "primit",
             "trimit",
-            "vicleșug"
+            "mulțumit"
           ]
         }
       ]
@@ -8055,9 +8055,9 @@ const EPISTLES = {
         {
           "answer": "Harul",
           "options": [
-            "Slabe",
-            "Slava",
-            "Slavei",
+            "Darul",
+            "Poporul",
+            "Cerul",
             "Harul"
           ]
         }
@@ -8072,10 +8072,10 @@ const EPISTLES = {
         {
           "answer": "Pavel",
           "options": [
-            "Fire",
-            "Firea",
+            "Israel",
+            "Samuel",
             "Pavel",
-            "Firesc"
+            "Abel"
           ]
         }
       ]
@@ -8087,10 +8087,10 @@ const EPISTLES = {
         {
           "answer": "către",
           "options": [
-            "măsură",
+            "mustre",
             "către",
-            "naște",
-            "naștere"
+            "pietre",
+            "intre"
           ]
         }
       ]
@@ -8103,9 +8103,9 @@ const EPISTLES = {
           "answer": "Hristos",
           "options": [
             "Hristos",
-            "Uitat",
-            "Uitați",
-            "Uitând"
+            "Ilie",
+            "David",
+            "Isaac"
           ]
         }
       ]
@@ -8117,9 +8117,9 @@ const EPISTLES = {
         {
           "answer": "Însuși",
           "options": [
-            "Slujiri",
-            "Slujit",
-            "Slujitor",
+            "Aduși",
+            "Supuși",
+            "Puși",
             "Însuși"
           ]
         }
@@ -8132,10 +8132,10 @@ const EPISTLES = {
         {
           "answer": "vecilor",
           "options": [
-            "lăsați",
-            "lăstari",
+            "taurilor",
+            "leviților",
             "vecilor",
-            "lăsăm"
+            "sfinților"
           ]
         }
       ]
@@ -8147,10 +8147,10 @@ const EPISTLES = {
         {
           "answer": "altă",
           "options": [
-            "doreau",
+            "înaltă",
             "altă",
-            "doresc",
-            "dori"
+            "multă",
+            "ascultă"
           ]
         }
       ]
@@ -8163,9 +8163,9 @@ const EPISTLES = {
           "answer": "tulbură",
           "options": [
             "tulbură",
-            "lapte",
-            "laptele",
-            "lauda"
+            "legătură",
+            "băutură",
+            "singură"
           ]
         }
       ]
@@ -8177,9 +8177,9 @@ const EPISTLES = {
         {
           "answer": "evanghelie",
           "options": [
-            "vrednică",
-            "vremurile",
-            "vremurilor",
+            "veșnicie",
+            "bunăvoie",
+            "sumedenie",
             "evanghelie"
           ]
         }
@@ -8192,10 +8192,10 @@ const EPISTLES = {
         {
           "answer": "deosebită",
           "options": [
-            "desfrâu",
-            "deslușit",
+            "întărită",
+            "numită",
             "deosebită",
-            "despart"
+            "socotită"
           ]
         }
       ]
@@ -8207,10 +8207,10 @@ const EPISTLES = {
         {
           "answer": "oare",
           "options": [
-            "suit",
-            "sulul",
+            "fiecare",
+            "purtare",
             "oare",
-            "suntem"
+            "iertare"
           ]
         }
       ]
@@ -8222,9 +8222,9 @@ const EPISTLES = {
         {
           "answer": "obârșie",
           "options": [
-            "preoția",
-            "preoție",
-            "preoții",
+            "chezășie",
+            "roșie",
+            "veșnicie",
             "obârșie"
           ]
         }
@@ -8238,9 +8238,9 @@ const EPISTLES = {
           "answer": "primit",
           "options": [
             "primit",
-            "uite",
-            "uitând",
-            "uităm"
+            "trimit",
+            "pătimit",
+            "mulțumit"
           ]
         }
       ]
@@ -8252,10 +8252,10 @@ const EPISTLES = {
         {
           "answer": "mult",
           "options": [
-            "stâlpi",
+            "înalt",
             "mult",
-            "stânci",
-            "stâncă"
+            "celălalt",
+            "ispitit"
           ]
         }
       ]
@@ -8267,10 +8267,10 @@ const EPISTLES = {
         {
           "answer": "vârstă",
           "options": [
-            "preoți",
-            "preoția",
+            "rânduită",
+            "ținută",
             "vârstă",
-            "preoție"
+            "poartă"
           ]
         }
       ]
@@ -8282,9 +8282,9 @@ const EPISTLES = {
         {
           "answer": "pântecele",
           "options": [
-            "preaînalt",
-            "preaînalte",
-            "prefacă",
+            "dobitoacele",
+            "stelele",
+            "picioarele",
             "pântecele"
           ]
         }
@@ -8298,9 +8298,9 @@ const EPISTLES = {
           "answer": "neamuri",
           "options": [
             "neamuri",
-            "vreți",
-            "vrăjmașe",
-            "vrăjmași"
+            "vremuri",
+            "muri",
+            "prinosuri"
           ]
         }
       ]
@@ -8312,10 +8312,10 @@ const EPISTLES = {
         {
           "answer": "mine",
           "options": [
-            "smerit",
+            "închine",
             "mine",
-            "smulgă",
-            "soarta"
+            "vine",
+            "puține"
           ]
         }
       ]
@@ -8327,10 +8327,10 @@ const EPISTLES = {
         {
           "answer": "cincisprezece",
           "options": [
-            "mărturisească",
-            "mărturisesc",
+            "paisprezece",
+            "potrivnice",
             "cincisprezece",
-            "mărturisește"
+            "propovăduiește"
           ]
         }
       ]
@@ -8342,9 +8342,9 @@ const EPISTLES = {
         {
           "answer": "decât",
           "options": [
-            "măduva",
-            "mănânce",
-            "măreția",
+            "întrucât",
+            "atât",
+            "omorât",
             "decât"
           ]
         }
@@ -8357,9 +8357,9 @@ const EPISTLES = {
         {
           "answer": "scriu",
           "options": [
-            "vestiți",
-            "veșnic",
-            "veșnica",
+            "târziu",
+            "știu",
+            "făcându",
             "scriu"
           ]
         }
@@ -8372,10 +8372,10 @@ const EPISTLES = {
         {
           "answer": "Ciliciei",
           "options": [
-            "Neamul",
-            "Neamuri",
+            "Evangheliei",
+            "Galatiei",
             "Ciliciei",
-            "Neamurile"
+            "Zădărniciei"
           ]
         }
       ]
@@ -8387,10 +8387,10 @@ const EPISTLES = {
         {
           "answer": "necunoscut",
           "options": [
-            "tomnatici",
+            "cunoscut",
             "necunoscut",
-            "totdeauna",
-            "tovarăși"
+            "plăcut",
+            "născut"
           ]
         }
       ]
@@ -8403,9 +8403,9 @@ const EPISTLES = {
           "answer": "propovăduiește",
           "options": [
             "propovăduiește",
-            "împărtășească",
-            "împărătească",
-            "încheieturile"
+            "răsplătește",
+            "mărturisește",
+            "sufletește"
           ]
         }
       ]
@@ -8417,9 +8417,9 @@ const EPISTLES = {
         {
           "answer": "pricina",
           "options": [
-            "idolești",
-            "idoli",
-            "iefta",
+            "sarcina",
+            "lumina",
+            "clătina",
             "pricina"
           ]
         }
@@ -8432,10 +8432,10 @@ const EPISTLES = {
         {
           "answer": "luat",
           "options": [
-            "apoi",
+            "aluat",
             "luat",
-            "apuc",
-            "apucat"
+            "uscat",
+            "așezat"
           ]
         }
       ]
@@ -8447,10 +8447,10 @@ const EPISTLES = {
         {
           "answer": "vază",
           "options": [
-            "turmei",
-            "turnat",
+            "lucrează",
+            "dreaptă",
             "vază",
-            "târziu"
+            "ceartă"
           ]
         }
       ]
@@ -8462,9 +8462,9 @@ const EPISTLES = {
         {
           "answer": "mine",
           "options": [
-            "facă",
-            "fală",
-            "fapta",
+            "vine",
+            "bine",
+            "tine",
             "mine"
           ]
         }
@@ -8478,9 +8478,9 @@ const EPISTLES = {
           "answer": "pândească",
           "options": [
             "pândească",
-            "câștigul",
-            "câștiguri",
-            "călcați"
+            "frățească",
+            "vestească",
+            "dospească"
           ]
         }
       ]
@@ -8492,10 +8492,10 @@ const EPISTLES = {
         {
           "answer": "rămână",
           "options": [
-            "anii",
+            "mână",
             "rămână",
-            "antiohia",
-            "anume"
+            "până",
+            "lână"
           ]
         }
       ]
@@ -8507,10 +8507,10 @@ const EPISTLES = {
         {
           "answer": "fața",
           "options": [
-            "faptă",
-            "faraon",
+            "viața",
+            "învăța",
             "fața",
-            "față"
+            "voința"
           ]
         }
       ]
@@ -8522,9 +8522,9 @@ const EPISTLES = {
         {
           "answer": "dimpotrivă",
           "options": [
-            "singurul",
-            "singurului",
-            "sintichia",
+            "deopotrivă",
+            "împotrivă",
+            "înșivă",
             "dimpotrivă"
           ]
         }
@@ -8538,9 +8538,9 @@ const EPISTLES = {
           "answer": "tăiați",
           "options": [
             "tăiați",
-            "rătăcite",
-            "rătăciți",
-            "răul"
+            "înviați",
+            "netăiați",
+            "mâncați"
           ]
         }
       ]
@@ -8552,10 +8552,10 @@ const EPISTLES = {
         {
           "answer": "însoțire",
           "options": [
-            "înarmați",
+            "curățire",
             "însoțire",
-            "înceapă",
-            "începe"
+            "simțire",
+            "împotrivire"
           ]
         }
       ]
@@ -8567,9 +8567,9 @@ const EPISTLES = {
         {
           "answer": "căutat",
           "options": [
-            "turnat",
-            "tuturor",
-            "tâlcuit",
+            "ajutat",
+            "mutat",
+            "arătat",
             "căutat"
           ]
         }
@@ -8582,10 +8582,10 @@ const EPISTLES = {
         {
           "answer": "venit",
           "options": [
-            "flacără",
-            "floarea",
+            "pomenit",
+            "ostenit",
             "venit",
-            "flămând"
+            "moștenit"
           ]
         }
       ]
@@ -8597,10 +8597,10 @@ const EPISTLES = {
         {
           "answer": "tăiați",
           "options": [
-            "slujitor",
+            "înviați",
             "tăiați",
-            "slujiți",
-            "slăveau"
+            "netăiați",
+            "căutați"
           ]
         }
       ]
@@ -8613,9 +8613,9 @@ const EPISTLES = {
           "answer": "iudei",
           "options": [
             "iudei",
-            "smerit",
-            "smerite",
-            "smeriți"
+            "unei",
+            "evrei",
+            "trei"
           ]
         }
       ]
@@ -8627,9 +8627,9 @@ const EPISTLES = {
         {
           "answer": "tuturor",
           "options": [
-            "dovadă",
-            "dovedit",
-            "dragoste",
+            "căror",
+            "zilelor",
+            "tinerilor",
             "tuturor"
           ]
         }
@@ -8642,10 +8642,10 @@ const EPISTLES = {
         {
           "answer": "fire",
           "options": [
-            "găsit",
-            "găsiți",
+            "cârtire",
+            "șovăire",
             "fire",
-            "haină"
+            "simțire"
           ]
         }
       ]
@@ -8657,10 +8657,10 @@ const EPISTLES = {
         {
           "answer": "socotiți",
           "options": [
-            "închis",
+            "ațintiți",
             "socotiți",
-            "închisoare",
-            "închiși"
+            "neclintiți",
+            "vestiți"
           ]
         }
       ]
@@ -8673,9 +8673,9 @@ const EPISTLES = {
           "answer": "păcătoși",
           "options": [
             "păcătoși",
-            "harului",
-            "heruvimii",
-            "hotărârii"
+            "credincioși",
+            "miloși",
+            "neevlavioși"
           ]
         }
       ]
@@ -8687,9 +8687,9 @@ const EPISTLES = {
         {
           "answer": "zidesc",
           "options": [
-            "foarte",
-            "focului",
-            "folos",
+            "gândesc",
+            "adeveresc",
+            "doresc",
             "zidesc"
           ]
         }
@@ -8702,10 +8702,10 @@ const EPISTLES = {
         {
           "answer": "trăiesc",
           "options": [
-            "chivot",
-            "chivotul",
+            "sfătuiesc",
+            "obișnuiesc",
             "trăiesc",
-            "ciliciei"
+            "războiesc"
           ]
         }
       ]
@@ -8717,10 +8717,10 @@ const EPISTLES = {
         {
           "answer": "Sine",
           "options": [
-            "Poarte",
-            "Poartă",
+            "Înșine",
+            "Tine",
             "Sine",
-            "Poate"
+            "Străine"
           ]
         }
       ]
@@ -8732,9 +8732,9 @@ const EPISTLES = {
         {
           "answer": "Hristos",
           "options": [
-            "Mulți",
-            "Mulțumesc",
-            "Mulțumiri",
+            "Moise",
+            "Samuel",
+            "Avraam",
             "Hristos"
           ]
         }
@@ -8748,9 +8748,9 @@ const EPISTLES = {
           "answer": "fermecat",
           "options": [
             "fermecat",
-            "mustrat",
-            "mustrați",
-            "mustre"
+            "vindecat",
+            "ferecat",
+            "plecat"
           ]
         }
       ]
@@ -8762,9 +8762,9 @@ const EPISTLES = {
         {
           "answer": "faptele",
           "options": [
-            "felurit",
-            "felurite",
-            "femei",
+            "fratele",
+            "sufletele",
+            "stele",
             "faptele"
           ]
         }
@@ -8777,10 +8777,10 @@ const EPISTLES = {
         {
           "answer": "vreți",
           "options": [
-            "drepte",
-            "dreptul",
+            "cădeți",
+            "creșteți",
             "vreți",
-            "drumul"
+            "pierdeți"
           ]
         }
       ]
@@ -8792,10 +8792,10 @@ const EPISTLES = {
         {
           "answer": "adevăr",
           "options": [
-            "poftit",
+            "număr",
             "adevăr",
-            "pomenit",
-            "pomi"
+            "unor",
+            "printr"
           ]
         }
       ]
@@ -8808,9 +8808,9 @@ const EPISTLES = {
           "answer": "Duhul",
           "options": [
             "Duhul",
-            "Mele",
-            "Mereu",
-            "Mergem"
+            "Apostolul",
+            "Îngerul",
+            "Învățătorul"
           ]
         }
       ]
@@ -8822,9 +8822,9 @@ const EPISTLES = {
         {
           "answer": "crezut",
           "options": [
-            "anatema",
-            "ancoră",
-            "anii",
+            "șezut",
+            "văzut",
+            "nevăzut",
             "crezut"
           ]
         }
@@ -8837,10 +8837,10 @@ const EPISTLES = {
         {
           "answer": "credință",
           "options": [
-            "apostolii",
-            "apostolul",
+            "trebuință",
+            "privință",
             "credință",
-            "aproape"
+            "stăruință"
           ]
         }
       ]
@@ -8852,10 +8852,10 @@ const EPISTLES = {
         {
           "answer": "tine",
           "options": [
-            "copil",
+            "bine",
             "tine",
-            "core",
-            "cort"
+            "oricine",
+            "vine"
           ]
         }
       ]
@@ -8868,9 +8868,9 @@ const EPISTLES = {
           "answer": "binecuvântați",
           "options": [
             "binecuvântați",
-            "dregătorilor",
-            "duhovnicească",
-            "duhovnicesc"
+            "înspăimântați",
+            "îmbărbătați",
+            "îndepărtați"
           ]
         }
       ]
@@ -8883,9 +8883,9 @@ const EPISTLES = {
           "answer": "lucrurile",
           "options": [
             "lucrurile",
-            "zilelor",
-            "zugrăvit",
-            "zădărniciei"
+            "crăpăturile",
+            "bunurile",
+            "cerurile"
           ]
         }
       ]
@@ -8897,10 +8897,10 @@ const EPISTLES = {
         {
           "answer": "trăi",
           "options": [
-            "luni",
+            "bătăi",
             "trăi",
-            "lupta",
-            "luptă"
+            "gunoi",
+            "putrezi"
           ]
         }
       ]
@@ -8912,10 +8912,10 @@ const EPISTLES = {
         {
           "answer": "credință",
           "options": [
-            "creșteți",
-            "creștin",
+            "pocăință",
+            "putință",
             "credință",
-            "croiți"
+            "făgăduință"
           ]
         }
       ]
@@ -8927,9 +8927,9 @@ const EPISTLES = {
         {
           "answer": "lemn",
           "options": [
-            "uitat",
-            "uitați",
-            "uite",
+            "îndemn",
+            "domn",
+            "ghedeon",
             "lemn"
           ]
         }
@@ -8943,9 +8943,9 @@ const EPISTLES = {
           "answer": "peste",
           "options": [
             "peste",
-            "puneți",
-            "pună",
-            "purta"
+            "veste",
+            "guste",
+            "dragoste"
           ]
         }
       ]
@@ -8957,10 +8957,10 @@ const EPISTLES = {
         {
           "answer": "nimeni",
           "options": [
-            "răcnește",
+            "oameni",
             "nimeni",
-            "rădăcină",
-            "rămas"
+            "veni",
+            "galateni"
           ]
         }
       ]
@@ -8972,10 +8972,10 @@ const EPISTLES = {
         {
           "answer": "multe",
           "options": [
-            "supune",
-            "supunea",
+            "asculte",
+            "alte",
             "multe",
-            "supunem"
+            "păcate"
           ]
         }
       ]
@@ -8987,9 +8987,9 @@ const EPISTLES = {
         {
           "answer": "Iată",
           "options": [
-            "Scăpa",
-            "Scăpat",
-            "Seama",
+            "Îndată",
+            "Odată",
+            "Curată",
             "Iată"
           ]
         }
@@ -9003,9 +9003,9 @@ const EPISTLES = {
           "answer": "vine",
           "options": [
             "vine",
-            "pomi",
-            "pont",
-            "popor"
+            "ține",
+            "sine",
+            "puține"
           ]
         }
       ]
@@ -9017,10 +9017,10 @@ const EPISTLES = {
         {
           "answer": "mijlocitor",
           "options": [
-            "nădăjduite",
+            "mistuitor",
             "mijlocitor",
-            "oamenilor",
-            "obișnuiesc"
+            "îngăduitor",
+            "ziditor"
           ]
         }
       ]
@@ -9032,10 +9032,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Ridicați",
+            "Pavel",
             "Dumnezeu",
-            "Ridice",
-            "Ridicându"
+            "Ilie",
+            "Iacov"
           ]
         }
       ]
@@ -9048,9 +9048,9 @@ const EPISTLES = {
           "answer": "Dumnezeu",
           "options": [
             "Dumnezeu",
-            "Apostol",
-            "Apostoli",
-            "Apostolii"
+            "Petru",
+            "Isaac",
+            "David"
           ]
         }
       ]
@@ -9062,9 +9062,9 @@ const EPISTLES = {
         {
           "answer": "închis",
           "options": [
-            "plăcut",
-            "plăcute",
-            "plăcută",
+            "deschis",
+            "scris",
+            "trimis",
             "închis"
           ]
         }
@@ -9077,10 +9077,10 @@ const EPISTLES = {
         {
           "answer": "credinței",
           "options": [
-            "împodobiți",
-            "împotriva",
+            "neputinței",
+            "seminței",
             "credinței",
-            "împotrivea"
+            "necredinței"
           ]
         }
       ]
@@ -9092,10 +9092,10 @@ const EPISTLES = {
         {
           "answer": "credință",
           "options": [
-            "primită",
+            "trebuință",
             "credință",
-            "primiți",
-            "prinos"
+            "stăruință",
+            "pocăință"
           ]
         }
       ]
@@ -9108,9 +9108,9 @@ const EPISTLES = {
           "answer": "îndrumătorul",
           "options": [
             "îndrumătorul",
-            "înșelătoare",
-            "înștiințat",
-            "înțelegeți"
+            "slujitorul",
+            "moștenitorul",
+            "mijlocitorul"
           ]
         }
       ]
@@ -9122,9 +9122,9 @@ const EPISTLES = {
         {
           "answer": "Isus",
           "options": [
-            "Bogat",
-            "Boli",
-            "Bolnav",
+            "Moise",
+            "Samuel",
+            "Iacov",
             "Isus"
           ]
         }
@@ -9137,10 +9137,10 @@ const EPISTLES = {
         {
           "answer": "Toți",
           "options": [
-            "Lucrat",
-            "Lucru",
+            "Preoți",
+            "Fiți",
             "Toți",
-            "Lucrul"
+            "Părți"
           ]
         }
       ]
@@ -9152,10 +9152,10 @@ const EPISTLES = {
         {
           "answer": "slobod",
           "options": [
-            "acum",
+            "norod",
             "slobod",
-            "adam",
-            "adauge"
+            "dorind",
+            "zicând"
           ]
         }
       ]
@@ -9168,9 +9168,9 @@ const EPISTLES = {
           "answer": "Avraam",
           "options": [
             "Avraam",
-            "Aducă",
-            "Adunarea",
-            "Adunării"
+            "Balaam",
+            "Adam",
+            "Făceam"
           ]
         }
       ]
@@ -9182,9 +9182,9 @@ const EPISTLES = {
         {
           "answer": "vreme",
           "options": [
-            "știu",
-            "știți",
-            "țapi",
+            "teme",
+            "lume",
+            "anume",
             "vreme"
           ]
         }
@@ -9198,9 +9198,9 @@ const EPISTLES = {
           "answer": "rânduită",
           "options": [
             "rânduită",
-            "băuturi",
-            "băutură",
-            "capacul"
+            "făgăduită",
+            "nezguduită",
+            "venită"
           ]
         }
       ]
@@ -9212,10 +9212,10 @@ const EPISTLES = {
         {
           "answer": "robia",
           "options": [
-            "abată",
+            "corabia",
             "robia",
-            "abel",
-            "aceeași"
+            "arabia",
+            "mânia"
           ]
         }
       ]
@@ -9227,10 +9227,10 @@ const EPISTLES = {
         {
           "answer": "femeie",
           "options": [
-            "vechi",
-            "vechime",
+            "chezășie",
+            "învie",
             "femeie",
-            "veci"
+            "nevoie"
           ]
         }
       ]
@@ -9242,9 +9242,9 @@ const EPISTLES = {
         {
           "answer": "căpătăm",
           "options": [
-            "smulgă",
-            "soarta",
-            "soartă",
+            "arătăm",
+            "purtăm",
+            "uităm",
             "căpătăm"
           ]
         }
@@ -9258,9 +9258,9 @@ const EPISTLES = {
           "answer": "Tată",
           "options": [
             "Tată",
-            "Cadă",
-            "Cain",
-            "Cale"
+            "Proorocule",
+            "Împărate",
+            "Învățătorule"
           ]
         }
       ]
@@ -9272,10 +9272,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Rușinile",
+            "Petru",
             "Dumnezeu",
-            "Rânduiala",
-            "Rânduit"
+            "David",
+            "Isaac"
           ]
         }
       ]
@@ -9287,10 +9287,10 @@ const EPISTLES = {
         {
           "answer": "Dumnezeu",
           "options": [
-            "Înălțat",
-            "Înșală",
+            "Ilie",
+            "Isaac",
             "Dumnezeu",
-            "Înșelați"
+            "Moise"
           ]
         }
       ]
@@ -9302,9 +9302,9 @@ const EPISTLES = {
         {
           "answer": "întoarceți",
           "options": [
-            "neputința",
-            "neputinței",
-            "neputință",
+            "treceți",
+            "aduceți",
+            "sunteți",
             "întoarceți"
           ]
         }
@@ -9317,10 +9317,10 @@ const EPISTLES = {
         {
           "answer": "vremuri",
           "options": [
-            "înnoită",
+            "muri",
             "vremuri",
-            "înnoiți",
-            "însemnat"
+            "neamuri",
+            "rânduri"
           ]
         }
       ]
@@ -9333,9 +9333,9 @@ const EPISTLES = {
           "answer": "ostenit",
           "options": [
             "ostenit",
-            "sfârșit",
-            "sfârșitul",
-            "sfârșiți"
+            "pomenit",
+            "venit",
+            "moștenit"
           ]
         }
       ]
@@ -9347,9 +9347,9 @@ const EPISTLES = {
         {
           "answer": "fiți",
           "options": [
-            "știți",
-            "țapi",
-            "țara",
+            "croiți",
+            "iubiți",
+            "primiți",
             "fiți"
           ]
         }
@@ -9362,10 +9362,10 @@ const EPISTLES = {
         {
           "answer": "neputința",
           "options": [
-            "învierea",
-            "învierii",
+            "locuința",
+            "cunoștința",
             "neputința",
-            "învățat"
+            "amenința"
           ]
         }
       ]
@@ -9377,10 +9377,10 @@ const EPISTLES = {
         {
           "answer": "dispreț",
           "options": [
-            "sămânță",
+            "preț",
             "dispreț",
-            "sănătate",
-            "săraci"
+            "stropirea",
+            "adevărat"
           ]
         }
       ]
@@ -9393,9 +9393,9 @@ const EPISTLES = {
           "answer": "putință",
           "options": [
             "putință",
-            "plăcute",
-            "plăcută",
-            "plăcuți"
+            "neputință",
+            "stăruință",
+            "pocăință"
           ]
         }
       ]
@@ -9407,9 +9407,9 @@ const EPISTLES = {
         {
           "answer": "făcut",
           "options": [
-            "păstrăm",
-            "pătimit",
-            "păzesc",
+            "plăcut",
+            "născut",
+            "cunoscut",
             "făcut"
           ]
         }
@@ -9422,10 +9422,10 @@ const EPISTLES = {
         {
           "answer": "fiți",
           "options": [
-            "arăta",
-            "arătat",
+            "zidiți",
+            "feriți",
             "fiți",
-            "arătăm"
+            "înnoiți"
           ]
         }
       ]
@@ -9437,10 +9437,10 @@ const EPISTLES = {
         {
           "answer": "plini",
           "options": [
-            "pricină",
+            "împlini",
             "plini",
-            "prihană",
-            "prilej"
+            "mâini",
+            "mărăcini"
           ]
         }
       ]
@@ -9453,9 +9453,9 @@ const EPISTLES = {
           "answer": "nașterii",
           "options": [
             "nașterii",
-            "slăveau",
-            "slăvesc",
-            "slăvit"
+            "îngerii",
+            "învierii",
+            "prezbiterii"
           ]
         }
       ]
@@ -9468,9 +9468,9 @@ const EPISTLES = {
           "answer": "glasul",
           "options": [
             "glasul",
-            "având",
-            "așadar",
-            "așezat"
+            "folosul",
+            "trimisul",
+            "dinadinsul"
           ]
         }
       ]
@@ -9482,10 +9482,10 @@ const EPISTLES = {
         {
           "answer": "Legea",
           "options": [
-            "Vestite",
+            "Marea",
             "Legea",
-            "Vestită",
-            "Vestiți"
+            "Iudeea",
+            "Curtea"
           ]
         }
       ]
@@ -9497,10 +9497,10 @@ const EPISTLES = {
         {
           "answer": "femeia",
           "options": [
-            "viței",
-            "voia",
+            "căreia",
+            "ploaia",
             "femeia",
-            "voie"
+            "mărturia"
           ]
         }
       ]
@@ -9512,9 +9512,9 @@ const EPISTLES = {
         {
           "answer": "femeia",
           "options": [
-            "ziua",
-            "zugrăvit",
-            "zăbovi",
+            "căreia",
+            "curăția",
+            "religia",
             "femeia"
           ]
         }
@@ -9528,9 +9528,9 @@ const EPISTLES = {
           "answer": "două",
           "options": [
             "două",
-            "opta",
-            "orice",
-            "oricui"
+            "vouă",
+            "nouă",
+            "dată"
           ]
         }
       ]
@@ -9542,10 +9542,10 @@ const EPISTLES = {
         {
           "answer": "Arabia",
           "options": [
-            "Trei",
+            "Robia",
             "Arabia",
-            "Treizeci",
-            "Treji"
+            "Corabia",
+            "Antiohia"
           ]
         }
       ]
@@ -9557,10 +9557,10 @@ const EPISTLES = {
         {
           "answer": "mama",
           "options": [
-            "partea",
-            "pasă",
+            "teama",
+            "seama",
             "mama",
-            "patrie"
+            "turma"
           ]
         }
       ]
@@ -9572,9 +9572,9 @@ const EPISTLES = {
         {
           "answer": "durerile",
           "options": [
-            "ascultați",
-            "asculte",
-            "ascultă",
+            "legăturile",
+            "plăcerile",
+            "puterile",
             "durerile"
           ]
         }
@@ -9588,9 +9588,9 @@ const EPISTLES = {
           "answer": "sunteți",
           "options": [
             "sunteți",
-            "prețuiți",
-            "prețul",
-            "pribegiei"
+            "puteți",
+            "creșteți",
+            "veți"
           ]
         }
       ]
@@ -9602,10 +9602,10 @@ const EPISTLES = {
         {
           "answer": "întâmplat",
           "options": [
-            "aducerea",
+            "sculat",
             "întâmplat",
-            "aduceți",
-            "aducând"
+            "spălat",
+            "nevinovat"
           ]
         }
       ]
@@ -9617,9 +9617,9 @@ const EPISTLES = {
         {
           "answer": "slobode",
           "options": [
-            "mutarea",
-            "mutase",
-            "mutat",
+            "partide",
+            "cuprinde",
+            "încrede",
             "slobode"
           ]
         }
@@ -9632,10 +9632,10 @@ const EPISTLES = {
         {
           "answer": "slobode",
           "options": [
-            "usucă",
-            "valuri",
+            "repede",
+            "cuprinde",
             "slobode",
-            "vasele"
+            "nădejde"
           ]
         }
       ]
@@ -9647,10 +9647,10 @@ const EPISTLES = {
         {
           "answer": "Rămâneți",
           "options": [
-            "Arătat",
-            "Arătăm",
+            "Țineți",
+            "Puneți",
             "Rămâneți",
-            "Asculta"
+            "Supuneți"
           ]
         }
       ]
@@ -9662,10 +9662,10 @@ const EPISTLES = {
         {
           "answer": "folosi",
           "options": [
-            "căreia",
+            "părăsi",
             "folosi",
-            "cărnii",
-            "căror"
+            "viței",
+            "batjocori"
           ]
         }
       ]
@@ -9678,9 +9678,9 @@ const EPISTLES = {
           "answer": "dată",
           "options": [
             "dată",
-            "feriți",
-            "fiicei",
-            "fiii"
+            "îndată",
+            "deodată",
+            "odată"
           ]
         }
       ]
@@ -9692,9 +9692,9 @@ const EPISTLES = {
         {
           "answer": "despărțit",
           "options": [
-            "schimbare",
-            "schimbarea",
-            "schimbate",
+            "sfințit",
+            "curățit",
+            "însuflețit",
             "despărțit"
           ]
         }
@@ -9707,10 +9707,10 @@ const EPISTLES = {
         {
           "answer": "credință",
           "options": [
-            "vârsta",
-            "vârstă",
+            "privință",
+            "bunăvoință",
             "credință",
-            "văpaia"
+            "trebuință"
           ]
         }
       ]
@@ -9722,10 +9722,10 @@ const EPISTLES = {
         {
           "answer": "netăierea",
           "options": [
-            "învățători",
+            "binefacerea",
             "netăierea",
-            "învățătura",
-            "învățături"
+            "vederea",
+            "întemeierea"
           ]
         }
       ]
@@ -9738,9 +9738,9 @@ const EPISTLES = {
           "answer": "adevăr",
           "options": [
             "adevăr",
-            "laud",
-            "lauda",
-            "laude"
+            "număr",
+            "mâinilor",
+            "singur"
           ]
         }
       ]
@@ -9752,9 +9752,9 @@ const EPISTLES = {
         {
           "answer": "vine",
           "options": [
-            "abată",
-            "abel",
-            "acesta",
+            "ține",
+            "străine",
+            "tine",
             "vine"
           ]
         }
@@ -9767,10 +9767,10 @@ const EPISTLES = {
         {
           "answer": "plămădeala",
           "options": [
-            "nemulțumiți",
-            "nepieritoare",
+            "osteneala",
+            "rânduiala",
             "plămădeala",
-            "neprefăcută"
+            "zeciuiala"
           ]
         }
       ]
@@ -9782,10 +9782,10 @@ const EPISTLES = {
         {
           "answer": "oricine",
           "options": [
-            "neamuri",
-            "neamurile",
+            "cine",
+            "puține",
             "oricine",
-            "neapărat"
+            "vine"
           ]
         }
       ]
@@ -9797,9 +9797,9 @@ const EPISTLES = {
         {
           "answer": "mine",
           "options": [
-            "anii",
-            "anume",
-            "apoi",
+            "oricine",
+            "străine",
+            "închine",
             "mine"
           ]
         }
@@ -9813,9 +9813,9 @@ const EPISTLES = {
           "answer": "odată",
           "options": [
             "odată",
-            "spiță",
-            "spre",
-            "spumegă"
+            "dată",
+            "deodată",
+            "vreodată"
           ]
         }
       ]
@@ -9827,10 +9827,10 @@ const EPISTLES = {
         {
           "answer": "faceți",
           "options": [
-            "domnul",
+            "aduceți",
             "faceți",
-            "domnului",
-            "dorea"
+            "duceți",
+            "treceți"
           ]
         }
       ]
@@ -9842,10 +9842,10 @@ const EPISTLES = {
         {
           "answer": "singură",
           "options": [
-            "cereri",
-            "cererile",
+            "negură",
+            "băutură",
             "singură",
-            "ceresc"
+            "legătură"
           ]
         }
       ]
@@ -9857,9 +9857,9 @@ const EPISTLES = {
         {
           "answer": "nimiciți",
           "options": [
-            "luptați",
-            "lăsați",
-            "lăstari",
+            "munciți",
+            "străluciți",
+            "rătăciți",
             "nimiciți"
           ]
         }
@@ -9873,9 +9873,9 @@ const EPISTLES = {
           "answer": "umblați",
           "options": [
             "umblați",
-            "împărat",
-            "împăratul",
-            "împărăția"
+            "înșelați",
+            "tăiați",
+            "uitați"
           ]
         }
       ]
@@ -9887,10 +9887,10 @@ const EPISTLES = {
         {
           "answer": "firii",
           "options": [
-            "pune",
+            "venirii",
             "firii",
-            "punem",
-            "punerea"
+            "intrării",
+            "stării"
           ]
         }
       ]
@@ -9902,10 +9902,10 @@ const EPISTLES = {
         {
           "answer": "Duhul",
           "options": [
-            "Înainte",
-            "Înalt",
+            "Împăratul",
+            "Proorocul",
             "Duhul",
-            "Înaltă"
+            "Stăpânul"
           ]
         }
       ]
@@ -9917,9 +9917,9 @@ const EPISTLES = {
         {
           "answer": "curvia",
           "options": [
-            "ascultă",
-            "ascuns",
-            "ascunse",
+            "corabia",
+            "altuia",
+            "mărturia",
             "curvia"
           ]
         }
@@ -9932,9 +9932,9 @@ const EPISTLES = {
         {
           "answer": "partide",
           "options": [
-            "călcat",
-            "călcați",
-            "călcător",
+            "pătrunde",
+            "slobode",
+            "repede",
             "partide"
           ]
         }
@@ -9947,10 +9947,10 @@ const EPISTLES = {
         {
           "answer": "spun",
           "options": [
-            "inima",
-            "inimii",
+            "vreun",
+            "niciun",
             "spun",
-            "inimă"
+            "plin"
           ]
         }
       ]
@@ -9962,10 +9962,10 @@ const EPISTLES = {
         {
           "answer": "răbdare",
           "options": [
-            "vorbi",
+            "lepădare",
             "răbdare",
-            "vorbim",
-            "vorbind"
+            "schimbare",
+            "sărbătoare"
           ]
         }
       ]
@@ -9978,9 +9978,9 @@ const EPISTLES = {
           "answer": "Lege",
           "options": [
             "Lege",
-            "Doreau",
-            "Doresc",
-            "Dori"
+            "Adauge",
+            "Atinge",
+            "Ajunge"
           ]
         }
       ]
@@ -9992,9 +9992,9 @@ const EPISTLES = {
         {
           "answer": "împreună",
           "options": [
-            "oricărui",
-            "ospețe",
-            "ospătează",
+            "furtună",
+            "bună",
+            "pună",
             "împreună"
           ]
         }
@@ -10007,10 +10007,10 @@ const EPISTLES = {
         {
           "answer": "trăim",
           "options": [
-            "stânci",
-            "stâncă",
+            "știm",
+            "părăsim",
             "trăim",
-            "stăm"
+            "grăbim"
           ]
         }
       ]
@@ -10022,10 +10022,10 @@ const EPISTLES = {
         {
           "answer": "pizmuindu",
           "options": [
-            "dispreț",
+            "făcându",
             "pizmuindu",
-            "disprețui",
-            "disprețuit"
+            "smulgându",
+            "aruncându"
           ]
         }
       ]
@@ -10037,10 +10037,10 @@ const EPISTLES = {
         {
           "answer": "duhovnicești",
           "options": [
-            "îndeplinesc",
+            "pământești",
             "duhovnicești",
-            "îndepărtați",
-            "îndepărteze"
+            "strămoșești",
+            "trăiești"
           ]
         }
       ]
@@ -10052,10 +10052,10 @@ const EPISTLES = {
         {
           "answer": "unii",
           "options": [
-            "malul",
-            "mama",
+            "oamenii",
+            "anii",
             "unii",
-            "mamă"
+            "cărnii"
           ]
         }
       ]
@@ -10067,9 +10067,9 @@ const EPISTLES = {
         {
           "answer": "măcar",
           "options": [
-            "deschis",
-            "desfrâu",
-            "despart",
+            "chiar",
+            "zadar",
+            "altar",
             "măcar"
           ]
         }
@@ -10083,9 +10083,9 @@ const EPISTLES = {
           "answer": "Fiecare",
           "options": [
             "Fiecare",
-            "Bucurați",
-            "Bucure",
-            "Bucuria"
+            "Mâncare",
+            "Încercare",
+            "Răbdare"
           ]
         }
       ]
@@ -10097,10 +10097,10 @@ const EPISTLES = {
         {
           "answer": "însuși",
           "options": [
-            "întrebat",
+            "supuși",
             "însuși",
-            "întrece",
-            "întrucât"
+            "aduși",
+            "puși"
           ]
         }
       ]
@@ -10112,10 +10112,10 @@ const EPISTLES = {
         {
           "answer": "facă",
           "options": [
-            "aici",
-            "aiurea",
+            "prefacă",
+            "treacă",
             "facă",
-            "ajung"
+            "încă"
           ]
         }
       ]
@@ -10127,9 +10127,9 @@ const EPISTLES = {
         {
           "answer": "seamănă",
           "options": [
-            "prăpăd",
-            "prăznuit",
-            "punctul",
+            "clatină",
+            "odihnă",
+            "râvnă",
             "seamănă"
           ]
         }
@@ -10143,9 +10143,9 @@ const EPISTLES = {
           "answer": "putrezirea",
           "options": [
             "putrezirea",
-            "făgăduise",
-            "făgăduit",
-            "făgăduite"
+            "desăvârșirea",
+            "ieșirea",
+            "stropirea"
           ]
         }
       ]
@@ -10157,10 +10157,10 @@ const EPISTLES = {
         {
           "answer": "oboseală",
           "options": [
-            "preoți",
+            "socoteală",
             "oboseală",
-            "preoția",
-            "preoție"
+            "împărțeală",
+            "îndrăzneală"
           ]
         }
       ]
@@ -10172,9 +10172,9 @@ const EPISTLES = {
         {
           "answer": "toți",
           "options": [
-            "roada",
-            "robi",
-            "robia",
+            "preoți",
+            "fiți",
+            "mânați",
             "toți"
           ]
         }
@@ -10187,10 +10187,10 @@ const EPISTLES = {
         {
           "answer": "Uitați",
           "options": [
-            "Gurile",
-            "Gustat",
+            "Luptați",
+            "Ajutați",
             "Uitați",
-            "Guste"
+            "Purtați"
           ]
         }
       ]
@@ -10202,10 +10202,10 @@ const EPISTLES = {
         {
           "answer": "împrejur",
           "options": [
-            "muritori",
+            "tremur",
             "împrejur",
-            "mustrare",
-            "mustrat"
+            "cutremur",
+            "singur"
           ]
         }
       ]
@@ -10218,9 +10218,9 @@ const EPISTLES = {
           "answer": "păzesc",
           "options": [
             "păzesc",
-            "înșelați",
-            "înșine",
-            "înșivă"
+            "vorbesc",
+            "vestesc",
+            "pângăresc"
           ]
         }
       ]
@@ -10232,9 +10232,9 @@ const EPISTLES = {
         {
           "answer": "altceva",
           "options": [
-            "auzeau",
-            "auzirea",
-            "auziseră",
+            "ceva",
+            "undeva",
+            "cineva",
             "altceva"
           ]
         }
@@ -10247,10 +10247,10 @@ const EPISTLES = {
         {
           "answer": "făptură",
           "options": [
-            "altfel",
-            "altora",
+            "legătură",
+            "băutură",
             "făptură",
-            "altuia"
+            "singură"
           ]
         }
       ]
@@ -10262,10 +10262,10 @@ const EPISTLES = {
         {
           "answer": "acesta",
           "options": [
-            "părăsite",
+            "vârsta",
             "acesta",
-            "părăsiți",
-            "părți"
+            "opta",
+            "gata"
           ]
         }
       ]
@@ -10278,9 +10278,9 @@ const EPISTLES = {
           "answer": "necăjească",
           "options": [
             "necăjească",
-            "privitoare",
-            "propovăduim",
-            "propovăduit"
+            "dospească",
+            "pământească",
+            "vestească"
           ]
         }
       ]
@@ -10292,9 +10292,9 @@ const EPISTLES = {
         {
           "answer": "Hristos",
           "options": [
-            "Câștigați",
-            "Câștigul",
-            "Câștiguri",
+            "Ilie",
+            "Petru",
+            "Avraam",
             "Hristos"
           ]
         }

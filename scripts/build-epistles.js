@@ -29,7 +29,70 @@ function tokens(text) {
   return [...text.matchAll(/[\p{L}\p{M}]+/gu)];
 }
 
-function makeExercise(ref, text, vocabulary) {
+const lower = (word) => word.toLocaleLowerCase('ro-RO');
+const isCapitalized = (word) => word[0] !== lower(word[0]);
+const capitalize = (word) => word[0].toLocaleUpperCase('ro-RO') + word.slice(1);
+
+// Cuvinte care nu apar niciodată ca variantă greșită: jignitoare sau nepotrivite
+// lângă textul biblic într-un joc pentru copii.
+const FORBIDDEN_DISTRACTOR = /^(ticălo|păcăto|drac|diavol|satan|curv|preacurv|desfrân|blestem|nebun|mincino|ucig|hoț|spurc|necurat|scârb|scârn|porc|măgar|câin|beți|bețiv|idol|prost|urât)/;
+
+// Pentru numele sfinte, variantele vin din liste fixe, cu aceeași formă
+// gramaticală, ca să nu apară cuvinte la întâmplare lângă ele.
+const PERSONS = ['moise', 'avraam', 'david', 'pavel', 'petru', 'iacov', 'ilie', 'samuel', 'isaac', 'iosif'];
+const TITLES = ['împăratul', 'apostolul', 'proorocul', 'preotul', 'stăpânul', 'învățătorul', 'îngerul'];
+const TITLES_GENITIVE = ['împăratului', 'apostolului', 'proorocului', 'preotului', 'stăpânului', 'învățătorului', 'îngerului'];
+const TITLES_VOCATIVE = ['împărate', 'stăpâne', 'învățătorule', 'proorocule'];
+const HOLY_DISTRACTORS = new Map([
+  ...['dumnezeu', 'isus', 'hristos', 'iisus', 'mesia', 'emanuel'].map((w) => [w, PERSONS]),
+  ...['domnul', 'duhul', 'tatăl', 'fiul', 'mântuitorul'].map((w) => [w, TITLES]),
+  ...['dumnezeului', 'domnului', 'duhului', 'tatălui', 'fiului', 'mântuitorului', 'hristosului'].map((w) => [w, TITLES_GENITIVE]),
+  ...['doamne', 'dumnezeule', 'tată'].map((w) => [w, TITLES_VOCATIVE]),
+]);
+
+// Variantele greșite trebuie să semene gramatical cu răspunsul, altfel acesta se
+// ghicește fără să cunoști versetul. Se aproximează prin terminație (întâi 4
+// litere, apoi tot mai puține) și prin tipul cuvântului (nume propriu sau nu).
+// Fiecare treaptă: [litere comune la final, același tip, diferență de lungime].
+const MATCH_STEPS = [[4, true, 3], [3, true, 3], [3, false, 4], [2, true, 2], [2, false, 4], [1, false, 3], [0, false, 6]];
+
+function pickDistractors(ref, answer, text, vocabulary, properNames) {
+  const key = lower(answer);
+  const inVerse = new Set(tokens(text).map((match) => lower(match[0])));
+  const order = (list) => [...list].sort((a, b) => hash(`${ref}:${a}`) - hash(`${ref}:${b}`));
+  const shape = (word) => (isCapitalized(answer) ? capitalize(word) : word);
+  const holy = HOLY_DISTRACTORS.get(key);
+  if (holy) return order(holy.filter((word) => !inVerse.has(word))).slice(0, 3).map(shape);
+
+  const proper = isCapitalized(answer) && properNames.has(key);
+  const chosen = [];
+  for (const [suffix, sameKind, spread] of MATCH_STEPS) {
+    if (chosen.length === 3) break;
+    const tail = suffix ? key.slice(-suffix) : '';
+    const candidates = vocabulary.filter((word) => word !== key && !inVerse.has(word)
+      && !chosen.includes(word) && !FORBIDDEN_DISTRACTOR.test(word) && !HOLY_DISTRACTORS.has(word)
+      && word.endsWith(tail) && Math.abs(word.length - key.length) <= spread
+      && (!sameKind || properNames.has(word) === proper));
+    chosen.push(...order(candidates).slice(0, 3 - chosen.length));
+  }
+  return chosen.map(shape);
+}
+
+// Cuvinte scrise aproape mereu cu majusculă în referință (nume proprii).
+function findProperNames(texts) {
+  const seen = new Map();
+  for (const text of texts) {
+    for (const match of tokens(text)) {
+      const entry = seen.get(lower(match[0])) || { capitalized: 0, total: 0 };
+      entry.total += 1;
+      if (isCapitalized(match[0])) entry.capitalized += 1;
+      seen.set(lower(match[0]), entry);
+    }
+  }
+  return new Set([...seen].filter(([, e]) => e.capitalized / e.total > 0.8).map(([word]) => word));
+}
+
+function makeExercise(ref, text, vocabulary, properNames) {
   const matches = tokens(text);
   const occurrences = new Map();
   for (const match of matches) {
@@ -43,17 +106,7 @@ function makeExercise(ref, text, vocabulary) {
   if (!uniqueWords.length) throw new Error(`${ref}: nu există un cuvânt unic potrivit pentru exercițiu`);
   const chosen = uniqueWords[hash(ref) % uniqueWords.length];
   const answer = chosen[0];
-  const lowerAnswer = answer.toLocaleLowerCase('ro-RO');
-  const candidates = vocabulary.filter((word) => word !== lowerAnswer
-    && Math.abs(word.length - answer.length) <= 2);
-  const start = hash(`${ref}:options`) % candidates.length;
-  const distractors = [];
-  for (let offset = 0; distractors.length < 3 && offset < candidates.length; offset++) {
-    const word = candidates[(start + offset) % candidates.length];
-    const option = answer[0] === answer[0].toLocaleUpperCase('ro-RO')
-      ? word[0].toLocaleUpperCase('ro-RO') + word.slice(1) : word;
-    distractors.push(option);
-  }
+  const distractors = pickDistractors(ref, answer, text, vocabulary, properNames);
   if (distractors.length !== 3) throw new Error(`${ref}: variante insuficiente`);
   const options = [...distractors];
   options.splice(hash(`${ref}:answer`) % 4, 0, answer);
@@ -73,8 +126,9 @@ function buildEpistles() {
     [...verses.values()].flatMap((text) => tokens(text)
       .map((match) => match[0].toLocaleLowerCase('ro-RO'))
       .filter((word) => word.length >= 4 && !STOP_WORDS.has(word)))))].sort();
+  const properNames = findProperNames(references.flatMap(({ verses }) => [...verses.values()]));
   return Object.fromEntries(references.map(({ book, verses }) => [
-    book.id, [...verses].map(([ref, text]) => makeExercise(ref, text, vocabulary)),
+    book.id, [...verses].map(([ref, text]) => makeExercise(ref, text, vocabulary, properNames)),
   ]));
 }
 
@@ -97,4 +151,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { buildEpistles, makeExercise };
+module.exports = { buildEpistles, makeExercise, HOLY_DISTRACTORS, FORBIDDEN_DISTRACTOR };
