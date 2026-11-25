@@ -118,8 +118,13 @@ async function main() {
     await db.exec('set role anon');
     await assert.rejects(() => db.query('select public.set_reading_category($1)', ['grades_2_3']), /permission denied/);
     await db.exec('reset role');
-    for (const file of newFiles) await db.exec(fs.readFileSync(path.join(ROOT, 'supabase', file), 'utf8'));
-    // 20261126_01 aplică răspunsurile alese de mână peste cheia din 20261110_01.
+    // După 20261126_01, rerularea cheii vechi (20261110_01) e refuzată intenționat: ar readuce
+    // răspunsurile înlocuite. Celelalte migrări rămân repetabile.
+    await assert.rejects(db.exec(fs.readFileSync(path.join(ROOT, 'supabase', '20261110_01_epistle_answer_key.sql'), 'utf8')), /nu rerula 20261110_01/);
+    await db.exec('rollback');
+    for (const file of newFiles.filter((name) => name !== '20261110_01_epistle_answer_key.sql')) {
+      await db.exec(fs.readFileSync(path.join(ROOT, 'supabase', file), 'utf8'));
+    }
     await db.exec(fs.readFileSync(path.join(ROOT, 'supabase', '20261126_01_epistle_curated_answers.sql'), 'utf8'));
     assert.equal(await scalar('select current_cycle from public.scores where user_id=$1', [A]), 1, 'Incremental migrations are repeatable');
     // Verifică ambele granițe pentru fiecare categorie, cu triggerul real.

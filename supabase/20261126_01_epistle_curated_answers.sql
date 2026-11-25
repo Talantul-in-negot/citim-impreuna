@@ -3,9 +3,11 @@
 -- Răspunsurile vechi rămân acceptate (aplicații neactualizate, coada offline). Rulează
 -- ÎNAINTE de publicarea aplicației. Sigur la rulări repetate.
 begin;
+-- Nu așteaptă la nesfârșit blocarea tabelului events; la eroare: rollback; și reîncearcă.
+set local lock_timeout = '5s';
 
 create table if not exists public.verse_answer_legacy (
-  verse_ref text not null references public.verse_answers (verse_ref) on delete cascade,
+  verse_ref text not null references public.verse_answers (verse_ref) on delete restrict,
   answer text not null,
   primary key (verse_ref, answer)
 );
@@ -30,6 +32,8 @@ begin
   if v_current is null or v_current = new.answer then return new; end if;
   if new.chosen = new.answer then new.chosen := v_current; end if;
   new.answer := v_current;
+  -- Validatorul live cere correct = (chosen = answer); verify_event_before_insert îl recalculează oricum.
+  new.correct := new.chosen is not distinct from v_current;
   return new;
 end;
 $$;
@@ -39,6 +43,24 @@ revoke all on function public.accept_legacy_answer() from public, anon, authenti
 drop trigger if exists events_accept_legacy_answer on public.events;
 create trigger events_accept_legacy_answer before insert on public.events
   for each row execute function public.accept_legacy_answer();
+
+-- Rerularea unei migrări vechi (20261110_01) ar readuce răspunsurile vechi în cheie și ar
+-- puncta greșit răspunsurile noi. Un răspuns devenit „vechi" nu mai poate reveni.
+create or replace function public.refuse_legacy_answer()
+returns trigger language plpgsql security definer set search_path = public, pg_temp as $$
+begin
+  if new.answer is distinct from old.answer and exists (
+    select 1 from public.verse_answer_legacy l where l.verse_ref = new.verse_ref and l.answer = new.answer
+  ) then
+    raise exception 'Răspunsul % pentru % a fost înlocuit; nu rerula 20261110_01 după 20261126_01', new.answer, new.verse_ref;
+  end if;
+  return new;
+end;
+$$;
+revoke all on function public.refuse_legacy_answer() from public, anon, authenticated;
+drop trigger if exists verse_answers_refuse_legacy_answer on public.verse_answers;
+create trigger verse_answers_refuse_legacy_answer before update on public.verse_answers
+  for each row execute function public.refuse_legacy_answer();
 
 create temporary table epistle_answers_20261126 (verse_ref text primary key, answer text not null, choices text[] not null) on commit drop;
 insert into epistle_answers_20261126 (verse_ref, answer, choices) values
@@ -374,7 +396,7 @@ insert into epistle_answers_20261126 (verse_ref, answer, choices) values
   ('Evrei 6:15', 'răbdare', array['răbdare', 'grabă', 'teamă', 'mânie']::text[]),
   ('Evrei 6:16', 'jurământul', array['darul', 'cântecul', 'zâmbetul', 'jurământul']::text[]),
   ('Evrei 6:17', 'jurământ', array['dar', 'semn', 'jurământ', 'toiag']::text[]),
-  ('Evrei 6:18', 'mintă', array['uite', 'mintă', 'plece', 'tacă']::text[]),
+  ('Evrei 6:18', 'nădejdea', array['slava', 'nădejdea', 'pacea', 'cununa']::text[]),
   ('Evrei 6:19', 'ancoră', array['ancoră', 'corabie', 'lampă', 'cheie']::text[]),
   ('Evrei 6:20', 'intrat', array['intrat', 'plecat', 'rămas', 'privit']::text[]),
   ('Evrei 7:1', 'Salemului', array['Ierihonului', 'Egiptului', 'Salemului', 'Babilonului']::text[]),

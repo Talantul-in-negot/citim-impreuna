@@ -77,6 +77,11 @@ async function main() {
     assert.deepEqual(await insert(db, row.ref, row.previous, row.previous),
       { chosen: row.answer, answer: row.answer, correct: true }, `${row.ref}: old correct answer is accepted and scored`);
   }
+  // Clientul vechi trimite correct=false dacă alegerea lui nu era răspunsul vechi; dacă acea
+  // alegere e chiar cuvântul nou, triggerul recalculează correct ca validatorul să nu-l respingă.
+  assert.deepEqual(await db.query(`insert into public.events (user_id, verse_ref, chosen, answer, correct, cycle)
+    values ($1, $2, $3, $4, false, 0) returning chosen, answer, correct`, [USER, sample.ref, sample.answer, sample.previous]).then((r) => r.rows[0]),
+    { chosen: sample.answer, answer: sample.answer, correct: true }, 'An old event can never block the queue');
   // O variantă greșită veche rămâne greșită, dar nu e respinsă.
   const oldWrong = before.get(sample.ref).find((o) => o !== sample.previous && o !== sample.answer);
   assert.deepEqual(await insert(db, sample.ref, oldWrong, sample.previous), { chosen: oldWrong, answer: sample.answer, correct: false });
@@ -86,8 +91,13 @@ async function main() {
   // Un răspuns inventat e respins în continuare de validatorul live.
   await assert.rejects(insert(db, sample.ref, 'cuvântinexistent', sample.answer), /not a valid option/);
 
+  // Rerularea cheii vechi (20261110_01) e oprită, nu readuce răspunsurile vechi.
+  await assert.rejects(db.exec(read('20261110_01_epistle_answer_key.sql')), /nu rerula 20261110_01/);
+  await db.exec('rollback');
+  assert.equal((await db.query('select answer from public.verse_answers where verse_ref = $1', [sample.ref])).rows[0].answer, sample.answer);
   for (const role of ['anon', 'authenticated']) {
     assert.equal((await db.query(`select has_function_privilege($1, 'public.accept_legacy_answer()', 'execute') as ok`, [role])).rows[0].ok, false);
+    assert.equal((await db.query(`select has_function_privilege($1, 'public.refuse_legacy_answer()', 'execute') as ok`, [role])).rows[0].ok, false);
     assert.equal((await db.query(`select has_table_privilege($1, 'public.verse_answer_legacy', 'select') as ok`, [role])).rows[0].ok, false);
   }
   await db.close();

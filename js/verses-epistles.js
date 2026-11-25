@@ -4990,15 +4990,15 @@ const EPISTLES = {
     },
     {
       "ref": "Evrei 6:18",
-      "text": "pentru ca, prin două lucruri care nu se pot schimba și în care este cu neputință ca Dumnezeu să {0}, să găsim o puternică îmbărbătare noi, a căror scăpare a fost să apucăm nădejdea care ne era pusă înainte,",
+      "text": "pentru ca, prin două lucruri care nu se pot schimba și în care este cu neputință ca Dumnezeu să mintă, să găsim o puternică îmbărbătare noi, a căror scăpare a fost să apucăm {0} care ne era pusă înainte,",
       "blanks": [
         {
-          "answer": "mintă",
+          "answer": "nădejdea",
           "options": [
-            "uite",
-            "mintă",
-            "plece",
-            "tacă"
+            "slava",
+            "nădejdea",
+            "pacea",
+            "cununa"
           ]
         }
       ]

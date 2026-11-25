@@ -280,6 +280,9 @@ epistole. Rulează pe producție **înainte** de publicarea aplicației:
   vechi (aplicație neactualizată, coada offline) în răspunsul nou: dacă era corect, rămâne corect
   și e punctat; o variantă greșită veche rămâne greșită, dar nu e respinsă.
 
+Migrarea are `lock_timeout = 5s` pe tabelul `events`: dacă dă eroare de blocare, rulează `rollback;` și reîncearcă.
+Un trigger pe `verse_answers` refuză readucerea unui răspuns înlocuit.
+
 **După această migrare nu rerula `20261110_01` sau `20261110_03` pe producție:** ar readuce
 răspunsurile vechi (01) sau ar pune răspunsul nou lângă variantele vechi și ar eșua (03).
 `20261110_01`, `20261110_03` și `20261125_01` sunt înghețate; generatoarele lor nu le mai rescriu.

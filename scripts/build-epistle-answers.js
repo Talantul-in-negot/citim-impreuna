@@ -21,6 +21,8 @@ const { loadEpistles, BOOK_ORDER } = require('./build-epistle-answer-key');
 const ROOT = path.join(__dirname, '..');
 const OUTPUT = path.join(ROOT, 'supabase/20261126_01_epistle_curated_answers.sql');
 const FROZEN_KEY = path.join(ROOT, 'supabase/20261110_01_epistle_answer_key.sql');
+const FROZEN_CHOICES = ['supabase/20261110_03_citim_catalog_epistles.sql', 'supabase/20261125_01_epistle_options.sql']
+  .map((file) => path.join(ROOT, file));
 
 // Răspunsurile publicate până acum, din migrarea aplicată în producție.
 function frozenAnswers() {
@@ -29,13 +31,33 @@ function frozenAnswers() {
     .map((m) => [m[1].replace(/''/g, "'"), m[2].replace(/''/g, "'")]));
 }
 
+// Variantele publicate vreodată (prima versiune și 20261125_01), pe verset.
+function frozenChoices() {
+  const choices = new Map();
+  for (const file of FROZEN_CHOICES) {
+    for (const m of fs.readFileSync(file, 'utf8').matchAll(/^      \('((?:[^']|'')+)', array\[(.*?)\]::text\[\]\)/gm)) {
+      const ref = m[1].replace(/''/g, "'");
+      const list = [...m[2].matchAll(/'((?:[^']|'')*)'/g)].map((x) => x[1].replace(/''/g, "'"));
+      choices.set(ref, [...(choices.get(ref) || []), ...list]);
+    }
+  }
+  return choices;
+}
+
 function answerRows() {
   const books = loadEpistles();
   const before = frozenAnswers();
+  const published = frozenChoices();
   return BOOK_ORDER.flatMap((id) => books[id]).map((verse) => {
     const { answer, options } = verse.blanks[0];
     if (!before.has(verse.ref)) throw new Error(`${verse.ref}: lipsește din 20261110_01`);
     if (options.length !== 4 || !options.includes(answer)) throw new Error(`${verse.ref}: variante invalide`);
+    // O variantă greșită dintr-o versiune publicată nu poate deveni răspuns corect: un
+    // răspuns vechi „greșit" cu acel cuvânt (coada offline) ar ajunge deodată corect.
+    const previous = before.get(verse.ref);
+    if (answer !== previous && (published.get(verse.ref) || []).includes(answer)) {
+      throw new Error(`${verse.ref}: "${answer}" a fost variantă greșită publicată; alege alt cuvânt`);
+    }
     return { ref: verse.ref, answer, previous: before.get(verse.ref), options: [...options] };
   });
 }
@@ -52,9 +74,11 @@ function renderSql(rows) {
     '-- Răspunsurile vechi rămân acceptate (aplicații neactualizate, coada offline). Rulează',
     '-- ÎNAINTE de publicarea aplicației. Sigur la rulări repetate.',
     'begin;',
+    "-- Nu așteaptă la nesfârșit blocarea tabelului events; la eroare: rollback; și reîncearcă.",
+    "set local lock_timeout = '5s';",
     '',
     'create table if not exists public.verse_answer_legacy (',
-    '  verse_ref text not null references public.verse_answers (verse_ref) on delete cascade,',
+    '  verse_ref text not null references public.verse_answers (verse_ref) on delete restrict,',
     '  answer text not null,',
     '  primary key (verse_ref, answer)',
     ');',
@@ -79,6 +103,8 @@ function renderSql(rows) {
     '  if v_current is null or v_current = new.answer then return new; end if;',
     '  if new.chosen = new.answer then new.chosen := v_current; end if;',
     '  new.answer := v_current;',
+    '  -- Validatorul live cere correct = (chosen = answer); verify_event_before_insert îl recalculează oricum.',
+    '  new.correct := new.chosen is not distinct from v_current;',
     '  return new;',
     'end;',
     '$$;',
@@ -88,6 +114,24 @@ function renderSql(rows) {
     'drop trigger if exists events_accept_legacy_answer on public.events;',
     'create trigger events_accept_legacy_answer before insert on public.events',
     '  for each row execute function public.accept_legacy_answer();',
+    '',
+    '-- Rerularea unei migrări vechi (20261110_01) ar readuce răspunsurile vechi în cheie și ar',
+    '-- puncta greșit răspunsurile noi. Un răspuns devenit „vechi" nu mai poate reveni.',
+    'create or replace function public.refuse_legacy_answer()',
+    'returns trigger language plpgsql security definer set search_path = public, pg_temp as $$',
+    'begin',
+    '  if new.answer is distinct from old.answer and exists (',
+    '    select 1 from public.verse_answer_legacy l where l.verse_ref = new.verse_ref and l.answer = new.answer',
+    '  ) then',
+    "    raise exception 'Răspunsul % pentru % a fost înlocuit; nu rerula 20261110_01 după 20261126_01', new.answer, new.verse_ref;",
+    '  end if;',
+    '  return new;',
+    'end;',
+    '$$;',
+    'revoke all on function public.refuse_legacy_answer() from public, anon, authenticated;',
+    'drop trigger if exists verse_answers_refuse_legacy_answer on public.verse_answers;',
+    'create trigger verse_answers_refuse_legacy_answer before update on public.verse_answers',
+    '  for each row execute function public.refuse_legacy_answer();',
     '',
     'create temporary table epistle_answers_20261126 (verse_ref text primary key, answer text not null, choices text[] not null) on commit drop;',
     'insert into epistle_answers_20261126 (verse_ref, answer, choices) values',
