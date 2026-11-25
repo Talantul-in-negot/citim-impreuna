@@ -7,6 +7,10 @@ const { validate } = require('./validate-verses');
 
 const ROOT = path.join(__dirname, '..');
 const OUTPUT = path.join(ROOT, 'js/verses-epistles.js');
+// Cuvântul de completat și variantele greșite alese de mână, pe verset. Au
+// prioritate față de alegerea automată de mai jos, care rămâne doar pentru
+// versetele încă nealese.
+const CHOICES_PATH = path.join(__dirname, 'epistle-choices.json');
 const STOP_WORDS = new Set([
   'acest', 'această', 'aceste', 'aceștia', 'aceasta', 'acestea', 'acela', 'aceea',
   'acelor', 'acestei', 'acesteia', 'acelei', 'acelui', 'aceluia', 'acele', 'aceia',
@@ -92,7 +96,7 @@ function findProperNames(texts) {
   return new Set([...seen].filter(([, e]) => e.capitalized / e.total > 0.8).map(([word]) => word));
 }
 
-function makeExercise(ref, text, vocabulary, properNames) {
+function makeExercise(ref, text, vocabulary, properNames, choices) {
   const matches = tokens(text);
   const occurrences = new Map();
   for (const match of matches) {
@@ -103,10 +107,27 @@ function makeExercise(ref, text, vocabulary, properNames) {
     const word = match[0].toLocaleLowerCase('ro-RO');
     return word.length >= 4 && occurrences.get(word) === 1 && !STOP_WORDS.has(word);
   });
-  if (!uniqueWords.length) throw new Error(`${ref}: nu există un cuvânt unic potrivit pentru exercițiu`);
-  const chosen = uniqueWords[hash(ref) % uniqueWords.length];
+  const curated = choices && choices[ref];
+  let chosen;
+  let distractors;
+  if (curated) {
+    const [word, ...wrong] = curated;
+    const same = matches.filter((match) => match[0].toLocaleLowerCase('ro-RO') === word.toLocaleLowerCase('ro-RO'));
+    if (same.length !== 1 || same[0][0] !== word) {
+      throw new Error(`${ref}: cuvântul ales "${word}" trebuie să apară exact o dată, scris ca în verset`);
+    }
+    const inVerse = new Set(matches.map((match) => match[0].toLocaleLowerCase('ro-RO')));
+    if (wrong.length !== 3 || wrong.some((w) => inVerse.has(w.toLocaleLowerCase('ro-RO')))) {
+      throw new Error(`${ref}: trebuie 3 variante greșite care nu apar în verset`);
+    }
+    chosen = same[0];
+    distractors = wrong;
+  } else {
+    if (!uniqueWords.length) throw new Error(`${ref}: nu există un cuvânt unic potrivit pentru exercițiu`);
+    chosen = uniqueWords[hash(ref) % uniqueWords.length];
+    distractors = pickDistractors(ref, chosen[0], text, vocabulary, properNames);
+  }
   const answer = chosen[0];
-  const distractors = pickDistractors(ref, answer, text, vocabulary, properNames);
   if (distractors.length !== 3) throw new Error(`${ref}: variante insuficiente`);
   const options = [...distractors];
   options.splice(hash(`${ref}:answer`) % 4, 0, answer);
@@ -115,6 +136,15 @@ function makeExercise(ref, text, vocabulary, properNames) {
     text: `${text.slice(0, chosen.index)}{0}${text.slice(chosen.index + answer.length)}`,
     blanks: [{ answer, options }],
   };
+}
+
+function loadChoices(knownRefs) {
+  if (!fs.existsSync(CHOICES_PATH)) return {};
+  const raw = JSON.parse(fs.readFileSync(CHOICES_PATH, 'utf8'));
+  const choices = Object.fromEntries(Object.entries(raw).filter(([ref]) => !ref.startsWith('_')));
+  const unknown = Object.keys(choices).filter((ref) => !knownRefs.has(ref));
+  if (unknown.length) throw new Error(`epistle-choices.json: referințe necunoscute: ${unknown.join(', ')}`);
+  return choices;
 }
 
 function buildEpistles() {
@@ -127,8 +157,9 @@ function buildEpistles() {
       .map((match) => match[0].toLocaleLowerCase('ro-RO'))
       .filter((word) => word.length >= 4 && !STOP_WORDS.has(word)))))].sort();
   const properNames = findProperNames(references.flatMap(({ verses }) => [...verses.values()]));
+  const choices = loadChoices(new Set(references.flatMap(({ verses }) => [...verses.keys()])));
   return Object.fromEntries(references.map(({ book, verses }) => [
-    book.id, [...verses].map(([ref, text]) => makeExercise(ref, text, vocabulary, properNames)),
+    book.id, [...verses].map(([ref, text]) => makeExercise(ref, text, vocabulary, properNames, choices)),
   ]));
 }
 

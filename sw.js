@@ -1,7 +1,7 @@
 // Keep these URLs in lock-step with the cache-busted URLs in index.html.
 // CacheStorage matches query strings, so precaching `js/app.js` does not make
 // `js/app.js?v=N` available on a fresh offline install.
-const CACHE = "citim-impreuna-v98";
+const CACHE = "citim-impreuna-v99";
 const ASSETS = [
   ".",
   "index.html",
@@ -13,7 +13,7 @@ const ASSETS = [
   "js/verses-1samuel.js?v=45",
   "js/verses-2samuel.js?v=46",
   "js/verses.js?v=44",
-  "js/verses-epistles.js?v=2",
+  "js/verses-epistles.js?v=3",
   "js/reading-path.js?v=1",
   "js/tracker.js?v=58",
   "js/pagination.js?v=1",

@@ -65,18 +65,7 @@ function renderSql(rows) {
   ].join('\n');
 }
 
-if (require.main === module) {
-  const rows = catalogChoices();
-  const sql = renderSql(rows);
-  if (process.argv.includes('--check')) {
-    if (!fs.existsSync(OUTPUT) || fs.readFileSync(OUTPUT, 'utf8').replace(/\r\n/g, '\n') !== sql) {
-      throw new Error('Variantele epistolelor trebuie regenerate: node scripts/build-epistle-options.js');
-    }
-    console.log(`Variantele epistolelor verificate: ${rows.length} versete.`);
-  } else {
-    fs.writeFileSync(OUTPUT, sql, 'utf8');
-    console.log(`Variantele epistolelor generate: ${rows.length} versete.`);
-  }
-}
+// 20261125_01 este aplicată în producție și rămâne înghețată. Variantele și
+// răspunsurile noi se publică prin scripts/build-epistle-answers.js.
 
 module.exports = { OUTPUT };

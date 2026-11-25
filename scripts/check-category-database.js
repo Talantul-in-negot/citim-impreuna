@@ -60,6 +60,8 @@ async function main() {
       values ($1,9000,9000,now(),0),($2,1234,1234,now(),3)`, [A, B]);
     const before = (await db.query('select user_id,points,current_cycle from public.scores order by user_id')).rows;
     for (const file of newFiles) await db.exec(fs.readFileSync(path.join(ROOT, 'supabase', file), 'utf8'));
+    // 20261126_01 aplică răspunsurile alese de mână peste cheia din 20261110_01.
+    await db.exec(fs.readFileSync(path.join(ROOT, 'supabase', '20261126_01_epistle_curated_answers.sql'), 'utf8'));
     assert.deepEqual((await db.query('select user_id,points,current_cycle from public.scores order by user_id')).rows, before);
     assert.equal(await scalar('select count(*) from public.verse_answers'), 2191);
     answerRows = (await db.query('select verse_ref,answer,page_index from public.verse_answers order by ordinal')).rows;
@@ -117,6 +119,8 @@ async function main() {
     await assert.rejects(() => db.query('select public.set_reading_category($1)', ['grades_2_3']), /permission denied/);
     await db.exec('reset role');
     for (const file of newFiles) await db.exec(fs.readFileSync(path.join(ROOT, 'supabase', file), 'utf8'));
+    // 20261126_01 aplică răspunsurile alese de mână peste cheia din 20261110_01.
+    await db.exec(fs.readFileSync(path.join(ROOT, 'supabase', '20261126_01_epistle_curated_answers.sql'), 'utf8'));
     assert.equal(await scalar('select current_cycle from public.scores where user_id=$1', [A]), 1, 'Incremental migrations are repeatable');
     // Verifică ambele granițe pentru fiecare categorie, cu triggerul real.
     for (const [index, category] of categories.entries()) {

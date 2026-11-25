@@ -267,3 +267,19 @@ Așteptat: `events` -> `authenticated: INSERT,SELECT`; `scores`/`reading_profile
 `authenticated: SELECT`; `verse_answers` lipsește; `app_config` -> doar `SELECT`.
 Triggerele pe `events`: `events_recalculate_scores`, `events_validate_citim_insert`,
 `events_verify_before_insert`, `events_verify_rate_limit`, `zz_events_account_display_name`.
+
+# Cuvinte de completat alese de mână în epistole (2026-11-26)
+
+`20261126_01_epistle_curated_answers.sql` (generat de `scripts/build-epistle-answers.js` din
+`scripts/epistle-choices.json`) schimbă cuvântul de completat la 603 din 686 de versete din
+epistole. Rulează pe producție **înainte** de publicarea aplicației:
+- răspunsul vechi al fiecărui verset schimbat rămâne în `public.verse_answer_legacy`;
+- `verse_answers.answer` și `citim_verse_catalog.correct_answer` primesc răspunsul nou, iar
+  variantele noi se adaugă la cele acceptate (cele vechi rămân);
+- triggerul `events_accept_legacy_answer` (rulează primul) traduce un răspuns trimis cu cuvântul
+  vechi (aplicație neactualizată, coada offline) în răspunsul nou: dacă era corect, rămâne corect
+  și e punctat; o variantă greșită veche rămâne greșită, dar nu e respinsă.
+
+**După această migrare nu rerula `20261110_01` sau `20261110_03` pe producție:** ar readuce
+răspunsurile vechi (01) sau ar pune răspunsul nou lângă variantele vechi și ar eșua (03).
+`20261110_01`, `20261110_03` și `20261125_01` sunt înghețate; generatoarele lor nu le mai rescriu.

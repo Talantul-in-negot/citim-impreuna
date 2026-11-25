@@ -38,18 +38,8 @@ function renderSql(rows) {
   return lines.join('\n');
 }
 
-if (require.main === module) {
-  const rows = buildEpistleRows();
-  const sql = renderSql(rows);
-  if (process.argv.includes('--check')) {
-    if (!fs.existsSync(OUTPUT) || fs.readFileSync(OUTPUT, 'utf8').replace(/\r\n/g, '\n') !== sql) {
-      throw new Error('Cheia epistolelor trebuie regenerată: node scripts/build-epistle-answer-key.js');
-    }
-    console.log(`Cheia epistolelor verificată: ${rows.length} versete.`);
-  } else {
-    fs.writeFileSync(OUTPUT, sql, 'utf8');
-    console.log(`Cheia epistolelor generată: ${rows.length} versete.`);
-  }
-}
+// 20261110_01 este aplicată în producție și rămâne înghețată. Răspunsurile noi se
+// publică prin scripts/build-epistle-answers.js; acest modul oferă doar
+// loadEpistles(), buildEpistleRows() și BOOK_ORDER.
 
 module.exports = { loadEpistles, buildEpistleRows, BOOK_ORDER };

@@ -28,6 +28,7 @@ async function freshDb({ withKey, withCatalog }) {
   await db.exec(read('20260903_01_verse_answer_key.sql'));
   if (withKey) await db.exec(read('20261110_01_epistle_answer_key.sql'));
   if (withCatalog) await db.exec(CATALOG_DDL);
+  await db.exec('create role anon; create role authenticated; create table public.events (id bigserial primary key, verse_ref text, chosen text, answer text);');
   return db;
 }
 
@@ -54,11 +55,18 @@ async function main() {
   const samuel = await db.query(`select * from public.citim_verse_catalog where verse_ref = '1 Samuel 1:1'`);
   assert.equal(samuel.rows[0].page_index, 0, 'Existing Samuel rows are untouched');
 
+  // 2) Reaplicarea e sigură (idempotentă), înainte de migrările care schimbă răspunsurile:
+  // după 20261126_01, 20261110_03 nu mai trebuie rerulată (ar pune răspunsul nou lângă variantele vechi).
+  await db.exec(migration);
+  const again = await db.query(`select count(*)::int as n from public.citim_verse_catalog`);
+  assert.equal(again.rows[0].n, expected.length + 1);
+
   // 1b) 20261125_01: catalogul acceptă variantele noi din aplicație și le păstrează
   // pe cele vechi (telefoane neactualizate, coada offline).
   const options = read('20261125_01_epistle_options.sql');
   await db.exec(options);
   await db.exec(options);
+  await db.exec(read('20261126_01_epistle_curated_answers.sql'));
   const merged = new Map((await db.query(`select verse_ref, valid_choices from public.citim_verse_catalog`)).rows
     .map((row) => [row.verse_ref, [...row.valid_choices]]));
   for (const { ref, options: app } of expected) {
@@ -69,11 +77,6 @@ async function main() {
   assert.equal(merged.get('1 Samuel 1:1').length, 4, 'Samuel choices are untouched');
   await assert.rejects(db.query(`update public.citim_verse_catalog set valid_choices = array['a','b','c'] where verse_ref = '1 Samuel 1:1'`),
     /valid_choices_check/, 'At least four choices are still required');
-
-  // 2) Reaplicarea e sigură (idempotentă).
-  await db.exec(migration);
-  const again = await db.query(`select count(*)::int as n from public.citim_verse_catalog`);
-  assert.equal(again.rows[0].n, expected.length + 1);
 
   // 3) Ordine greșită (fără cheia epistolelor): eșuează zgomotos, nu inserează nimic.
   const early = await freshDb({ withKey: false, withCatalog: true });
@@ -86,6 +89,7 @@ async function main() {
   const fresh = await freshDb({ withKey: true, withCatalog: false });
   await fresh.exec(migration);
   await fresh.exec(read('20261125_01_epistle_options.sql'));
+  await fresh.exec(read('20261126_01_epistle_curated_answers.sql'));
 
   console.log(`Epistle catalog: ${expected.length} verses added consistently with the answer key; idempotent; wrong order fails; no-op without catalog.`);
 }
