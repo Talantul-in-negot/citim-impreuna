@@ -44,6 +44,7 @@ const FILES = [
   "20261119_02_event_rate_limit.sql",
   "20261125_01_epistle_options.sql",
   "20261126_01_epistle_curated_answers.sql",
+  "20261127_01_samuel_fixes.sql",
 ];
 
 function main() {

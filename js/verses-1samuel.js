@@ -155,7 +155,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 2:3",
     text: "Nu mai vorbiți cu atâta {0}, să nu vă mai iasă din gură cuvinte de mândrie, căci Domnul este un Dumnezeu care știe totul, și toate faptele sunt cântărite de El.",
-    blanks: [{ answer: "îngâmfare", options: ["îngâmfare","mândrie","trufie","semeție"] }],
+    blanks: [{ answer: "îngâmfare", options: ["înfumurare","trufie","îngâmfare","semeție"] }],
   },
   {
     ref: "1 Samuel 2:4",
@@ -165,7 +165,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 2:5",
     text: "Cei ce erau {0} se închiriază pentru pâine, și cei ce erau flămânzi se odihnesc; chiar cea stearpă naște de șapte ori, și cea care avea mulți copii stă lâncezită.",
-    blanks: [{ answer: "sătui", options: ["sătui","flămânzi","săraci","bogați"] }],
+    blanks: [{ answer: "sătui", options: ["sătui","îndestulați","săraci","bogați"] }],
   },
   {
     ref: "1 Samuel 2:6",
@@ -339,8 +339,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 3:4",
-    text: "Atunci Domnul l-a {0} pe Samuel. El a răspuns: „Iată-mă!”",
-    blanks: [{ answer: "chemat", options: ["chemat","strigat","glasuit","invocat"] }],
+    text: "Atunci Domnul l-a chemat pe {0}. El a răspuns: „Iată-mă!”",
+    blanks: [{ answer: "Samuel", options: ["Samuel","Saul","Eli","David"] }],
   },
   {
     ref: "1 Samuel 3:5",
@@ -349,8 +349,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 3:6",
-    text: "Domnul l-a chemat din nou pe Samuel. Și Samuel s-a {0}, s-a dus la Eli și a zis: „Iată-mă, căci m-ai chemat!” Eli a răspuns: „Nu te-am chemat, fiule; întoarce-te și te culcă!”",
-    blanks: [{ answer: "sculat", options: ["sculat","ridicat","urcat","îndreptat"] }],
+    text: "Domnul l-a chemat din nou pe Samuel. Și Samuel s-a sculat, s-a dus la Eli și a zis: „Iată-mă, căci m-ai chemat!” Eli a răspuns: „Nu te-am chemat, {0}; întoarce-te și te culcă!”",
+    blanks: [{ answer: "fiule", options: ["copile","băiete","fiule","dragule"] }],
   },
   {
     ref: "1 Samuel 3:7",
@@ -375,12 +375,12 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 3:11",
     text: "Atunci Domnul i-a zis lui Samuel: „Iată că voi face în Israel un lucru care va {0} urechile oricui îl va auzi.",
-    blanks: [{ answer: "asurzi", options: ["asurzi","sperie","mire","tulbura"] }],
+    blanks: [{ answer: "asurzi", options: ["speria","mira","asurzi","tulbura"] }],
   },
   {
     ref: "1 Samuel 3:12",
     text: "În ziua aceea voi împlini asupra lui Eli tot ce am rostit împotriva casei lui; voi începe și voi {0}.",
-    blanks: [{ answer: "isprăvi", options: ["isprăvi","termina","sfârși","voi"] }],
+    blanks: [{ answer: "isprăvi", options: ["termina","isprăvi","sfârși","încheia"] }],
   },
   {
     ref: "1 Samuel 3:13",
@@ -430,7 +430,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 4:1",
     text: "Chemarea lui Samuel a ajuns la cunoștința întregului Israel. Israel a ieșit înaintea filistenilor ca să lupte împotriva lor. Au tăbărât lângă {0}, și filistenii tăbărâseră la Afec.",
-    blanks: [{ answer: "Eben-Ezer", options: ["Eben-Ezer","Afec","Silo","Mițpa"] }],
+    blanks: [{ answer: "Eben-Ezer", options: ["Ghilgal","Silo","Eben-Ezer","Mițpa"] }],
   },
   {
     ref: "1 Samuel 4:2",
@@ -479,13 +479,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 4:11",
-    text: "Chivotul lui Dumnezeu a fost {0}, și cei doi fii ai lui Eli, Hofni și Fineas, au murit.",
-    blanks: [{ answer: "luat", options: ["luat","capturat","furat","ridicat"] }],
+    text: "{0} lui Dumnezeu a fost luat, și cei doi fii ai lui Eli, Hofni și Fineas, au murit.",
+    blanks: [{ answer: "Chivotul", options: ["Altarul","Cortul","Sfeșnicul","Chivotul"] }],
   },
   {
     ref: "1 Samuel 4:12",
     text: "Un om din Beniamin a {0} din tabăra de bătaie și a venit la Silo în aceeași zi, cu hainele sfâșiate și cu capul acoperit cu țărână.",
-    blanks: [{ answer: "alergat", options: ["alergat","fugit","venit","grăbit"] }],
+    blanks: [{ answer: "alergat", options: ["alergat","fugit","pornit","grăbit"] }],
   },
   {
     ref: "1 Samuel 4:13",
@@ -529,23 +529,23 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 4:21",
-    text: "I-a pus copilului numele I-Cabod (Nu mai e slavă), zicând: „S-a {0} slava din Israel!” Spunea lucrul acesta din pricina luării chivotului lui Dumnezeu și din pricina socrului și a bărbatului ei.",
-    blanks: [{ answer: "dus", options: ["dus","plecat","retras","despărțit"] }],
+    text: "I-a pus copilului numele I-Cabod (Nu mai e slavă), zicând: „S-a dus {0} din Israel!” Spunea lucrul acesta din pricina luării chivotului lui Dumnezeu și din pricina socrului și a bărbatului ei.",
+    blanks: [{ answer: "slava", options: ["cinstea","lumina","slava","puterea"] }],
   },
   {
     ref: "1 Samuel 4:22",
     text: "Ea a zis: „S-a dus slava din Israel, căci chivotul lui {0} este luat.”",
-    blanks: [{ answer: "Dumnezeu", options: ["Dumnezeu","Israel","Domnul","Tatăl"] }],
+    blanks: [{ answer: "Dumnezeu", options: ["Atotputernicul","Dumnezeu","Domnul","Tatăl"] }],
   },
   {
     ref: "1 Samuel 5:1",
-    text: "Filistenii au luat chivotul lui Dumnezeu și l-au {0} din Eben-Ezer la Asdod.",
-    blanks: [{ answer: "dus", options: ["dus","adus","purtat","transportat"] }],
+    text: "Filistenii au luat chivotul lui Dumnezeu și l-au dus din Eben-Ezer la {0}.",
+    blanks: [{ answer: "Asdod", options: ["Gaza","Ecron","Gat","Asdod"] }],
   },
   {
     ref: "1 Samuel 5:2",
-    text: "După ce au pus mâna pe chivotul lui Dumnezeu, filistenii l-au {0} în casa lui Dagon (Zeul-pește) și l-au așezat lângă Dagon.",
-    blanks: [{ answer: "dus", options: ["dus","adus","purtat","deschis"] }],
+    text: "După ce au pus mâna pe chivotul lui Dumnezeu, filistenii l-au dus în casa lui Dagon (Zeul-pește) și l-au {0} lângă Dagon.",
+    blanks: [{ answer: "așezat", options: ["așezat","ridicat","înălțat","păstrat"] }],
   },
   {
     ref: "1 Samuel 5:3",
@@ -570,7 +570,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 5:7",
     text: "Când au văzut că așa stau lucrurile, oamenii din Asdod au zis: „Chivotul Dumnezeului lui Israel să {0} rămână la noi, căci mâna Lui apasă asupra noastră și asupra lui Dagon, dumnezeul nostru.”",
-    blanks: [{ answer: "nu", options: ["nu","nici","niciodată","nu va"] }],
+    blanks: [{ answer: "nu", options: ["nici","nu","niciodată","mai"] }],
   },
   {
     ref: "1 Samuel 5:8",
@@ -580,12 +580,12 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 5:9",
     text: "Dar după ce a fost dus acolo, mâna Domnului a {0} asupra cetății și a fost o mare groază; i-a lovit pe oamenii cetății de la mic până la mare și au avut o spuzeală de bube la șezut.",
-    blanks: [{ answer: "apăsat", options: ["apăsat","lovit","cioplit","cuprins"] }],
+    blanks: [{ answer: "apăsat", options: ["atins","cioplit","cuprins","apăsat"] }],
   },
   {
     ref: "1 Samuel 5:10",
-    text: "Atunci au {0} chivotul lui Dumnezeu la Ecron. Când a intrat chivotul lui Dumnezeu în Ecron, ecroniții au strigat: „Au adus la noi chivotul Dumnezeului lui Israel ca să ne omoare, pe noi și pe poporul nostru.”",
-    blanks: [{ answer: "trimis", options: ["trimis","dus","transportat","aruncat"] }],
+    text: "Atunci au trimis chivotul lui Dumnezeu la Ecron. Când a intrat chivotul lui Dumnezeu în Ecron, ecroniții au strigat: „Au adus la noi chivotul Dumnezeului lui Israel ca să ne {0}, pe noi și pe poporul nostru.”",
+    blanks: [{ answer: "omoare", options: ["ucidă","omoare","piardă","nimicească"] }],
   },
   {
     ref: "1 Samuel 5:11",
@@ -645,12 +645,12 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 6:10",
     text: "Oamenii au făcut așa. Au luat două vaci care {0}, le-au înjugat la car și le-au închis vițeii acasă.",
-    blanks: [{ answer: "alăptau", options: ["alăptau","fătau","se-mpotriveau","gemeau"] }],
+    blanks: [{ answer: "alăptau", options: ["alăptau","fătau","mugeau","gemeau"] }],
   },
   {
     ref: "1 Samuel 6:11",
-    text: "Au {0} în car chivotul Domnului și lada cu șoarecii de aur și chipurile umflăturilor lor.",
-    blanks: [{ answer: "pus", options: ["pus","desfăcut","plasat","depozitat"] }],
+    text: "Au pus în car chivotul Domnului și lada cu {0} de aur și chipurile umflăturilor lor.",
+    blanks: [{ answer: "șoarecii", options: ["broaștele","șoarecii","lăcustele","viermii"] }],
   },
   {
     ref: "1 Samuel 6:12",
@@ -734,8 +734,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 7:7",
-    text: "Filistenii au {0} că fiii lui Israel se adunaseră la Mițpa, și domnitorii filistenilor s-au suit împotriva lui Israel. La vestea aceasta, copiii lui Israel s-au temut de filisteni",
-    blanks: [{ answer: "aflat", options: ["aflat","auzit","știut","văzut"] }],
+    text: "Filistenii au aflat că fiii lui Israel se adunaseră la {0}, și domnitorii filistenilor s-au suit împotriva lui Israel. La vestea aceasta, copiii lui Israel s-au temut de filisteni",
+    blanks: [{ answer: "Mițpa", options: ["Rama","Ghilgal","Betel","Mițpa"] }],
   },
   {
     ref: "1 Samuel 7:8",
@@ -755,7 +755,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 7:11",
     text: "Bărbații lui Israel au ieșit din Mițpa, i-au {0} pe filisteni și i-au bătut până sub Bet-Car.",
-    blanks: [{ answer: "urmărit", options: ["urmărit","alungat","bătut","gonit"] }],
+    blanks: [{ answer: "urmărit", options: ["alungat","izgonit","urmărit","gonit"] }],
   },
   {
     ref: "1 Samuel 7:12",
@@ -769,8 +769,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 7:14",
-    text: "Cetățile pe care le luaseră filistenii de la Israel s-au {0} la Israel, de la Ecron până la Gat, cu ținutul lor; Israel le-a smuls din mâna filistenilor. Și a fost pace între Israel și amoriți.",
-    blanks: [{ answer: "întors", options: ["întors","restaurat","redat","redus"] }],
+    text: "Cetățile pe care le luaseră filistenii de la Israel s-au întors la Israel, de la Ecron până la Gat, cu ținutul lor; Israel le-a smuls din mâna filistenilor. Și a fost {0} între Israel și amoriți.",
+    blanks: [{ answer: "pace", options: ["liniște","înțelegere","prietenie","pace"] }],
   },
   {
     ref: "1 Samuel 7:15",
@@ -809,8 +809,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 8:5",
-    text: "Ei au zis: „Iată că tu ești bătrân, și copiii tăi nu calcă pe urmele tale; acum {0} un împărat peste noi să ne judece, cum au toate neamurile!”",
-    blanks: [{ answer: "pune", options: ["pune","alege","trimite","faci"] }],
+    text: "Ei au zis: „Iată că tu ești bătrân, și copiii tăi nu calcă pe urmele tale; acum pune un {0} peste noi să ne judece, cum au toate neamurile!”",
+    blanks: [{ answer: "împărat", options: ["domn","conducător","împărat","rege"] }],
   },
   {
     ref: "1 Samuel 8:6",
@@ -834,8 +834,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 8:10",
-    text: "Samuel a {0} toate cuvintele Domnului poporului care-i cerea un împărat.",
-    blanks: [{ answer: "spus", options: ["spus","anunțat","vestit","deschis"] }],
+    text: "Samuel a spus toate cuvintele Domnului poporului care-i cerea un {0}.",
+    blanks: [{ answer: "împărat", options: ["rege","domn","împărat","conducător"] }],
   },
   {
     ref: "1 Samuel 8:11",
@@ -889,8 +889,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 8:21",
-    text: "Samuel, după ce a {0} toate cuvintele poporului, le-a spus în auzul Domnului.",
-    blanks: [{ answer: "auzit", options: ["auzit","ascultat","luat","considerat"] }],
+    text: "Samuel, după ce a auzit toate cuvintele poporului, le-a spus în {0} Domnului.",
+    blanks: [{ answer: "auzul", options: ["fața","glasul","auzul","numele"] }],
   },
   {
     ref: "1 Samuel 8:22",
@@ -915,7 +915,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 9:4",
     text: "Saul a trecut prin {0} lui Efraim și a străbătut țara Șalișa fără să le găsească; au trecut prin țara Șaalim, și nu erau acolo; au străbătut țara lui Beniamin, și nu le-au găsit.",
-    blanks: [{ answer: "muntele", options: ["muntele","țara","culmea","poalele"] }],
+    blanks: [{ answer: "muntele", options: ["dealul","culmea","muntele","poalele"] }],
   },
   {
     ref: "1 Samuel 9:5",
@@ -935,12 +935,12 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 9:8",
     text: "Sluga a luat din nou cuvântul și i-a zis lui Saul: „Uite, eu am la mine un sfert de {0} de argint; i-l voi da omului lui Dumnezeu, și ne va arăta drumul.”",
-    blanks: [{ answer: "siclu", options: ["siclu","sfert","ban","talent"] }],
+    blanks: [{ answer: "siclu", options: ["dinar","ban","siclu","talent"] }],
   },
   {
     ref: "1 Samuel 9:9",
     text: "Odinioară, în Israel, când se ducea cineva să-L întrebe pe {0}, zicea: „Haidem să mergem la văzător!” Căci acela care se numește azi proroc se numea odinioară văzător.",
-    blanks: [{ answer: "Dumnezeu", options: ["Dumnezeu","Domnul","preot","proroc"] }],
+    blanks: [{ answer: "Dumnezeu", options: ["Domnul","preot","înger","Dumnezeu"] }],
   },
   {
     ref: "1 Samuel 9:10",
@@ -949,8 +949,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 9:11",
-    text: "Pe când se suiau ei spre cetate, au întâlnit niște fete care ieșiseră să scoată apă și le-au {0}: „Aici este văzătorul?”",
-    blanks: [{ answer: "zis", options: ["zis","întrebat","spus","răspuns"] }],
+    text: "Pe când se suiau ei spre cetate, au întâlnit niște fete care ieșiseră să scoată apă și le-au zis: „Aici este {0}?”",
+    blanks: [{ answer: "văzătorul", options: ["văzătorul","prorocul","preotul","învățătorul"] }],
   },
   {
     ref: "1 Samuel 9:12",
@@ -979,13 +979,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 9:17",
-    text: "Când l-a zărit Samuel pe Saul, Domnul i-a {0}: „Iată omul despre care ți-am vorbit; el va domni peste poporul Meu.”",
-    blanks: [{ answer: "zis", options: ["zis","spus","arătat","vestit"] }],
+    text: "Când l-a zărit Samuel pe Saul, Domnul i-a zis: „Iată omul despre care ți-am vorbit; el va {0} peste poporul Meu.”",
+    blanks: [{ answer: "domni", options: ["stăpâni","judeca","domni","conduce"] }],
   },
   {
     ref: "1 Samuel 9:18",
-    text: "Saul s-a apropiat de Samuel la mijlocul porții și i-a {0}: „Arată-mi, te rog, unde este casa văzătorului!”",
-    blanks: [{ answer: "zis", options: ["zis","spus","întrebat","cerut"] }],
+    text: "Saul s-a apropiat de Samuel la mijlocul porții și i-a zis: „Arată-mi, te rog, unde este casa {0}!”",
+    blanks: [{ answer: "văzătorului", options: ["prorocului","văzătorului","preotului","judecătorului"] }],
   },
   {
     ref: "1 Samuel 9:19",
@@ -1014,8 +1014,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 9:24",
-    text: "Bucătarul a dat spata și ce era pe ea și a {0}-o înaintea lui Saul. Și Samuel a zis: „Iată ce a fost păstrat; pune-o înainte și mănâncă, fiindcă pentru tine s-a păstrat când am poftit poporul!” Astfel, Saul a mâncat cu Samuel în ziua aceea.",
-    blanks: [{ answer: "pus", options: ["pus","adus","așezat","dat"] }],
+    text: "Bucătarul a dat {0} și ce era pe ea și a pus-o înaintea lui Saul. Și Samuel a zis: „Iată ce a fost păstrat; pune-o înainte și mănâncă, fiindcă pentru tine s-a păstrat când am poftit poporul!” Astfel, Saul a mâncat cu Samuel în ziua aceea.",
+    blanks: [{ answer: "spata", options: ["spata","pulpa","coasta","pieptul"] }],
   },
   {
     ref: "1 Samuel 9:25",
@@ -1024,8 +1024,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 9:26",
-    text: "Apoi s-au sculat dis-de-dimineață, și în revărsatul zorilor Samuel l-a {0} pe Saul de pe acoperiș și a zis: „Scoală-te, și te voi însoți!” Saul s-a sculat și au ieșit amândoi, el și Samuel.",
-    blanks: [{ answer: "chemat", options: ["chemat","trezit","strigat","adus"] }],
+    text: "Apoi s-au sculat dis-de-dimineață, și în revărsatul zorilor Samuel l-a chemat pe Saul de pe {0} și a zis: „Scoală-te, și te voi însoți!” Saul s-a sculat și au ieșit amândoi, el și Samuel.",
+    blanks: [{ answer: "acoperiș", options: ["terasă","balcon","acoperiș","deal"] }],
   },
   {
     ref: "1 Samuel 9:27",
@@ -1049,8 +1049,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 10:4",
-    text: "Ei te vor {0} de sănătate și-ți vor da două pâini, pe care le vei lua din mâna lor.",
-    blanks: [{ answer: "întreba", options: ["întreba","saluta","cuvânta","zice"] }],
+    text: "Ei te vor întreba de sănătate și-ți vor da două {0}, pe care le vei lua din mâna lor.",
+    blanks: [{ answer: "pâini", options: ["turte","colaci","pâini","azime"] }],
   },
   {
     ref: "1 Samuel 10:5",
@@ -1059,8 +1059,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 10:6",
-    text: "Duhul Domnului va veni {0} tine, vei proroci cu ei și vei fi prefăcut într-alt om.",
-    blanks: [{ answer: "peste", options: ["peste","în","pe","sub"] }],
+    text: "Duhul Domnului va veni peste tine, vei proroci cu ei și vei fi {0} într-alt om.",
+    blanks: [{ answer: "prefăcut", options: ["prefăcut","schimbat","transformat","înnoit"] }],
   },
   {
     ref: "1 Samuel 10:7",
@@ -1099,13 +1099,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 10:14",
-    text: "Unchiul lui Saul le-a {0} lui Saul și slugii lui: „Unde v-ați dus?” Saul a răspuns: „Să căutăm măgărițele, dar când am văzut că nu le găsim, ne-am dus la Samuel.”",
-    blanks: [{ answer: "zis", options: ["zis","spus","întrebat","mărturisit"] }],
+    text: "Unchiul lui Saul le-a zis lui Saul și slugii lui: „Unde v-ați dus?” Saul a răspuns: „Să căutăm {0}, dar când am văzut că nu le găsim, ne-am dus la Samuel.”",
+    blanks: [{ answer: "măgărițele", options: ["oile","măgărițele","caprele","cămilele"] }],
   },
   {
     ref: "1 Samuel 10:15",
-    text: "Unchiul lui Saul a zis din nou: „Istorisește-mi dar ce v-a {0} Samuel!”",
-    blanks: [{ answer: "spus", options: ["spus","zis","mărturisit","vestit"] }],
+    text: "Unchiul lui Saul a zis din nou: „{0}-mi dar ce v-a spus Samuel!”",
+    blanks: [{ answer: "Istorisește", options: ["Istorisește","Povestește","Spune","Arată"] }],
   },
   {
     ref: "1 Samuel 10:16",
@@ -1114,13 +1114,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 10:17",
-    text: "Samuel a {0} poporul înaintea Domnului la Mițpa",
-    blanks: [{ answer: "chemat", options: ["chemat","adunat","convocat","strâns"] }],
+    text: "Samuel a chemat poporul înaintea Domnului la {0}",
+    blanks: [{ answer: "Mițpa", options: ["Rama","Ghilgal","Mițpa","Silo"] }],
   },
   {
     ref: "1 Samuel 10:18",
-    text: "și le-a zis copiilor lui Israel: „Așa {0} Domnul, Dumnezeul lui Israel: «Eu l-am scos din Egipt pe Israel și v-am izbăvit din mâna egiptenilor și din mâna tuturor împărățiilor care vă apăsau.",
-    blanks: [{ answer: "vorbește", options: ["vorbește","zice","spune","grăiește"] }],
+    text: "și le-a zis copiilor lui Israel: „Așa vorbește Domnul, Dumnezeul lui Israel: «Eu l-am scos din Egipt pe Israel și v-am {0} din mâna egiptenilor și din mâna tuturor împărățiilor care vă apăsau.",
+    blanks: [{ answer: "izbăvit", options: ["scăpat","izbăvit","salvat","eliberat"] }],
   },
   {
     ref: "1 Samuel 10:19",
@@ -1139,8 +1139,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 10:22",
-    text: "L-au {0} din nou pe Domnul: „A venit oare omul acesta aici?” Și Domnul a zis: „Iată că este ascuns între vase.”",
-    blanks: [{ answer: "întrebat", options: ["întrebat","chemat","invocat","rugat"] }],
+    text: "L-au întrebat din nou pe Domnul: „A venit oare omul acesta aici?” Și Domnul a zis: „Iată că este {0} între vase.”",
+    blanks: [{ answer: "ascuns", options: ["pitit","adăpostit","ascuns","culcat"] }],
   },
   {
     ref: "1 Samuel 10:23",
@@ -1149,8 +1149,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 10:24",
-    text: "Samuel a zis întregului popor: „Îl vedeți pe cel pe care l-a ales Domnul? Nu este nimeni în tot poporul care să fie ca el.” Și tot poporul a {0}: „Trăiască împăratul!”",
-    blanks: [{ answer: "strigat", options: ["strigat","zis","cântat","răspuns"] }],
+    text: "Samuel a zis întregului popor: „Îl vedeți pe cel pe care l-a ales Domnul? Nu este nimeni în tot poporul care să fie ca el.” Și tot poporul a strigat: „{0} împăratul!”",
+    blanks: [{ answer: "Trăiască", options: ["Trăiască","Domnească","Biruiască","Înflorească"] }],
   },
   {
     ref: "1 Samuel 10:25",
@@ -1174,13 +1174,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 11:2",
-    text: "Dar Nahaș, amonitul, le-a {0}: „Voi face legământ cu voi dacă mă lăsați să vă scot la toți ochiul drept și să arunc astfel o ocară asupra întregului Israel.”",
-    blanks: [{ answer: "răspuns", options: ["răspuns","zis","mărturisit","spus"] }],
+    text: "Dar Nahaș, amonitul, le-a răspuns: „Voi face legământ cu voi dacă mă lăsați să vă scot la toți {0} drept și să arunc astfel o ocară asupra întregului Israel.”",
+    blanks: [{ answer: "ochiul", options: ["brațul","ochiul","urechea","degetul"] }],
   },
   {
     ref: "1 Samuel 11:3",
-    text: "Bătrânii din Iabes i-au {0}: „Dă-ne un răgaz de șapte zile ca să trimitem soli în tot ținutul lui Israel; și dacă nu va fi nimeni să ne ajute, ne vom supune ție.”",
-    blanks: [{ answer: "zis", options: ["zis","spus","răspuns","mărturisit"] }],
+    text: "Bătrânii din Iabes i-au zis: „Dă-ne un {0} de șapte zile ca să trimitem soli în tot ținutul lui Israel; și dacă nu va fi nimeni să ne ajute, ne vom supune ție.”",
+    blanks: [{ answer: "răgaz", options: ["răgaz","termen","timp","răstimp"] }],
   },
   {
     ref: "1 Samuel 11:4",
@@ -1194,8 +1194,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 11:6",
-    text: "Cum a {0} Saul aceste lucruri, Duhul lui Dumnezeu a venit peste el; și s-a mâniat foarte tare.",
-    blanks: [{ answer: "auzit", options: ["auzit","aflat","învățat","cunoscut"] }],
+    text: "Cum a auzit Saul aceste lucruri, {0} lui Dumnezeu a venit peste el; și s-a mâniat foarte tare.",
+    blanks: [{ answer: "Duhul", options: ["Îngerul","Duhul","Glasul","Cuvântul"] }],
   },
   {
     ref: "1 Samuel 11:7",
@@ -1204,13 +1204,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 11:8",
-    text: "Saul le-a {0} numărătoarea la Bezec; copiii lui Israel erau trei sute de mii, și bărbații lui Iuda, treizeci de mii.",
-    blanks: [{ answer: "făcut", options: ["făcut","dat","condus","organizat"] }],
+    text: "Saul le-a făcut {0} la Bezec; copiii lui Israel erau trei sute de mii, și bărbații lui Iuda, treizeci de mii.",
+    blanks: [{ answer: "numărătoarea", options: ["socoteala","adunarea","strângerea","numărătoarea"] }],
   },
   {
     ref: "1 Samuel 11:9",
-    text: "Ei le-au zis solilor care veniseră: „Așa să le vorbiți locuitorilor Iabesului din Galaad: «Mâine, când va dogori soarele, veți {0} ajutor.»” Solii le-au dus vestea aceasta celor din Iabes, care s-au umplut de bucurie;",
-    blanks: [{ answer: "avea", options: ["avea","primi","găsi","ajunge"] }],
+    text: "Ei le-au zis solilor care veniseră: „Așa să le vorbiți locuitorilor Iabesului din Galaad: «Mâine, când va dogori soarele, veți avea {0}.»” Solii le-au dus vestea aceasta celor din Iabes, care s-au umplut de bucurie;",
+    blanks: [{ answer: "ajutor", options: ["sprijin","scăpare","ajutor","izbăvire"] }],
   },
   {
     ref: "1 Samuel 11:10",
@@ -1224,23 +1224,23 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 11:12",
-    text: "Poporul i-a {0} lui Samuel: „Cine zicea: «Saul să domnească peste noi?» Dați-i încoace pe oamenii aceia, ca să-i omorâm!”",
-    blanks: [{ answer: "zis", options: ["zis","spus","întrebat","mărturisit"] }],
+    text: "Poporul i-a zis lui Samuel: „Cine zicea: «Saul să domnească peste noi?» Dați-i încoace pe oamenii aceia, ca să-i {0}!”",
+    blanks: [{ answer: "omorâm", options: ["omorâm","pedepsim","ucidem","judecăm"] }],
   },
   {
     ref: "1 Samuel 11:13",
-    text: "Dar Saul a {0}: „Nimeni nu va fi omorât în ziua aceasta, căci astăzi Domnul i-a dat o izbăvire lui Israel.”",
-    blanks: [{ answer: "zis", options: ["zis","spus","răspuns","mărturisit"] }],
+    text: "Dar Saul a zis: „Nimeni nu va fi omorât în ziua aceasta, căci astăzi Domnul i-a dat o {0} lui Israel.”",
+    blanks: [{ answer: "izbăvire", options: ["biruință","izbăvire","scăpare","mântuire"] }],
   },
   {
     ref: "1 Samuel 11:14",
-    text: "Și Samuel a {0} poporului: „Veniți să mergem la Ghilgal, ca să întărim acolo împărăția!”",
-    blanks: [{ answer: "zis", options: ["zis","spus","mărturisit","anunțat"] }],
+    text: "Și Samuel a zis poporului: „Veniți să mergem la Ghilgal, ca să întărim acolo {0}!”",
+    blanks: [{ answer: "împărăția", options: ["legământul","domnia","împărăția","cetatea"] }],
   },
   {
     ref: "1 Samuel 11:15",
-    text: "Tot poporul s-a dus la Ghilgal și l-au {0} pe Saul împărat înaintea Domnului, la Ghilgal. Acolo au adus jertfe de mulțumire înaintea Domnului, și Saul și toți oamenii lui Israel s-au veselit foarte mult acolo.",
-    blanks: [{ answer: "pus", options: ["pus","ridicat","proclamat","sfințit"] }],
+    text: "Tot poporul s-a dus la Ghilgal și l-au pus pe Saul împărat înaintea Domnului, la Ghilgal. Acolo au adus jertfe de mulțumire înaintea Domnului, și Saul și toți oamenii lui Israel s-au {0} foarte mult acolo.",
+    blanks: [{ answer: "veselit", options: ["bucurat","înveselit","desfătat","veselit"] }],
   },
   {
     ref: "1 Samuel 12:1",
@@ -1255,7 +1255,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 12:3",
     text: "Iată-mă! Mărturisiți împotriva mea în fața Domnului și în fața unsului Lui: cui i-am luat boul sau cui i-am luat {0}? Pe cine am apăsat și pe cine am năpăstuit? De la cine am luat mită ca să închid ochii asupra lui? Mărturisiți, și vă voi da înapoi!”",
-    blanks: [{ answer: "măgarul", options: ["măgarul","oaia","vaca","boul"] }],
+    blanks: [{ answer: "măgarul", options: ["oaia","vaca","calul","măgarul"] }],
   },
   {
     ref: "1 Samuel 12:4",
@@ -1264,13 +1264,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 12:5",
-    text: "El le-a mai zis: „Domnul este martor împotriva voastră, și unsul Lui este martor în ziua {0} că n-ați găsit nimic în mâinile mele.” Și ei au răspuns: „Sunt martori.”",
-    blanks: [{ answer: "aceasta", options: ["aceasta","aceea","de azi","de mâine"] }],
+    text: "El le-a mai zis: „Domnul este martor împotriva voastră, și {0} Lui este martor în ziua aceasta că n-ați găsit nimic în mâinile mele.” Și ei au răspuns: „Sunt martori.”",
+    blanks: [{ answer: "unsul", options: ["alesul","unsul","slujitorul","robul"] }],
   },
   {
     ref: "1 Samuel 12:6",
-    text: "Atunci Samuel a zis poporului: „Domnul i-a {0} pe Moise și pe Aaron și i-a scos pe părinții voștri din Egipt.",
-    blanks: [{ answer: "pus", options: ["pus","trimis","ales","ridicat"] }],
+    text: "Atunci Samuel a zis poporului: „Domnul i-a pus pe {0} și pe Aaron și i-a scos pe părinții voștri din Egipt.",
+    blanks: [{ answer: "Moise", options: ["Iosua","Iosif","Moise","Avraam"] }],
   },
   {
     ref: "1 Samuel 12:7",
@@ -1280,7 +1280,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 12:8",
     text: "După ce a venit Iacov în Egipt, părinții voștri au strigat către Domnul, și Domnul i-a trimis pe Moise și pe Aaron, care i-au {0} pe părinții voștri din Egipt și i-au adus să locuiască în locul acesta.",
-    blanks: [{ answer: "scos", options: ["scos","adus","condus","eliberat"] }],
+    blanks: [{ answer: "scos", options: ["scos","smuls","condus","eliberat"] }],
   },
   {
     ref: "1 Samuel 12:9",
@@ -1299,13 +1299,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 12:12",
-    text: "Apoi, când ați văzut că Nahaș, împăratul fiilor lui Amon, mergea împotriva voastră, mi-ați {0}: «Nu, ci un împărat să domnească peste noi!» Și totuși Domnul, Dumnezeul vostru, era Împăratul vostru.",
-    blanks: [{ answer: "zis", options: ["zis","spus","cerut","răspuns"] }],
+    text: "Apoi, când ați văzut că {0}, împăratul fiilor lui Amon, mergea împotriva voastră, mi-ați zis: «Nu, ci un împărat să domnească peste noi!» Și totuși Domnul, Dumnezeul vostru, era Împăratul vostru.",
+    blanks: [{ answer: "Nahaș", options: ["Agag","Nahaș","Goliat","Achiș"] }],
   },
   {
     ref: "1 Samuel 12:13",
     text: "Iată dar {0} pe care l-ați ales și pe care l-ați cerut; iată că Domnul a pus un împărat peste voi.",
-    blanks: [{ answer: "împăratul", options: ["împăratul","regele","conducătorul","domnul"] }],
+    blanks: [{ answer: "împăratul", options: ["împăratul","regele","conducătorul","stăpânul"] }],
   },
   {
     ref: "1 Samuel 12:14",
@@ -1370,7 +1370,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 13:1",
     text: "Saul era în vârstă de treizeci de ani când a {0} împărat și a domnit doi ani peste Israel.",
-    blanks: [{ answer: "ajuns", options: ["ajuns","devenit","fost pus","urcat"] }],
+    blanks: [{ answer: "ajuns", options: ["ajuns","devenit","numit","urcat"] }],
   },
   {
     ref: "1 Samuel 13:2",
@@ -1539,13 +1539,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 14:12",
-    text: "Și oamenii care erau de strajă le-au {0} astfel lui Ionatan și celui ce-i ducea armele: „Suiți-vă la noi, ca să vă arătăm ceva!” Ionatan i-a zis celui ce-i ducea armele: „Suie-te după mine, căci Domnul îi dă în mâinile lui Israel!”",
-    blanks: [{ answer: "vorbit", options: ["vorbit","zis","răspuns","strigat"] }],
+    text: "Și oamenii care erau de {0} le-au vorbit astfel lui Ionatan și celui ce-i ducea armele: „Suiți-vă la noi, ca să vă arătăm ceva!” Ionatan i-a zis celui ce-i ducea armele: „Suie-te după mine, căci Domnul îi dă în mâinile lui Israel!”",
+    blanks: [{ answer: "strajă", options: ["pază","veghe","pândă","strajă"] }],
   },
   {
     ref: "1 Samuel 14:13",
-    text: "Și Ionatan s-a suit ajutându-se cu mâinile și picioarele, și cel ce-i ducea armele a {0} după el. Filistenii au căzut înaintea lui Ionatan, și cel ce-i ducea armele arunca moartea în urma lui.",
-    blanks: [{ answer: "mers", options: ["mers","urcat","venit","sărit"] }],
+    text: "Și Ionatan s-a suit ajutându-se cu mâinile și {0}, și cel ce-i ducea armele a mers după el. Filistenii au căzut înaintea lui Ionatan, și cel ce-i ducea armele arunca moartea în urma lui.",
+    blanks: [{ answer: "picioarele", options: ["genunchii","coatele","picioarele","degetele"] }],
   },
   {
     ref: "1 Samuel 14:14",
@@ -1559,8 +1559,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 14:16",
-    text: "Străjerii lui Saul, care erau la Ghibea lui Beniamin, au {0} că mulțimea se împrăștie și fuge în toate părțile.",
-    blanks: [{ answer: "văzut", options: ["văzut","observat","zărit","aflat"] }],
+    text: "Străjerii lui Saul, care erau la Ghibea lui Beniamin, au văzut că mulțimea se {0} și fuge în toate părțile.",
+    blanks: [{ answer: "împrăștie", options: ["risipește","destramă","tulbură","împrăștie"] }],
   },
   {
     ref: "1 Samuel 14:17",
@@ -1595,7 +1595,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 14:23",
     text: "Domnul l-a {0} pe Israel în ziua aceea, și lupta s-a întins până dincolo de Bet-Aven.",
-    blanks: [{ answer: "izbăvit", options: ["izbăvit","salvat","ajutat","aparat"] }],
+    blanks: [{ answer: "izbăvit", options: ["salvat","ajutat","apărat","izbăvit"] }],
   },
   {
     ref: "1 Samuel 14:24",
@@ -1610,7 +1610,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 14:26",
     text: "Când a intrat poporul în pădure, a văzut mierea {0}, dar niciunul n-a dus mierea la gură, căci poporul ținea jurământul.",
-    blanks: [{ answer: "curgând", options: ["curgând","picurând","scurgându-se","vărsându-se"] }],
+    blanks: [{ answer: "curgând", options: ["picurând","șiroind","curgând","izvorând"] }],
   },
   {
     ref: "1 Samuel 14:27",
@@ -1619,8 +1619,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 14:28",
-    text: "Atunci cineva din popor, vorbindu-i, i-a {0}: „Tatăl tău a pus poporul să jure zicând: «Blestemat să fie omul care va mânca astăzi!»” Și poporul era sleit de puteri.",
-    blanks: [{ answer: "zis", options: ["zis","spus","arătat","mărturisit"] }],
+    text: "Atunci cineva din popor, vorbindu-i, i-a zis: „Tatăl tău a pus poporul să jure zicând: «{0} să fie omul care va mânca astăzi!»” Și poporul era sleit de puteri.",
+    blanks: [{ answer: "Blestemat", options: ["Blestemat","Pedepsit","Osândit","Vinovat"] }],
   },
   {
     ref: "1 Samuel 14:29",
@@ -1645,7 +1645,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 14:33",
     text: "I-au spus lucrul acesta lui Saul și i-au zis: „Iată că poporul {0} împotriva Domnului, mâncând cu sânge.” Saul a zis: „Voi faceți o nelegiuire. Rostogoliți îndată o piatră mare încoace!”",
-    blanks: [{ answer: "păcătuiește", options: ["păcătuiește","greșește","se-ntinează","cade"] }],
+    blanks: [{ answer: "păcătuiește", options: ["păcătuiește","greșește","rătăcește","cade"] }],
   },
   {
     ref: "1 Samuel 14:34",
@@ -1655,7 +1655,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 14:35",
     text: "Saul I-a zidit un altar Domnului: acesta a fost cel {0} altar pe care I l-a zidit Domnului.",
-    blanks: [{ answer: "dintâi", options: ["dintâi","singurul","cel mai mare","vechiul"] }],
+    blanks: [{ answer: "dintâi", options: ["singurul","ultim","dintâi","vechiul"] }],
   },
   {
     ref: "1 Samuel 14:36",
@@ -1664,8 +1664,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 14:37",
-    text: "Și Saul L-a întrebat pe Dumnezeu: „Să mă cobor după filisteni? Îi vei da în mâinile lui Israel?” Dar în clipa aceea nu i-a dat niciun {0}.",
-    blanks: [{ answer: "răspuns", options: ["răspuns","semn","cuvânt","sfat"] }],
+    text: "Și Saul L-a întrebat pe Dumnezeu: „Să mă cobor după {0}? Îi vei da în mâinile lui Israel?” Dar în clipa aceea nu i-a dat niciun răspuns.",
+    blanks: [{ answer: "filisteni", options: ["filisteni","amaleciți","amoniți","moabiți"] }],
   },
   {
     ref: "1 Samuel 14:38",
@@ -1679,8 +1679,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 14:40",
-    text: "Atunci a zis întregului Israel: „Așezați-vă voi deoparte, și eu și fiul meu Ionatan vom {0} de cealaltă!” Și poporul i-a zis lui Saul: „Fă ce vei crede!”",
-    blanks: [{ answer: "sta", options: ["sta","rămâne","fi","ședea"] }],
+    text: "Atunci a zis întregului Israel: „Așezați-vă voi deoparte, și eu și fiul meu {0} vom sta de cealaltă!” Și poporul i-a zis lui Saul: „Fă ce vei crede!”",
+    blanks: [{ answer: "Ionatan", options: ["Abner","David","Ionatan","Malchișua"] }],
   },
   {
     ref: "1 Samuel 14:41",
@@ -1720,7 +1720,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 14:48",
     text: "S-a arătat viteaz, l-a bătut pe Amalec și l-a {0} pe Israel din mâna celor ce-l jefuiau.",
-    blanks: [{ answer: "scăpat", options: ["scăpat","salvat","izbăvit","aparat"] }],
+    blanks: [{ answer: "scăpat", options: ["salvat","izbăvit","scăpat","apărat"] }],
   },
   {
     ref: "1 Samuel 14:49",
@@ -1735,7 +1735,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 14:51",
     text: "Chis, tatăl lui Saul, și Ner, tatăl lui Abner, erau fiii lui {0}.",
-    blanks: [{ answer: "Abiel", options: ["Abiel","Chis","Ner","Saul"] }],
+    blanks: [{ answer: "Abiel", options: ["Abiel","Afiah","Țeror","Becorat"] }],
   },
   {
     ref: "1 Samuel 14:52",
@@ -1744,8 +1744,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 15:1",
-    text: "Samuel i-a zis lui Saul: „Pe mine m-a {0} Domnul să te ung împărat peste poporul Lui, peste Israel. Ascultă dar ce zice Domnul!",
-    blanks: [{ answer: "trimis", options: ["trimis","ales","pus","rânduit"] }],
+    text: "Samuel i-a zis lui Saul: „Pe mine m-a trimis Domnul să te {0} împărat peste poporul Lui, peste Israel. Ascultă dar ce zice Domnul!",
+    blanks: [{ answer: "ung", options: ["pun","aleg","ung","sfințesc"] }],
   },
   {
     ref: "1 Samuel 15:2",
@@ -1760,7 +1760,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 15:4",
     text: "Saul a adunat poporul și l-a {0} la Telaim: erau două sute de mii de oameni pedeștri și zece mii de oameni din Iuda.",
-    blanks: [{ answer: "numărat", options: ["numărat","socotit","împărțit","adunat"] }],
+    blanks: [{ answer: "numărat", options: ["socotit","împărțit","cercetat","numărat"] }],
   },
   {
     ref: "1 Samuel 15:5",
@@ -1789,8 +1789,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 15:10",
-    text: "Domnul i-a {0} lui Samuel și i-a zis:",
-    blanks: [{ answer: "vorbit", options: ["vorbit","grăit","spus","zis"] }],
+    text: "Domnul i-a vorbit lui {0} și i-a zis:",
+    blanks: [{ answer: "Samuel", options: ["Saul","Natan","Samuel","Eli"] }],
   },
   {
     ref: "1 Samuel 15:11",
@@ -1799,8 +1799,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 15:12",
-    text: "S-a {0} dis-de-dimineață ca să se ducă înaintea lui Saul. Și au venit și i-au spus: „Saul s-a dus la Carmel și iată că și-a înălțat un semn de biruință, apoi s-a întors și, trecând mai departe, s-a coborât la Ghilgal.”",
-    blanks: [{ answer: "sculat", options: ["sculat","ridicat","grăbit","pregătit"] }],
+    text: "S-a sculat dis-de-dimineață ca să se ducă înaintea lui Saul. Și au venit și i-au spus: „Saul s-a dus la Carmel și iată că și-a înălțat un semn de {0}, apoi s-a întors și, trecând mai departe, s-a coborât la Ghilgal.”",
+    blanks: [{ answer: "biruință", options: ["biruință","izbândă","victorie","triumf"] }],
   },
   {
     ref: "1 Samuel 15:13",
@@ -1819,8 +1819,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 15:16",
-    text: "Samuel i-a zis lui Saul: „Stai, și-ți voi {0} ce mi-a zis Domnul astă-noapte!” Și Saul i-a zis: „Vorbește!”",
-    blanks: [{ answer: "spune", options: ["spune","arăta","istorisi","mărturisi"] }],
+    text: "Samuel i-a zis lui Saul: „Stai, și-ți voi spune ce mi-a zis Domnul astă-{0}!” Și Saul i-a zis: „Vorbește!”",
+    blanks: [{ answer: "noapte", options: ["noapte","dimineață","seară","ziuă"] }],
   },
   {
     ref: "1 Samuel 15:17",
@@ -1839,8 +1839,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 15:20",
-    text: "Saul i-a răspuns lui Samuel: „Am ascultat glasul Domnului și m-am {0} în calea pe care mă trimitea Domnul. L-am adus pe Agag, împăratul lui Amalec, și i-am nimicit cu desăvârșire pe amaleciți,",
-    blanks: [{ answer: "dus", options: ["dus","grăbit","pornit","întors"] }],
+    text: "Saul i-a răspuns lui Samuel: „Am ascultat {0} Domnului și m-am dus în calea pe care mă trimitea Domnul. L-am adus pe Agag, împăratul lui Amalec, și i-am nimicit cu desăvârșire pe amaleciți,",
+    blanks: [{ answer: "glasul", options: ["cuvântul","porunca","sfatul","glasul"] }],
   },
   {
     ref: "1 Samuel 15:21",
@@ -1860,7 +1860,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 15:24",
     text: "Atunci Saul i-a zis lui Samuel: „Am {0}, căci am călcat porunca Domnului și n-am ascultat cuvintele tale; mă temeam de popor și i-am ascultat glasul.",
-    blanks: [{ answer: "păcătuit", options: ["păcătuit","greșit","rătăcit","cazut"] }],
+    blanks: [{ answer: "păcătuit", options: ["greșit","rătăcit","căzut","păcătuit"] }],
   },
   {
     ref: "1 Samuel 15:25",
@@ -1930,7 +1930,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 16:3",
     text: "Să-l poftești pe Isai la jertfă; Eu îți voi arăta ce trebuie să faci și Mi-l vei {0} pe acela pe care-ți voi spune să-l ungi.”",
-    blanks: [{ answer: "unge", options: ["unge","arăta","aduce","prezenta"] }],
+    blanks: [{ answer: "unge", options: ["chema","aduce","prezenta","unge"] }],
   },
   {
     ref: "1 Samuel 16:4",
@@ -1954,8 +1954,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 16:8",
-    text: "Isai l-a chemat pe Abinadab și l-a trecut pe dinaintea lui Samuel, și Samuel a zis: „Nici pe {0} nu l-a ales Domnul.”",
-    blanks: [{ answer: "acesta", options: ["acesta","el","fiul acesta","cel de-al doilea"] }],
+    text: "Isai l-a chemat pe {0} și l-a trecut pe dinaintea lui Samuel, și Samuel a zis: „Nici pe acesta nu l-a ales Domnul.”",
+    blanks: [{ answer: "Abinadab", options: ["Abinadab","Eliab","Șama","Ozem"] }],
   },
   {
     ref: "1 Samuel 16:9",
@@ -2040,7 +2040,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 17:2",
     text: "Saul și bărbații lui Israel s-au strâns și ei; au tăbărât în Valea Terebinților și s-au {0} în linie de bătaie împotriva filistenilor.",
-    blanks: [{ answer: "așezat", options: ["așezat","pus","aliniat","strâns"] }],
+    blanks: [{ answer: "așezat", options: ["pus","aliniat","rânduit","așezat"] }],
   },
   {
     ref: "1 Samuel 17:3",
@@ -2075,7 +2075,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 17:9",
     text: "Dacă va putea să se bată cu mine și să mă omoare, noi vom fi robii voștri; dar dacă-l voi {0} și-l voi omorî eu, voi ne veți fi robi nouă și ne veți sluji.”",
-    blanks: [{ answer: "birui", options: ["birui","învinge","doborî","omorî"] }],
+    blanks: [{ answer: "birui", options: ["birui","învinge","doborî","zdrobi"] }],
   },
   {
     ref: "1 Samuel 17:10",
@@ -2129,8 +2129,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 17:20",
-    text: "David s-a sculat dis-de-dimineață. A lăsat oile în seama unui paznic, și-a luat lucrurile și a {0}, cum îi poruncise Isai. Când a ajuns în tabără, oștirea pornise să se așeze în șiruri de bătaie și scotea strigăte de război.",
-    blanks: [{ answer: "plecat", options: ["plecat","mers","grăbit","pornit"] }],
+    text: "David s-a sculat dis-de-dimineață. A lăsat oile în seama unui {0}, și-a luat lucrurile și a plecat, cum îi poruncise Isai. Când a ajuns în tabără, oștirea pornise să se așeze în șiruri de bătaie și scotea strigăte de război.",
+    blanks: [{ answer: "paznic", options: ["păstor","paznic","slujitor","cioban"] }],
   },
   {
     ref: "1 Samuel 17:21",
@@ -2164,8 +2164,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 17:27",
-    text: "Poporul, spunând din nou aceleași lucruri, i-a zis: „Așa și așa i se va {0} aceluia care-l va omorî.”",
-    blanks: [{ answer: "face", options: ["face","da","răsplăti","întâmpla"] }],
+    text: "Poporul, spunând din nou aceleași lucruri, i-a zis: „Așa și așa i se va face aceluia care-l va {0}.”",
+    blanks: [{ answer: "omorî", options: ["ucide","birui","omorî","doborî"] }],
   },
   {
     ref: "1 Samuel 17:28",
@@ -2174,8 +2174,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 17:29",
-    text: "David a răspuns: „Ce-am {0} oare? Nu pot să vorbesc astfel?”",
-    blanks: [{ answer: "făcut", options: ["făcut","spus","greșit","zis"] }],
+    text: "{0} a răspuns: „Ce-am făcut oare? Nu pot să vorbesc astfel?”",
+    blanks: [{ answer: "David", options: ["David","Saul","Ionatan","Eliab"] }],
   },
   {
     ref: "1 Samuel 17:30",
@@ -2205,7 +2205,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 17:35",
     text: "alergam după el, îl loveam și-i smulgeam oaia din gură. Dacă se ridica împotriva mea, îl {0} de falcă, îl loveam și-l omoram.",
-    blanks: [{ answer: "apucam", options: ["apucam","prindeam","loveam","trăgeam"] }],
+    blanks: [{ answer: "apucam", options: ["prindeam","țineam","trăgeam","apucam"] }],
   },
   {
     ref: "1 Samuel 17:36",
@@ -2350,7 +2350,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 18:6",
     text: "Pe când veneau ei, la întoarcerea lui David de la omorârea filisteanului, femeile au ieșit din toate cetățile lui Israel înaintea împăratului {0}, cântând și jucând în sunetul timpanelor și al alăutelor și scoțând strigăte de bucurie.",
-    blanks: [{ answer: "Saul", options: ["Saul","David","Ionatan","Abner"] }],
+    blanks: [{ answer: "Saul", options: ["Saul","Samuel","Ionatan","Abner"] }],
   },
   {
     ref: "1 Samuel 18:7",
@@ -2384,8 +2384,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 18:13",
-    text: "L-a îndepărtat de lângă el și l-a {0} mai-mare peste o mie de oameni. David ieșea și intra în fruntea poporului;",
-    blanks: [{ answer: "pus", options: ["pus","făcut","numit","rânduit"] }],
+    text: "L-a {0} de lângă el și l-a pus mai-mare peste o mie de oameni. David ieșea și intra în fruntea poporului;",
+    blanks: [{ answer: "îndepărtat", options: ["alungat","depărtat","îndepărtat","izgonit"] }],
   },
   {
     ref: "1 Samuel 18:14",
@@ -2410,7 +2410,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 18:18",
     text: "David i-a răspuns lui Saul: „Cine sunt eu și ce este {0} mea, ce este familia tatălui meu în Israel, ca să fiu ginerele împăratului?”",
-    blanks: [{ answer: "viața", options: ["viața","familia","casa","starea"] }],
+    blanks: [{ answer: "viața", options: ["averea","viața","casa","starea"] }],
   },
   {
     ref: "1 Samuel 18:19",
@@ -2439,8 +2439,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 18:24",
-    text: "Slujitorii lui Saul i-au {0} ce răspunsese David.",
-    blanks: [{ answer: "spus", options: ["spus","istorisit","arătat","adus"] }],
+    text: "{0} lui Saul i-au spus ce răspunsese David.",
+    blanks: [{ answer: "Slujitorii", options: ["Slujitorii","Robii","Oamenii","Ostașii"] }],
   },
   {
     ref: "1 Samuel 18:25",
@@ -2504,8 +2504,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 19:7",
-    text: "Ionatan l-a chemat pe David și i-a {0} toate cuvintele acestea, apoi l-a adus la Saul; și David a fost înaintea lui, ca mai înainte.",
-    blanks: [{ answer: "spus", options: ["spus","istorisit","arătat","vestit"] }],
+    text: "{0} l-a chemat pe David și i-a spus toate cuvintele acestea, apoi l-a adus la Saul; și David a fost înaintea lui, ca mai înainte.",
+    blanks: [{ answer: "Ionatan", options: ["Ionatan","Abner","Mical","Doeg"] }],
   },
   {
     ref: "1 Samuel 19:8",
@@ -2535,7 +2535,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 19:13",
     text: "În urmă Mical a luat terafimul și l-a pus în pat; i-a pus o {0} de capră în jurul capului și l-a învelit cu o haină.",
-    blanks: [{ answer: "piele", options: ["piele","blană","pătură","haină"] }],
+    blanks: [{ answer: "piele", options: ["blană","piele","pătură","lână"] }],
   },
   {
     ref: "1 Samuel 19:14",
@@ -2565,7 +2565,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 19:19",
     text: "I-au spus lucrul acesta lui Saul și au zis: „Iată că David este în {0}, lângă Rama.”",
-    blanks: [{ answer: "Naiot", options: ["Naiot","Ghibeea","Rama","Betleem"] }],
+    blanks: [{ answer: "Naiot", options: ["Ghibeea","Silo","Betleem","Naiot"] }],
   },
   {
     ref: "1 Samuel 19:20",
@@ -2584,8 +2584,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 19:23",
-    text: "Și s-a îndreptat spre Naiot, lângă Rama. Duhul lui Dumnezeu a venit și peste {0}; și Saul și-a văzut de drum, prorocind până la sosirea lui în Naiot, lângă Rama.",
-    blanks: [{ answer: "el", options: ["el","Saul","oamenii lui","ceilalți"] }],
+    text: "Și s-a îndreptat spre Naiot, lângă Rama. Duhul lui Dumnezeu a venit și peste el; și Saul și-a văzut de drum, {0} până la sosirea lui în Naiot, lângă Rama.",
+    blanks: [{ answer: "prorocind", options: ["prorocind","cântând","vorbind","strigând"] }],
   },
   {
     ref: "1 Samuel 19:24",
@@ -2594,8 +2594,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 20:1",
-    text: "David a fugit din Naiot, de lângă Rama. S-a dus la Ionatan și a zis: „Ce-am {0} eu? Care este nelegiuirea mea, care este păcatul meu înaintea tatălui tău, de vrea să-mi ia viața?”",
-    blanks: [{ answer: "făcut", options: ["făcut","greșit","spus","zis"] }],
+    text: "David a fugit din Naiot, de lângă Rama. S-a dus la Ionatan și a zis: „Ce-am făcut eu? Care este {0} mea, care este păcatul meu înaintea tatălui tău, de vrea să-mi ia viața?”",
+    blanks: [{ answer: "nelegiuirea", options: ["fărădelegea","greșeala","nelegiuirea","vina"] }],
   },
   {
     ref: "1 Samuel 20:2",
@@ -2609,8 +2609,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 20:4",
-    text: "Ionatan i-a zis lui David: „Pentru tine voi {0} tot ce vei vrea.”",
-    blanks: [{ answer: "face", options: ["face","împlini","da","aduce"] }],
+    text: "{0} i-a zis lui David: „Pentru tine voi face tot ce vei vrea.”",
+    blanks: [{ answer: "Ionatan", options: ["Saul","Abner","Mical","Ionatan"] }],
   },
   {
     ref: "1 Samuel 20:5",
@@ -2639,13 +2639,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 20:10",
-    text: "David i-a zis lui Ionatan: „Cine-mi va da de știre dacă tatăl tău ți-ar {0} cu asprime?”",
-    blanks: [{ answer: "răspunde", options: ["răspunde","vorbi","spune","zice"] }],
+    text: "David i-a zis lui Ionatan: „Cine-mi va da de știre dacă tatăl tău ți-ar răspunde cu {0}?”",
+    blanks: [{ answer: "asprime", options: ["mânie","duritate","asprime","răceală"] }],
   },
   {
     ref: "1 Samuel 20:11",
-    text: "Și Ionatan i-a zis lui David: „Vino, să ieșim pe câmp!” Și au {0} amândoi pe câmp.",
-    blanks: [{ answer: "ieșit", options: ["ieșit","plecat","mers","pornit"] }],
+    text: "Și {0} i-a zis lui David: „Vino, să ieșim pe câmp!” Și au ieșit amândoi pe câmp.",
+    blanks: [{ answer: "Ionatan", options: ["Abner","Mical","Saul","Ionatan"] }],
   },
   {
     ref: "1 Samuel 20:12",
@@ -2665,7 +2665,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 20:15",
     text: "să nu îți {0} niciodată bunătatea față de casa mea, nici chiar când Domnul îi va nimici pe fiecare din vrăjmașii lui David de pe fața pământului!",
-    blanks: [{ answer: "îndepărtezi", options: ["îndepărtezi","retragi","uiti","schimbi"] }],
+    blanks: [{ answer: "îndepărtezi", options: ["retragi","uiți","schimbi","îndepărtezi"] }],
   },
   {
     ref: "1 Samuel 20:16",
@@ -2745,7 +2745,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 20:31",
     text: "Căci, câtă vreme va {0} fiul lui Isai pe pământ, nu va fi liniște nici pentru tine, nici pentru împărăția ta. Și acum trimite să-l caute și să mi-l aducă, fiindcă este vrednic de moarte!”",
-    blanks: [{ answer: "trăi", options: ["trăi","fi","rămâne","exista"] }],
+    blanks: [{ answer: "trăi", options: ["sta","trăi","rămâne","exista"] }],
   },
   {
     ref: "1 Samuel 20:32",
@@ -2794,8 +2794,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 20:41",
-    text: "După plecarea băiatului, David s-a {0} din partea de miazăzi, apoi s-a aruncat cu fața la pământ și s-a închinat de trei ori. Cei doi prieteni s-au îmbrățișat și au plâns împreună. David mai ales se prăpădea plângând.",
-    blanks: [{ answer: "sculat", options: ["sculat","ridicat","ivit","arătat"] }],
+    text: "După plecarea băiatului, David s-a sculat din partea de miazăzi, apoi s-a aruncat cu fața la pământ și s-a închinat de trei ori. Cei doi prieteni s-au {0} și au plâns împreună. David mai ales se prăpădea plângând.",
+    blanks: [{ answer: "îmbrățișat", options: ["îmbrățișat","sărutat","strâns","mângâiat"] }],
   },
   {
     ref: "1 Samuel 20:42",
@@ -2830,7 +2830,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 21:6",
     text: "Atunci preotul i-a dat pâinea {0}, căci nu era acolo altă pâine decât pâinea pentru punerea înainte care fusese luată dinaintea Domnului ca să fie înlocuită cu pâine caldă în clipa când o luaseră pe cealaltă.",
-    blanks: [{ answer: "sfințită", options: ["sfințită","curată","caldă","proaspătă"] }],
+    blanks: [{ answer: "sfințită", options: ["sfințită","curată","albă","proaspătă"] }],
   },
   {
     ref: "1 Samuel 21:7",
@@ -2895,7 +2895,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 22:4",
     text: "Și i-a adus înaintea împăratului Moabului și au {0} cu el în tot timpul cât a stat David în cetățuie.",
-    blanks: [{ answer: "locuit", options: ["locuit","rămas","stat","trăit"] }],
+    blanks: [{ answer: "locuit", options: ["rămas","locuit","zăbovit","trăit"] }],
   },
   {
     ref: "1 Samuel 22:5",
@@ -2904,8 +2904,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 22:6",
-    text: "Saul a {0} că David și oamenii lui au fost descoperiți. Saul ședea sub tamarisc, la Ghibea, pe înălțime; avea sulița în mână și toți slujitorii lui stăteau lângă el.",
-    blanks: [{ answer: "aflat", options: ["aflat","auzit","știut","văzut"] }],
+    text: "Saul a aflat că David și oamenii lui au fost descoperiți. Saul ședea sub {0}, la Ghibea, pe înălțime; avea sulița în mână și toți slujitorii lui stăteau lângă el.",
+    blanks: [{ answer: "tamarisc", options: ["stejar","terebint","smochin","tamarisc"] }],
   },
   {
     ref: "1 Samuel 22:7",
@@ -2919,13 +2919,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 22:9",
-    text: "Doeg, edomitul, care era și el printre slujitorii lui Saul, a {0}: „Eu l-am văzut pe fiul lui Isai venind la Nob, la Ahimelec, fiul lui Ahitub.",
-    blanks: [{ answer: "răspuns", options: ["răspuns","zis","vorbit","spus"] }],
+    text: "{0}, edomitul, care era și el printre slujitorii lui Saul, a răspuns: „Eu l-am văzut pe fiul lui Isai venind la Nob, la Ahimelec, fiul lui Ahitub.",
+    blanks: [{ answer: "Doeg", options: ["Doeg","Abner","Ioab","Abiatar"] }],
   },
   {
     ref: "1 Samuel 22:10",
-    text: "Ahimelec L-a {0} pe Domnul pentru el, i-a dat merinde și i-a dat sabia lui Goliat, filisteanul.”",
-    blanks: [{ answer: "întrebat", options: ["întrebat","rugat","cerut","chemat"] }],
+    text: "Ahimelec L-a întrebat pe Domnul pentru el, i-a dat merinde și i-a dat {0} lui Goliat, filisteanul.”",
+    blanks: [{ answer: "sabia", options: ["sabia","sulița","armura","scutul"] }],
   },
   {
     ref: "1 Samuel 22:11",
@@ -2934,8 +2934,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 22:12",
-    text: "Saul a zis: „Ascultă, fiul lui Ahitub!” El a {0}: „Iată-mă, domnul meu!”",
-    blanks: [{ answer: "răspuns", options: ["răspuns","zis","grăit","spus"] }],
+    text: "Saul a zis: „Ascultă, fiul lui {0}!” El a răspuns: „Iată-mă, domnul meu!”",
+    blanks: [{ answer: "Ahitub", options: ["Ahimelec","Abiatar","Ahitub","Eli"] }],
   },
   {
     ref: "1 Samuel 22:13",
@@ -2975,12 +2975,12 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 22:20",
     text: "Un fiu al lui Ahimelec, fiul lui Ahitub, a {0}. Numele lui era Abiatar. A fugit la David",
-    blanks: [{ answer: "scăpat", options: ["scăpat","fugit","trăit","rămas"] }],
+    blanks: [{ answer: "scăpat", options: ["salvat","scăpat","trăit","rămas"] }],
   },
   {
     ref: "1 Samuel 22:21",
-    text: "și i-a {0} că Saul i-a ucis pe preoții Domnului.",
-    blanks: [{ answer: "spus", options: ["spus","istorisit","arătat","vestit"] }],
+    text: "și i-a spus că Saul i-a ucis pe {0} Domnului.",
+    blanks: [{ answer: "preoții", options: ["preoții","leviții","prorocii","slujitorii"] }],
   },
   {
     ref: "1 Samuel 22:22",
@@ -3010,7 +3010,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 23:4",
     text: "David L-a întrebat iarăși pe Domnul. Și Domnul i-a răspuns: „Scoală-te și {0}-te la Cheila, căci îi dau pe filisteni în mâinile tale!”",
-    blanks: [{ answer: "coboară", options: ["coboară","grăbește","du-te","întoarce"] }],
+    blanks: [{ answer: "coboară", options: ["coboară","grăbește","suie","întoarce"] }],
   },
   {
     ref: "1 Samuel 23:5",
@@ -3039,8 +3039,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 23:10",
-    text: "Și David a zis: „Doamne, Dumnezeul lui Israel, robul Tău a {0} că Saul vrea să vină la Cheila ca să nimicească cetatea din pricina mea.",
-    blanks: [{ answer: "aflat", options: ["aflat","auzit","văzut","știut"] }],
+    text: "Și David a zis: „Doamne, Dumnezeul lui Israel, robul Tău a aflat că Saul vrea să vină la Cheila ca să {0} cetatea din pricina mea.",
+    blanks: [{ answer: "nimicească", options: ["dărâme","pustiască","prade","nimicească"] }],
   },
   {
     ref: "1 Samuel 23:11",
@@ -3064,8 +3064,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 23:15",
-    text: "David, văzând că Saul a pornit să-i ia viața, a {0} în pustia Zif, în pădure.",
-    blanks: [{ answer: "stat", options: ["stat","rămas","locuit","trăit"] }],
+    text: "David, văzând că Saul a pornit să-i ia viața, a stat în pustia Zif, în {0}.",
+    blanks: [{ answer: "pădure", options: ["peșteră","vale","pădure","cetate"] }],
   },
   {
     ref: "1 Samuel 23:16",
@@ -3100,7 +3100,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 23:22",
     text: "Duceți-vă, vă rog, de mai cercetați, ca să {0} și să descoperiți în ce loc și-a îndreptat pașii și cine l-a văzut, căci mi s-a spus că este foarte șiret!",
-    blanks: [{ answer: "știți", options: ["știți","vedeți","aflați","cercetați"] }],
+    blanks: [{ answer: "știți", options: ["știți","vedeți","aflați","înțelegeți"] }],
   },
   {
     ref: "1 Samuel 23:23",
@@ -3110,7 +3110,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 23:24",
     text: "S-au sculat dar și s-au dus la Zif înaintea lui Saul. David și oamenii lui erau în pustia {0}, și anume în Câmpia dinspre miazăzi de pustie.",
-    blanks: [{ answer: "Maon", options: ["Maon","Zif","Cheila","En-Ghedi"] }],
+    blanks: [{ answer: "Maon", options: ["Carmel","Cheila","Maon","Hebron"] }],
   },
   {
     ref: "1 Samuel 23:25",
@@ -3120,7 +3120,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 23:26",
     text: "Saul mergea pe o parte a muntelui, și David cu oamenii lui, pe cealaltă parte a muntelui. David {0} repede, ca să scape de Saul. Dar Saul și oamenii lui chiar îi înconjuraseră pe David și pe ai lui, ca să pună mâna pe ei,",
-    blanks: [{ answer: "fugea", options: ["fugea","mergea","alerga","cobora"] }],
+    blanks: [{ answer: "fugea", options: ["fugea","pleca","alerga","cobora"] }],
   },
   {
     ref: "1 Samuel 23:27",
@@ -3195,7 +3195,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 24:12",
     text: "Judece Domnul între mine și tine și Domnul să mă {0} pe tine, dar eu nu voi pune mâna pe tine!",
-    blanks: [{ answer: "răzbune", options: ["răzbune","apere","judece","salveze"] }],
+    blanks: [{ answer: "răzbune", options: ["răzbune","apere","păzească","salveze"] }],
   },
   {
     ref: "1 Samuel 24:13",
@@ -3264,8 +3264,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 25:4",
-    text: "David a {0} în pustie că Nabal își tunde oile.",
-    blanks: [{ answer: "aflat", options: ["aflat","auzit","știut","văzut"] }],
+    text: "David a aflat în pustie că Nabal își {0} oile.",
+    blanks: [{ answer: "tunde", options: ["paște","adună","tunde","numără"] }],
   },
   {
     ref: "1 Samuel 25:5",
@@ -3279,8 +3279,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 25:7",
-    text: "Și acum, am {0} că tunzi oile. Păstorii tăi au fost cu noi; nu i-am ocărât și nu li s-a luat nimic în tot timpul cât au fost la Carmel.",
-    blanks: [{ answer: "auzit", options: ["auzit","aflat","știut","văzut"] }],
+    text: "Și acum, am auzit că tunzi oile. Păstorii tăi au fost cu noi; nu i-am {0} și nu li s-a luat nimic în tot timpul cât au fost la Carmel.",
+    blanks: [{ answer: "ocărât", options: ["batjocorit","ocărât","jignit","necăjit"] }],
   },
   {
     ref: "1 Samuel 25:8",
@@ -3289,13 +3289,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 25:9",
-    text: "Când au ajuns, oamenii lui David i-au {0} lui Nabal toate aceste cuvinte în numele lui David. Apoi au tăcut.",
-    blanks: [{ answer: "spus", options: ["spus","arătat","vestit","istorisit"] }],
+    text: "Când au ajuns, oamenii lui David i-au spus lui Nabal toate aceste cuvinte în numele lui David. Apoi au {0}.",
+    blanks: [{ answer: "tăcut", options: ["așteptat","oprit","liniștit","tăcut"] }],
   },
   {
     ref: "1 Samuel 25:10",
-    text: "Nabal le-a {0} slujitorilor lui David: „Cine este David și cine este fiul lui Isai? Astăzi sunt mulți slujitori care fug de la stăpâni.",
-    blanks: [{ answer: "răspuns", options: ["răspuns","zis","vorbit","spus"] }],
+    text: "Nabal le-a răspuns slujitorilor lui David: „Cine este David și cine este fiul lui Isai? Astăzi sunt mulți slujitori care fug de la {0}.",
+    blanks: [{ answer: "stăpâni", options: ["domni","stăpâni","părinți","căpetenii"] }],
   },
   {
     ref: "1 Samuel 25:11",
@@ -3304,8 +3304,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 25:12",
-    text: "Oamenii lui David și-au luat drumul înapoi; s-au întors și i-au {0}, la sosirea lor, toate aceste cuvinte lui David.",
-    blanks: [{ answer: "spus", options: ["spus","istorisit","arătat","vestit"] }],
+    text: "Oamenii lui David și-au luat drumul înapoi; s-au întors și i-au spus, la {0} lor, toate aceste cuvinte lui David.",
+    blanks: [{ answer: "sosirea", options: ["întoarcerea","venirea","intrarea","sosirea"] }],
   },
   {
     ref: "1 Samuel 25:13",
@@ -3319,8 +3319,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 25:15",
-    text: "Și totuși oamenii aceștia au fost foarte buni cu noi; nu ne-au ocărât și nu ni s-a {0} nimic în tot timpul cât am fost cu ei în câmp.",
-    blanks: [{ answer: "luat", options: ["luat","furat","cerut","jefuit"] }],
+    text: "Și totuși oamenii aceștia au fost foarte {0} cu noi; nu ne-au ocărât și nu ni s-a luat nimic în tot timpul cât am fost cu ei în câmp.",
+    blanks: [{ answer: "buni", options: ["buni","blânzi","cinstiți","prietenoși"] }],
   },
   {
     ref: "1 Samuel 25:16",
@@ -3339,8 +3339,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 25:19",
-    text: "și le-a zis slujitorilor săi: „Luați-o înaintea mea, și eu voi veni {0} voi!” Nu i-a spus nimic bărbatului ei, Nabal.",
-    blanks: [{ answer: "după", options: ["după","cu","lângă","spre"] }],
+    text: "și le-a zis {0} săi: „Luați-o înaintea mea, și eu voi veni după voi!” Nu i-a spus nimic bărbatului ei, Nabal.",
+    blanks: [{ answer: "slujitorilor", options: ["slujitorilor","robilor","servitorilor","oamenilor"] }],
   },
   {
     ref: "1 Samuel 25:20",
@@ -3360,7 +3360,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 25:23",
     text: "Când l-a zărit Abigail pe David, s-a dat jos repede de pe măgar, a {0} cu fața la pământ înaintea lui David și s-a închinat până la pământ.",
-    blanks: [{ answer: "căzut", options: ["căzut","aruncat","plecat","închinat"] }],
+    blanks: [{ answer: "căzut", options: ["aruncat","plecat","aplecat","căzut"] }],
   },
   {
     ref: "1 Samuel 25:24",
@@ -3390,7 +3390,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 25:29",
     text: "Dacă se va {0} cineva care să te urmărească și să vrea să-ți ia viața, sufletul domnului meu va fi legat în mănunchiul celor vii la Domnul, Dumnezeul tău; și să arunce cu praștia sufletul vrăjmașilor tăi.",
-    blanks: [{ answer: "ridica", options: ["ridica","scula","arata","ivi"] }],
+    blanks: [{ answer: "ridica", options: ["scula","ridica","arăta","ivi"] }],
   },
   {
     ref: "1 Samuel 25:30",
@@ -3420,7 +3420,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 25:35",
     text: "Și David a luat din mâna lui Abigail ce-i adusese și i-a zis: „Suie-te în {0} acasă; vezi că ți-am ascultat glasul și te-am primit bine.”",
-    blanks: [{ answer: "pace", options: ["pace","liniște","bine","grabă"] }],
+    blanks: [{ answer: "pace", options: ["liniște","tihnă","pace","grabă"] }],
   },
   {
     ref: "1 Samuel 25:36",
@@ -3444,8 +3444,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 25:40",
-    text: "Slujitorii lui David au ajuns la Abigail, la Carmel, și i-au {0} așa: „David ne-a trimis la tine, ca să te ia de nevastă.”",
-    blanks: [{ answer: "vorbit", options: ["vorbit","spus","zis","arătat"] }],
+    text: "Slujitorii lui David au ajuns la Abigail, la Carmel, și i-au vorbit așa: „David ne-a trimis la tine, ca să te ia de {0}.”",
+    blanks: [{ answer: "nevastă", options: ["soție","slujnică","nevastă","mireasă"] }],
   },
   {
     ref: "1 Samuel 25:41",
@@ -3454,8 +3454,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 25:42",
-    text: "Și îndată Abigail a plecat, călare pe un măgar și însoțită de cinci fete; a {0} după solii lui David și i-a fost nevastă.",
-    blanks: [{ answer: "mers", options: ["mers","plecat","grăbit","urmat"] }],
+    text: "Și îndată Abigail a plecat, călare pe un {0} și însoțită de cinci fete; a mers după solii lui David și i-a fost nevastă.",
+    blanks: [{ answer: "măgar", options: ["măgar","cal","catâr","cămilă"] }],
   },
   {
     ref: "1 Samuel 25:43",
@@ -3484,13 +3484,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 26:4",
-    text: "a trimis niște iscoade și a {0} că, într-adevăr, Saul venise.",
-    blanks: [{ answer: "aflat", options: ["aflat","auzit","știut","văzut"] }],
+    text: "a trimis niște {0} și a aflat că, într-adevăr, Saul venise.",
+    blanks: [{ answer: "iscoade", options: ["soli","iscoade","străjeri","ostași"] }],
   },
   {
     ref: "1 Samuel 26:5",
-    text: "Atunci David s-a sculat și a venit la locul unde tăbărâse Saul și a {0} locul unde era culcat Saul cu Abner, fiul lui Ner, căpetenia oștirii lui. Saul era culcat în cort, în mijlocul taberei, și poporul era tăbărât în jurul lui.",
-    blanks: [{ answer: "văzut", options: ["văzut","zărit","găsit","aflat"] }],
+    text: "Atunci David s-a sculat și a venit la locul unde tăbărâse Saul și a văzut locul unde era culcat Saul cu Abner, fiul lui Ner, căpetenia oștirii lui. Saul era culcat în {0}, în mijlocul taberei, și poporul era tăbărât în jurul lui.",
+    blanks: [{ answer: "cort", options: ["cort","car","șanț","adăpost"] }],
   },
   {
     ref: "1 Samuel 26:6",
@@ -3534,13 +3534,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 26:14",
-    text: "Și le-a {0} poporului și lui Abner, fiul lui Ner: „N-auzi tu, Abner?” Abner a răspuns: „Cine ești tu, care strigi către împărat?”",
-    blanks: [{ answer: "strigat", options: ["strigat","zis","vorbit","chemat"] }],
+    text: "Și le-a strigat poporului și lui Abner, fiul lui Ner: „N-auzi tu, Abner?” Abner a răspuns: „Cine ești tu, care strigi către {0}?”",
+    blanks: [{ answer: "împărat", options: ["împărat","rege","stăpân","domn"] }],
   },
   {
     ref: "1 Samuel 26:15",
     text: "Și David i-a zis lui Abner: „Oare nu ești tu bărbat? Și cine este ca tine în Israel? Pentru ce atunci nu l-ai {0} pe împărat, stăpânul tău? Căci cineva din popor a venit să-l omoare pe împărat, stăpânul tău.",
-    blanks: [{ answer: "păzit", options: ["păzit","vegheat","aparat","urmat"] }],
+    blanks: [{ answer: "păzit", options: ["vegheat","păzit","apărat","urmat"] }],
   },
   {
     ref: "1 Samuel 26:16",
@@ -3560,7 +3560,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 26:19",
     text: "Să binevoiască acum împăratul, domnul meu, să {0} cuvintele robului său. Dacă Domnul este Cel ce te ațâță împotriva mea, să primească mirosul unui dar de mâncare de la noi, dar dacă oamenii te ațâță, blestemați să fie înaintea Domnului, fiindcă ei mă izgonesc azi ca să mă dezlipească de moștenirea Domnului, zicându-mi: «Du-te de slujește-le unor dumnezei străini!»",
-    blanks: [{ answer: "asculte", options: ["asculte","audă","primească","cerceteze"] }],
+    blanks: [{ answer: "asculte", options: ["audă","asculte","înțeleagă","cerceteze"] }],
   },
   {
     ref: "1 Samuel 26:20",
@@ -3570,12 +3570,12 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 26:21",
     text: "Saul a zis: „Am {0}; întoarce-te, fiul meu David, căci nu-ți voi mai face rău, fiindcă în ziua aceasta viața mea a fost scumpă înaintea ta! Am lucrat ca un nebun și am făcut o mare greșeală.”",
-    blanks: [{ answer: "păcătuit", options: ["păcătuit","greșit","rătăcit","cazut"] }],
+    blanks: [{ answer: "păcătuit", options: ["păcătuit","greșit","rătăcit","căzut"] }],
   },
   {
     ref: "1 Samuel 26:22",
-    text: "David a răspuns: „Iată sulița împăratului; să vină unul din oamenii tăi s-o {0}.",
-    blanks: [{ answer: "ia", options: ["ia","aducă","poarte","caute"] }],
+    text: "David a răspuns: „Iată {0} împăratului; să vină unul din oamenii tăi s-o ia.",
+    blanks: [{ answer: "sulița", options: ["sabia","cana","scutul","sulița"] }],
   },
   {
     ref: "1 Samuel 26:23",
@@ -3609,8 +3609,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 27:4",
-    text: "Saul, când a {0} că David fugise la Gat, a încetat să-l mai caute.",
-    blanks: [{ answer: "aflat", options: ["aflat","auzit","știut","văzut"] }],
+    text: "Saul, când a aflat că David fugise la {0}, a încetat să-l mai caute.",
+    blanks: [{ answer: "Gat", options: ["Gat","Gaza","Ecron","Asdod"] }],
   },
   {
     ref: "1 Samuel 27:5",
@@ -3619,8 +3619,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 27:6",
-    text: "Și chiar în ziua aceea Achiș i-a {0} Țiclagul. De aceea Țiclagul a fost al împăraților lui Iuda până în ziua de azi.",
-    blanks: [{ answer: "dat", options: ["dat","oferit","predat","arătat"] }],
+    text: "Și chiar în ziua aceea {0} i-a dat Țiclagul. De aceea Țiclagul a fost al împăraților lui Iuda până în ziua de azi.",
+    blanks: [{ answer: "Achiș", options: ["Saul","Nahaș","Achiș","Agag"] }],
   },
   {
     ref: "1 Samuel 27:7",
@@ -3639,8 +3639,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 27:10",
-    text: "Achiș zicea: „Unde ați năvălit azi?” Și David {0}: „Spre miazăzi de Iuda, spre miazăzi de ierahmeeliți și spre miazăzi de cheniți.”",
-    blanks: [{ answer: "răspundea", options: ["răspundea","zicea","spunea","mărturisea"] }],
+    text: "Achiș zicea: „Unde ați {0} azi?” Și David răspundea: „Spre miazăzi de Iuda, spre miazăzi de ierahmeeliți și spre miazăzi de cheniți.”",
+    blanks: [{ answer: "năvălit", options: ["prădat","atacat","jefuit","năvălit"] }],
   },
   {
     ref: "1 Samuel 27:11",
@@ -3659,8 +3659,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 28:2",
-    text: "David i-a răspuns lui Achiș: „Ei bine, vei {0} ce va face robul tău.” Și Achiș i-a zis lui David: „De aceea te voi pune păzitorul capului meu în tot timpul.”",
-    blanks: [{ answer: "vedea", options: ["vedea","ști","afla","cunoaște"] }],
+    text: "David i-a răspuns lui Achiș: „Ei bine, vei vedea ce va face robul tău.” Și Achiș i-a zis lui David: „De aceea te voi pune {0} capului meu în tot timpul.”",
+    blanks: [{ answer: "păzitorul", options: ["străjerul","păzitorul","apărătorul","slujitorul"] }],
   },
   {
     ref: "1 Samuel 28:3",
@@ -3670,7 +3670,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 28:4",
     text: "Filistenii s-au strâns și au venit de au tăbărât la {0}. Saul a strâns tot Israelul și au tăbărât la Ghilboa.",
-    blanks: [{ answer: "Sunem", options: ["Sunem","Ghilboa","Iezreel","Endor"] }],
+    blanks: [{ answer: "Sunem", options: ["Afec","Iezreel","Endor","Sunem"] }],
   },
   {
     ref: "1 Samuel 28:5",
@@ -3679,8 +3679,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 28:6",
-    text: "Saul L-a întrebat pe Domnul, și Domnul nu i-a {0} nici prin vise, nici prin Urim, nici prin proroci.",
-    blanks: [{ answer: "răspuns", options: ["răspuns","vorbit","arătat","zis"] }],
+    text: "Saul L-a întrebat pe Domnul, și Domnul nu i-a răspuns nici prin {0}, nici prin Urim, nici prin proroci.",
+    blanks: [{ answer: "vise", options: ["semne","vise","vedenii","îngeri"] }],
   },
   {
     ref: "1 Samuel 28:7",
@@ -3700,12 +3700,12 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 28:10",
     text: "Saul i-a {0} pe Domnul și a zis: „Viu este Domnul că nu ți se va întâmpla niciun rău pentru aceasta!”",
-    blanks: [{ answer: "jurat", options: ["jurat","promis","zis","spus"] }],
+    blanks: [{ answer: "jurat", options: ["promis","făgăduit","jurat","spus"] }],
   },
   {
     ref: "1 Samuel 28:11",
-    text: "Femeia a zis: „Pe cine vrei să-ți scol?” Și el a {0}: „Scoală-mi-l pe Samuel!”",
-    blanks: [{ answer: "răspuns", options: ["răspuns","zis","cerut","spus"] }],
+    text: "Femeia a zis: „Pe cine vrei să-ți scol?” Și el a răspuns: „Scoală-mi-l pe {0}!”",
+    blanks: [{ answer: "Samuel", options: ["Eli","Natan","Gad","Samuel"] }],
   },
   {
     ref: "1 Samuel 28:12",
@@ -3744,8 +3744,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 28:19",
-    text: "Și chiar Domnul îl va da pe Israel împreună cu tine în mâinile filistenilor. Mâine tu și fiii tăi veți fi împreună cu {0}, și Domnul va da tabăra lui Israel în mâinile filistenilor.”",
-    blanks: [{ answer: "mine", options: ["mine","Domnul","David","poporul"] }],
+    text: "Și chiar Domnul îl va da pe Israel împreună cu tine în mâinile filistenilor. {0} tu și fiii tăi veți fi împreună cu mine, și Domnul va da tabăra lui Israel în mâinile filistenilor.”",
+    blanks: [{ answer: "Mâine", options: ["Astăzi","Poimâine","Curând","Mâine"] }],
   },
   {
     ref: "1 Samuel 28:20",
@@ -3774,8 +3774,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 28:25",
-    text: "Le-a {0} înaintea lui Saul și înaintea slujitorilor lui și au mâncat. Apoi s-au sculat și au plecat chiar în noaptea aceea.",
-    blanks: [{ answer: "pus", options: ["pus","adus","dat","așezat"] }],
+    text: "Le-a pus înaintea lui Saul și înaintea slujitorilor lui și au mâncat. Apoi s-au sculat și au plecat chiar în {0} aceea.",
+    blanks: [{ answer: "noaptea", options: ["seara","dimineața","noaptea","ziua"] }],
   },
   {
     ref: "1 Samuel 29:1",
@@ -3789,8 +3789,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 29:3",
-    text: "Domnii filistenilor au zis: „Ce caută evreii aceștia aici?” Și Achiș le-a {0} domnitorilor filistenilor: „Acesta este David, slujitorul lui Saul, împăratul lui Israel. De mult este cu mine, și n-am găsit nici cel mai mic lucru de care să-l învinuiesc, de la venirea lui și până în ziua de azi.”",
-    blanks: [{ answer: "răspuns", options: ["răspuns","zis","vorbit","spus"] }],
+    text: "Domnii filistenilor au zis: „Ce caută evreii aceștia aici?” Și Achiș le-a răspuns domnitorilor filistenilor: „Acesta este David, slujitorul lui Saul, împăratul lui Israel. De mult este cu mine, și n-am găsit nici cel mai mic lucru de care să-l {0}, de la venirea lui și până în ziua de azi.”",
+    blanks: [{ answer: "învinuiesc", options: ["acuz","învinuiesc","osândesc","mustru"] }],
   },
   {
     ref: "1 Samuel 29:4",
@@ -3814,13 +3814,13 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 29:8",
-    text: "David i-a zis lui Achiș: „Dar ce am {0} și ce ai găsit în robul tău, de când sunt la tine până în ziua de azi, ca să nu merg să lupt împotriva vrăjmașilor domnului meu, împăratul?”",
-    blanks: [{ answer: "făcut", options: ["făcut","greșit","spus","zis"] }],
+    text: "David i-a zis lui Achiș: „Dar ce am făcut și ce ai găsit în robul tău, de când sunt la tine până în ziua de azi, ca să nu merg să lupt împotriva {0} domnului meu, împăratul?”",
+    blanks: [{ answer: "vrăjmașilor", options: ["dușmanilor","potrivnicilor","vrăjmașilor","prigonitorilor"] }],
   },
   {
     ref: "1 Samuel 29:9",
-    text: "Achiș i-a {0} lui David: „Știu că ești plăcut înaintea mea ca un înger al lui Dumnezeu, dar domnitorii filistenilor au zis: «Să nu se suie cu noi la luptă.»",
-    blanks: [{ answer: "răspuns", options: ["răspuns","zis","vorbit","spus"] }],
+    text: "Achiș i-a răspuns lui David: „Știu că ești plăcut înaintea mea ca un {0} al lui Dumnezeu, dar domnitorii filistenilor au zis: «Să nu se suie cu noi la luptă.»",
+    blanks: [{ answer: "înger", options: ["proroc","sfânt","fiu","înger"] }],
   },
   {
     ref: "1 Samuel 29:10",
@@ -3829,8 +3829,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 29:11",
-    text: "David și oamenii lui s-au {0} de cu noapte de tot, ca să plece dimineața și să se întoarcă în țara filistenilor. Și filistenii s-au suit la Izreel.",
-    blanks: [{ answer: "sculat", options: ["sculat","ridicat","grăbit","pregătit"] }],
+    text: "David și oamenii lui s-au sculat de cu noapte de tot, ca să plece dimineața și să se întoarcă în țara filistenilor. Și filistenii s-au suit la {0}.",
+    blanks: [{ answer: "Izreel", options: ["Izreel","Ghilboa","Afec","Sunem"] }],
   },
   {
     ref: "1 Samuel 30:1",
@@ -3934,8 +3934,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 30:21",
-    text: "David a ajuns la cei două sute de oameni care fuseseră prea obosiți ca să mai meargă după el și pe care-i lăsase la pârâul Besor. Ei au ieșit înaintea lui David și înaintea poporului care era cu el. David s-a apropiat de ei și i-a {0} de sănătate.",
-    blanks: [{ answer: "întrebat", options: ["întrebat","salutat","primit","văzut"] }],
+    text: "David a ajuns la cei două sute de oameni care fuseseră prea {0} ca să mai meargă după el și pe care-i lăsase la pârâul Besor. Ei au ieșit înaintea lui David și înaintea poporului care era cu el. David s-a apropiat de ei și i-a întrebat de sănătate.",
+    blanks: [{ answer: "obosiți", options: ["sleiți","istoviți","slăbiți","obosiți"] }],
   },
   {
     ref: "1 Samuel 30:22",
@@ -3959,8 +3959,8 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 30:26",
-    text: "Când s-a întors la Țiclag, David le-a {0} o parte din pradă bătrânilor lui Iuda, prietenilor săi, spunându-le aceste cuvinte: „Iată darul pe care vi-l fac din prada luată de la vrăjmașii Domnului!”",
-    blanks: [{ answer: "trimis", options: ["trimis","dat","împărtit","adus"] }],
+    text: "Când s-a întors la Țiclag, David le-a trimis o parte din pradă bătrânilor lui Iuda, prietenilor săi, spunându-le aceste cuvinte: „Iată {0} pe care vi-l fac din prada luată de la vrăjmașii Domnului!”",
+    blanks: [{ answer: "darul", options: ["darul","ploconul","cadoul","răsplata"] }],
   },
   {
     ref: "1 Samuel 30:27",
@@ -4000,7 +4000,7 @@ const VERSES_1SAMUEL = [
   {
     ref: "1 Samuel 31:3",
     text: "Saul a fost {0} în toiul luptei; arcașii l-au ajuns și l-au rănit greu.",
-    blanks: [{ answer: "prins", options: ["prins","lovit","atacat","ajuns"] }],
+    blanks: [{ answer: "prins", options: ["lovit","atacat","prins","doborât"] }],
   },
   {
     ref: "1 Samuel 31:4",
@@ -4029,18 +4029,18 @@ const VERSES_1SAMUEL = [
   },
   {
     ref: "1 Samuel 31:9",
-    text: "I-au tăiat capul lui Saul și i-au luat armele. Apoi au {0} să dea de veste prin toată țara filistenilor, în casele idolilor lor și în popor.",
-    blanks: [{ answer: "trimis", options: ["trimis","grăbit","vestit","poruncit"] }],
+    text: "I-au tăiat capul lui Saul și i-au luat armele. Apoi au trimis să dea de veste prin toată țara filistenilor, în casele {0} lor și în popor.",
+    blanks: [{ answer: "idolilor", options: ["idolilor","zeilor","templelor","dumnezeilor"] }],
   },
   {
     ref: "1 Samuel 31:10",
     text: "Au pus armele lui Saul în casa astarteelor și i-au {0} trupul pe zidurile Bet-Șeanului.",
-    blanks: [{ answer: "atârnat", options: ["atârnat","pus","legat","prins"] }],
+    blanks: [{ answer: "atârnat", options: ["atârnat","spânzurat","legat","prins"] }],
   },
   {
     ref: "1 Samuel 31:11",
-    text: "Când au {0} locuitorii Iabesului din Galaad ce i-au făcut filistenii lui Saul,",
-    blanks: [{ answer: "auzit", options: ["auzit","aflat","văzut","știut"] }],
+    text: "Când au auzit locuitorii Iabesului din {0} ce i-au făcut filistenii lui Saul,",
+    blanks: [{ answer: "Galaad", options: ["Basan","Galaad","Moab","Edom"] }],
   },
   {
     ref: "1 Samuel 31:12",

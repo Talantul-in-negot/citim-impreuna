@@ -110,3 +110,6 @@ jobs:
 
       - name: Curated epistle answers keep old answers accepted and scored
         run: npm run check:epistle-answers
+
+      - name: Samuel corrections keep old answers accepted and scored
+        run: npm run check:samuel-fixes

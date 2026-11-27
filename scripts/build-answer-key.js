@@ -145,6 +145,10 @@ function main() {
   );
 }
 
-if (require.main === module) main();
+// 20260903_01 este aplicată în producție și rămâne înghețată: corecturile Samuel se
+// publică prin scripts/apply-samuel-choices.js și scripts/build-samuel-answers.js.
+// Rescrierea ei ar readuce răspunsurile înlocuite (refuzate în producție de
+// triggerul verse_answers_refuse_legacy_answer). Rulează doar cu --force.
+if (require.main === module && process.argv.includes('--force')) main();
 
 module.exports = { buildRows, renderSql, loadVerses };
